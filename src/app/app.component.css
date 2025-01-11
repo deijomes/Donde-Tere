@@ -1,0 +1,33 @@
+.nav-item.bg {
+    border-left: 5px solid #ff6c2f; /* Resaltar el borde izquierdo */
+    background-color: transparent; /* Sin fondo */
+    color: #ff6c2f; /* Cambiar el color del texto para que combine */
+    padding-left: 10px; /* Ajustar espacio para que no quede pegado al borde */
+}
+
+.nav-item.bg .nav-icon {
+    color: #ff6c2f; /* Cambiar el color del icono al mismo que el del borde */
+}
+
+/* Asegúrate de que los enlaces dentro de un nav-item con bg también cambien su color */
+.nav-item.bg .nav-link {
+    color: #e26f0a; /* Color de texto para enlaces */
+}
+
+/* Estilos para submenú: sin fondo ni cambios de texto */
+.sub-navbar-nav .sub-nav-link {
+    background-color: transparent; /* Fondo transparente */
+    color: #afadab; /* Mantener el color original */
+    transition: color 0.3s ease, background-color 0.3s ease; /* Suavizar la transición */
+}
+
+.sub-navbar-nav .sub-nav-link:hover {
+    background-color: #fff0ead5; /* Fondo sutil al pasar el mouse (puedes ajustarlo a tu preferencia) */
+    color: #e3a74c!important;
+     border-radius: 10px; /* Cambiar color del texto al pasar el mouse */
+}
+.sub-navbar-nav .sub-nav-link.selected {
+    background-color: #fff0ead5; /* Fondo sutil similar al hover */
+    color: #f17e4a !important; /* Cambiar color del texto al hacer clic */
+    border-radius: 10px;
+}
