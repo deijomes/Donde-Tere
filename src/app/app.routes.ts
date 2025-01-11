@@ -5,14 +5,18 @@ import { VentaComponent } from './features/venta/venta.component';
 import { VentasTotalesComponent } from './features/ventas-totales/ventas-totales.component';
 import { InventarioGeneralComponent } from './features/inventario-general/inventario-general.component';
 import { MovimientosComponent } from './features/movimientos/movimientos.component';
-import { PRODUCT_ROUTES } from './features/productos/productos-routes';
 
 
-export const routes: Routes = [  
+
+export const routes: Routes = [  { path: '', redirectTo: 'inventarioo', pathMatch: 'full' },
+
                                  {path: 'inventarioo', component:InventarioGeneralComponent},
-                                 {path: 'productos', children: PRODUCT_ROUTES},
+                                 { path: 'productos-registro', component: RegistrarComponent},
+                                 { path: 'productos-inventario', component:InventarioComponent},
                                  {path: 'movimientos', component: MovimientosComponent},
                                  {path: 'ventas',component:VentaComponent},
                                  {path: 'ventastotales', component:VentasTotalesComponent},
+
+                                 { path: '**', redirectTo: 'inventarioo' } // Maneja rutas no existentes
     
 ];
