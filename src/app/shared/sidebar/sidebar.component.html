@@ -1,0 +1,97 @@
+<div class="main-nav">
+    <!-- Sidebar Logo -->
+    <div class="logo-box">
+        <a class="logo-dark">
+            <img src="assets/images/logo-sm.png" class="logo-sm" alt="logo sm">
+            <img src="assets/images/logo-dark.png" class="logo-lg" alt="logo dark">
+        </a>
+        <a class="logo-light">
+            <img src="assets/images/tere4.png" class="logo-sm" alt="logo sm">
+            <img src="assets/images/tere3.png" class="logo-lg" alt="logo light">
+        </a>
+    </div>
+
+    <!-- Menu Toggle Button (sm-hover) -->
+    <button type="button" class="button-sm-hover" aria-label="Show Full Sidebar" (click)="toggleMenuSize()">
+        <iconify-icon icon="solar:double-alt-arrow-right-bold-duotone" class="button-sm-hover-icon"></iconify-icon>
+    </button>
+
+    <div class="scrollbar" data-simplebar>
+        <ul class="navbar-nav" id="navbar-nav">
+            <li class="menu-title">General</li>
+
+
+            <!-- Inventario -->
+            <li class="nav-item" [ngClass]="{'bg': activeMenu === 'inventario'}" (click)="setActiveMenu('inventario')">
+                <a class="nav-link">
+                    <span class="nav-icon">
+                        <iconify-icon icon="solar:widget-5-bold-duotone"></iconify-icon>
+                    </span>
+                    <span class="nav-text"> Inventario</span>
+                </a>
+            </li>
+
+<!-- Productos -->
+<li class="nav-item">
+    <a class="nav-link menu-arrow" href="#sidebarProductos" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarProductos">
+        <span class="nav-icon">
+            <iconify-icon icon="solar:box-bold-duotone"></iconify-icon>
+        </span>
+        <span class="nav-text"> Productos </span>
+    </a>
+    <div class="collapse" id="sidebarProductos">
+        <ul class="nav sub-navbar-nav">
+            <li class="sub-nav-item">
+                <a class="sub-nav-link" routerLink="/productos/registro" >Registrar</a>
+            </li>
+            <li class="sub-nav-item">
+                <a class="sub-nav-link" href="icons-solar.html">Mostrar inventario</a>
+            </li>
+        </ul>
+    </div>
+</li>
+
+
+
+            <li class="nav-item">
+                <a class="nav-link">
+                    <span class="nav-icon">
+                        <iconify-icon icon="solar:chart-2-bold-duotone"></iconify-icon>
+                    </span>
+                    <span class="nav-text">Ventas totales</span>
+                </a>
+            </li>
+
+
+
+            <li class="menu-title mt-2">Users</li>
+
+
+
+            <li class="nav-item">
+                <a class="nav-link menu-arrow" href="#sidebarRoles" data-bs-toggle="collapse" role="button"
+                    aria-expanded="false" aria-controls="sidebarRoles">
+                    <span class="nav-icon">
+                        <iconify-icon icon="solar:user-speak-rounded-bold-duotone"></iconify-icon>
+                    </span>
+                    <span class="nav-text"> Roles </span>
+                </a>
+                <div class="collapse" id="sidebarRoles">
+                    <ul class="nav sub-navbar-nav">
+                        <ul class="nav sub-navbar-nav">
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="role-list.html">List</a>
+                            </li>
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="role-edit.html">Edit</a>
+                            </li>
+                            <li class="sub-nav-item">
+                                <a class="sub-nav-link" href="role-add.html">Create</a>
+                            </li>
+                        </ul>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
