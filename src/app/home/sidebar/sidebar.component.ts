@@ -1,23 +1,26 @@
+import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, RouterLinkActive, CommonModule],
    schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
-  activeMenu: string = ''; // Solo se aplica a opciones principales
+
+   activeMenu: string = ''; // Solo se aplica a opciones principales
   selectedSubMenu: string = ''; // Solo se aplica a subopciones
   configSize: string = 'sm-hover'; // Define el tamaño inicial del menú
   
   // Función para activar el menú principal
   setActiveMenu(menu: string): void {
-    this.activeMenu = menu; // Actualiza el menú principal activo
-  }
+    if (this.activeMenu !== menu) {
+        this.activeMenu = menu;
+    }}
 
   // Función para activar las subopciones
   setSubMenu(menu: string, submenu: string): void {
@@ -90,8 +93,7 @@ export class SidebarComponent {
       submenu.classList.remove('show'); // Remueve la clase 'show' para colapsarlos
     });
 
-    
-  
 
   }
-}
+  }
+  

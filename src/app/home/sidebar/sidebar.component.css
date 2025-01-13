@@ -1,0 +1,71 @@
+
+/* Estilos para el menú principal cuando tiene la clase bg */
+.nav-item.bg {
+    border-left: 5px solid #ff6c2f; /* Resaltar el borde izquierdo */
+    border-radius: 3px;
+    background-color: transparent; /* Sin fondo */
+    color: #ff6c2f; /* Cambiar el color del texto para que combine */
+    padding-left: 10px; /* Ajustar espacio para que no quede pegado al borde */
+}
+
+.nav-item.bg .nav-icon {
+    color: #ff6c2f; /* Cambiar el color del icono al mismo que el del borde */
+}
+
+/* Asegúrate de que los enlaces dentro de un nav-item con bg también cambien su color */
+.nav-item.bg .nav-link {
+    color: #e26f0a; /* Color de texto para enlaces */
+}
+
+/* Estilos para submenú: sin fondo ni cambios de texto */
+.sub-navbar-nav .sub-nav-link {
+    background-color: transparent; /* Fondo transparente */
+    color: #afadab; /* Mantener el color original */
+    transition: color 0.3s ease, background-color 0.3s ease; /* Suavizar la transición */
+}
+
+.sub-navbar-nav .sub-nav-link:hover {
+    background-color: #fff0ead5; /* Fondo sutil al pasar el mouse (puedes ajustarlo a tu preferencia) */
+    color: #e3a74c!important;
+     border-radius: 10px; /* Cambiar color del texto al pasar el mouse */
+}
+.sub-navbar-nav .sub-nav-link.selected {
+    background-color: #fff0ead5; /* Fondo sutil similar al hover */
+    color: #f17e4a !important; /* Cambiar color del texto al hacer clic */
+    border-radius: 10px;
+}
+/* Submenú con bg cuando está activo */
+.sub-navbar-nav .sub-nav-link.bg {
+    background-color: #e26f0a; /* Fondo similar al menú principal */
+    color: #ffffff; /* Texto claro para contraste */
+    border-radius: 5px; /* Opcional: bordes redondeados */
+}
+
+
+/* Se oculta el botón por defecto */
+.btn-close-sidebar {
+    display: none;
+  }
+  
+  /* Cuando la clase sidebar-enable está activa, mostramos el botón */
+  html.sidebar-enable .btn-close-sidebar {
+    display: block;
+  }
+
+  /* Asegúrate de que los menús principales no estén ocultos cuando un submenú está presente */
+.navbar-nav {
+    display: block; /* Asegura que el menú principal sea siempre visible */
+    visibility: visible; /* Asegura que la visibilidad no sea afectada */
+  }
+  
+  /* Verifica también que los submenús no estén afectando el flujo de otros elementos */
+  .collapse {
+    display: none; /* Los submenús deberían empezar ocultos */
+  }
+  
+  .collapse.show {
+    display: block; /* Solo los submenús con la clase 'show' se deben mostrar */
+  }
+
+  
+  
