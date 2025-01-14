@@ -21,4 +21,5 @@ import { MovimientosComponent } from './features/movimientos/movimientos.compone
 })
 export class AppComponent {
   title = 'Inventario';
+  currentYear: number = new Date().getFullYear();
 }

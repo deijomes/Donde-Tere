@@ -1,85 +1,82 @@
-<div class="row">
-    <div class="col-md-6 col-xl-3">
-        <div class="card">
-            <div class="card-body">                                
-                <div class="d-flex align-items-center gap-2 mb-3">
-                    <div class="avatar-md bg-primary bg-opacity-10 rounded">
-                        <iconify-icon icon="solar:users-group-two-rounded-bold-duotone" class="fs-32 text-primary avatar-title"></iconify-icon>
-                    </div>
-                    <div>
-                        <h4 class="mb-0">All Customers</h4>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center justify-content-between">
-                    <p class="text-muted fw-medium fs-22 mb-0">+22.63k</p>            
-                    <div>
-                        <span class="badge text-success bg-success-subtle fs-12"><i class="bx bx-up-arrow-alt"></i>34.4%</span>
-                    </div>        
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 col-xl-3">
-        <div class="card">
-            <div class="card-body">                                
-                <div class="d-flex align-items-center gap-2 mb-3">
-                    <div class="avatar-md bg-primary bg-opacity-10 rounded">
-                        <iconify-icon icon="solar:box-bold-duotone" class="fs-32 text-primary avatar-title"></iconify-icon>
-                    </div>
-                    <div>
-                        <h4 class="mb-0">Orders</h4>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center justify-content-between">
-                    <p class="text-muted fw-medium fs-22 mb-0">+4.5k</p>            
-                    <div>
-                        <span class="badge text-danger bg-danger-subtle fs-12"><i class="bx bx-down-arrow-alt"></i>8.1%</span>
-                    </div>        
-                </div>
-            </div>
-        </div>
+
+<div class="card">
+    <div class="card-body">
+         <div class="d-flex align-items-center justify-content-between">
+              <h4 class="card-title">
+                  Registro de producto
+              </h4>
+
+              
+         </div>
     </div>
 
-    <div class="col-md-6 col-xl-3">
-        <div class="card">
-            <div class="card-body">                                
-                <div class="d-flex align-items-center gap-2 mb-3">
-                    <div class="avatar-md bg-primary bg-opacity-10 rounded">
-                        <iconify-icon icon="solar:headphones-round-sound-bold-duotone" class="fs-32 text-primary avatar-title"></iconify-icon>
-                    </div>
-                    <div>
-                        <h4 class="mb-0">Services Request</h4>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center justify-content-between">
-                    <p class="text-muted fw-medium fs-22 mb-0">+1.03k</p>            
-                    <div>
-                        <span class="badge text-success bg-success-subtle fs-12"><i class="bx bx-up-arrow-alt"></i>12.6%</span>
-                    </div>        
-                </div>
+    <div class="paddin padding-lados">
+
+        <div class="row">
+            <div class="col-lg-6">
+                 <form>
+                      <div class="mb-3">
+                           <label for="product-name" class="form-label"> Nombre</label>
+                           <input type="text" id="product-name" class="form-control" placeholder="nombre encargado" value="Men Black Slim Fit T-shirt">
+                      </div>
+                 </form>
             </div>
-        </div>
+            <div class="col-lg-6">
+                <form>
+                    <label for="product-date" class="form-label">Fecha</label>
+                    <input type="date" id="product-date" class="form-control">
+                </form>
+                
+            </div>
+       </div>
+
     </div>
 
-    <div class="col-md-6 col-xl-3">
-        <div class="card">
-            <div class="card-body">                                
-                <div class="d-flex align-items-center gap-2 mb-3">
-                    <div class="avatar-md bg-primary bg-opacity-10 rounded">
-                        <iconify-icon icon="solar:bill-list-bold-duotone" class="fs-32 text-primary avatar-title"></iconify-icon>
-                    </div>
-                    <div>
-                        <h4 class="mb-0">Invoice &amp; Payment</h4>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center justify-content-between">
-                    <p class="text-muted fw-medium fs-22 mb-0">$38,908.00</p>            
-                    <div>
-                        <span class="badge text-success bg-success-subtle fs-12"><i class="bx bx-up-arrow-alt"></i>45.9%</span>
-                    </div>        
-                </div>
-            </div>
-        </div>
+  
+    <!-- end card body -->
+    <div class="table-responsive table-centered">
+         <table class="table mb-0">
+              <thead class="bg-light bg-opacity-50">
+                   <tr>
+                    <th>Artículo</th>
+                    <th>Código</th>
+                    <th>Cantidad Inicial</th>
+                    <th>Cantidad Mínima</th>
+                    <th>Precio de Venta Unitario</th>
+                    <th>Precio de Compra Unitario</th>
+                  </tr>
+                       
+              </thead>
+              <!-- end thead-->
+              <tbody >
+                <tr>
+                  <td><input type="text" class="form-control" id="articulo1" required></td>
+                  <td><input type="text" class="form-control" id="codigo1" required></td>
+                  <td><input type="text" class="form-control" id="cantidadInicial1" required></td>
+                  <td><input type="number" class="form-control" id="cantidadMinima1" required></td>
+                  <td><input type="number" class="form-control" id="precioVenta1" required></td>
+                  <td><input type="number" class="form-control" id="precioCompra1" required></td>
+                </tr>
+              </tbody>
+              <!-- end tbody -->
+         </table>
+         <!-- end table -->
+
+         
     </div>
 
+    <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between">
+            <a  class="btn btn-sm btn-soft-primary">
+                 Guardar producto
+           </a>
+        
+
+             
+        </div>
+   </div>
+  
+   
 </div>
+
+
