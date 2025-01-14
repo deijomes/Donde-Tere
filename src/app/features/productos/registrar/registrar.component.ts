@@ -1,11 +1,12 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { registroModel } from '../../../models/registroModel';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-registrar',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,CommonModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './registrar.component.html',
   styleUrls: ['./registrar.component.css']  // Corrección: Cambié `styleUrl` por `styleUrls`
@@ -14,6 +15,8 @@ export class RegistrarComponent implements OnInit {
 
   registro: registroModel;
   registroForm!: FormGroup;
+  formEnviado = false;
+
 
   constructor(private bf: FormBuilder) {
     this.registro = new registroModel();
@@ -22,6 +25,18 @@ export class RegistrarComponent implements OnInit {
   ngOnInit(): void {
     this.getform();  // Llamar a getform en ngOnInit
   }
+
+
+  nombreNovalido() {
+    return this.registroForm.get('articulo')?.invalid && (this.formEnviado || this.registroForm.get('codigo')?.touched);;
+  }
+
+  codigoNovalido() {
+    return this.registroForm.get('codigo')?.invalid &&(this.formEnviado || this.registroForm.get('codigo')?.touched);
+  }
+
+ 
+
 
   getform(): void {
     this.registroForm = this.bf.group({
@@ -35,8 +50,11 @@ export class RegistrarComponent implements OnInit {
   }
 
   guardar(): void {
+    this.formEnviado = true;
+
     if (this.registroForm.valid) {
       console.log('Formulario válido:', this.registroForm.value);
+      this.registroForm.reset()
       
     } else {
       console.log('Formulario inválido');

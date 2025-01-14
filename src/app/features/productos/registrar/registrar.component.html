@@ -13,7 +13,7 @@
 
                          <div class="container mt-3">
 
-                            <!-- <div class="row">
+                              <!-- <div class="row">
 
                                    <div class="col-lg-6">
                                         <div class="mb-3">
@@ -119,7 +119,7 @@
                                                   transform="rotate(3, 400, 400)"></path>
                                         </g>
                                    </svg>
-                              </div> --> 
+                              </div> -->
 
 
 
@@ -136,8 +136,12 @@
                     <div class="col-lg-4">
                          <div class="mb-3">
                               <label for="product-brand" class="form-label">Articulo</label>
-                              <input type="text" id="product-brand" formControlName="articulo" class="form-control"
-                                   placeholder="Brand Name">
+                              <input type="text" id="product-brand" formControlName="articulo"
+                                   [class.is-invalid]="nombreNovalido()" class="form-control"
+                                   placeholder="Nombre de producto">
+                              <div *ngIf="nombreNovalido()" class="">
+                                   El es obligatorio.
+                              </div>
                          </div>
                     </div>
 
@@ -146,7 +150,12 @@
                          <div class="mb-3">
                               <label for="product-weight" class="form-label">Codigo</label>
                               <input type="text" id="product-weight" formControlName="codigo"
-                                   class="form-control" placeholder="Nombre articulo">
+                              [class.is-invalid]="codigoNovalido()"
+                               class="form-control"
+                                   placeholder="Nombre articulo">
+                                   <div *ngIf="codigoNovalido()" class="">
+                                        El es obligatorio.
+                                   </div>
                          </div>
                     </div>
 
@@ -165,8 +174,8 @@
                     <div class="col-lg-4">
                          <div class="mb-3">
                               <label for="small-field" class="form-label">Cantidad mínima</label>
-                              <input type="number" id="small-field" formControlName="cantidadMinima" class="form-control"
-                                   placeholder="Cantidad mínima">
+                              <input type="number" id="small-field" formControlName="cantidadMinima"
+                                   class="form-control" placeholder="Cantidad mínima">
                          </div>
                     </div>
 
@@ -193,7 +202,7 @@
           <div class="p-3 bg-light mb-3 ">
                <div class="row justify-content-end g-2">
                     <div class="col-lg-2">
-                         <button type="submit" class="btn btn-primary w-100" >Guardar</button>
+                         <button type="submit" class="btn btn-primary w-100">Guardar</button>
                     </div>
                </div>
 

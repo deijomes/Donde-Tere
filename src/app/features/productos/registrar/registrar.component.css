@@ -70,3 +70,15 @@ input[type="number"] {
 .no-border-radius {
   border-radius: 4px !important; /* Elimina el borde redondeado */
 }
+
+.is-invalid {
+  border-color: orange; /* Borde naranja cuando es inválido */
+}
+
+.is-valid {
+  border-color: green; /* Borde verde cuando es válido */
+}
+
+.text-danger {
+  color: orange; /* Color naranja para el mensaje de error */
+}
