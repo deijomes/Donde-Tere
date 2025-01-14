@@ -70,6 +70,3 @@ input[type="number"] {
 .no-border-radius {
   border-radius: 4px !important; /* Elimina el borde redondeado */
 }
-.border{
-  border-radius: 3px !important;
-}
