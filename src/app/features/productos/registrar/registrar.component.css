@@ -82,3 +82,12 @@ input[type="number"] {
 .text-danger {
   color: orange; /* Color naranja para el mensaje de error */
 }
+.fondo{
+  background:#ff6d2fe3 !important;
+  border-radius: 3px;
+}
+
+.mi-color-letra{
+  color: white !important;
+}
+
