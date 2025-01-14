@@ -67,6 +67,9 @@ input[type="number"] {
     outline: none; /* Elimina el contorno azul estándar */
     box-shadow: 0 0 5px rgba(135, 48, 11, 0.09); /* Sombra más intensa al enfocar */
 }
-  
-
-  
+.no-border-radius {
+  border-radius: 4px !important; /* Elimina el borde redondeado */
+}
+.border{
+  border-radius: 3px !important;
+}
