@@ -7,7 +7,7 @@
      </div>
 
      <form [formGroup]="registroForm" (ngSubmit)="guardar()">
-         
+
 
           <!-- Resto del formulario sin clases de card -->
           <div class="container padding-lados">
@@ -30,12 +30,11 @@
                          <div class="mb-3">
                               <label for="product-weight" class="form-label">Codigo</label>
                               <input type="text" id="product-weight" formControlName="codigo"
-                              [class.is-invalid]="codigoNovalido()"
-                               class="form-control"
+                                   [class.is-invalid]="codigoNovalido()" class="form-control"
                                    placeholder="Nombre articulo">
-                                   <div *ngIf="codigoNovalido()" class="">
-                                        El es obligatorio.
-                                   </div>
+                              <div *ngIf="codigoNovalido()" class="">
+                                   El es obligatorio.
+                              </div>
                          </div>
                     </div>
 
@@ -90,5 +89,8 @@
      </form>
 
 
+     <!-- Tabla para mostrar los productos -->
+</div>
 
-     <!-- Botón de Guardar -->
+
+

@@ -24,13 +24,6 @@
 
 
 
-               <!-- Productos -->
-
-
-               <!-- Productos -->
-
-
-
                <!-- Inventario -->
                <li class="nav-item" [ngClass]="{'bg': activeMenu === 'inventario'}"
                     (click)="setActiveMenu('inventario')">
@@ -41,6 +34,9 @@
                          <span class="nav-text"> Inventario</span>
                     </a>
                </li>
+
+
+
                <li class="nav-item" [ngClass]="{
              'bg': activeMenu === 'productos',
              'active': activeMenu === 'productos',
@@ -89,7 +85,7 @@
                          <span class="nav-icon">
                               <iconify-icon icon="solar:card-transfer-bold-duotone"></iconify-icon>
                          </span>
-                         <span class="nav-text"> movimientos</span>
+                         <span class="nav-text"> Movimientos</span>
                     </a>
                </li>
 
@@ -99,7 +95,7 @@
                          <span class="nav-icon">
                               <iconify-icon icon="solar:cash-out-bold-duotone"></iconify-icon>
                          </span>
-                         <span class="nav-text"> ventas</span>
+                         <span class="nav-text"> Ventas</span>
                     </a>
                </li>
 

@@ -2,6 +2,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { registroModel } from '../../../models/registroModel';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ProductoService } from '../../../services/producto.service';
 
 @Component({
   selector: 'app-registrar',
@@ -16,9 +17,11 @@ export class RegistrarComponent implements OnInit {
   registro: registroModel;
   registroForm!: FormGroup;
   formEnviado = false;
+  productos: registroModel[] = []
+  mostrarTabla: boolean = false;
 
 
-  constructor(private bf: FormBuilder) {
+  constructor(private bf: FormBuilder, private productoService: ProductoService) {
     this.registro = new registroModel();
   }
 
@@ -53,13 +56,14 @@ export class RegistrarComponent implements OnInit {
     this.formEnviado = true;
 
     if (this.registroForm.valid) {
-      console.log('Formulario válido:', this.registroForm.value);
-      this.registroForm.reset()
-      
+      const nuevoProducto: registroModel = { ...this.registroForm.value };
+      this.productoService.agregarProducto(nuevoProducto);  // Usamos el servicio para agregar el producto
+      console.log('Producto agregado:', nuevoProducto);
+      this.registroForm.reset();
     } else {
       console.log('Formulario inválido');
-      
     }
+  
   }
 
 }
