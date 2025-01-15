@@ -1,12 +1,17 @@
 
 /* Estilos para el menú principal cuando tiene la clase bg */
-.nav-item.bg {
-    border-left: 5px solid #ff6c2f; /* Resaltar el borde izquierdo */
-    border-radius: 3px;
-    background-color: transparent; /* Sin fondo */
-    color: #ff6c2f; /* Cambiar el color del texto para que combine */
-    padding-left: 10px; /* Ajustar espacio para que no quede pegado al borde */
+/* Clase para el borde izquierdo */
+.border-left {
+  border-left: 3px solid #ff6c2f; /* Cambia el color al que desees */
+  padding-left: 8px; /* Asegura que el texto no se pegue al borde */
+  transition: border-color 0.3s ease; /* Animación suave al cambiar el borde */
 }
+
+/* Opcional: cambia el color del borde cuando el menú está activo */
+.nav-item.active .border-left {
+  border-left-color: #0056b3; /* Color más oscuro para el activo */
+}
+
 
 .nav-item.bg .nav-icon {
     color: #ff6c2f; /* Cambiar el color del icono al mismo que el del borde */
