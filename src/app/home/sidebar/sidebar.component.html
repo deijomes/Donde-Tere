@@ -35,9 +35,19 @@
                     </a>
                </li>
 
+               <li class="nav-item" [ngClass]="{'bg': activeMenu === 'productos'}"
+               (click)="setActiveMenu('inventario')">
+               <a class="nav-link" [routerLink]="['productos']" routerLinkActive="active">
+                    <span class="nav-icon">
+                         <iconify-icon icon="solar:box-bold-duotone"></iconify-icon>
+                    </span>
+                    <span class="nav-text"> Productos</span>
+               </a>
+          </li>
 
 
-               <li class="nav-item" [ngClass]="{
+
+           <!-- <li class="nav-item" [ngClass]="{
              'bg': activeMenu === 'productos',
              'active': activeMenu === 'productos',
              'border-left': activeMenu === 'productos' && selectedSubMenu
@@ -69,7 +79,7 @@
                          </ul>
                     </div>
                </li>
-
+   -->    
 
 
 

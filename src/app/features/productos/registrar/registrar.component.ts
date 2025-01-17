@@ -3,6 +3,7 @@ import { registroModel } from '../../../models/registroModel';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ProductoService } from '../../../services/producto.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registrar',
@@ -18,11 +19,13 @@ export class RegistrarComponent implements OnInit {
   registroForm!: FormGroup;
   formEnviado = false;
   productos: registroModel[] = []
-  mostrarTabla: boolean = false;
+ 
 
 
-  constructor(private bf: FormBuilder, private productoService: ProductoService) {
-    this.registro = new registroModel();
+  constructor(private bf: FormBuilder, private productoService: ProductoService, private router: Router) {
+    this.registro = new registroModel(
+      
+    );
   }
 
   ngOnInit(): void {
@@ -58,6 +61,8 @@ export class RegistrarComponent implements OnInit {
     if (this.registroForm.valid) {
       const nuevoProducto: registroModel = { ...this.registroForm.value };
       this.productoService.agregarProducto(nuevoProducto);  // Usamos el servicio para agregar el producto
+      this.router.navigateByUrl('productos');
+
       console.log('Producto agregado:', nuevoProducto);
       this.registroForm.reset();
     } else {
