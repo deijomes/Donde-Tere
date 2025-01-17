@@ -1,0 +1,93 @@
+.form-control {
+   
+  
+    background: #eae8e8;
+    border-radius: 0.375rem; /* Bordes ligeramente redondeados */
+    padding: 0.5rem 1rem; /* Espaciado interno cómodo */
+    font-size: 1rem; /* Tamaño de texto estándar */
+   
+    transition: box-shadow 0.3s ease, border-color 0.3s ease; /* Animaciones suaves */
+}
+
+.form-control:focus {
+    border-color: #ff6d2f74; /* Resalta el borde al enfocar */
+    outline: none; /* Elimina el contorno azul estándar */
+    box-shadow: 0 0 5px rgba(135, 48, 11, 0.09); /* Sombra más intensa al enfocar */
+}
+
+/* Fondo para toda la fila */
+.custom-bg td {
+    background-color: rgba(135, 48, 11, 0.1); /* Puedes cambiar este color */
+}
+
+/* Fondo cuando la celda está activa */
+.custom-bg td input:focus {
+    background-color: rgba(135, 48, 11, 0.3); /* Fondo más oscuro cuando la celda es activada */
+}
+
+
+/* Ocultar las flechas de selección en campos numéricos */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Para Firefox */
+}
+
+.padding-lados {
+    padding-left: 25px;
+    padding-right: 20px;
+    padding: auto;
+  }
+
+  @media (max-width: 768px) {
+    #product-date {
+      margin-bottom: 20px; /* Añade espacio debajo del campo de fecha */
+    }
+
+    .table-responsive {
+      margin-top: 20px; /* Añade espacio entre la tabla y el contenido superior */
+    }
+  }
+
+  .form-control {
+    border: 1px solid #ccc;
+    background-color: rgba(135, 48, 11, 0.05);
+    color: #333;
+    border-radius: 0.375rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Transición suave */
+}
+  .form-control:focus {
+    border-color: #ff6d2f74; /* Resalta el borde al enfocar */
+    outline: none; /* Elimina el contorno azul estándar */
+    box-shadow: 0 0 5px rgba(135, 48, 11, 0.09); /* Sombra más intensa al enfocar */
+}
+.no-border-radius {
+  border-radius: 4px !important; /* Elimina el borde redondeado */
+}
+
+.is-invalid {
+  border-color: orange; /* Borde naranja cuando es inválido */
+}
+
+.is-valid {
+  border-color: green; /* Borde verde cuando es válido */
+}
+
+.text-danger {
+  color: orange; /* Color naranja para el mensaje de error */
+}
+.fondo{
+  background:#ff6d2fe3 !important;
+  border-radius: 3px;
+}
+
+.mi-color-letra{
+  color: white !important;
+}
+

@@ -12,5 +12,12 @@
 .mi-color-letra{
     color: white !important;
   }
-  
+  .custom-btn:hover {
+    background-color: #ff6d2fe3; /* Color de fondo al hacer hover */
+    color: white; /* Color del texto o icono al hacer hover */
+  }
 
+  .fondo, .no-padding {
+    margin: 0;
+    padding: 0;
+}

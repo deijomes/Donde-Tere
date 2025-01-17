@@ -1,0 +1,28 @@
+.custom-header {
+    background-color: #ff6d2fe3; 
+  
+  }
+.color-text{
+    color: white;
+}
+
+.letra{
+    color:#313b5e ;
+    font-weight: bold;
+  }
+
+.letrapro{
+    color:#313b5ed6 ;
+    font-weight: bold;
+}
+
+.fondo{
+    border-radius: 3px;
+}
+
+.fondo, .no-padding {
+    margin: 0;
+    padding: 0;
+}
+
+/* Elimina el margen inferior del contenedor de la cabecera */

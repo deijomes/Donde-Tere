@@ -15,13 +15,27 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 export class InventarioComponent implements OnInit{
 
   productos: registroModel[] = [];
+  tabla:boolean = true;
+  mostrarTabla : boolean = true
 
-  constructor(private productoService: ProductoService , private router: Router) {}
+  constructor(private productoService: ProductoService , private router: Router) {
+
+   
+  }
 
   ngOnInit(): void {
+
+    this.verificarRuta();
+
+    // Nos suscribimos a cambios en las rutas para actualizar la bandera
+    this.router.events.subscribe(() => {
+      this.verificarRuta();
+    });
+
     // Nos suscribimos al observable de productos para actualizar la vista automáticamente
     this.productoService.productos$.subscribe((productos) => {
       this.productos = productos;
+      
     });
   }
 
@@ -29,9 +43,30 @@ export class InventarioComponent implements OnInit{
     this.productoService.eliminarProducto(codigo);  // Llamar al servicio para eliminar el producto
   }
 
+  actualizar(codigo: string | number): void {
+    const codigoString = codigo.toString(); // Convertir a cadena
+    console.log('Código recibido como string:', codigoString);
+    this.router.navigate([`productos/actualizar/${codigoString}`]);
+  }
   registro() {
     this.router.navigateByUrl('productos/registrar');
+   
   }
+  verificarRuta(): void {
+    
+    const rutaActual = this.router.url;
+
+    
+    const registrarActivo = rutaActual.startsWith('/productos/registrar');
+
+   
+    const actualizarActivo = rutaActual.startsWith('/productos/actualizar/');
+
+   
+    this.mostrarTabla = !(registrarActivo || actualizarActivo);
+  }
+
+  
 
   
 

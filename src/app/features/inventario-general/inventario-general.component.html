@@ -1,1 +1,54 @@
-<p>inventario-general works!</p>
+
+
+<div class="card">
+    <div class="p-3 bg-light custom-header mb-0 fondo">
+        <div class="d-flex align-items-center justify-content-between">
+            <h4 class="card-title mi-color-letra"> General Inventario</h4>
+        </div>
+    </div>
+
+    <div class="no-padding">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0 table-hover table-centered">
+                <thead class="custom-header">
+                    <tr>
+                        <th class="text-center color-text">Código</th>
+                        <th class="text-center color-text">Artículo</th>
+                        <th class="text-center color-text">Cantidad Inicial</th>
+                        <th class="text-center color-text">Cantidad Mínima</th>
+                        <th class="text-center color-text">Entradas</th>
+                        <th class="text-center color-text">Salidas</th>
+                        <th class="text-center color-text">Cantidad Actual</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let producto of productos">
+                        <td class="text-center letra">{{ producto.codigo }}</td>
+                        <td class="text-center letrapro">{{ producto.producto }}</td>
+                        <td class="text-center">{{ producto.cantidadInicial }}</td>
+                        <td class="text-center">{{ producto.cantidadMinima }}</td>
+                        <td class="text-center">{{ producto.entrada }}</td>
+                        <td class="text-center">{{ producto.salida }}</td>
+                        <td class="text-center">{{ producto.cantidadActual }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card-footer border-top">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end mb-0">
+                <li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>
+                <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
+                <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+
+

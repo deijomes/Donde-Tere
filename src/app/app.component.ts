@@ -8,13 +8,14 @@ import { VentaComponent } from './features/venta/venta.component';
 import { VentasTotalesComponent } from './features/ventas-totales/ventas-totales.component';
 import { InventarioGeneralComponent } from './features/inventario-general/inventario-general.component';
 import { MovimientosComponent } from './features/movimientos/movimientos.component';
+import { ActualizarComponent } from './features/productos/actualizar/actualizar.component';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, SidebarComponent,NavbarComponent, RegistrarComponent, InventarioComponent, 
-    VentaComponent,VentasTotalesComponent, InventarioGeneralComponent, MovimientosComponent],
+    VentaComponent,VentasTotalesComponent, InventarioGeneralComponent, MovimientosComponent, ActualizarComponent],
    schemas: [CUSTOM_ELEMENTS_SCHEMA], // Añade esta línea
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

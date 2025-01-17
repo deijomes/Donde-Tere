@@ -26,10 +26,22 @@ export class ProductoService {
     this.productosSource.next(productosFiltrados);  // Emitir la nueva lista sin el producto eliminado
   }
 
-  editarProducto(codigo: string, productoEditado: registroModel): void {
-    const productos = this.productosSubject.value.map((producto: { codigo: string; }) =>
-      producto.codigo === codigo ? { ...producto, ...productoEditado } : producto
-    );
-    this.productosSubject.next(productos);  // Emitir la nueva lista con el producto editado
+  obtenerProducto(codigo: string): registroModel | undefined {
+    const productos = this.productosSource.getValue();
+    return productos.find(producto => producto.codigo === codigo);
   }
+
+  editarProducto(codigo: string, productoEditado: registroModel): void {
+    const productos = this.productosSource.getValue();
+    const indice = productos.findIndex(producto => producto.codigo === codigo);
+
+    if (indice === -1) {
+      console.error(`Producto con código ${codigo} no encontrado.`);
+      return;
+    }
+
+    productos[indice] = { ...productos[indice], ...productoEditado };
+    this.productosSource.next([...productos]); // Emitir nueva lista
+  }
+  
 }
