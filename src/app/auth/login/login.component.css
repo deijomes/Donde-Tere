@@ -1,5 +1,18 @@
-.logo{
-    height: 200px;
+.floating-box {
+    background-color: #ffffff; /* Fondo blanco */
+    box-shadow: -1px 0 2px rgba(255, 165, 0, 0.404); /* Sombra en el lado izquierdo con naranja (rgba) */
+ 
+    border-radius: 10px; /* Bordes redondeados */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.floating-box:hover {
+    transform: translateY(-5px); /* Pequeño movimiento hacia arriba al pasar el cursor */
+    box-shadow: 4px 0 6px rgba(0, 0, 0, 0.1); /* Sombra sutil solo en el lado derecho */
 
+
+}
+
+.floating-box {
+    margin-top: 20px; /* Ajusta el valor según lo necesites */
+}
