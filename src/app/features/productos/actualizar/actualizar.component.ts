@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { registroModel } from '../../../models/registroModel';
 import { ProductoService } from '../../../services/producto.service';
 import { CommonModule } from '@angular/common';
@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-actualizar',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './actualizar.component.html',
   styleUrls: ['./actualizar.component.css']
 })
@@ -83,6 +83,10 @@ export class ActualizarComponent implements OnInit {
     } else {
       console.log('Formulario inválido');
     }
+  }
+
+  cancelar(): void {
+    this.router.navigate(['/productos']);
   }
 
  

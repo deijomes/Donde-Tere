@@ -71,4 +71,9 @@ export class RegistrarComponent implements OnInit {
   
   }
 
+  
+  cancelar(): void {
+    this.router.navigate(['/productos']);
+  }
+
 }

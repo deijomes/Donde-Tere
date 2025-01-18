@@ -1,7 +1,7 @@
-<div class="wrapper">
+<div  class="wrapper">
      <!-- ========== Topbar Start ========== -->
-     <header class="topbar">
-          <div class="container-fluid">
+     <header *ngIf="!isLoginRoute()" class="topbar">
+          <div  class="container-fluid">
                <app-navbar></app-navbar>
           </div>
      </header>
@@ -11,7 +11,7 @@
      <!-- ========== App Menu Start ========== -->
 
 
-     <app-sidebar></app-sidebar>
+     <app-sidebar *ngIf="!isLoginRoute()"></app-sidebar>
 
 
      <!-- ========== App Menu End ========== -->
@@ -33,7 +33,7 @@
 
 
           <!-- src/app/app.component.html (o el archivo HTML de tu pie de página) -->
-          <footer class="footer">
+          <footer *ngIf="!isLoginRoute()" class="footer">
                <div class="container-fluid">
                     <div class="row">
                          <div class="col-12 text-center">

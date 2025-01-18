@@ -6,6 +6,7 @@ import { VentasTotalesComponent } from './features/ventas-totales/ventas-totales
 import { InventarioGeneralComponent } from './features/inventario-general/inventario-general.component';
 import { MovimientosComponent } from './features/movimientos/movimientos.component';
 import { PRODUCTOS_ROUTES } from './features/productos/registro.routes';
+import { LoginComponent } from './auth/login/login.component';
 
 // export const routes: Routes = [
 //   { path: '', redirectTo: 'inventarioo', pathMatch: 'full' },
@@ -43,5 +44,7 @@ export const routes: Routes = [
     { path: 'movimientos', component: MovimientosComponent, },
     { path: 'ventas', component: VentaComponent, },
     { path: 'ventastotales', component: VentasTotalesComponent, },
+    { path: 'login', component: LoginComponent },
     { path: '**', pathMatch: 'full', redirectTo: 'inventarioo' },
+    { path: '**', redirectTo: '/login' }, // Página por defecto
 ];
