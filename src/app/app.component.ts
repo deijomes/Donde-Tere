@@ -11,6 +11,7 @@ import { MovimientosComponent } from './features/movimientos/movimientos.compone
 import { ActualizarComponent } from './features/productos/actualizar/actualizar.component';
 import { LoginComponent } from './auth/login/login.component';
 import { CommonModule } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
 
 
 @Component({
@@ -18,7 +19,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [RouterOutlet, SidebarComponent, NavbarComponent, RegistrarComponent, InventarioComponent,
     VentaComponent, VentasTotalesComponent, InventarioGeneralComponent, MovimientosComponent,
-    ActualizarComponent, LoginComponent, CommonModule],
+    ActualizarComponent, LoginComponent, CommonModule,  MatInputModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], // Añade esta línea
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

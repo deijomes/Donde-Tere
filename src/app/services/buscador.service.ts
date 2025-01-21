@@ -30,7 +30,7 @@ export class BuscadorService {
     return this.productos;
   }
 
- 
+  
   buscarProductos(termino: string): registroModel[] {
     if (!termino) {
       return this.productos; 

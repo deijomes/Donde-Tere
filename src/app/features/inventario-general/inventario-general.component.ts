@@ -30,11 +30,11 @@ export class InventarioGeneralComponent implements OnInit {
       this.productosFiltrados = this.productos;
     
       this.servicio.terminoBusqueda$.subscribe((termino) => {
-        console.log('Término recibido:', termino); // Verificar el término
+        console.log('Término recibido:', termino); 
         if (termino) {
           this.BusquedaActiva = true;
           this.productosFiltrados = this.servicio.buscarProductos(termino);
-          console.log('Productos filtrados:', this.productosFiltrados); // Verificar resultados
+          console.log('Productos filtrados:', this.productosFiltrados); 
         } else {
           this.BusquedaActiva = false;
           this.productosFiltrados = this.productos;

@@ -30,14 +30,20 @@
                 
               }
             ],
-            "styles": [
-              "src/styles.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "public/assets/css/vendor.min.css",
-              "public/assets/css/icons.min.css",
-              "public/assets/css/app.min.css"
+            "styles": [   "node_modules/select2/dist/css/select2.min.css",
+                         "src/styles.css",
+                         "node_modules/bootstrap/dist/css/bootstrap.min.css",
+                          "node_modules/@ng-select/ng-select/themes/default.theme.css",
+              
+              
+                           "public/assets/css/vendor.min.css",
+                           "public/assets/css/icons.min.css",
+                           "public/assets/css/app.min.css",
+                           "src/styles.css"
+             
             ],
-            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+            "scripts": [ "node_modules/select2/dist/js/select2.min.js",
+                       "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
                          "node_modules/@iconify/iconify/dist/iconify.min.js",
                         "public/assets/js/config.js",
                          "public/assets/js/vendor.js",
@@ -46,6 +52,7 @@
                         "public/assets/vendor/jsvectormap/maps/world-merc.js",
                         "public/assets/vendor/jsvectormap/maps/world.js",
                         "public/assets/js/pages/dashboard.js"
+                        
                       ]
           },
           "configurations": {
@@ -104,14 +111,21 @@
             ],
 
             
-            "styles": [
-              "src/styles.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "public/assets/css/vendor.min.css",
-              "public/assets/css/icons.min.css",
-              "public/assets/css/app.min.css"
+            "styles": [   
+                        "src/styles.css",
+                        "node_modules/bootstrap/dist/css/bootstrap.min.css",
+                        "node_modules/@ng-select/ng-select/themes/default.theme.css",
+            
+             
+                        "public/assets/css/vendor.min.css",
+                        "public/assets/css/icons.min.css",
+                        "public/assets/css/app.min.css"
+              
+             
             ],
-            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+            "scripts": [  
+                        "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+                       
                          "node_modules/@iconify/iconify/dist/iconify.min.js",
                         "public/assets/js/config.js",
                          "public/assets/js/vendor.js",
@@ -119,7 +133,8 @@
                         "public/assets/vendor/jsvectormap/js/jsvectormap.min.js",
                         "public/assets/vendor/jsvectormap/maps/world-merc.js",
                         "public/assets/vendor/jsvectormap/maps/world.js",
-                        "public/assets/js/pages/dashboard.js"]
+                        "public/assets/js/pages/dashboard.js" 
+                        ]
           }
         }
       }
