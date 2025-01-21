@@ -1,4 +1,5 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, Output } from '@angular/core';
+import { BuscadorService } from '../../services/buscador.service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,6 +11,27 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 })
 export class NavbarComponent {
   configSize: string = 'sm-hover';
+
+  constructor(private buscadorService:BuscadorService){
+
+
+  }
+  
+
+
+
+  onSearch(event: Event): void {
+    const inputValue = (event.target as HTMLInputElement).value;
+    this.buscadorService.setTerminoBusqueda(inputValue); // Notifica al servicio
+  }
+
+
+
+
+
+
+
+
   toggleMenuSize(): void {
     const htmlElement = document.documentElement; // Accede al elemento <html>
     const bodyElement = document.body; // Accede al elemento <body>

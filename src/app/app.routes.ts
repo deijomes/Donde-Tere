@@ -46,5 +46,5 @@ export const routes: Routes = [
     { path: 'ventastotales', component: VentasTotalesComponent, },
     { path: 'login', component: LoginComponent },
     { path: '**', pathMatch: 'full', redirectTo: 'inventarioo' },
-    { path: '**', redirectTo: '/login' }, // Página por defecto
+   
 ];
