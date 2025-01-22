@@ -89,6 +89,7 @@ export class MovimientosComponent implements OnInit {
       codigo: [null],
       articulo: [{ value: '', disabled: false }],
       movimiento: ['entrada'], // Valor predeterminado
+      fecharegistro: ['',Validators.required],
       cantidad: ['', Validators.required],
       precioUnitario: ['', Validators.required],
       totalTransaccion: ['', Validators.required],
@@ -102,6 +103,7 @@ export class MovimientosComponent implements OnInit {
       codigo: [null],
       articulo: [{ value: '', disabled: false }],
       movimiento: ['salida'], // Valor predeterminado
+      fecha:['',Validators.required],
       cantidad: ['', [Validators.required, ]],
       precioUnitario: ['', [Validators.required]],
       totalTransaccion: ['', [Validators.required]],
@@ -118,6 +120,7 @@ export class MovimientosComponent implements OnInit {
       codigo: null,
       articulo: '',
       movimiento: 'entrada',
+      fecharegistro:'',
       cantidad: '',
       precioUnitario: '',
       totalTransaccion: '',
@@ -134,6 +137,7 @@ export class MovimientosComponent implements OnInit {
       codigo: null,
       articulo: '',
       movimiento: 'salida',
+      fecha:'',
       cantidad: '',
       precioUnitario: '',
       totalTransaccion: '',
