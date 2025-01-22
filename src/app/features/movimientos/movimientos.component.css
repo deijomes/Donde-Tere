@@ -92,3 +92,49 @@ input[type="number"] {
 }
 
 
+
+.ng-select.ng-select-single .ng-select-container{
+  height: 42px !important;
+}
+
+
+.ng-select.ng-select-focused:not(.ng-select-opened) > .ng-select-container {
+  border-color: orange !important; /* Cambiar el color del borde a naranja */
+  box-shadow: none !important; 
+  background-color: #f9f2f2da; /* Fondo claro */
+}
+
+.ng-select .ng-select-container .ng-value-container .ng-placeholder{
+  font-size: 16px;
+  padding-left: 8px !important;
+  color: #333333c2;
+}
+
+.progress, .progress-stacked {
+  --bs-progress-height: 0.75rem;
+  --bs-progress-font-size: 0.65625rem;
+  --bs-progress-bg: rgba(255, 166, 0, 0.592);
+  --bs-progress-border-radius: var(--bs-border-radius);
+  --bs-progress-box-shadow: var(--bs-box-shadow-inset);
+  --bs-progress-bar-color: #ffffff;
+  --bs-progress-bar-bg: #ff6c2f;
+  --bs-progress-bar-transition: width 0.6s ease;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex
+;
+ 
+}
+
+.selectable {
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.selectable.active {
+  background-color: #ff6d2fe3;
+ 
+}
+
+
+
+

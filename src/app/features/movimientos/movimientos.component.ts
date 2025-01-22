@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
-import {  Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
-import {FormControl, ReactiveFormsModule} from '@angular/forms';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { BuscadorService } from '../../services/buscador.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 
-import { Observable } from 'rxjs';
 
 
 
@@ -13,33 +12,38 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-movimientos',
   standalone: true,
-  imports: [ ReactiveFormsModule ,CommonModule, NgSelectModule, ],
-   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [ReactiveFormsModule, CommonModule, NgSelectModule,],
+
   templateUrl: './movimientos.component.html',
-  styleUrls: ['./movimientos.component.css'], // Cambié a "styleUrls" (plural) porque estaba incorrecto
+  styleUrls: ['./movimientos.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class MovimientosComponent implements OnInit {
 
- listaproducto: any[]=[]
- filteredProductos: any[] = [];
- searchTerm: string = '';
- isLoading: boolean = false; 
+  selectedItem: string = 'Entradas';
 
 
 
+  listaproducto: any[] = []
+  filteredProductos: any[] = [];
+  searchTerm: string = '';
+  isLoading: boolean = false;
 
 
- 
- 
-  constructor( private serviceproduct: BuscadorService){
+  entradaForm!: FormGroup
+  salidaForm!: FormGroup
 
-    
-  }
 
-  
+  constructor(private serviceproduct: BuscadorService, private bf: FormBuilder) { }
 
 
   ngOnInit(): void {
+
+
+    this.getform();
+
+
+    this.selectItem(this.selectedItem);
     // Obtiene la lista de productos desde el servicio
     this.isLoading = true;
     this.listaproducto = this.serviceproduct.getProductos();
@@ -50,7 +54,75 @@ export class MovimientosComponent implements OnInit {
     this.isLoading = false;
 
 
-   
+    this.entradaForm.get('codigo')?.valueChanges.subscribe((codigo) => {
+      const producto = this.listaproducto.find((p) => p.codigo === codigo);
+      if (producto) {
+        this.entradaForm.get('articulo')?.setValue(producto.articulo);
+      } else {
+        this.entradaForm.get('articulo')?.setValue('');
+      }
+    });
+
+
+
+  }
+
+  selectItem(item: string) {
+    this.selectedItem = item;
+    console.log('Item seleccionado:', this.selectedItem); // Verifica el valor
+
+    if (this.entradaForm) {
+      if (this.selectedItem === 'Entradas') {
+        this.setMovimientoValue('entrada');
+      } else if (this.selectedItem === 'Salidas') {
+        this.setMovimientoValue('salida');
+      }
+    }
+  }
+
+  // Función que actualiza el valor de 'movimiento' en el formulario
+  setMovimientoValue(value: string) {
+    console.log('Actualizando movimiento a: ', value); // Verificar el valor
+    this.entradaForm.patchValue({
+      movimiento: value
+    });
+  }
+
+
+
+
+  getform() {
+
+    this.entradaForm = this.bf.group({
+      codigo: [null],
+      articulo: [{ value: '', disabled: false }],
+      movimiento: [null],
+      cantidad: ['', Validators.required],
+      precioUnitario: ['', Validators.required],
+      totalTransaccion: ['', Validators.required]
+
+    })
+
+  }
+
+  getformsalida() {
+
+    this.entradaForm = this.bf.group({
+      codigo: [null],
+      articulo: [{ value: '', disabled: false }],
+      movimiento: [null],
+      cantidad: ['', Validators.required],
+      precioUnitario: ['', Validators.required],
+      totalTransaccion: ['', Validators.required]
+
+    })
+
+  }
+
+  onSubmit(): void {
+    console.log(this.entradaForm.value);
+    this.entradaForm.reset();
+
   }
 
   // Filtra los productos según el término de búsqueda
@@ -65,9 +137,9 @@ export class MovimientosComponent implements OnInit {
     console.log('Producto seleccionado:', event);
   }
 
- 
 
-  
 
-  
+
+
+
 }
