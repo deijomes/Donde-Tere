@@ -50,8 +50,8 @@
                 <div class="col-lg-4">
                     <div class="mb-3">
                         <label for="product-cantidad-inicial" class="form-label">Movimiento</label>
-                        <input type="number" id="product-cantidad-inicial" class="form-control"
-                            formControlName="movimiento" placeholder="Cantidad inicial" />
+                        <input type="text" id="product-cantidad-inicial" class="form-control"
+                            formControlName="movimiento" placeholder="Cantidad inicial"  readonly />
                     </div>
                 </div>
             </div>
@@ -103,7 +103,7 @@
         </div>
     </div>
 
-    <form [formGroup]="entradaForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="salidadForm" (ngSubmit)="onSubmitt()">
         <div class="container padding-lados">
             <div class="row mt-3">
                 <div class="col-lg-4">
@@ -129,7 +129,7 @@
                     <div class="mb-3">
                         <label for="product-cantidad-inicial" class="form-label">Movimiento</label>
                         <input type="text" id="product-cantidad-inicial" class="form-control"
-                            formControlName="movimiento" placeholder="Cantidad inicial"  />
+                            formControlName="movimiento" placeholder="Cantidad inicial"  readonly />
                     </div>
                 </div>
             </div>
@@ -164,7 +164,7 @@
         <div class="p-3 bg-light mb-3">
             <div class="row justify-content-end g-2">
                 <div class="col-lg-2">
-                    <button type="submit" class="btn btn-primary w-100" [disabled]="entradaForm.invalid">
+                    <button type="submit" class="btn btn-primary w-100" [disabled]="salidadForm.invalid">
                         Guardar
                     </button>
                 </div>

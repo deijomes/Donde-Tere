@@ -113,7 +113,7 @@ input[type="number"] {
 .progress, .progress-stacked {
   --bs-progress-height: 0.75rem;
   --bs-progress-font-size: 0.65625rem;
-  --bs-progress-bg: rgba(255, 166, 0, 0.592);
+  --bs-progress-bg: rgba(255, 166, 0, 0.221);
   --bs-progress-border-radius: var(--bs-border-radius);
   --bs-progress-box-shadow: var(--bs-box-shadow-inset);
   --bs-progress-bar-color: #ffffff;

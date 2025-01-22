@@ -31,99 +31,117 @@ export class MovimientosComponent implements OnInit {
 
 
   entradaForm!: FormGroup
-  salidaForm!: FormGroup
+  salidadForm!: FormGroup
 
 
   constructor(private serviceproduct: BuscadorService, private bf: FormBuilder) { }
 
-
   ngOnInit(): void {
-
-
-    this.getform();
-
-
+    this.getform(); // Inicializa el formulario de entrada
+    this.getformsalida(); // Inicializa el formulario de salida
+  
     this.selectItem(this.selectedItem);
+  
     // Obtiene la lista de productos desde el servicio
     this.isLoading = true;
     this.listaproducto = this.serviceproduct.getProductos();
-    console.log('listado', this.listaproducto);
-
+    console.log('Listado de productos:', this.listaproducto);
+  
     // Inicializa la lista filtrada con todos los productos
     this.filteredProductos = this.listaproducto;
     this.isLoading = false;
-
-
+  
+    // Maneja los cambios en el campo "codigo" del formulario de entrada
     this.entradaForm.get('codigo')?.valueChanges.subscribe((codigo) => {
       const producto = this.listaproducto.find((p) => p.codigo === codigo);
       if (producto) {
-        this.entradaForm.get('articulo')?.setValue(producto.articulo);
+        this.entradaForm.patchValue({
+          articulo: producto.articulo,
+        });
       } else {
-        this.entradaForm.get('articulo')?.setValue('');
+        this.entradaForm.patchValue({
+          articulo: '',
+        });
       }
     });
-
-
-
+  
+    // Maneja los cambios en el campo "codigo" del formulario de salida
+    this.salidadForm.get('codigo')?.valueChanges.subscribe((codigo) => {
+      const producto = this.listaproducto.find((p) => p.codigo === codigo);
+      if (producto) {
+        this.salidadForm.patchValue({
+          articulo: producto.articulo,
+        });
+      } else {
+        this.salidadForm.patchValue({
+          articulo: '',
+        });
+      }
+    });
   }
-
-  selectItem(item: string) {
+  
+  selectItem(item: string): void {
     this.selectedItem = item;
-    console.log('Item seleccionado:', this.selectedItem); // Verifica el valor
-
-    if (this.entradaForm) {
-      if (this.selectedItem === 'Entradas') {
-        this.setMovimientoValue('entrada');
-      } else if (this.selectedItem === 'Salidas') {
-        this.setMovimientoValue('salida');
-      }
-    }
   }
-
-  // Función que actualiza el valor de 'movimiento' en el formulario
-  setMovimientoValue(value: string) {
-    console.log('Actualizando movimiento a: ', value); // Verificar el valor
-    this.entradaForm.patchValue({
-      movimiento: value
+  
+  getform(): void {
+    this.entradaForm = this.bf.group({
+      codigo: [null],
+      articulo: [{ value: '', disabled: false }],
+      movimiento: ['entrada'], // Valor predeterminado
+      cantidad: ['', Validators.required],
+      precioUnitario: ['', Validators.required],
+      totalTransaccion: ['', Validators.required],
     });
+  
+    console.log('Formulario de entrada inicializado:', this.entradaForm.value);
   }
-
-
-
-
-  getform() {
-
-    this.entradaForm = this.bf.group({
+  
+  getformsalida(): void {
+    this.salidadForm = this.bf.group({
       codigo: [null],
       articulo: [{ value: '', disabled: false }],
-      movimiento: [null],
-      cantidad: ['', Validators.required],
-      precioUnitario: ['', Validators.required],
-      totalTransaccion: ['', Validators.required]
-
-    })
-
+      movimiento: ['salida'], // Valor predeterminado
+      cantidad: ['', [Validators.required, ]],
+      precioUnitario: ['', [Validators.required]],
+      totalTransaccion: ['', [Validators.required]],
+    });
+  
+    console.log('Formulario de salida inicializado:', this.salidadForm.value);
   }
-
-  getformsalida() {
-
-    this.entradaForm = this.bf.group({
-      codigo: [null],
-      articulo: [{ value: '', disabled: false }],
-      movimiento: [null],
-      cantidad: ['', Validators.required],
-      precioUnitario: ['', Validators.required],
-      totalTransaccion: ['', Validators.required]
-
-    })
-
-  }
-
+  
   onSubmit(): void {
-    console.log(this.entradaForm.value);
-    this.entradaForm.reset();
-
+    console.log('Datos del formulario de entrada:', this.entradaForm.value);
+  
+    // Resetea el formulario de entrada con valores predeterminados
+    this.entradaForm.reset({
+      codigo: null,
+      articulo: '',
+      movimiento: 'entrada',
+      cantidad: '',
+      precioUnitario: '',
+      totalTransaccion: '',
+    });
+  
+    console.log('Formulario de entrada reseteado:', this.entradaForm.value);
   }
+  
+  onSubmitt(): void {
+    console.log('Datos del formulario de salida:', this.salidadForm.value);
+  
+    // Resetea el formulario de salida con valores predeterminados
+    this.salidadForm.reset({
+      codigo: null,
+      articulo: '',
+      movimiento: 'salida',
+      cantidad: '',
+      precioUnitario: '',
+      totalTransaccion: '',
+    });
+  
+    console.log('Formulario de salida reseteado:', this.salidadForm.value);
+  }
+  
 
   // Filtra los productos según el término de búsqueda
   filterProductos(): void {
