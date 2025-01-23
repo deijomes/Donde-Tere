@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { BuscadorService } from '../../services/buscador.service';
@@ -13,6 +13,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
   selector: 'app-movimientos',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule, NgSelectModule,],
+   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
   templateUrl: './movimientos.component.html',
   styleUrls: ['./movimientos.component.css'],

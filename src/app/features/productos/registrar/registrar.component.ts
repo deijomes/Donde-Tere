@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   imports: [ReactiveFormsModule,CommonModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './registrar.component.html',
-  styleUrls: ['./registrar.component.css']  // Corrección: Cambié `styleUrl` por `styleUrls`
+  styleUrls: ['./registrar.component.css']  
 })
 export class RegistrarComponent implements OnInit {
 
