@@ -51,9 +51,9 @@
         
           
           <div *ngIf="filteredProductos.length > 0" class="floating-box">
-            <div *ngFor="let producto of filteredProductos" class="floating-content">
+            <div (click)="onSelectProducto(producto)" *ngFor="let producto of filteredProductos" class="floating-content ">
               <input class="form-check-input me-1" type="checkbox" [id]="producto.codigo">
-              <label class="form-check-label" [for]="producto.codigo">{{ producto.articulo }} ({{ producto.codigo }})</label>
+              <label class="form-check-label" [for]="producto.codigo">{{ producto.articulo }} ({{ producto.codigo }}) </label>
             </div>
           </div>
         
@@ -78,9 +78,9 @@
 
                     <div class="col-lg-4">
                         <div class="mb-3">
-                            <label for="product-articulo" class="form-label">Articulo</label>
+                            <label for="product-articulo" class="form-label">codigo</label>
                             <input type="text" id="product-articulo" class="form-control"
-                                placeholder="Nombre del artículo" formControlName="articulo" readonly />
+                                placeholder="Nombre del artículo" formControlName="codigo" readonly />
                         </div>
                     </div>
 

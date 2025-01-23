@@ -158,6 +158,24 @@ export class MovimientosComponent implements OnInit {
     });
   
   }
+
+  onSelectProducto(producto: any): void {
+    console.log('Producto seleccionado:', producto);
+
+    if (producto) {
+      this.entradaForm.patchValue({
+        codigo: producto.codigo,
+        articulo: producto.articulo,
+        precioUnitario: producto.precio,
+        cantidad: 1, // valor por defecto
+        totalTransaccion: producto.precio, // si es necesario
+      });
+
+      console.log('Formulario después de patchValue:', this.entradaForm.value);
+    }
+  
+
+  }
   
 
   // Filtra los productos según el término de búsqueda
