@@ -50,7 +50,7 @@
 
         
           
-          <div *ngIf="filteredProductos.length > 0" class="floating-box">
+          <div [ngClass]="{'visible': mostrarBarraProductos, 'hidden': !mostrarBarraProductos}" *ngIf="filteredProductos.length > 0 " class="floating-box">
             <div (click)="onSelectProducto(producto)" *ngFor="let producto of filteredProductos" class="floating-content ">
               <input class="form-check-input me-1" type="checkbox" [id]="producto.codigo">
               <label class="form-check-label" [for]="producto.codigo">{{ producto.articulo }} ({{ producto.codigo }}) </label>

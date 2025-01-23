@@ -183,5 +183,17 @@ input[type="number"] {
   color: #333;  /* Color del texto */
 }
 
+.floating-box {
+  transition: all 0.3s ease;
+}
+
+.floating-box.visible {
+  display: block; /* La barra se muestra */
+}
+
+.floating-box.hidden {
+  display: none; /* La barra desaparece completamente */
+}
+
 
 

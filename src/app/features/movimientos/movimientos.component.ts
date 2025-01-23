@@ -29,6 +29,9 @@ export class MovimientosComponent implements OnInit {
   listaproducto: any[] = []
 
   filteredProductos: any[] = [];
+  mostrarBarraProductos = true; 
+  
+
   searchTerm: string = '';
   isLoading: boolean = false;
 
@@ -117,7 +120,7 @@ export class MovimientosComponent implements OnInit {
   
     // Resetea el formulario de entrada con valores predeterminados
     this.entradaForm.reset({
-      codigo: null,
+      codigo: '',
       articulo: '',
       movimiento: 'entrada',
       fecharegistro:'',
@@ -162,12 +165,16 @@ export class MovimientosComponent implements OnInit {
   onSelectProducto(producto: any): void {
     console.log('Producto seleccionado:', producto);
 
+    
+
+    this.mostrarBarraProductos = false;
+
     if (producto) {
       this.entradaForm.patchValue({
         codigo: producto.codigo,
         articulo: producto.articulo,
         precioUnitario: producto.precio,
-        cantidad: 1, // valor por defecto
+        cantidad: '', // valor por defecto
         totalTransaccion: producto.precio, // si es necesario
       });
 
