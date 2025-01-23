@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 
 import { BuscadorService } from '../../services/buscador.service';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { registroModel } from '../../models/registroModel';
 
 
 
@@ -26,6 +27,7 @@ export class MovimientosComponent implements OnInit {
 
 
   listaproducto: any[] = []
+
   filteredProductos: any[] = [];
   searchTerm: string = '';
   isLoading: boolean = false;
@@ -39,7 +41,7 @@ export class MovimientosComponent implements OnInit {
 
   ngOnInit(): void {
     this.getform(); // Inicializa el formulario de entrada
-    this.getformsalida(); // Inicializa el formulario de salida
+    this.getforms(); // Inicializa el formulario de salida
   
     this.selectItem(this.selectedItem);
   
@@ -48,8 +50,7 @@ export class MovimientosComponent implements OnInit {
     this.listaproducto = this.serviceproduct.getProductos();
     console.log('Listado de productos:', this.listaproducto);
   
-    // Inicializa la lista filtrada con todos los productos
-    this.filteredProductos = this.listaproducto;
+    
     this.isLoading = false;
   
     // Maneja los cambios en el campo "codigo" del formulario de entrada
@@ -67,7 +68,8 @@ export class MovimientosComponent implements OnInit {
     });
   
     // Maneja los cambios en el campo "codigo" del formulario de salida
-    this.salidadForm.get('codigo')?.valueChanges.subscribe((codigo) => {
+    
+   /* this.salidadForm.get('codigo')?.valueChanges.subscribe((codigo) => {
       const producto = this.listaproducto.find((p) => p.codigo === codigo);
       if (producto) {
         this.salidadForm.patchValue({
@@ -79,7 +81,8 @@ export class MovimientosComponent implements OnInit {
         });
       }
     });
-  }
+    */
+  } 
   
   selectItem(item: string): void {
     this.selectedItem = item;
@@ -99,15 +102,11 @@ export class MovimientosComponent implements OnInit {
     console.log('Formulario de entrada inicializado:', this.entradaForm.value);
   }
   
-  getformsalida(): void {
+  getforms(): void {
     this.salidadForm = this.bf.group({
-      codigo: [null],
-      articulo: [{ value: '', disabled: false }],
-      movimiento: ['salida'], // Valor predeterminado
-      fecha:['',Validators.required],
-      cantidad: ['', [Validators.required, ]],
-      precioUnitario: ['', [Validators.required]],
-      totalTransaccion: ['', [Validators.required]],
+      codigo: ['',Validators.required],
+      articulo: ['',Validators.required],
+     
     });
   
     console.log('Formulario de salida inicializado:', this.salidadForm.value);
@@ -131,20 +130,33 @@ export class MovimientosComponent implements OnInit {
   }
   
   onSubmitt(): void {
-    console.log('Datos del formulario de salida:', this.salidadForm.value);
+
+    
+      const codigo = this.salidadForm.get('codigo')?.value;
+      const articulo = this.salidadForm.get('articulo')?.value;
+    
+      // Llamar al servicio y pasar los valores como parámetros
+      this.serviceproduct.buscarArticulo(codigo, articulo).subscribe(
+        (resultado: any) => {
+          console.log('Resultado del servicio:', resultado);
+          if (resultado) {
+            this.filteredProductos = [resultado]
+          } else {
+            console.log('Artículo no encontrado');
+            this.filteredProductos = ['producto no encontrado']
+          }
+        },
+        (error: any) => {
+          console.error('Error al buscar el artículo:', error);
+        }
+      );
   
     // Resetea el formulario de salida con valores predeterminados
     this.salidadForm.reset({
-      codigo: null,
+      codigo: '',
       articulo: '',
-      movimiento: 'salida',
-      fecha:'',
-      cantidad: '',
-      precioUnitario: '',
-      totalTransaccion: '',
     });
   
-    console.log('Formulario de salida reseteado:', this.salidadForm.value);
   }
   
 

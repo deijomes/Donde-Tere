@@ -27,10 +27,10 @@
 
     <div class=" padding-lado  mb-2 ">
 
-        <form class="row g-2">
+        <form   [formGroup]="salidadForm" (ngSubmit)="onSubmitt()" class="row g-2">
             <div class="col-md-5">
                 <label for="validationDefault01" class="form-label"></label>
-                <input type="text" class="form-control no-bg-placeholder" id="validationDefault01" placeholder="Artículo"  required>
+                <input type="text" class="form-control no-bg-placeholder" formControlName="articulo" id="validationDefault01" placeholder="Artículo"  required>
             </div>
             
 
@@ -38,15 +38,25 @@
 
             <div class="col-md-3">
                 <label for="validationDefault02" class="form-label"></label>
-                <input type="text" class="form-control no-bg-placeholder" id="validationDefault02" placeholder="Codigo"  required>
+                <input type="text" class="form-control no-bg-placeholder" formControlName="codigo" id="validationDefault02" placeholder="Codigo"  required>
             </div>
 
             <div class="col-md-1 d-flex align-items-center">
-                <button class="btn btn-soft-danger btn-sm mt-3">
+                <button type="submit" class="btn btn-soft-danger btn-sm mt-3" [disabled]="salidadForm.invalid">
                     <iconify-icon icon="solar:filter-linear" class="align-middle fs-18"></iconify-icon>
                 </button>
             </div>
         </form>
+
+        
+          
+          <div *ngIf="filteredProductos.length > 0" class="floating-box">
+            <div *ngFor="let producto of filteredProductos" class="floating-content">
+              <input class="form-check-input me-1" type="checkbox" [id]="producto.codigo">
+              <label class="form-check-label" [for]="producto.codigo">{{ producto.articulo }} ({{ producto.codigo }})</label>
+            </div>
+          </div>
+        
 
 
     </div>

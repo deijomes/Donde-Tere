@@ -135,11 +135,7 @@ input[type="number"] {
  
 }
 
-.fondo-filtro{
-  
- 
-  
-}
+
 
 
 
@@ -155,4 +151,37 @@ input[type="number"] {
   padding-right: 20px;
   padding: auto;
 }
+
+/* Caja con sombra y efecto flotante */
+.floating-box {
+  width: 400px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Sombra sutil */
+  transition: all 0.3s ease; /* Transición suave */
+  display: inline-block;
+  margin: 20px;
+}
+
+.floating-box:hover {
+  transform: translateY(-5px); /* Efecto de flotado */
+ 
+}
+
+.floating-content {
+  display: flex;
+  align-items: center;
+}
+
+.floating-content input {
+  margin-right: 10px;  /* Separación entre checkbox y texto */
+}
+
+.floating-content label {
+  font-size: 14px;
+  color: #333;  /* Color del texto */
+}
+
+
 

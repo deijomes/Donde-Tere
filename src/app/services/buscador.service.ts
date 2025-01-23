@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { registroModel } from '../models/registroModel';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +46,15 @@ export class BuscadorService {
 
   setTerminoBusqueda(termino: string): void {
     this.terminoBusquedaSubject.next(termino); // Actualiza el término de búsqueda
+  }
+
+  buscarArticulo(codigo: string, articulo: string):Observable<any> {
+    const resultado = this.productos.find(
+      (producto) =>
+        producto.codigo === codigo && producto.articulo.toLowerCase() === articulo.toLowerCase()
+    );
+    // Regresamos el resultado envuelto en un Observable
+    return of(resultado); // 'of()' convierte un valor en un Observable
   }
 }
   
