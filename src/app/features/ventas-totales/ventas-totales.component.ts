@@ -1,6 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { DashboardService } from '../../services/dashboard.service';
-import { ChartData, ChartDataset, ChartOptions } from 'chart.js';  
+import { ChartData, ChartDataset, ChartOptions } from 'chart.js';
 import { NgChartsModule } from 'ng2-charts'
 
 @Component({
@@ -13,21 +13,27 @@ import { NgChartsModule } from 'ng2-charts'
 })
 export class VentasTotalesComponent implements OnInit {
 
- ventamesActual: number = 0;
- totalventas : number = 0;
+  ventamesActual: number = 0;
+  totalventas: number = 0;
+
+  productosMasVendidos: any[] = [];
+  productosMas: string[] = []
+
+  productosMenosVendidos :any []=[]
+
 
 
   ventasTotals: any[] = [];  // Almacenará los datos de ventas
   barChartLabels: string[] = [];  // Etiquetas para el gráfico (meses)
   barChartData: ChartData<'bar'> = {  // Cambiamos el tipo a ChartData<'bar'>
-    labels: [],  
+    labels: [],
     datasets: [{
-      data: [],  
+      data: [],
       label: 'Ventas Totales',
       backgroundColor: ' #FF6C2F',
       hoverBackgroundColor: 'rgba(255, 108, 47, 0.8)',
-      barThickness: 50, 
-      borderRadius: 5, 
+      barThickness: 50,
+      borderRadius: 5,
     }]
   };
   barChartOptions: ChartOptions<'bar'> = {
@@ -42,13 +48,18 @@ export class VentasTotalesComponent implements OnInit {
     },
     plugins: {
       legend: {
-        display: false 
+        display: false
       }
     }
   };
   barChartType: 'bar' = 'bar';  // Especificamos que el tipo de gráfico es 'bar'
 
-  constructor(private servicio: DashboardService) {}
+  
+  
+
+  Dashboardprt: 'line' = 'line'
+
+  constructor(private servicio: DashboardService) { }
 
   ngOnInit(): void {
     // Obtener ventas mensuales
@@ -64,17 +75,21 @@ export class VentasTotalesComponent implements OnInit {
 
     this.getventasActuales();
     this.gettotalActual();
+    
   }
 
 
-  getventasActuales(){
-    this.servicio.getVentasActual().subscribe((data:any)=> { this.ventamesActual = data; console.log(this.ventamesActual)})
+  getventasActuales() {
+    this.servicio.getVentasActual().subscribe((data: any) => { this.ventamesActual = data; console.log(this.ventamesActual) })
   }
 
-  gettotalActual(){
+  gettotalActual() {
 
-    this.servicio.gettotalActual().subscribe((data:any)=>{this.totalventas = data})
+    this.servicio.gettotalActual().subscribe((data: any) => { this.totalventas = data })
 
   }
+  
+  
+  
 
 }

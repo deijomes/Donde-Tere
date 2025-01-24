@@ -43,8 +43,11 @@ export class DashboardService {
   }
 
   // 4. Productos más vendidos por día
-  getTopSellingProducts(): Observable<{ date: string; product: string; sales: number }[]> {
+  getproductosMAsVendidos(): Observable<{ date: string; product: string; sales: number }[]> {
     const topSelling = [
+      { date: '2025-01-01', product: 'Producto A', sales: 50 },
+      { date: '2025-01-02', product: 'Producto B', sales: 30 },
+      { date: '2025-01-03', product: 'Producto A', sales: 40 },
       { date: '2025-01-01', product: 'Producto A', sales: 50 },
       { date: '2025-01-02', product: 'Producto B', sales: 30 },
       { date: '2025-01-03', product: 'Producto A', sales: 40 },
@@ -53,10 +56,16 @@ export class DashboardService {
   }
 
   // 5. Productos menos vendidos por día
-  getLowSellingProducts(): Observable<{ date: string; product: string; sales: number }[]> {
+  getproductosMenossVendidos(): Observable<{ date: string; product: string; sales: number }[]> {
     const lowSelling = [
       { date: '2025-01-01', product: 'Producto C', sales: 5 },
       { date: '2025-01-02', product: 'Producto A', sales: 10 },
+      { date: '2025-01-03', product: 'Producto B', sales: 8 },
+      { date: '2025-01-01', product: 'Producto C', sales: 5 },
+      { date: '2025-01-02', product: 'Producto A', sales: 10 },
+      { date: '2025-01-09', product: 'Producto B', sales: 8 },
+      { date: '2025-01-10', product: 'Producto C', sales: 5 },
+      { date: '2025-01-30', product: 'Producto A', sales: 10 },
       { date: '2025-01-03', product: 'Producto B', sales: 8 },
     ];
     return of(lowSelling);

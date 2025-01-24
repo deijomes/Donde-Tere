@@ -1,108 +1,160 @@
 <div class="row">
      <!-- Columna para los card (Salidas y Ganancias) -->
      <div class="col-xxl-5">
-         <div class="row">
-             <div class="col-12">
-                 <div class="alert alert-primary text-truncate mb-3" role="alert">
-                     INFORME VENTAS 
-                 </div>
-             </div>
- 
-             <!-- Card de Salidas -->
-             <div class="col-md-6">
-                 <div class="card overflow-hidden">
-                     <div class="card-body">
-                         <div class="row">
-                             <div class="col-6">
-                                 <div class="avatar-md bg-soft-primary rounded">
-                                     <i class="bx bxs-backpack avatar-title fs-24 text-primary"></i>
-                                 </div>
-                             </div> <!-- end col -->
-                             <div class="col-6 text-end">
-                                 <p class="text-muted mb-0 text-truncate">Salidas</p>
-                                 <h3 class="text-dark mt-1 mb-0">{{ventamesActual}}</h3>
-                             </div> <!-- end col -->
-                         </div> <!-- end row-->
-                     </div> <!-- end card body -->
-                     <div class="card-footer py-2 bg-light bg-opacity-50">
-                         <div class="d-flex align-items-center justify-content-between">
-                             <div>
-                                 <span class="text-muted ms-1 fs-12">Mes actual</span>
-                             </div>
-                         </div>
-                     </div> <!-- end card body -->
-                 </div> <!-- end card -->
+          <div class="row">
+               <div class="col-12">
+                    <div class="alert alert-primary text-truncate mb-3" role="alert">
+                         INFORME VENTAS
+                    </div>
+               </div>
 
-                
-             </div> <!-- end col -->
+               <!-- Card de Salidas -->
+               <div class="col-md-6">
+                    <div class="card overflow-hidden">
+                         <div class="card-body">
+                              <div class="row">
+                                   <div class="col-6">
+                                        <div class="avatar-md bg-soft-primary rounded">
+                                             <i class="bx bxs-backpack avatar-title fs-24 text-primary"></i>
+                                        </div>
+                                   </div> <!-- end col -->
+                                   <div class="col-6 text-end">
+                                        <p class="text-muted mb-0 text-truncate">Salidas</p>
+                                        <h3 class="text-dark mt-1 mb-0">{{ventamesActual}}</h3>
+                                   </div> <!-- end col -->
+                              </div> <!-- end row-->
+                         </div> <!-- end card body -->
+                         <div class="card-footer py-2 bg-light bg-opacity-50">
+                              <div class="d-flex align-items-center justify-content-between">
+                                   <div>
+                                        <span class="text-muted ms-1 fs-12">Mes actual</span>
+                                   </div>
+                              </div>
+                         </div> <!-- end card body -->
+                    </div> <!-- end card -->
 
-             
-             
-             <!-- Card de Ganancias -->
-             <div class="col-md-6">
-                 <div class="card overflow-hidden">
-                     <div class="card-body">
-                         <div class="row">
-                             <div class="col-6">
-                                 <div class="avatar-md bg-soft-primary rounded">
-                                     <i class="bx bx-dollar-circle avatar-title text-primary fs-24"></i>
-                                 </div>
-                             </div> <!-- end col -->
-                             <div class="col-6 text-end">
-                                 <p class="text-muted mb-0 text-truncate">Ganancias</p>
-                                 <h3 class="text-dark mt-1 mb-0">${{totalventas}}</h3>
-                             </div> <!-- end col -->
-                         </div> <!-- end row-->
-                     </div> <!-- end card body -->
-                     <div class="card-footer py-2 bg-light bg-opacity-50">
-                         <div class="d-flex align-items-center justify-content-between">
-                             <div>
-                                 <span class="text-muted ms-1 fs-12">Mes actual</span>
-                             </div>
-                         </div>
-                     </div> <!-- end card body -->
-                 </div> <!-- end card -->
-             </div> <!-- end col -->
-         </div> <!-- end row -->
-         <div class="col-12 mt-4">
-          <div class="card-header d-flex justify-content-center">
-              <a class="btn btn-sm btn-soft-primary d-flex align-items-center justify-content-center" style="width: 90%;">
-                  <iconify-icon icon="solar:eye-broken" class="align-middle fs-18 me-2"></iconify-icon>
-                  <span>Top productos vendidos</span>
-              </a>
+
+               </div> <!-- end col -->
+
+
+
+               <!-- Card de Ganancias -->
+               <div class="col-md-6">
+                    <div class="card overflow-hidden">
+                         <div class="card-body">
+                              <div class="row">
+                                   <div class="col-6">
+                                        <div class="avatar-md bg-soft-primary rounded">
+                                             <i class="bx bx-dollar-circle avatar-title text-primary fs-24"></i>
+                                        </div>
+                                   </div> <!-- end col -->
+                                   <div class="col-6 text-end">
+                                        <p class="text-muted mb-0 text-truncate">Ganancias</p>
+                                        <h3 class="text-dark mt-1 mb-0">${{totalventas}}</h3>
+                                   </div> <!-- end col -->
+                              </div> <!-- end row-->
+                         </div> <!-- end card body -->
+                         <div class="card-footer py-2 bg-light bg-opacity-50">
+                              <div class="d-flex align-items-center justify-content-between">
+                                   <div>
+                                        <span class="text-muted ms-1 fs-12">Mes actual</span>
+                                   </div>
+                              </div>
+                         </div> <!-- end card body -->
+                    </div> <!-- end card -->
+               </div> <!-- end col -->
+          </div> <!-- end row -->
+          <div class="col-12 mt-4">
+               <div class="card-header d-flex justify-content-center">
+                    <a class="btn btn-sm btn-soft-primary d-flex align-items-center justify-content-center"
+                         style="width: 90%;">
+                         <iconify-icon icon="solar:eye-broken" class="align-middle fs-18 me-2"></iconify-icon>
+                         <span>Top productos vendidos</span>
+                    </a>
+               </div>
           </div>
-      </div>
-      
-      
-      
+
+
+
      </div> <!-- end col -->
- 
+
+
+     <div class="col-xxl-7">
+          <div class="card ">
+               <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                         <h4 class="card-title">Ventas últimos meses</h4>
+                         <div>
+                              <button type="button" class="btn btn-sm btn-outline-light">ALL</button>
+                         </div>
+                    </div>
+
+                    <div class="chart-container mt-3">
+                         <canvas baseChart [data]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                              [type]="barChartType">
+                         </canvas>
+                    </div>
+               </div>
+          </div>
+     </div> <!-- end col -->
+
+
+     <div class="col-lg-4">
+          <div class="card card-height-100">
+               <div class="card-header d-flex align-items-center justify-content-between gap-2">
+                    <h4 class="card-title flex-grow-1">Top mas vendidos</h4>
+
+                   
+               </div>
+               <div class="table-responsive">
+                    <table class="table table-hover table-nowrap table-centered m-0">
+                         <thead class="bg-light bg-opacity-50">
+                              <tr>
+                                   <th class="text-muted ps-3"> Producto</th>
+                                  
+                                   <th class="text-muted">Cantidad </th>
+                              </tr>
+                         </thead>
+                         <tbody>
+                              <tr>
+                                   <td class="ps-3"><a href="#" class="text-muted">larkon/ecommerce.html</a></td>
+                                  
+                                   <td><span class="badge badge-soft-success">400</span></td>
+                              </tr>
+                            
+                         </tbody>
+                    </table>
+               </div>
+          </div>
+     </div>
+
      
-     <div class="col-xxl-7"> 
-         <div class="card ">
-             <div class="card-body">
-                 <div class="d-flex justify-content-between align-items-center">
-                     <h4 class="card-title">Ventas últimos meses</h4>
-                     <div>
-                         <button type="button" class="btn btn-sm btn-outline-light">ALL</button>
-                     </div>
-                 </div>
- 
-                 <div class="chart-container mt-3" >
-                     <canvas
-                         baseChart
-                         [data]="barChartData"
-                         [labels]="barChartLabels"
-                         [options]="barChartOptions"
-                         [type]="barChartType">
-                     </canvas>
-                 </div>
-             </div>
-         </div>
-     </div> <!-- end col -->
- </div> 
+     <div class="col-lg-4">
+          <div class="card card-height-100">
+               <div class="card-header d-flex align-items-center justify-content-between gap-2">
+                    <h4 class="card-title flex-grow-1">Top menos vendidos</h4>
 
-
-
- 
-  
+                   
+               </div>
+               <div class="table-responsive">
+                    <table class="table table-hover table-nowrap table-centered m-0">
+                         <thead class="bg-light bg-opacity-50">
+                              <tr>
+                                   <th class="text-muted ps-3"> Producto</th>
+                                  
+                                   <th class="text-muted">Cantidad </th>
+                              </tr>
+                         </thead>
+                         <tbody>
+                              <tr>
+                                   <td class="ps-3"><a href="#" class="text-muted">ckdmkmckd</a></td>
+                                  
+                                   <td><span class="badge badge-soft-danger">4</span></td>
+                              </tr>
+                              
+                         </tbody>
+                    </table>
+               </div>
+          </div>
+     </div>
+</div>
