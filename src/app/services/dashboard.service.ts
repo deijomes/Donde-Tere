@@ -15,13 +15,20 @@ export class DashboardService {
       { month: 'Febrero', sales: 4500 },
       { month: 'Marzo', sales: 5200 },
       { month: 'Abril', sales: 4800 },
+      
+      
     ];
     return of(data);
   }
 
   // 2. Total de ventas del mes actual
-  getCurrentMonthSales(): Observable<number> {
+  getVentasActual(): Observable<number> {
     const currentMonthSales = 4800; // Simulación del total actual
+    return of(currentMonthSales);
+  }
+
+  gettotalActual(): Observable<number> {
+    const currentMonthSales = 12800000; // Simulación del total actual
     return of(currentMonthSales);
   }
 
