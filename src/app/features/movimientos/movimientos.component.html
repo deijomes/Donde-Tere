@@ -52,7 +52,7 @@
 
 
 
-        <div *ngIf="filteredProductos.length > 0" class="floating-box">
+        <div *ngIf="filteredProductos.length > 0; else noResultsTemplate " class="floating-box">
             <table class="table table-hover table-nowrap table-centered m-0" style="table-layout: fixed; width: 100%;">
               <thead>
                 <tr>
@@ -79,6 +79,14 @@
               </tbody>
             </table>
           </div>
+          
+          <ng-template #noResultsTemplate>
+            <div  *ngIf="mensajeNoEncontrado" class="alert alert-success mb-0 mt-1 d-flex align-items-center gap-2" role="alert" style="width: 400px;">
+                <iconify-icon icon="solar:shield-check-bold" class="fs-28 align-middle"></iconify-icon>
+                {{ mensajeNoEncontrado }}
+           </div>
+          </ng-template>
+
           
           
       

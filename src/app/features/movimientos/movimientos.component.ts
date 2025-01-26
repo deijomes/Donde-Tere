@@ -29,7 +29,8 @@ export class MovimientosComponent implements OnInit {
   listaproducto: any[] = []
 
   filteredProductos: any[] = [];
-  mostrarBarraProductos = true; 
+  mensajeNoEncontrado: string =''
+  
   
 
   searchTerm: string = '';
@@ -144,9 +145,13 @@ export class MovimientosComponent implements OnInit {
           console.log('Resultado del servicio:', resultado);
           if (resultado) {
             this.filteredProductos = [resultado]
+            this.mensajeNoEncontrado = '';
+            
           } else {
             console.log('Artículo no encontrado');
-            this.filteredProductos = ['producto no encontrado']
+            this.filteredProductos = [];  // Limpiamos los productos filtrados
+            this.mensajeNoEncontrado = 'Producto no encontrado';  // Asignamos el mensaje
+           
           }
         },
         (error: any) => {
@@ -171,7 +176,7 @@ export class MovimientosComponent implements OnInit {
 
     
 
-    this.mostrarBarraProductos = false;
+  
 
     if (producto) {
       this.entradaForm.patchValue({
@@ -189,18 +194,7 @@ export class MovimientosComponent implements OnInit {
   }
   
 
-  // Filtra los productos según el término de búsqueda
-  filterProductos(): void {
-    this.filteredProductos = this.listaproducto.filter(codigo =>
-      codigo.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
-  }
-
-  // Función que se ejecuta cuando se selecciona un producto
-  onProductChange(event: any): void {
-    console.log('Producto seleccionado:', event);
-  }
-
+  
 
 
 
