@@ -164,6 +164,10 @@ export class MovimientosComponent implements OnInit {
 
   onSelectProducto(producto: any): void {
     console.log('Producto seleccionado:', producto);
+    if (this.filteredProductos.length > 0) {
+      // Vaciar la lista después de seleccionar el producto
+      this.filteredProductos = [];
+    }
 
     
 

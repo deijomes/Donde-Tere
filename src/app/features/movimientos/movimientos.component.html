@@ -27,18 +27,20 @@
 
     <div class=" padding-lado  mb-2 ">
 
-        <form   [formGroup]="salidadForm" (ngSubmit)="onSubmitt()" class="row g-2">
+        <form [formGroup]="salidadForm" (ngSubmit)="onSubmitt()" class="row g-2">
             <div class="col-md-5">
                 <label for="validationDefault01" class="form-label"></label>
-                <input type="text" class="form-control no-bg-placeholder" formControlName="articulo" id="validationDefault01" placeholder="Artículo"  required>
+                <input type="text" class="form-control no-bg-placeholder" formControlName="articulo"
+                    id="validationDefault01" placeholder="Artículo" required>
             </div>
-            
 
-            
+
+
 
             <div class="col-md-3">
                 <label for="validationDefault02" class="form-label"></label>
-                <input type="text" class="form-control no-bg-placeholder" formControlName="codigo" id="validationDefault02" placeholder="Codigo"  required>
+                <input type="text" class="form-control no-bg-placeholder" formControlName="codigo"
+                    id="validationDefault02" placeholder="Codigo" required>
             </div>
 
             <div class="col-md-1 d-flex align-items-center">
@@ -48,21 +50,45 @@
             </div>
         </form>
 
-        
-          
-          <div  *ngIf="filteredProductos.length > 0 " class="floating-box">
-            <div (click)="onSelectProducto(producto)" *ngFor="let producto of filteredProductos" class="floating-content ">
-              <input class="form-check-input me-1" type="checkbox" [id]="producto.codigo">
-              <label class="form-check-label" [for]="producto.codigo">{{ producto.articulo }} ({{ producto.codigo }}) </label>
-            </div>
+
+
+        <div *ngIf="filteredProductos.length > 0" class="floating-box">
+            <table class="table table-hover table-nowrap table-centered m-0" style="table-layout: fixed; width: 100%;">
+              <thead>
+                <tr>
+                  <th class="text-muted ps-3" style="padding: 4px; padding-left: 8px;">Producto</th> <!-- Ajuste más pequeño -->
+                  <th class="text-muted" style="padding: 4px;">Código</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr  *ngFor="let producto of filteredProductos" (click)="onSelectProducto(producto)">
+                  <td class="ps-3" style="padding: 4px; display: flex; align-items: center; justify-content: space-between;">
+                    <!-- Botón alineado a la izquierda -->
+                  
+                    <!-- Nombre del producto alineado a la derecha -->
+                    <span>{{ producto.articulo }}</span>
+                  </td>
+                  <td style="padding: 4px;">
+                    <span>{{ producto.codigo }}</span>
+                  </td>
+                  <a class="icon-button" style="height: 50%; display: flex; align-items: center;">
+                    <i class='bx bx-select-multiple'></i>
+                  </a>
+                  
+                </tr>
+              </tbody>
+            </table>
           </div>
-        
+          
+          
+      
+
 
 
     </div>
 
 
-    <div class="mt-4" >
+    <div class="mt-4">
 
         <form [formGroup]="entradaForm" (ngSubmit)="onSubmit()">
             <div class="container padding-lados">
