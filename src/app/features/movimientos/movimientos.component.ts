@@ -150,7 +150,7 @@ export class MovimientosComponent implements OnInit {
           } else {
             console.log('Artículo no encontrado');
             this.filteredProductos = [];  // Limpiamos los productos filtrados
-            this.mensajeNoEncontrado = 'Producto no encontrado';  // Asignamos el mensaje
+            this.mensajeNoEncontrado = 'No se encontraron productos que coincidan con tu búsqueda.';  // Asignamos el mensaje
            
           }
         },
@@ -174,9 +174,6 @@ export class MovimientosComponent implements OnInit {
       this.filteredProductos = [];
     }
 
-    
-
-  
 
     if (producto) {
       this.entradaForm.patchValue({
