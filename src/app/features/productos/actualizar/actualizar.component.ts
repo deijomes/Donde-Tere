@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { registroModel } from '../../../models/registroModel';
-import { ProductoService } from '../../../services/producto.service';
+
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -23,7 +23,7 @@ export class ActualizarComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private activeRou: ActivatedRoute,
-    private productoService: ProductoService
+   
   ) {
     this.registro = new registroModel();
   }
@@ -33,18 +33,7 @@ export class ActualizarComponent implements OnInit {
     this.getform();
 
     // Obtenemos el parámetro de la URL
-    this.activeRou.params.subscribe(params => {
-      this.codigo = params['codigo'];
-      if (this.codigo) {
-        // Buscamos el producto por código
-        const producto = this.productoService.obtenerProducto(this.codigo);
-        if (producto) {
-          this.actualizarForm.patchValue(producto); // Actualizamos el formulario
-        } else {
-          console.error(`Producto con código ${this.codigo} no encontrado.`);
-        }
-      }
-    });
+    
 
   
   }
@@ -71,19 +60,7 @@ export class ActualizarComponent implements OnInit {
     });
   }
 
-  editar(): void {
-    this.formEnviado = true;
-
-    if (this.actualizarForm.valid) {
-      const productoEditado: registroModel = { ...this.actualizarForm.value };
-
-      this.productoService.editarProducto(this.codigo, productoEditado);
-      this.router.navigateByUrl('productos');
-      console.log('Producto editado:', productoEditado);
-    } else {
-      console.log('Formulario inválido');
-    }
-  }
+  
 
   cancelar(): void {
     this.router.navigate(['/productos']);

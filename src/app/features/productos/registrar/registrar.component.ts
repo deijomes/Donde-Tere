@@ -1,9 +1,11 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
-import { registroModel } from '../../../models/registroModel';
+
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ProductoService } from '../../../services/producto.service';
+
 import { Router } from '@angular/router';
+import { registerModel } from '../../../models/registerModel';
+import { PoductService } from '../../../services/poduct.service';
 
 @Component({
   selector: 'app-registrar',
@@ -15,15 +17,15 @@ import { Router } from '@angular/router';
 })
 export class RegistrarComponent implements OnInit {
 
-  registro: registroModel;
+  registro: registerModel;
   registroForm!: FormGroup;
   formEnviado = false;
-  productos: registroModel[] = []
+  productos: registerModel[] = []
  
 
 
-  constructor(private bf: FormBuilder, private productoService: ProductoService, private router: Router) {
-    this.registro = new registroModel(
+  constructor(private bf: FormBuilder, private http:PoductService, private router: Router) {
+    this.registro = new registerModel(
       
     );
   }
@@ -34,11 +36,11 @@ export class RegistrarComponent implements OnInit {
 
 
   nombreNovalido() {
-    return this.registroForm.get('articulo')?.invalid && (this.formEnviado || this.registroForm.get('codigo')?.touched);;
+    return this.registroForm.get('name')?.invalid && (this.formEnviado || this.registroForm.get('code')?.touched);;
   }
 
   codigoNovalido() {
-    return this.registroForm.get('codigo')?.invalid &&(this.formEnviado || this.registroForm.get('codigo')?.touched);
+    return this.registroForm.get('code')?.invalid &&(this.formEnviado || this.registroForm.get('code')?.touched);
   }
 
  
@@ -46,12 +48,13 @@ export class RegistrarComponent implements OnInit {
 
   getform(): void {
     this.registroForm = this.bf.group({
-      articulo: ['', Validators.required],
-      codigo: ['', [Validators.required]],
-      cantidadInicial: ['', Validators.required],
-      cantidadMinima: ['', Validators.required],
-      PvUnitario: ['', Validators.required],
-      PcUnitario: ['', Validators.required]
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      code: ['', Validators.required],
+      category: ['', Validators.required],
+      price: [0, [Validators.required, Validators.min(0)]],
+      quantity: [0, [Validators.required, Validators.min(0)]],
+      ingredients: [[]]
     });
   }
 
@@ -59,11 +62,17 @@ export class RegistrarComponent implements OnInit {
     this.formEnviado = true;
 
     if (this.registroForm.valid) {
-      const nuevoProducto: registroModel = { ...this.registroForm.value };
-      this.productoService.agregarProducto(nuevoProducto);  // Usamos el servicio para agregar el producto
-      this.router.navigateByUrl('productos');
-
-      console.log('Producto agregado:', nuevoProducto);
+      const formData = this.registroForm.value
+      this.http.registroProducto(formData).subscribe({
+        next: (response) => {
+          console.log('Producto registrado exitosamente:', response);
+        },
+        error: (error) => {
+          console.error('Error al registrar producto:', error);
+        }
+      });
+    
+      
       this.registroForm.reset();
     } else {
       console.log('Formulario inválido');

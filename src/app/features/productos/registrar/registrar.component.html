@@ -16,7 +16,7 @@
                     <div class="col-lg-4">
                          <div class="mb-3">
                               <label for="product-brand" class="form-label">Articulo</label>
-                              <input type="text" id="product-brand" formControlName="articulo"
+                              <input type="text" id="product-brand" formControlName="name"
                                    [class.is-invalid]="nombreNovalido()" class="form-control"
                                    placeholder="Nombre de producto">
                               <div *ngIf="nombreNovalido()" class="">
@@ -28,8 +28,8 @@
                     <!-- Segunda Columna (Código) -->
                     <div class="col-lg-4">
                          <div class="mb-3">
-                              <label for="product-weight" class="form-label">Codigo</label>
-                              <input type="text" id="product-weight" formControlName="codigo"
+                              <label for="product-weight" class="form-label">descripcion</label>
+                              <input type="text" id="product-weight" formControlName="description"
                                    [class.is-invalid]="codigoNovalido()" class="form-control"
                                    placeholder="Nombre articulo">
                               <div *ngIf="codigoNovalido()" class="">
@@ -41,8 +41,8 @@
                     <!-- Tercera Columna (Cantidad Inicial) -->
                     <div class="col-lg-4">
                          <div class="mb-3">
-                              <label for="product-weight" class="form-label">Cantidad inicial</label>
-                              <input type="number" id="product-weight" formControlName="cantidadInicial"
+                              <label for="product-weight" class="form-label">codigo</label>
+                              <input type="text" id="product-weight" formControlName="code"
                                    class="form-control" placeholder="Cantidad inicial">
                          </div>
                     </div>
@@ -52,8 +52,8 @@
                     <!-- Primera Columna (Cantidad Mínima) -->
                     <div class="col-lg-4">
                          <div class="mb-3">
-                              <label for="small-field" class="form-label">Cantidad mínima</label>
-                              <input type="number" id="small-field" formControlName="cantidadMinima"
+                              <label for="small-field" class="form-label">Categoria</label>
+                              <input type="text" id="small-field" formControlName="category"
                                    class="form-control" placeholder="Cantidad mínima">
                          </div>
                     </div>
@@ -62,7 +62,7 @@
                     <div class="col-lg-4">
                          <div class="mb-3">
                               <label for="small-field" class="form-label">Precio de venta unitario</label>
-                              <input type="number" id="small-field" formControlName="PvUnitario" class="form-control"
+                              <input type="number" id="small-field" formControlName="price" class="form-control"
                                    placeholder="Precio de venta unitario">
                          </div>
                     </div>
@@ -70,8 +70,8 @@
                     <!-- Tercera Columna (Precio de compra unitario) -->
                     <div class="col-lg-4">
                          <div class="mb-3">
-                              <label for="small-field" class="form-label">Precio de compra unitario</label>
-                              <input type="number" id="small-field" formControlName="PcUnitario" class="form-control"
+                              <label for="small-field" class="form-label">cantidad</label>
+                              <input type="number" id="small-field" formControlName="quantity" class="form-control"
                                    placeholder="precio de compra unitario">
                          </div>
                     </div>

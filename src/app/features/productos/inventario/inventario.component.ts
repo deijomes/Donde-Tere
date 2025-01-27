@@ -1,8 +1,11 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
-import { registroModel } from '../../../models/registroModel';
-import { ProductoService } from '../../../services/producto.service';
+
+
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { registerModel } from '../../../models/registerModel';
+import { PoductService } from '../../../services/poduct.service';
+
 
 @Component({
   selector: 'app-inventario',
@@ -14,60 +17,42 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 })
 export class InventarioComponent implements OnInit{
 
-  productos: registroModel[] = [];
-  tabla:boolean = true;
+  productos: registerModel[] = [];
+  
   mostrarTabla : boolean = true
 
-  constructor(private productoService: ProductoService , private router: Router) {
+  constructor( private router: Router, private http: PoductService) {
 
    
   }
 
   ngOnInit(): void {
+    this.registros();
+  }
 
-    this.verificarRuta();
 
-    // Nos suscribimos a cambios en las rutas para actualizar la bandera
-    this.router.events.subscribe(() => {
-      this.verificarRuta();
+  registros(){
+    this.http.obtenerRegistros().subscribe({
+      next: (response) => {
+        console.log('Productos obtenidos:', response);
+        this.productos = response; 
+      },
+      error: (error) => {
+        console.error('Error al obtener productos:', error);
+      }
     });
-
-    // Nos suscribimos al observable de productos para actualizar la vista automáticamente
-    this.productoService.productos$.subscribe((productos) => {
-      this.productos = productos;
-      
-    });
   }
-
-  eliminar(codigo: string): void {
-    this.productoService.eliminarProducto(codigo);  // Llamar al servicio para eliminar el producto
-  }
-
-  actualizar(codigo: string | number): void {
-    const codigoString = codigo.toString(); // Convertir a cadena
-    console.log('Código recibido como string:', codigoString);
-    this.router.navigate([`productos/actualizar/${codigoString}`]);
-  }
+  
   registro() {
     this.router.navigateByUrl('productos/registrar');
+    this.mostrarTabla = false
+    
    
   }
-  verificarRuta(): void {
-    
-    const rutaActual = this.router.url;
-
-    
-    const registrarActivo = rutaActual.startsWith('/productos/registrar');
-
-   
-    const actualizarActivo = rutaActual.startsWith('/productos/actualizar/');
-
-   
-    this.mostrarTabla = !(registrarActivo || actualizarActivo);
-  }
-
-  
-
-  
-
 }
+
+  
+
+  
+
+
