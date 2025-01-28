@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { registerModel } from '../models/registerModel';
 import { catchError, Observable } from 'rxjs';
+import { error } from 'jquery';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,22 @@ export class PoductService {
   obtenerRegistros(): Observable<any> {
 
     return this.http.get(`${this.url}`)
+  }
+
+  prodoctoEditar(id:string):Observable<any>{
+
+    return this.http.get(`${this.url}/${id}`)
+  }
+
+  EditarProducto(id: string, producto:registerModel):  Observable<any>{
+    return this.http.patch(`${this.url}/${id}`, producto)
+
+    .pipe(catchError(error=>{
+      console.error('error al actualizar', error);
+      throw error
+    })
+
+    )
   }
 
   

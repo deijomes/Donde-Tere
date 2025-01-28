@@ -4,6 +4,9 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { registroModel } from '../../../models/registroModel';
 
 import { CommonModule } from '@angular/common';
+import { registerModel } from '../../../models/registerModel';
+import { Subscription } from 'rxjs';
+import { PoductService } from '../../../services/poduct.service';
 
 @Component({
   selector: 'app-actualizar',
@@ -13,26 +16,39 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./actualizar.component.css']
 })
 export class ActualizarComponent implements OnInit {
-  registro: registroModel;
+  registro: registerModel;
   actualizarForm!: FormGroup;
   formEnviado = false;
-  codigo!: string;
+  private paramsSubscription: Subscription | undefined;
+  id :string = ''
+
   
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private activeRou: ActivatedRoute,
+    private http : PoductService
    
   ) {
-    this.registro = new registroModel();
+    this.registro = new registerModel();
   }
 
   ngOnInit(): void {
     // Inicializamos el formulario
     this.getform();
 
-    // Obtenemos el parámetro de la URL
+    this.activeRou.params.subscribe((params)=> {
+
+      this.id = params['id'];
+      console.log(this.id, 'este es el id obtenido');
+
+      this.cargarProdcuto();
+
+
+    })
+    
+   
     
 
   
@@ -51,14 +67,28 @@ export class ActualizarComponent implements OnInit {
   // Método para inicializar el formulario
   getform(): void {
     this.actualizarForm = this.fb.group({
-      articulo: ['', Validators.required],
-      codigo: ['', Validators.required],
-      cantidadInicial: ['', Validators.required],
-      cantidadMinima: ['', Validators.required],
-      PvUnitario: ['', Validators.required],
-      PcUnitario: ['', Validators.required]
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      code: ['', Validators.required],
+      category: ['', Validators.required],
+      price: [ null, Validators.required],
+      quantity: [ null, Validators.required],
+      ingredients: [[]]
     });
   }
+
+  cargarProdcuto (){
+    this.http.prodoctoEditar(this.id).subscribe({
+      next: (producto) => this.actualizarForm.patchValue(producto)
+    })
+
+    error: (error:any) => {
+      console.error('Error al cargar los datos del producto:', error);
+      alert('No se pudo cargar la información del producto.');
+      this.router.navigate(['/productos']); // Redirige en caso de error
+    }
+  };
+  
 
   
 

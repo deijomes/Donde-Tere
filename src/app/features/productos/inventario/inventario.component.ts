@@ -73,10 +73,6 @@ export class InventarioComponent implements OnInit{
   edicion(id: string){
 
     console.log(id)
-
-    
-    
-
     
     this.router.navigateByUrl(`/productos/actualizar/${id}`)
     
