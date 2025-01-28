@@ -88,7 +88,29 @@ export class ActualizarComponent implements OnInit {
       this.router.navigate(['/productos']); // Redirige en caso de error
     }
   };
+  actualizarProducto(): void {
+    this.formEnviado = true;
+
+    if (this.actualizarForm.invalid) {
+      console.log('Formulario inválido');
+      return;
+    }
+
   
+    const productoActualizado = this.actualizarForm.value;
+
+    
+    this.http.EditarProducto(this.id, productoActualizado).subscribe({
+      next: (response) => {
+        console.log('Producto actualizado exitosamente:', response);
+        alert('Producto actualizado exitosamente');
+        this.router.navigate(['/productos']); 
+      },
+      error: (error) => {
+        console.error('Error al actualizar el producto:', error);
+        alert('Ocurrió un error al actualizar el producto.');
+      }
+    });}
 
   
 
