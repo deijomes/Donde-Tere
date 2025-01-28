@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { registerModel } from '../../../models/registerModel';
 import { Subscription } from 'rxjs';
 import { PoductService } from '../../../services/poduct.service';
+import { InventarioComponent } from '../inventario/inventario.component';
 
 @Component({
   selector: 'app-actualizar',
@@ -28,7 +29,8 @@ export class ActualizarComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private activeRou: ActivatedRoute,
-    private http : PoductService
+    private http : PoductService,
+    private inventario : InventarioComponent,
    
   ) {
     this.registro = new registerModel();
@@ -105,6 +107,7 @@ export class ActualizarComponent implements OnInit {
         console.log('Producto actualizado exitosamente:', response);
         alert('Producto actualizado exitosamente');
         this.router.navigate(['/productos']); 
+        this.inventario.recargarTabla();
       },
       error: (error) => {
         console.error('Error al actualizar el producto:', error);

@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { registerModel } from '../../../models/registerModel';
 import { PoductService } from '../../../services/poduct.service';
+import { InventarioComponent } from '../inventario/inventario.component';
 
 @Component({
   selector: 'app-registrar',
@@ -25,7 +26,7 @@ export class RegistrarComponent implements OnInit {
   
 
 
-  constructor(private bf: FormBuilder, private http:PoductService, private router: Router) {
+  constructor(private bf: FormBuilder, private http:PoductService, private router: Router, private inventario:InventarioComponent) {
     this.registro = new registerModel(
       
     );
@@ -80,6 +81,7 @@ export class RegistrarComponent implements OnInit {
     }
 
     this.router.navigateByUrl('productos')
+    this.inventario.recargarTabla();
   
   }
 
