@@ -21,3 +21,19 @@
     margin: 0;
     padding: 0;
 }
+
+
+
+::ng-deep .ngx-pagination .current {
+  padding: .1875rem .625rem;
+  background: #ff6d2fe3 !important;
+  color: #fefefe;
+  cursor: default;
+  border-radius: 3px;
+  
+}
+
+::ng-deep .ngx-pagination li a:hover {
+  background: none !important; /* No cambiar el fondo al hacer hover */
+  color: inherit !important; /* Mantener el color del texto */
+}

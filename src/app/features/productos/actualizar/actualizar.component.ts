@@ -12,7 +12,7 @@ import { InventarioComponent } from '../inventario/inventario.component';
 @Component({
   selector: 'app-actualizar',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterLink],
+  imports: [ReactiveFormsModule, CommonModule, ],
   templateUrl: './actualizar.component.html',
   styleUrls: ['./actualizar.component.css']
 })

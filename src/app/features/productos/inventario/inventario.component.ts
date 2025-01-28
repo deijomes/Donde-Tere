@@ -5,12 +5,13 @@ import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { registerModel } from '../../../models/registerModel';
 import { PoductService } from '../../../services/poduct.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @Component({
   selector: 'app-inventario',
   standalone: true,
-  imports: [CommonModule,  RouterOutlet],
+  imports: [CommonModule,  RouterOutlet,NgxPaginationModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './inventario.component.html',
   styleUrl: './inventario.component.css'
@@ -21,6 +22,11 @@ export class InventarioComponent implements OnInit{
   
   mostrarTabla : boolean = true
   registrosCargados: boolean = false; 
+
+
+  currentPage: number = 1;  // Página actual (comienza en 1)
+  itemsPerPage: number = 5;  // Elementos por página (puedes cambiar este valor)
+  totalItems: number = 0;  // Total de productos que vamos a paginar
 
   constructor( private router: Router, private http: PoductService) {
 
@@ -62,6 +68,7 @@ export class InventarioComponent implements OnInit{
       next: (response) => {
         this.productos = response;  // Asignamos los registros obtenidos
         this.registrosCargados = true;  // Marcamos que los registros ya fueron cargados
+        this.totalItems = response.length;
       },
       error: (error) => {
         console.error('Error al obtener productos:', error);

@@ -27,14 +27,15 @@
                               <th class="text-center">Categoria</th>
                               <th class="text-center">Precio</th>
                               <th class="text-center">Cantidad</th>
-                              <th class=""><iconify-icon
-                                        icon="solar:settings-bold-duotone"></iconify-icon>Opciones </th>
+                              <th class=""><iconify-icon icon="solar:settings-bold-duotone"></iconify-icon>Opciones
+                              </th>
                          </tr>
                     </thead>
                     <tbody>
 
 
-                         <tr *ngFor="let producto of productos">
+                         <tr
+                              *ngFor="let producto of productos | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; let i = index">
                               <td class="text-center letra">{{ producto.name }}</td>
                               <td class="text-center">{{ producto.description }}</td>
                               <td class="text-center">{{ producto.code }}</td>
@@ -44,7 +45,8 @@
                               <td class="text-center">
                                    <div class="d-flex gap-2 ">
 
-                                        <a (click)="edicion(producto.id)" class="btn btn-soft-danger btn-sm custom-btn"><iconify-icon
+                                        <a (click)="edicion(producto.id)"
+                                             class="btn btn-soft-danger btn-sm custom-btn"><iconify-icon
                                                   icon="solar:pen-2-broken"
                                                   class="align-middle fs-18"></iconify-icon></a>
                                         <a class="btn btn-soft-danger btn-sm"><iconify-icon
@@ -61,15 +63,17 @@
           <!-- end table-responsive -->
      </div>
      <div class="card-footer border-top">
-          <nav aria-label="Page navigation example">
-               <ul class="pagination justify-content-end mb-0">
-                    <li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>
-                    <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
-                    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-                    <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-                    <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
-               </ul>
+          <nav aria-label="Page navigation">
+            <pagination-controls
+              class="pagination justify-content-end mb-0"
+              (pageChange)="currentPage = $event"
+              previousLabel="Anterior"
+              nextLabel="Siguiente"
+              [responsive]="true"
+              [autoHide]="true">
+            </pagination-controls>
           </nav>
-     </div>
+        </div>
+        
 
 </div>

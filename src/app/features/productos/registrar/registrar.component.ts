@@ -72,7 +72,7 @@ export class RegistrarComponent implements OnInit {
 
           Swal.fire({
             title: '¡Éxito!',
-            text: 'El producto fue actualizado.',
+            text: 'El producto ha sido guardado.',
             icon: 'success',
             timer: 2000, // La alerta desaparecerá después de 2 segundos
             showConfirmButton: false
