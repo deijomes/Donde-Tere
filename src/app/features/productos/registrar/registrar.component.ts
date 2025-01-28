@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, OnInit, Output } from '@angular/core';
 
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -22,6 +22,7 @@ export class RegistrarComponent implements OnInit {
   formEnviado = false;
   productos: registerModel[] = []
  
+  
 
 
   constructor(private bf: FormBuilder, private http:PoductService, private router: Router) {
@@ -77,12 +78,17 @@ export class RegistrarComponent implements OnInit {
     } else {
       console.log('Formulario inválido');
     }
+
+    this.router.navigateByUrl('productos')
   
   }
 
   
   cancelar(): void {
-    this.router.navigate(['/productos']);
+    
+    this.router.navigateByUrl('productos')
+    
+   
   }
 
 }

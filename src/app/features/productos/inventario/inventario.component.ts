@@ -2,7 +2,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 
 
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { registerModel } from '../../../models/registerModel';
 import { PoductService } from '../../../services/poduct.service';
 
@@ -28,6 +28,18 @@ export class InventarioComponent implements OnInit{
 
   ngOnInit(): void {
     this.registros();
+
+    // cambia la condicion de la tabla por la escucha en la ruta 
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        // Verifica si no estás en la ruta de registro
+        this.mostrarTabla = event.url !== '/productos/registrar';
+      }
+      if (this.mostrarTabla) {
+        this.registros();
+      }
+    });
   }
 
 
@@ -41,6 +53,9 @@ export class InventarioComponent implements OnInit{
         console.error('Error al obtener productos:', error);
       }
     });
+
+    
+
   }
   
   registro() {
@@ -49,6 +64,8 @@ export class InventarioComponent implements OnInit{
     
    
   }
+
+  
 }
 
   

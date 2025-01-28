@@ -83,8 +83,8 @@
                     <div class="col-lg-2">
                          <a (click)="cancelar()"  class="btn btn-outline-secondary w-100">Cancelar</a>
                     </div>
-                    <div class="col-lg-2">
-                         <button type="submit" class="btn btn-primary w-100">Guardar</button>
+                    <div class="col-lg-2"  >
+                         <button type="submit" class="btn btn-primary w-100" [disabled]="registroForm.invalid">Guardar</button>
                     </div>
                </div>
 
