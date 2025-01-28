@@ -23,14 +23,7 @@ export class InventarioComponent implements OnInit{
 
   constructor( private router: Router, private http: PoductService) {
 
-   
-  }
-
-  ngOnInit(): void {
-    this.registros();
-
-    // cambia la condicion de la tabla por la escucha en la ruta 
-
+    
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Verifica si no estás en la ruta de registro
@@ -41,6 +34,18 @@ export class InventarioComponent implements OnInit{
         this.registros();
       }
     });
+
+   
+  }
+
+  ngOnInit(): void {
+    this.registros();
+
+    const currentUrl = this.router.url;
+    this.mostrarTabla = !(currentUrl.startsWith('/productos/registrar') || currentUrl.startsWith('/productos/actualizar/'));
+
+    // cambia la condicion de la tabla por la escucha en la ruta 
+
   }
 
 
