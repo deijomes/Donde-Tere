@@ -8,11 +8,11 @@ import { catchError, Observable } from 'rxjs';
 })
 export class PoductService {
 
-  private url = 'http://localhost:3000';
+  private url = 'http://localhost:3000/api/product';
   constructor( private http: HttpClient) {}
 
   registroProducto(producto: registerModel): Observable<any> {
-    return this.http.post(`${this.url}/api/product`, producto)
+    return this.http.post(`${this.url}`, producto)
       .pipe(
         
         catchError(error => {
@@ -25,7 +25,7 @@ export class PoductService {
 
   obtenerRegistros(): Observable<any> {
 
-    return this.http.get(`${this.url}/api/product`)
+    return this.http.get(`${this.url}`)
   }
 
   

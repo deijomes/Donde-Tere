@@ -53,8 +53,8 @@ export class RegistrarComponent implements OnInit {
       description: ['', Validators.required],
       code: ['', Validators.required],
       category: ['', Validators.required],
-      price: [0, [Validators.required, Validators.min(0)]],
-      quantity: [0, [Validators.required, Validators.min(0)]],
+      price: [ null, Validators.required],
+      quantity: [ null, Validators.required],
       ingredients: [[]]
     });
   }

@@ -34,7 +34,8 @@ export class InventarioComponent implements OnInit{
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // Verifica si no estás en la ruta de registro
-        this.mostrarTabla = event.url !== '/productos/registrar';
+        this.mostrarTabla = event.url !== '/productos/registrar' ;
+        this.mostrarTabla = !(event.url.startsWith('/productos/registrar') || event.url.startsWith('/productos/actualizar/'));
       }
       if (this.mostrarTabla) {
         this.registros();
@@ -61,8 +62,21 @@ export class InventarioComponent implements OnInit{
   registro() {
     this.router.navigateByUrl('productos/registrar');
     this.mostrarTabla = false
-    
    
+  }
+
+  edicion(id: string){
+
+    console.log(id)
+
+    
+    
+
+    
+    this.router.navigateByUrl(`/productos/actualizar/${id}`)
+    
+    
+
   }
 
   

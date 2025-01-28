@@ -1,4 +1,5 @@
 export class registerModel {
+    id: string = '';
     name: string = '';
     description: string = '';
     code: number = 0;
