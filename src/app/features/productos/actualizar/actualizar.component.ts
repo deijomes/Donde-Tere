@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { registroModel } from '../../../models/registroModel';
+import Swal from 'sweetalert2';
 
 import { CommonModule } from '@angular/common';
 import { registerModel } from '../../../models/registerModel';
@@ -105,17 +105,24 @@ export class ActualizarComponent implements OnInit {
     this.http.EditarProducto(this.id, productoActualizado).subscribe({
       next: (response) => {
         console.log('Producto actualizado exitosamente:', response);
-        alert('Producto actualizado exitosamente');
-        this.router.navigate(['/productos']); 
+       
+        
+         Swal.fire({
+                    title: '¡Éxito!',
+                    text: 'El producto fue actualizado.',
+                    icon: 'success',
+                    timer: 2000, 
+                    showConfirmButton: false
+                  });
         this.inventario.recargarTabla();
       },
       error: (error) => {
         console.error('Error al actualizar el producto:', error);
         alert('Ocurrió un error al actualizar el producto.');
       }
-    });}
+    });
 
-  
+    this.router.navigate(['/productos']); }
 
   cancelar(): void {
     this.router.navigate(['/productos']);

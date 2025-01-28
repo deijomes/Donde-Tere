@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { registerModel } from '../../../models/registerModel';
 import { PoductService } from '../../../services/poduct.service';
 import { InventarioComponent } from '../inventario/inventario.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-registrar',
@@ -68,6 +69,14 @@ export class RegistrarComponent implements OnInit {
       this.http.registroProducto(formData).subscribe({
         next: (response) => {
           console.log('Producto registrado exitosamente:', response);
+
+          Swal.fire({
+            title: '¡Éxito!',
+            text: 'El producto fue actualizado.',
+            icon: 'success',
+            timer: 2000, // La alerta desaparecerá después de 2 segundos
+            showConfirmButton: false
+          });
         },
         error: (error) => {
           console.error('Error al registrar producto:', error);
