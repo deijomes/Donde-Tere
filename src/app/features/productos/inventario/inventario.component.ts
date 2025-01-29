@@ -6,6 +6,7 @@ import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router
 import { registerModel } from '../../../models/registerModel';
 import { PoductService } from '../../../services/poduct.service';
 import { NgxPaginationModule } from 'ngx-pagination';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -94,6 +95,23 @@ export class InventarioComponent implements OnInit{
     
 
   }
+
+  eliminar(id:string): void {
+
+    console.log(id)
+    this.http.eliminarProducto(id).subscribe({
+      next: (response) => {
+        console.log('Producto eliminado con éxito:', response);
+        
+        this.registros();
+        
+      },
+      error: (error) => {
+        console.error('Error al eliminar producto:', error);
+       
+      
+      }
+    });}
 
   recargarTabla() {
     this.registros();  

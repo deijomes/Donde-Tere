@@ -45,6 +45,14 @@ export class PoductService {
     )
   }
 
+  eliminarProducto(id:string): Observable<any> {
+    return this.http.delete(`${this.url}/${id}`).pipe(
+      catchError((error) => {
+        console.error('Error al eliminar producto:', error);
+        throw error; 
+      })
+    );
+  }
   
 
 
