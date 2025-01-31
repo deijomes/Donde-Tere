@@ -99,19 +99,41 @@ export class InventarioComponent implements OnInit{
   eliminar(id:string): void {
 
     console.log(id)
-    this.http.eliminarProducto(id).subscribe({
-      next: (response) => {
-        console.log('Producto eliminado con éxito:', response);
-        
-        this.registros();
-        
-      },
-      error: (error) => {
-        console.error('Error al eliminar producto:', error);
-       
-      
+
+
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Esta acción no se puede deshacer",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#ff6d2fe3", 
+      cancelButtonColor: "##dc3545", 
+      confirmButtonText: "Eliminar",
+      cancelButtonText: "Cancelar"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.http.eliminarProducto(id).subscribe({
+          next: (response) => {
+            console.log("Producto eliminado con éxito:", response);
+            Swal.fire({
+                                title: '¡Éxito!',
+                                text: 'El producto ha sido eliminado.',
+                                icon: 'success',
+                                timer: 1000, 
+                                showConfirmButton: false
+                              });
+            
+            this.registros();
+          },
+          error: (error) => {
+            console.error("Error al eliminar producto:", error);
+            Swal.fire("Error", "No se pudo eliminar el producto.", "error");
+          }
+        });
       }
-    });}
+    });
+  }
+   
 
   recargarTabla() {
     this.registros();  
