@@ -243,6 +243,7 @@ td.text {
 
 .no-bg {
   background-color: transparent !important; /* Se asegura de quitar el color de fondo */
+  border-radius: 4px;
 }
 
 
