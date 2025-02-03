@@ -1,2 +1,91 @@
+<div class="card " >
+    <div class="p-3 mb-3 fondo">
+        <div class="d-flex align-items-center justify-content-between">
+            <h4 class="card-title mi-color-letra">Registro de ventas</h4>
+        </div>
+    </div>
+
+    
 
 
+    <div class="mt-2">
+
+        <form [formGroup]="saleForm">
+            <div class="container padding-lados">
+                <div class="row mt-3">
+                  
+                  <!-- Código con ng-select -->
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label for="product-code" class="form-label">Código</label>
+              
+                      <ng-select
+                        [items]="filteredProductos"
+                        bindLabel="name"
+                        bindValue="code"
+                        placeholder="Seleccionar producto"
+                        [searchable]="true"
+                        [clearable]="true"
+                        [virtualScroll]="true"
+                        formControlName="codigo"
+                        class="custom-ng-select">
+              
+                        <!-- Opción personalizada con cabecera (solo una vez) -->
+                        <ng-template ng-header-tmp>
+                            <table class="table table-sm mb-0">
+                              <thead>
+                                <tr class="color">
+                                  <th>Artículo</th>
+                                  <th class="text">Código</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </ng-template>
+                          
+                          <!-- Opción personalizada para cada producto -->
+                          <ng-template ng-option-tmp let-item="item">
+                            <table class="table table-sm mb-0">
+                              <tbody>
+                                <tr>
+                                  <td>{{ item.name }}</td>
+                                  <td  class="text">{{ item.code }}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </ng-template>
+                          
+              
+                      </ng-select>
+                    </div>
+                  </div>
+              
+               
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label for="cantidad-minima" class="form-label">Cantidad</label>
+                      <input type="number" id="cantidad-minima" class="form-control no-bg"
+                        placeholder="Cantidad" formControlName="cantidad" />
+                    </div>
+                  </div>
+              
+                </div>
+              </div>
+             
+              
+          
+            <!-- Botón de Guardar -->
+            <div class="p-3 bg-light mb-4">
+              <div class="row justify-content-end g-2">
+                <div class="col-lg-2">
+                  <button type="submit" class="btn btn-primary w-100">
+                    Guardar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+          
+
+    </div>
+
+</div>
