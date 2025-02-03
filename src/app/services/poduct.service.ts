@@ -10,6 +10,7 @@ import { error } from 'jquery';
 export class PoductService {
 
   private url = 'http://localhost:3000/api/product';
+  private baseUrl= 'http://localhost:3000/api/sale'
   constructor( private http: HttpClient) {}
 
   registroProducto(producto: registerModel): Observable<any> {
@@ -50,6 +51,17 @@ export class PoductService {
       catchError((error) => {
         console.error('Error al eliminar producto:', error);
         throw error; 
+      })
+    );
+  }
+  enviarVenta(cliente: string, saleItems: any[]): Observable<any> {
+    const body = {customer: cliente, saleItems }; 
+    console.log('Datos a enviar:', body); 
+  
+    return this.http.post(`${this.baseUrl}`,body).pipe(
+      catchError(error => {
+        console.error('Error al registrar venta:', error);
+        throw error;
       })
     );
   }

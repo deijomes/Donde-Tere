@@ -23,16 +23,24 @@ export class VentaComponent  implements OnInit{
   productosSeleccionados: any[] = [];
   ProductoSeleccionado: ventaModel[] = []
   
+  
   constructor(private fb: FormBuilder, private serviceproduct: PoductService) {
     this.saleForm = this.fb.group({
-      codigo: [''],
-      articulo: [''],
-      cantidad: ['']
+      codigo: '',
+      articulo: ['', Validators.required],
+      cantidad: ['', Validators.required]
     });
+
+    
+
+  
+    
   }
   
   ngOnInit(): void {
     this.producto();
+    this.cargarProductosSeleccionados()
+   
     
   }
   
@@ -76,7 +84,8 @@ export class VentaComponent  implements OnInit{
     if (productoEncontrado) {
       this.saleForm.patchValue({
         articulo: productoEncontrado.name,
-        cantidad: '',Validators
+        cantidad: '',
+       
       });
       console.log('Producto seleccionado:', productoEncontrado);
     } else {
@@ -108,18 +117,64 @@ export class VentaComponent  implements OnInit{
   
       // Agregar el producto a la lista de productos seleccionados
       this.productosSeleccionados.push(productoAAgregar);
+      localStorage.setItem('productosSeleccionados', JSON.stringify(this.productosSeleccionados));
       console.log('Producto agregado:', productoAAgregar);
+  
+
       this.saleForm.reset();  // Reiniciar el formulario después de agregar
     } else {
       console.log('Producto no encontrado');
     }
   }
-  
-  
-  
- 
 
- 
+  cargarProductosSeleccionados() {
+    const productosGuardados = localStorage.getItem('productosSeleccionados');
+    if (productosGuardados) {
+      this.productosSeleccionados = JSON.parse(productosGuardados); // Convertir de JSON a objeto
+      console.log('Productos cargados desde LocalStorage:', this.productosSeleccionados);
+    }
+
+  }
+  enviarVenta() {
+    const saleItems = this.prepararDatosParaAPI();
+    const cliente = "Juan David"; 
+  
+    console.log('Sale Items:', saleItems);
+    console.log('Cliente:', cliente);
+  
+    this.serviceproduct.enviarVenta(cliente, saleItems).subscribe({
+      next: (response) => {
+        console.log('Venta enviada con éxito:', response);
+        this.eliminarProductosGuardados()
+      },
+      error: (err) => {
+        console.error('Error al enviar la venta:', err);
+      }
+    });
+
+    this.ProductoSeleccionado
+
+    this.eliminarProductosGuardados()
+  }
+  
+
+  // Preparar los productos para el formato correcto
+  prepararDatosParaAPI(): any[] {
+    return this.productosSeleccionados.map(producto => {
+      return {
+        productId: producto.id, 
+        quantity: producto.quantity
+      };
+      
+    });
+
+    
+  }
+
+  eliminarProductosGuardados() {
+    localStorage.removeItem('productosSeleccionados');
+    console.log('Productos eliminados de localStorage.');
+  }
 }  
 
  
