@@ -18,9 +18,11 @@ import { ventaModel } from '../../models/venta.Model';
 export class VentaComponent  implements OnInit{
 
   saleForm: FormGroup;
+  clienteForm : FormGroup;
   productos: any[] = [];
   filteredProductos: any[] = [];
   productosSeleccionados: any[] = [];
+  prodcutotabla: boolean = false
   ProductoSeleccionado: ventaModel[] = []
   
   
@@ -30,6 +32,10 @@ export class VentaComponent  implements OnInit{
       articulo: ['', Validators.required],
       cantidad: ['', Validators.required]
     });
+
+    this.clienteForm = this.fb.group({
+      cliente : ['',Validators.required]
+    })
 
     
 
@@ -119,8 +125,8 @@ export class VentaComponent  implements OnInit{
       this.productosSeleccionados.push(productoAAgregar);
       localStorage.setItem('productosSeleccionados', JSON.stringify(this.productosSeleccionados));
       console.log('Producto agregado:', productoAAgregar);
-  
 
+      this.prodcutotabla = true
       this.saleForm.reset();  // Reiniciar el formulario después de agregar
     } else {
       console.log('Producto no encontrado');
@@ -135,9 +141,11 @@ export class VentaComponent  implements OnInit{
     }
 
   }
+
   enviarVenta() {
     const saleItems = this.prepararDatosParaAPI();
-    const cliente = "Juan David"; 
+    const cliente = this.clienteForm.value.cliente;
+    
   
     console.log('Sale Items:', saleItems);
     console.log('Cliente:', cliente);
@@ -145,16 +153,19 @@ export class VentaComponent  implements OnInit{
     this.serviceproduct.enviarVenta(cliente, saleItems).subscribe({
       next: (response) => {
         console.log('Venta enviada con éxito:', response);
-        this.eliminarProductosGuardados()
+        this.eliminarProductosGuardados(); 
+        this.productosSeleccionados = [];
+        this.prodcutotabla = false
+        this.clienteForm.reset() 
+        
       },
       error: (err) => {
         console.error('Error al enviar la venta:', err);
       }
     });
 
-    this.ProductoSeleccionado
+    
 
-    this.eliminarProductosGuardados()
   }
   
 
