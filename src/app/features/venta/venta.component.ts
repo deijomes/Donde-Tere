@@ -154,6 +154,16 @@ export class VentaComponent  implements OnInit{
     this.serviceproduct.enviarVenta(cliente, saleItems).subscribe({
       next: (response) => {
         console.log('Venta enviada con éxito:', response);
+
+        Swal.fire({
+          title: 'Venta Registrada',
+          text: 'La venta se ha registrado con éxito.',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            confirmButton: 'swal-success-btn'
+          }
+        });
         this.eliminarProductosGuardados(); 
         this.productosSeleccionados = [];
         this.prodcutotabla = false
@@ -162,6 +172,19 @@ export class VentaComponent  implements OnInit{
       },
       error: (err) => {
         console.error('Error al enviar la venta:', err);
+        const mensajeError = err.error?.message || 'Hubo un problema al registrar la venta.';
+
+        // ✅ Alerta de error con mensaje dinámico
+        Swal.fire({
+         
+          text: mensajeError,
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            confirmButton: 'swal-success-btn'
+          }
+        });
+      
       }
     });
 
@@ -276,6 +299,15 @@ export class VentaComponent  implements OnInit{
       }
     });
   }
+
+  getTotal(): number {
+    
+    return this.productosSeleccionados.reduce((sum, producto) => {
+      const totalProducto = producto.price * producto.quantity; // Total por producto
+      return sum + totalProducto; // Sumar al total general
+    }, 0);
+  }
+  
   
 }  
 

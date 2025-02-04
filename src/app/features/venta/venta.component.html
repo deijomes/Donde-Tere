@@ -102,6 +102,7 @@
 
                     <th class="text-center">Precio</th>
                     <th class="text-center">Cantidad</th>
+                    <th class="text-center">Total</th>
                     <th class=""><iconify-icon icon="solar:settings-bold-duotone"></iconify-icon>Opciones
                     </th>
                 </tr>
@@ -109,24 +110,35 @@
             <tbody>
 
 
-                <tr *ngFor="let producto of productosSeleccionados">
+                <tr *ngFor="let producto of productosSeleccionados, let i = index">
                     <td class="text-center letra">{{ producto.name }}</td>
 
                     <td class="text-center">{{ producto.code }}</td>
 
                     <td class="text-center">{{ producto.price }}</td>
                     <td class="text-center">{{ producto.quantity }}</td>
+                    <td class="text-center">{{ producto.price * producto.quantity }}</td>
                     <td class="text-center">
                         <div class="d-flex gap-2 ">
 
                             <a (click)="modificarProducto(producto)"  class="btn btn-soft-danger btn-sm custom-btn"><iconify-icon icon="solar:pen-2-broken"
                                     class="align-middle fs-18"></iconify-icon></a>
-                            <a  (click)="eliminarProducto(producto)" class="btn btn-soft-danger btn-sm"><iconify-icon
+                            <a  (click)="eliminarProducto(i)" class="btn btn-soft-danger btn-sm"><iconify-icon
                                     icon="solar:trash-bin-minimalistic-2-broken"
                                     class="align-middle fs-18"></iconify-icon></a>
                         </div>
                     </td>
+
+                    
+                    
                 </tr>
+
+                <tr *ngIf="productosSeleccionados.length > 0">
+                    <td colspan="4" class="text-end fw-bold">Total:</td>
+                    <td class="text-center fw-bold">{{ getTotal() }}</td>
+                    <td></td> <!-- Celda vacía para los botones -->
+                  </tr>
+                
 
 
             </tbody>

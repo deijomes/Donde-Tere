@@ -252,8 +252,17 @@ td.text {
 }
 
 
+.swal-success-btn {
+  background-color: orange !important; /* Azul */
+  color: white !important;
+  border: none !important;
+}
+.swal-confirm-btn{
+  background-color: orange !important; /* Azul */
+  color: white !important;
+  border: none !important;
 
-
+}
 
 
 
