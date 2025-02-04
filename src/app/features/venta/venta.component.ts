@@ -5,6 +5,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
 import { PoductService } from '../../services/poduct.service';
 import { ventaModel } from '../../models/venta.Model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-venta',
@@ -186,6 +187,96 @@ export class VentaComponent  implements OnInit{
     localStorage.removeItem('productosSeleccionados');
     console.log('Productos eliminados de localStorage.');
   }
+
+  modificarProducto(producto: any) {
+    Swal.fire({
+      title: 'Modificar Cantidad',
+      input: 'number',
+      inputValue: producto.quantity, // Mostrar cantidad actual
+      inputAttributes: {
+        min: '1'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Guardar',
+      cancelButtonText: 'Cancelar',
+      customClass: {
+        popup: 'mi-alerta',  // Clase para personalizar la alerta
+        input: 'mi-input',  // Clase para personalizar el input
+        confirmButton: 'mi-boton-confirmar',  // Clase para el botón de confirmar
+        cancelButton: 'mi-boton-cancelar'  // Clase para el botón de cancelar
+      },
+      preConfirm: (nuevaCantidad) => {
+        if (!nuevaCantidad || nuevaCantidad <= 0) {
+          Swal.showValidationMessage('La cantidad debe ser mayor a 0');
+          return false;
+        }
+        return nuevaCantidad;
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        this.modificarCantidad(producto.id, Number(result.value));
+      }
+    });
+  }
+  
+  modificarCantidad(productId: string, nuevaCantidad: number) {
+    const productosGuardados = localStorage.getItem('productosSeleccionados');
+    if (productosGuardados) {
+      let productos = JSON.parse(productosGuardados);
+  
+      // Buscar el producto por su ID y actualizar la cantidad
+      const index = productos.findIndex((p: any) => p.id === productId);
+      if (index !== -1) {
+        productos[index].quantity = nuevaCantidad;
+  
+        // Guardar los productos actualizados en localStorage
+        localStorage.setItem('productosSeleccionados', JSON.stringify(productos));
+  
+        // Actualizar la lista en el componente
+        this.productosSeleccionados = productos;
+  
+        Swal.fire('¡Cantidad actualizada!', '', 'success');
+      } else {
+        Swal.fire('Error', 'Producto no encontrado en localStorage.', 'error');
+      }
+    }
+  }
+
+ 
+  
+  eliminarProducto(index:number) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Este producto será eliminado de la lista.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'eliminar',
+      cancelButtonText: 'Cancelar',
+      customClass: {
+        confirmButton: 'swal-confirm-btn',
+        cancelButton: 'swal-cancel-btn'
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        let productos = JSON.parse(localStorage.getItem('productosSeleccionados') || '[]');
+  
+        // 2️Eliminar el producto por su índice
+        productos.splice(index, 1);
+  
+        
+        localStorage.setItem('productosSeleccionados', JSON.stringify(productos));
+  
+        
+        this.cargarProductosSeleccionados();
+  
+       
+        Swal.fire('Eliminado', 'El producto ha sido eliminado.', 'success');
+      }
+    });
+  }
+  
 }  
 
  
