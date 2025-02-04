@@ -12,6 +12,7 @@ export class PoductService {
   private url = 'http://localhost:3000/api/product';
   private baseUrl= 'http://localhost:3000/api/sale'
   private urlstock = 'http://localhost:3000/api/Product/add-stock/'
+  private urlmov= 'http://localhost:3000/api/movement'
   constructor( private http: HttpClient) {}
 
   registroProducto(producto: registerModel): Observable<any> {
@@ -76,6 +77,23 @@ export class PoductService {
       })
     );
 
+
+  }
+
+  getmovimientos():Observable<any>{
+
+    return this.http.get(`${this.urlmov}`)
+
+  }
+
+  eliminarMovimiento(id: any): Observable<any>{
+
+    return this.http.delete(`${this.urlmov}/${id}`).pipe(
+      catchError((error) => {
+        console.error('Error al eliminar producto:', error);
+        throw error; 
+      })
+    );
 
   }
 

@@ -91,7 +91,7 @@ export class InventarioComponent implements OnInit {
   stock(id: string) {
 
     Swal.fire({
-      title: 'Modificar Cantidad',
+      title: 'Agregar a stock',
       input: 'number',
      
       inputAttributes: {
@@ -146,7 +146,7 @@ export class InventarioComponent implements OnInit {
         
         this.http.agregarstock(id, nuevaCantidad).subscribe({
           next: (response) => {
-            Swal.fire('¡stock agregado!', '', 'success');
+            Swal.fire('¡Stock agregado!', '', 'success');
             this.registros(); 
           },
           error: (err) => {

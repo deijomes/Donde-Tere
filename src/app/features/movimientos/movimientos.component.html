@@ -18,6 +18,8 @@
 </div-> -->
 
 <!-- Formulario de Registro de Entradas -->
+
+<!--
 <div class="card " *ngIf="selectedItem === 'Entradas' ">
     <div class="p-3 mb-3 fondo">
         <div class="d-flex align-items-center justify-content-between">
@@ -56,16 +58,15 @@
             <table class="table table-hover table-nowrap table-centered m-0" style="table-layout: fixed; width: 100%;">
               <thead>
                 <tr>
-                  <th class="text-muted ps-3" style="padding: 4px; padding-left: 8px;">Producto</th> <!-- Ajuste más pequeño -->
+                  <th class="text-muted ps-3" style="padding: 4px; padding-left: 8px;">Producto</th> 
                   <th class="text-muted" style="padding: 4px;">Código</th>
                 </tr>
               </thead>
               <tbody>
                 <tr  *ngFor="let producto of filteredProductos" (click)="onSelectProducto(producto)">
                   <td class="ps-3" style="padding: 4px; display: flex; align-items: center; justify-content: space-between;">
-                    <!-- Botón alineado a la izquierda -->
                   
-                    <!-- Nombre del producto alineado a la derecha -->
+                  
                     <span>{{ producto.articulo }}</span>
                   </td>
                   <td style="padding: 4px;">
@@ -178,8 +179,11 @@
     </div>
 
 </div>
+-->
 
-<!-- Formulario de Registro de Salidas -->
+
+<!--
+
 <div class="card" *ngIf="selectedItem === 'Salidas'">
     <div class="p-3 mb-3 fondo">
         <div class="d-flex align-items-center justify-content-between">
@@ -274,3 +278,68 @@
         </div>
     </form>
 </div>
+
+-->
+
+
+
+
+    <div class="row">
+         <div class="col-xl-12">
+              <div class="card">
+                   <div class="d-flex card-header justify-content-between align-items-center">
+                        <div>
+                             <h4 class="card-title">Registro Movimientos</h4>
+                        </div>
+                      
+                   </div>
+                   <div>
+                        <div class="table-responsive">
+                             <table class="table align-middle mb-0 table-hover table-centered">
+                                  <thead class="bg-light-subtle">
+                                       <tr>
+                                           
+                                       
+                                            <th class="text-center">Producto</th>
+                                            <th class="text-center">Movimiento</th>
+                                            <th class="text-center">Cantidad</th>
+                                            <th class="text-center">Fecha</th>
+                                            <th ></th>
+                                           
+                                       </tr>
+                                  </thead>
+                                  <tbody  *ngFor="let movimiento of listMovimientos">
+                                       <tr>
+                                        
+                                            <td class="text-center" ></td>
+                                            <td class="text-center">{{ movimiento.reason }}</td>
+                                            <td class="text-center">{{ movimiento.quantity }}</td>   
+                                            <td class="text-center" >{{ movimiento.createdAt | date:'dd/MM/yyyy' }}</td>
+                                            <td>
+                                                <div class="d-flex gap-2">
+                                                     
+                                                     <a (click)="limpiarMovimiento(movimiento.id)" class="btn btn-soft-danger btn-sm"><iconify-icon icon="solar:broom-broken" class="align-middle fs-18"></iconify-icon></a>
+                                                </div>
+                                           </td>
+                                            
+                                       </tr>
+
+                                       
+
+
+                                       
+                                      
+
+
+                                       
+                                       
+                                  </tbody>
+                             </table>
+                        </div>
+                        <!-- end table-responsive -->
+                   </div>
+                  
+              </div>
+         </div>
+    </div>
+

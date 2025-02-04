@@ -5,6 +5,8 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { BuscadorService } from '../../services/buscador.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { registroModel } from '../../models/registroModel';
+import { PoductService } from '../../services/poduct.service';
+import { error } from 'jquery';
 
 
 
@@ -27,6 +29,7 @@ export class MovimientosComponent implements OnInit {
 
 
   listaproducto: any[] = []
+  listMovimientos:any [] = []
 
   filteredProductos: any[] = [];
   mensajeNoEncontrado: string =''
@@ -41,9 +44,14 @@ export class MovimientosComponent implements OnInit {
   salidadForm!: FormGroup
 
 
-  constructor(private serviceproduct: BuscadorService, private bf: FormBuilder) { }
+  constructor(private serviceproduct: BuscadorService,  private http: PoductService, private bf: FormBuilder) { }
 
   ngOnInit(): void {
+
+    this.getmovimientos()
+
+
+
     this.getform(); // Inicializa el formulario de entrada
     this.getforms(); // Inicializa el formulario de salida
   
@@ -191,6 +199,27 @@ export class MovimientosComponent implements OnInit {
   }
   
 
+  getmovimientos(){
+    this.http.getmovimientos().subscribe({
+      next:(response)=>{
+
+      this.listMovimientos = response
+      console.log('listamovimientos', this.listMovimientos)
+      }
+    })
+  }
+  
+  limpiarMovimiento(id: string) {
+    this.http.eliminarMovimiento(id).subscribe({
+      next: (response: any) => {
+        console.log("Producto eliminado con éxito:", response);
+      },
+      error: (error: any) => {
+        console.error("Error al eliminar producto:", error);
+      }
+    });
+  }
+  
   
 
 
