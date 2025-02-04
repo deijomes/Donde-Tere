@@ -12,28 +12,28 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-inventario',
   standalone: true,
-  imports: [CommonModule,  RouterOutlet,NgxPaginationModule],
+  imports: [CommonModule, RouterOutlet, NgxPaginationModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './inventario.component.html',
   styleUrl: './inventario.component.css'
 })
-export class InventarioComponent implements OnInit{
+export class InventarioComponent implements OnInit {
 
   productos: registerModel[] = [];
-  
-  mostrarTabla : boolean = true
-  registrosCargados: boolean = false; 
+
+  mostrarTabla: boolean = true
+  registrosCargados: boolean = false;
 
 
   currentPage: number = 1;  // Página actual (comienza en 1)
   itemsPerPage: number = 5;  // Elementos por página (puedes cambiar este valor)
   totalItems: number = 0;  // Total de productos que vamos a paginar
 
-  constructor( private router: Router, private http: PoductService) {
+  constructor(private router: Router, private http: PoductService) {
 
-  
 
-   
+
+
   }
 
   ngOnInit(): void {
@@ -77,26 +77,106 @@ export class InventarioComponent implements OnInit{
     });
   }
 
-    
 
-  
+
+
   registro() {
     this.router.navigateByUrl('productos/registrar');
     this.mostrarTabla = false
-   
+
   }
 
-  edicion(id: string){
+
+
+  stock(id: string) {
+
+    Swal.fire({
+      title: 'Modificar Cantidad',
+      input: 'number',
+     
+      inputAttributes: {
+        min: '1'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Guardar',
+      cancelButtonText: 'Cancelar',
+      inputValidator: (value: string) => {
+        
+        const cantidad = Number(value);
+      
+       
+        if (!value || cantidad <= 0) {
+          return 'Por favor ingrese una cantidad válida';
+        }
+      
+        return null; 
+      }
+  
+      
+    }).then((result) => {
+      
+      if (result.isConfirmed && result.value !== undefined) {
+        
+        const nuevaCantidad = Number(result.value); 
+  
+      
+        this.agregarstock(id, nuevaCantidad);
+      }
+    });
+
+  }
+
+
+  agregarstock(id: string, nuevaCantidad: number) {
+    
+    Swal.fire({
+      title: '¿Está seguro de que desea actualizar Stock?',
+     
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Agregar',
+      cancelButtonText: 'Cancelar',
+      customClass: {
+        confirmButton: 'swal-confirm-btn',
+        cancelButton: 'swal-cancel-btn'
+      }
+    }).then((result) => {
+      
+      if (result.isConfirmed) {
+        
+        this.http.agregarstock(id, nuevaCantidad).subscribe({
+          next: (response) => {
+            Swal.fire('¡stock agregado!', '', 'success');
+            this.registros(); 
+          },
+          error: (err) => {
+            Swal.fire('Error', 'Hubo un problema al actualizar la cantidad', 'error');
+          }
+        });
+      } else {
+        
+        Swal.fire('Cancelado', 'La actualización no se ha realizado', 'info');
+      }
+    });
+  }
+  
+
+  
+
+
+
+
+  edicion(id: string) {
 
     console.log(id)
-    
+
     this.router.navigateByUrl(`/productos/actualizar/${id}`)
-    
-    
+
+
 
   }
 
-  eliminar(id:string): void {
+  eliminar(id: string): void {
 
     console.log(id)
 
@@ -106,8 +186,8 @@ export class InventarioComponent implements OnInit{
       text: "Esta acción no se puede deshacer",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#ff6d2fe3", 
-      cancelButtonColor: "##dc3545", 
+      confirmButtonColor: "#ff6d2fe3",
+      cancelButtonColor: "##dc3545",
       confirmButtonText: "Eliminar",
       cancelButtonText: "Cancelar"
     }).then((result) => {
@@ -116,13 +196,13 @@ export class InventarioComponent implements OnInit{
           next: (response) => {
             console.log("Producto eliminado con éxito:", response);
             Swal.fire({
-                                title: '¡Éxito!',
-                                text: 'El producto ha sido eliminado.',
-                                icon: 'success',
-                                timer: 1000, 
-                                showConfirmButton: false
-                              });
-            
+              title: '¡Éxito!',
+              text: 'El producto ha sido eliminado.',
+              icon: 'success',
+              timer: 1000,
+              showConfirmButton: false
+            });
+
             this.registros();
           },
           error: (error) => {
@@ -133,16 +213,16 @@ export class InventarioComponent implements OnInit{
       }
     });
   }
-   
+
 
   recargarTabla() {
-    this.registros();  
+    this.registros();
   }
-  
+
 }
 
-  
 
-  
+
+
 
 

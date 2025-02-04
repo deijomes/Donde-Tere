@@ -11,6 +11,7 @@ export class PoductService {
 
   private url = 'http://localhost:3000/api/product';
   private baseUrl= 'http://localhost:3000/api/sale'
+  private urlstock = 'http://localhost:3000/api/Product/add-stock/'
   constructor( private http: HttpClient) {}
 
   registroProducto(producto: registerModel): Observable<any> {
@@ -65,6 +66,20 @@ export class PoductService {
       })
     );
   }
+
+  agregarstock(id: string, cantidad: number):Observable<any> {
+    const body = {quantity: cantidad};
+    return this.http.post(`${this.urlstock}${id}`,body).pipe(
+      catchError(error => {
+        console.error('Error al actualizarstock:', error);
+        throw error;
+      })
+    );
+
+
+  }
+
+
   
 
 
