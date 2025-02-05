@@ -1,3 +1,18 @@
+<div class="row mt-3 gy-2">
+    <div class="col-lg-2 col-6 ms-auto"> <!-- Mueve la columna al final -->
+        <div (click)="historial()" class="d-flex align-items-center justify-content-end cursor-pointer">
+            <!-- Justifica el contenido a la derecha -->
+            <div class="">
+                <iconify-icon icon="solar:notebook-bold-duotone" class="fs-28 text-primary"></iconify-icon>
+            </div>
+            <div class="ms-2"> <!-- Agrega separación entre el icono y el texto -->
+                <h5 class="mb-1">Historial</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="card ">
     <div class="p-3 mb-3 fondo">
         <div class="d-flex align-items-center justify-content-between">
@@ -147,21 +162,18 @@
         <div class="p-3 bg-light mb-4">
             <form [formGroup]="clienteForm" (ngSubmit)="enviarVenta()">
                 <div class="row d-flex justify-content-between align-items-center g-2">
-                    <!-- Input -->
-
-
+                    
                     <div class="col-lg-6">
-                        <input type="text" id="cantidad-minima" class="form-control no-bg" placeholder="cliente"
-                            formControlName="cliente" />
+                        <input type="text" id="cantidad-minima" class="form-control no-bg" placeholder="Cliente" formControlName="cliente" />
                     </div>
-                    <!-- Botón -->
-                    <div class="col-lg-2 text-end">
-                        <button type="submit" class="btn btn-primary w-100" [disabled]="clienteForm.invalid">
-                            Registrar venta
-                        </button>
+                    
+                    
+                    <div class="col-lg-6 d-flex gap-2 justify-content-end">
+                        <button (click)="cancelarventa()" class="btn btn-outline-secondary w-auto" type="button">Cancelar</button>
+                        <button type="submit" class="btn btn-primary w-auto" [disabled]="clienteForm.invalid">Registrar venta</button>
                     </div>
-
                 </div>
+                
             </form>
         </div>
 
@@ -173,16 +185,23 @@
     <!-- end table-responsive -->
 </div>
 
-<div class="card">
-    <div class="card-header">
-        <h4 class="card-title">Historial</h4>
+
+
+<div *ngIf="mostrarHistorial" class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h4 class="card-title mb-0">Historial</h4>
+        <a (click)="ocultarHistorial()" class="btn btn-light btn-sm">
+            <iconify-icon icon="mdi:close" class="align-middle fs-18"></iconify-icon>
+        </a>
     </div>
+    
     <div class="card-body">
         <div class="position-relative ms-2">
             <span class="position-absolute start-0  top-0 border border-dashed h-100"></span>
 
 
-            <div *ngFor="let salida  of salidas | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }" class="position-relative ps-4">
+            <div *ngFor="let salida  of salidas | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }"
+                class="position-relative ps-4">
                 <div class="mb-4">
                     <span
                         class="position-absolute start-0 avatar-sm translate-middle-x bg-light d-inline-flex align-items-center justify-content-center rounded-circle text-success fs-20">
@@ -195,9 +214,10 @@
 
                         </div>
                         <div class="d-flex justify-content-between align-items-center gap-3">
-                            <p class="mb-0">{{salida.createdAt | date: "yyyy-MM-dd    h:mm a" : 'es' }}</p>
-                            <a (click)="detalle(salida)" class="btn btn-light btn-sm " data-bs-toggle="modal" data-bs-target="#staticBackdrop"><iconify-icon
-                                    icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
+                            <p class="mb-0">{{salida.createdAt | date: "yyyy-MM-dd h:mm a" : 'es' }}</p>
+                            <a (click)="detalle(salida)" class="btn btn-light btn-sm " data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop"><iconify-icon icon="solar:eye-broken"
+                                    class="align-middle fs-18"></iconify-icon></a>
 
                         </div>
 
@@ -208,10 +228,8 @@
 
             <div class="card-footer border-top">
                 <nav aria-label="Page navigation">
-                    <pagination-controls class="pagination justify-content-end mb-0"
-                        (pageChange)="currentPage = $event" 
-                        previousLabel="Anterior" nextLabel="Siguiente"
-                        [responsive]="true" [autoHide]="true">
+                    <pagination-controls class="pagination justify-content-end mb-0" (pageChange)="currentPage = $event"
+                        previousLabel="Anterior" nextLabel="Siguiente" [responsive]="true" [autoHide]="true">
                     </pagination-controls>
                 </nav>
             </div>
@@ -221,52 +239,55 @@
     </div>
 </div>
 
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Factura Detalles</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="card">
-           
-            <div class="card-body">
-              <p><strong>ID de la Factura:</strong> {{ selctSalida.id | id }}</p>
-              <p><strong>Cliente:</strong> {{ selctSalida.customer | uppercase }}</p>
-              <p><strong>Fecha de Registro:</strong> {{ selctSalida.createdAt |date: "yyyy-MM-dd    h:mm a" : 'es' }}</p>
-  
-              <div class="table-responsive mt-3">
-                <table class="table mb-0">
-                  <thead>
-                    <tr>
-                      <th>Nombre del Producto</th>
-                      <th>Cantidad</th>
-                      <th>Precio</th>
-                      <th>Subtotal</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- Iterar sobre los items de venta -->
-                    <tr *ngFor="let item of selctSalida.saleItems">
-                      <td>desconocido</td> <!-- Puedes reemplazar productId con el nombre del producto si lo tienes -->
-                      <td class="text-center">{{ item.quantity }}</td>
-                      <td>${{ item.price }}</td>
-                      <td>${{ item.subtotal }}</td>
-                    </tr>
-                    <tr>
-                      <td colspan="3" class="text-end"><strong>Total de la Factura</strong></td>
-                      <td>${{ selctSalida.total }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Factura Detalles</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-          </div>
+            <div class="modal-body">
+                <div class="card">
+
+                    <div class="card-body">
+                        <p><strong>ID de la Factura:</strong> {{ selctSalida.id | id }}</p>
+                        <p><strong>Cliente:</strong> {{ selctSalida.customer | uppercase }}</p>
+                        <p><strong>Fecha de Registro:</strong> {{ selctSalida.createdAt |date: "yyyy-MM-dd h:mm a" :
+                            'es' }}</p>
+
+                        <div class="table-responsive mt-3">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre del Producto</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Iterar sobre los items de venta -->
+                                    <tr *ngFor="let item of selctSalida.saleItems">
+                                        <td>desconocido</td>
+                                        <!-- Puedes reemplazar productId con el nombre del producto si lo tienes -->
+                                        <td class="text-center">{{ item.quantity }}</td>
+                                        <td>${{ item.price }}</td>
+                                        <td>${{ item.subtotal }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" class="text-end"><strong>Total de la Factura</strong></td>
+                                        <td>${{ selctSalida.total }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>

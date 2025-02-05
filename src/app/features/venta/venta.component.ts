@@ -28,6 +28,7 @@ export class VentaComponent  implements OnInit{
   prodcutotabla: boolean = false
   salidas: any []=[];
   selctSalida : any = []
+  mostrarHistorial: boolean = false
   ProductoSeleccionado: ventaModel[] = []
 
   currentPage: number = 1;  // Página actual (comienza en 1)
@@ -333,6 +334,21 @@ export class VentaComponent  implements OnInit{
     this.selctSalida = salida
     console.log(this.selctSalida)
     
+
+  }
+
+  historial(){
+    this.mostrarHistorial= true
+  }
+  ocultarHistorial(){
+    this.mostrarHistorial = false
+  }
+  cancelarventa(){
+
+    localStorage.removeItem('productosSeleccionados');
+    console.log('Productos eliminados de localStorage.');
+    this.productosSeleccionados= []
+    this.prodcutotabla = false 
 
   }
   
