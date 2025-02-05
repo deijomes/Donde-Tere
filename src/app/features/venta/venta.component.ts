@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NgxPaginationModule } from 'ngx-pagination'
 
 import { PoductService } from '../../services/poduct.service';
 import { ventaModel } from '../../models/venta.Model';
@@ -11,7 +12,7 @@ import { IdPipe } from '../../pipes/id.pipe';
 @Component({
   selector: 'app-venta',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgSelectModule, IdPipe],
+  imports: [CommonModule, ReactiveFormsModule, NgSelectModule, IdPipe ,NgxPaginationModule],
    schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './venta.component.html',
   styleUrl: './venta.component.css',
@@ -28,6 +29,10 @@ export class VentaComponent  implements OnInit{
   salidas: any []=[];
   selctSalida : any = []
   ProductoSeleccionado: ventaModel[] = []
+
+  currentPage: number = 1;  // Página actual (comienza en 1)
+  itemsPerPage: number = 10;  // Elementos por página (puedes cambiar este valor)
+  totalItems: number = 0;  //
   
   
   constructor(private fb: FormBuilder, private serviceproduct: PoductService) {
@@ -327,6 +332,7 @@ export class VentaComponent  implements OnInit{
 
     this.selctSalida = salida
     console.log(this.selctSalida)
+    
 
   }
   

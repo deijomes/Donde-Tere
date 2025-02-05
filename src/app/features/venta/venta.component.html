@@ -182,7 +182,7 @@
             <span class="position-absolute start-0  top-0 border border-dashed h-100"></span>
 
 
-            <div *ngFor="let salida  of salidas" class="position-relative ps-4">
+            <div *ngFor="let salida  of salidas | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }" class="position-relative ps-4">
                 <div class="mb-4">
                     <span
                         class="position-absolute start-0 avatar-sm translate-middle-x bg-light d-inline-flex align-items-center justify-content-center rounded-circle text-success fs-20">
@@ -204,6 +204,16 @@
 
                     </div>
                 </div>
+            </div>
+
+            <div class="card-footer border-top">
+                <nav aria-label="Page navigation">
+                    <pagination-controls class="pagination justify-content-end mb-0"
+                        (pageChange)="currentPage = $event" 
+                        previousLabel="Anterior" nextLabel="Siguiente"
+                        [responsive]="true" [autoHide]="true">
+                    </pagination-controls>
+                </nav>
             </div>
 
 
