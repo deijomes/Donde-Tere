@@ -24,6 +24,9 @@ export class InventarioComponent implements OnInit {
   mostrarTabla: boolean = true
   registrosCargados: boolean = false;
 
+  cantidad: number = 0;
+  idProducto: string = ''
+
 
   currentPage: number = 1;  // Página actual (comienza en 1)
   itemsPerPage: number = 5;  // Elementos por página (puedes cambiar este valor)
@@ -90,40 +93,18 @@ export class InventarioComponent implements OnInit {
 
   stock(id: string) {
 
-    Swal.fire({
-      title: 'Agregar a stock',
-      input: 'number',
-     
-      inputAttributes: {
-        min: '1'
-      },
-      showCancelButton: true,
-      confirmButtonText: 'Guardar',
-      cancelButtonText: 'Cancelar',
-      inputValidator: (value: string) => {
-        
-        const cantidad = Number(value);
-      
-       
-        if (!value || cantidad <= 0) {
-          return 'Por favor ingrese una cantidad válida';
-        }
-      
-        return null; 
-      }
-  
-      
-    }).then((result) => {
-      
-      if (result.isConfirmed && result.value !== undefined) {
-        
-        const nuevaCantidad = Number(result.value); 
-  
-      
-        this.agregarstock(id, nuevaCantidad);
-      }
-    });
+    this.idProducto = id
+  }
 
+  guardarStock() {
+    const cantidad = Number((document.getElementById('cantidad') as HTMLInputElement).value);
+
+    if (cantidad <= 0 || isNaN(cantidad)) {
+      Swal.fire('Error', 'Por favor ingrese una cantidad válida', 'error');
+      return;
+    }
+
+    this.agregarstock(this.idProducto, cantidad);
   }
 
 
@@ -136,10 +117,8 @@ export class InventarioComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Agregar',
       cancelButtonText: 'Cancelar',
-      customClass: {
-        confirmButton: 'swal-confirm-btn',
-        cancelButton: 'swal-cancel-btn'
-      }
+       confirmButtonColor: '#ffa500',
+      
     }).then((result) => {
       
       if (result.isConfirmed) {
@@ -186,7 +165,7 @@ export class InventarioComponent implements OnInit {
       text: "Esta acción no se puede deshacer",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#ff6d2fe3",
+      confirmButtonColor: '#ffa500',
       cancelButtonColor: "##dc3545",
       confirmButtonText: "Eliminar",
       cancelButtonText: "Cancelar"

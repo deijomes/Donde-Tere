@@ -38,6 +38,18 @@
   color: inherit !important; /* Mantener el color del texto */
 }
 
+.btn-hover-dark:hover {
+  background-color: #627cd856 !important; /* Gris más intenso */
+  color: white; /* Color blanco para el icono */
+}
+.swal-confirm-btn{
+  background-color: orange !important; /* Azul */
+  color: white !important;
+  border: none !important;
 
+}
+::ng-deep .swal-confirm-btn{
+  background-color: orange;
+}
 
 
