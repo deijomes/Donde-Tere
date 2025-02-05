@@ -24,6 +24,7 @@ export class VentaComponent  implements OnInit{
   filteredProductos: any[] = [];
   productosSeleccionados: any[] = [];
   prodcutotabla: boolean = false
+  salidas: any []=[]
   ProductoSeleccionado: ventaModel[] = []
   
   
@@ -47,6 +48,7 @@ export class VentaComponent  implements OnInit{
   ngOnInit(): void {
     this.producto();
     this.cargarProductosSeleccionados()
+    this.obtenerSalidas()
    
     
   }
@@ -174,7 +176,7 @@ export class VentaComponent  implements OnInit{
         console.error('Error al enviar la venta:', err);
         const mensajeError = err.error?.message || 'Hubo un problema al registrar la venta.';
 
-        // ✅ Alerta de error con mensaje dinámico
+       
         Swal.fire({
          
           text: mensajeError,
@@ -308,6 +310,14 @@ export class VentaComponent  implements OnInit{
     }, 0);
   }
   
+  obtenerSalidas(){
+    this.serviceproduct.obtenerSalidas().subscribe({
+      next:(Response)=>{
+        this.salidas = Response
+        console.log(this.salidas)
+      }
+    })
+  }
   
 }  
 

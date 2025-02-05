@@ -98,6 +98,12 @@ export class PoductService {
   }
 
 
+  obtenerSalidas():Observable<any>{
+    return this.http.get(`${this.baseUrl}`)
+
+  }
+
+
   
 
 

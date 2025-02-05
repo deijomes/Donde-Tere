@@ -222,5 +222,16 @@ input[type="number"] {
 
 
 
+.ngx-pagination .current {
+  padding: .1875rem .625rem;
+  background:#ff6d2fe3 !important;
+  color: #fefefe;
+  cursor: default;
+  border-radius: 3px;
+}
+
+
+
+
 
 

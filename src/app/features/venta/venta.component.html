@@ -171,3 +171,34 @@
     </div>
     <!-- end table-responsive -->
 </div>
+
+<div class="card">
+    <div class="card-header">
+         <h4 class="card-title">Historial</h4>
+    </div>
+    <div class="card-body">
+         <div class="position-relative ms-2">
+              <span class="position-absolute start-0  top-0 border border-dashed h-100"></span>
+              
+            
+              <div *ngFor="let salida  of salidas" class="position-relative ps-4">
+                   <div class="mb-4">
+                        <span class="position-absolute start-0 avatar-sm translate-middle-x bg-light d-inline-flex align-items-center justify-content-center rounded-circle text-success fs-20">
+                             <i class="bx bx-check-circle"></i>
+                        </span>
+                        <div class="ms-2 d-flex flex-wrap gap-2 align-items-center justify-content-between">
+                             <div>
+                                  <h5 class="mb-1 text-dark fw-medium fs-15"> ID: {{salida.id}}</h5>
+                                  <p class="mb-2"> Total: {{salida.total}}</p>
+                                 
+                             </div>
+                             <p class="mb-0">{{salida.createdAt}}</p>
+
+                        </div>
+                   </div>
+              </div>
+             
+             
+         </div>
+    </div>
+</div>

@@ -8,6 +8,8 @@ import { registroModel } from '../../models/registroModel';
 import { PoductService } from '../../services/poduct.service';
 import { error } from 'jquery';
 
+import { NgxPaginationModule } from 'ngx-pagination'
+
 
 
 
@@ -15,7 +17,7 @@ import { error } from 'jquery';
 @Component({
   selector: 'app-movimientos',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, NgSelectModule,],
+  imports: [ReactiveFormsModule, CommonModule, NgSelectModule,NgxPaginationModule],
    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
   templateUrl: './movimientos.component.html',
@@ -30,6 +32,9 @@ export class MovimientosComponent implements OnInit {
 
   listaproducto: any[] = []
   listMovimientos:any [] = []
+  currentPage: number = 1;  // Página actual (comienza en 1)
+  itemsPerPage: number = 10;  // Elementos por página (puedes cambiar este valor)
+  totalItems: number = 0;  // Total de productos que vamos a paginar
 
   filteredProductos: any[] = [];
   mensajeNoEncontrado: string =''
@@ -208,8 +213,8 @@ export class MovimientosComponent implements OnInit {
       }
     })
   }
-  
-  limpiarMovimiento(id: string) {
+
+  limpiarMovimiento(id: any) {
     this.http.eliminarMovimiento(id).subscribe({
       next: (response: any) => {
         console.log("Producto eliminado con éxito:", response);
