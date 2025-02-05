@@ -25,7 +25,8 @@ export class VentaComponent  implements OnInit{
   filteredProductos: any[] = [];
   productosSeleccionados: any[] = [];
   prodcutotabla: boolean = false
-  salidas: any []=[]
+  salidas: any []=[];
+  selctSalida : any = []
   ProductoSeleccionado: ventaModel[] = []
   
   
@@ -320,6 +321,13 @@ export class VentaComponent  implements OnInit{
         
       }
     })
+  }
+
+  detalle(salida: any){
+
+    this.selctSalida = salida
+    console.log(this.selctSalida)
+
   }
   
 }  

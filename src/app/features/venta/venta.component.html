@@ -195,9 +195,9 @@
 
                         </div>
                         <div class="d-flex justify-content-between align-items-center gap-3">
-                            <p class="mb-0">{{salida.createdAt | date: 'MMMM d, y, hh:mm a'}}</p>
-                            <a class="btn btn-light btn-sm "><iconify-icon icon="solar:eye-broken"
-                                    class="align-middle fs-18"></iconify-icon></a>
+                            <p class="mb-0">{{salida.createdAt | date: 'MMM d, y, hh:mm a'}}</p>
+                            <a (click)="detalle(salida)" class="btn btn-light btn-sm " data-bs-toggle="modal" data-bs-target="#staticBackdrop"><iconify-icon
+                                    icon="solar:eye-broken" class="align-middle fs-18"></iconify-icon></a>
 
                         </div>
 
@@ -210,3 +210,53 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Factura Detalles</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="card">
+           
+            <div class="card-body">
+              <p><strong>ID de la Factura:</strong> {{ selctSalida.id | id }}</p>
+              <p><strong>Cliente:</strong> {{ selctSalida.customer | uppercase }}</p>
+              <p><strong>Fecha de Registro:</strong> {{ selctSalida.createdAt | date: 'MMM d, y, hh:mm a' }}</p>
+  
+              <div class="table-responsive mt-3">
+                <table class="table mb-0">
+                  <thead>
+                    <tr>
+                      <th>Nombre del Producto</th>
+                      <th>Cantidad</th>
+                      <th>Precio</th>
+                      <th>Subtotal</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Iterar sobre los items de venta -->
+                    <tr *ngFor="let item of selctSalida.saleItems">
+                      <td>desconocido</td> <!-- Puedes reemplazar productId con el nombre del producto si lo tienes -->
+                      <td class="text-center">{{ item.quantity }}</td>
+                      <td>${{ item.price }}</td>
+                      <td>${{ item.subtotal }}</td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" class="text-end"><strong>Total de la Factura</strong></td>
+                      <td>${{ selctSalida.total }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
