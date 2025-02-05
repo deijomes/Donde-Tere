@@ -30,6 +30,8 @@ export class VentaComponent  implements OnInit{
   selctSalida : any = []
   mostrarHistorial: boolean = false
   ProductoSeleccionado: ventaModel[] = []
+  cantidad: number = 0
+  idproduct: string = ''
 
   currentPage: number = 1;  // Página actual (comienza en 1)
   itemsPerPage: number = 10;  // Elementos por página (puedes cambiar este valor)
@@ -222,38 +224,43 @@ export class VentaComponent  implements OnInit{
     console.log('Productos eliminados de localStorage.');
   }
 
-  modificarProducto(producto: any) {
+
+  modificarProducto(idproducto: any) {
+
+    this.idproduct = idproducto
+    
+  }
+  actualizarCantidad() {
+    const cantidad = Number((document.getElementById('cantidad') as HTMLInputElement).value);
+  
+    if (cantidad <= 0 || isNaN(cantidad)) {
+      Swal.fire('Error', 'Por favor ingrese una cantidad válida', 'error');
+      return;
+    }
+  
+    // Alerta de confirmación
     Swal.fire({
-      title: 'Modificar Cantidad',
-      input: 'number',
-      inputValue: producto.quantity, // Mostrar cantidad actual
-      inputAttributes: {
-        min: '1'
-      },
+      title: '¿Está seguro de que desea actualizar la cantidad?',
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Guardar',
+      confirmButtonText: 'actualizar',
       cancelButtonText: 'Cancelar',
       customClass: {
-        popup: 'mi-alerta',  // Clase para personalizar la alerta
-        input: 'mi-input',  // Clase para personalizar el input
-        confirmButton: 'mi-boton-confirmar',  // Clase para el botón de confirmar
-        cancelButton: 'mi-boton-cancelar'  // Clase para el botón de cancelar
-      },
-      preConfirm: (nuevaCantidad) => {
-        if (!nuevaCantidad || nuevaCantidad <= 0) {
-          Swal.showValidationMessage('La cantidad debe ser mayor a 0');
-          return false;
-        }
-        return nuevaCantidad;
+        confirmButton: 'swal-confirm-btn',
+        cancelButton: 'swal-cancel-btn'
       }
     }).then((result) => {
       if (result.isConfirmed) {
-        
-        this.modificarCantidad(producto.id, Number(result.value));
+        // Si el usuario confirma, se llama a la función para modificar la cantidad
+        this.modificarCantidad(this.idproduct, cantidad);
+      } else {
+        // Si el usuario cancela, no se hace nada
+        Swal.fire('Cancelado', 'La cantidad no fue modificada', 'info');
       }
     });
   }
-  
+
+ 
   modificarCantidad(productId: string, nuevaCantidad: number) {
     const productosGuardados = localStorage.getItem('productosSeleccionados');
     if (productosGuardados) {

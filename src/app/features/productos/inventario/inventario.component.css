@@ -27,6 +27,7 @@
 ::ng-deep .ngx-pagination .current {
   padding: .1875rem .625rem;
   background: #ff6d2fe3 !important;
+  
   color: #fefefe;
   cursor: default;
   border-radius: 3px;
@@ -42,14 +43,6 @@
   background-color: #627cd856 !important; /* Gris más intenso */
   color: white; /* Color blanco para el icono */
 }
-.swal-confirm-btn{
-  background-color: orange !important; /* Azul */
-  color: white !important;
-  border: none !important;
 
-}
-::ng-deep .swal-confirm-btn{
-  background-color: orange;
-}
 
 
