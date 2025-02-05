@@ -6,11 +6,12 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { PoductService } from '../../services/poduct.service';
 import { ventaModel } from '../../models/venta.Model';
 import Swal from 'sweetalert2';
+import { IdPipe } from '../../pipes/id.pipe';
 
 @Component({
   selector: 'app-venta',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgSelectModule],
+  imports: [CommonModule, ReactiveFormsModule, NgSelectModule, IdPipe],
    schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './venta.component.html',
   styleUrl: './venta.component.css',
@@ -168,6 +169,7 @@ export class VentaComponent  implements OnInit{
         });
         this.eliminarProductosGuardados(); 
         this.productosSeleccionados = [];
+        this.obtenerSalidas()
         this.prodcutotabla = false
         this.clienteForm.reset() 
         
@@ -315,6 +317,7 @@ export class VentaComponent  implements OnInit{
       next:(Response)=>{
         this.salidas = Response
         console.log(this.salidas)
+        
       }
     })
   }
