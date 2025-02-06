@@ -91,6 +91,7 @@ export class RegistrarComponent implements OnInit {
 
     this.router.navigateByUrl('productos')
     this.inventario.recargarTabla();
+    this.inventario.registros()
   
   }
 
