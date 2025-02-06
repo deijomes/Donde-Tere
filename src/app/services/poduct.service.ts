@@ -80,7 +80,7 @@ export class PoductService {
 
   }
 
-  getmovimientos(limit: number = 20, offset :number=0):Observable<any>{
+  getmovimientos(limit: number = 60, offset :number=0):Observable<any>{
 
     return this.http.get(`${this.urlmov}`, {
       params: {
@@ -110,6 +110,11 @@ export class PoductService {
       }
     })
 
+  }
+
+  facturaVenta(id: string): Observable<any>{
+    return this.http.get(`${this.baseUrl}/${id}`)
+    
   }
 
 
