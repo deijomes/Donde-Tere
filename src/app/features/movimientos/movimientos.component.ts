@@ -208,7 +208,7 @@ export class MovimientosComponent implements OnInit {
     this.http.getmovimientos().subscribe({
       next:(response)=>{
 
-      this.listMovimientos = response
+      this.listMovimientos = response.data
       console.log('listamovimientos', this.listMovimientos)
       }
     })

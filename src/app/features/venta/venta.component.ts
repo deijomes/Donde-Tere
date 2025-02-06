@@ -8,11 +8,12 @@ import { PoductService } from '../../services/poduct.service';
 import { ventaModel } from '../../models/venta.Model';
 import Swal from 'sweetalert2';
 import { IdPipe } from '../../pipes/id.pipe';
+import { CapitalizePipe } from "../../pipes/capitalize.pipe";
 
 @Component({
   selector: 'app-venta',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgSelectModule, IdPipe ,NgxPaginationModule],
+  imports: [CommonModule, ReactiveFormsModule, NgSelectModule, IdPipe, NgxPaginationModule, CapitalizePipe],
    schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './venta.component.html',
   styleUrl: './venta.component.css',
@@ -329,7 +330,7 @@ export class VentaComponent  implements OnInit{
   obtenerSalidas(){
     this.serviceproduct.obtenerSalidas().subscribe({
       next:(Response)=>{
-        this.salidas = Response
+        this.salidas = Response.data
         console.log(this.salidas)
         
       }

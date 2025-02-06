@@ -80,9 +80,13 @@ export class PoductService {
 
   }
 
-  getmovimientos():Observable<any>{
+  getmovimientos(limit: number = 20, offset :number=0):Observable<any>{
 
-    return this.http.get(`${this.urlmov}`)
+    return this.http.get(`${this.urlmov}`, {
+      params: {
+      limit : limit.toString(),
+      offset: offset.toString()
+    }})
 
   }
 
@@ -98,10 +102,18 @@ export class PoductService {
   }
 
 
-  obtenerSalidas():Observable<any>{
-    return this.http.get(`${this.baseUrl}`)
+  obtenerSalidas(limit: number = 20, offset: number = 0):Observable<any>{
+    return this.http.get(`${this.baseUrl}`, {
+      params: {
+        limit: limit.toString(),
+        offset: offset.toString()
+      }
+    })
 
   }
+
+
+  
 
 
   

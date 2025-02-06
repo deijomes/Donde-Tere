@@ -269,7 +269,7 @@
                                 <tbody>
                                     <!-- Iterar sobre los items de venta -->
                                     <tr *ngFor="let item of selctSalida.saleItems">
-                                        <td>desconocido</td>
+                                        <td>{{item.product.name|capitalize }}</td>
                                         <!-- Puedes reemplazar productId con el nombre del producto si lo tienes -->
                                         <td class="text-center">{{ item.quantity }}</td>
                                         <td>${{ item.price }}</td>
