@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { BuscadorService } from '../../services/buscador.service';
 import { registroModel } from '../../models/registroModel';
+import { PdfService } from '../../services/pdf.service';
 
 @Component({
   selector: 'app-inventario-general',
@@ -19,7 +20,7 @@ export class InventarioGeneralComponent implements OnInit {
   BusquedaActiva: boolean = false; 
   
   
-  constructor( private servicio : BuscadorService){
+  constructor( private servicio : BuscadorService, private pdf: PdfService){
 
     
     
@@ -41,6 +42,8 @@ export class InventarioGeneralComponent implements OnInit {
         }
       });
     }
+
+    
    
     
   }

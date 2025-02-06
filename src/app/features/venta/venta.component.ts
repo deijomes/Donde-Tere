@@ -9,6 +9,7 @@ import { ventaModel } from '../../models/venta.Model';
 import Swal from 'sweetalert2';
 import { IdPipe } from '../../pipes/id.pipe';
 import { CapitalizePipe } from "../../pipes/capitalize.pipe";
+import { PdfService } from '../../services/pdf.service';
 
 @Component({
   selector: 'app-venta',
@@ -39,7 +40,7 @@ export class VentaComponent  implements OnInit{
   totalItems: number = 0;  //
   
   
-  constructor(private fb: FormBuilder, private serviceproduct: PoductService) {
+  constructor(private fb: FormBuilder, private serviceproduct: PoductService, private pdf : PdfService) {
     this.saleForm = this.fb.group({
       codigo: '',
       articulo: ['', Validators.required],
@@ -341,8 +342,14 @@ export class VentaComponent  implements OnInit{
 
     this.selctSalida = salida
     console.log(this.selctSalida)
+
+
     
 
+  }
+
+  generatePDF() {
+    this.pdf.generateFacturaPDF(this.selctSalida);
   }
 
   historial(){
