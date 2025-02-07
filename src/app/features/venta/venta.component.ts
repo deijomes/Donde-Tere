@@ -209,7 +209,9 @@ export class VentaComponent implements OnInit {
           }
         }).then(() => {
           
-          this.generatePDFF();
+          setTimeout(() => {
+            this.generatePDFF(); 
+          }, 1000); 
         });
 
 
@@ -386,7 +388,11 @@ export class VentaComponent implements OnInit {
 
 
   generatePDF() {
-    this.pdf.generateFacturaPDF(this.selctSalida);
+    setTimeout(()=>{
+      this.pdf.generateFacturaPDF(this.selctSalida);
+
+    },500)
+  
   }
 
   generatePDFF() {
@@ -398,7 +404,18 @@ export class VentaComponent implements OnInit {
 
   historial() {
     this.mostrarHistorial = true
+
+    setTimeout(() => {
+      
+      const destino = document.getElementById('tablaDestino');
+      if (destino) {
+       
+        destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   }
+
+
   ocultarHistorial() {
     this.mostrarHistorial = false
   }
