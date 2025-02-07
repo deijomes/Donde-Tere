@@ -243,10 +243,10 @@ td.text {
 
 .no-bg {
   background-color: transparent !important; /* Se asegura de quitar el color de fondo */
-  border-radius: 15px;
+  border-radius: 5px;
 }
 .custom-ng-select .ng-select-container {
-  border-radius: 15px; /* Ajusta el radio según lo necesites */
+  border-radius: 5px; /* Ajusta el radio según lo necesites */
   border: 1px solid #ccc; /* Opcional: mejora el borde */
   padding: 5px; /* Opcional: mejora el espaciado interno */
 }

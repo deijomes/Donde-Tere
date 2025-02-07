@@ -1,20 +1,19 @@
-
-
-<div class="row mt-3 gy-2 justify-content-end  mb-2">
-   
+<div class="row mt-3 gy-2 justify-content-end mb-2">
     <div class="col-lg-2 col-6 cursor-pointer">
-        <div (click)="historial()" class="d-flex align-items-center gap-2 border-start p-1 border-end">
-             <div class="">
-                  <iconify-icon icon="solar:notebook-bold-duotone" class="fs-28 text-primary"></iconify-icon>
-             </div>
-             <div>
-                  <h5 class="mb-1">Historial</h5>
-                  <p class="mb-0">Visualizar</p>
-             </div>
+        <div (click)="historial()" class="d-flex align-items-center gap-2 border-start border-end p-2 w-100">
+            <div>
+                <iconify-icon icon="solar:notebook-bold-duotone" class="fs-24 text-primary"></iconify-icon>
+            </div>
+            <div>
+                <h6 class="mb-1">Historial</h6>
+                <p class="mb-0 small">Visualizar</p>
+            </div>
         </div>
-   </div>
-   
+    </div>
 </div>
+
+
+
 
 
 <div class="card ">
@@ -45,22 +44,26 @@
 
 
                                 <ng-template ng-header-tmp>
-                                    <table class="table table-sm mb-0 text-center" style="table-layout: fixed; width: 100%;">
+                                    <table class="table table-sm mb-0 text-center"
+                                        style="table-layout: fixed; width: 100%;">
                                         <thead>
                                             <tr class="color">
-                                                <th class="text-start" style="width: 60%;">Artículo</th> 
-                                                <th class="text-start" style="width: 40%;">Código</th> <!-- Alineado a la izquierda -->
+                                                <th class="text-start" style="width: 60%;">Artículo</th>
+                                                <th class="text-start" style="width: 40%;">Código</th>
+                                                <!-- Alineado a la izquierda -->
                                             </tr>
                                         </thead>
                                     </table>
                                 </ng-template>
-                                
+
                                 <ng-template ng-option-tmp let-item="item">
-                                    <table class="table table-sm mb-0 text-center" style="table-layout: fixed; width: 100%;">
+                                    <table class="table table-sm mb-0 text-center"
+                                        style="table-layout: fixed; width: 100%;">
                                         <tbody>
                                             <tr>
-                                                <td class="text-start" style="width: 60%;">{{ item.name }}</td>  
-                                                <td class="text-start" style="width: 40%;">{{ item.code }}</td> <!-- Alineado a la izquierda -->
+                                                <td class="text-start" style="width: 60%;">{{ item.name }}</td>
+                                                <td class="text-start" style="width: 40%;">{{ item.code }}</td>
+                                                <!-- Alineado a la izquierda -->
                                             </tr>
                                         </tbody>
                                     </table>
@@ -138,9 +141,9 @@
                     <td class="text-center">
                         <div class="d-flex gap-2 ">
 
-                            <a (click)="modificarProducto(producto.id)"
-                                class="btn btn-soft-danger btn-sm custom-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop1"><iconify-icon icon="solar:pen-2-broken"
-                                    class="align-middle fs-18"></iconify-icon></a>
+                            <a (click)="modificarProducto(producto.id)" class="btn btn-soft-danger btn-sm custom-btn"
+                                data-bs-toggle="modal" data-bs-target="#staticBackdrop1"><iconify-icon
+                                    icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
                             <a (click)="eliminarProducto(i)" class="btn btn-soft-danger btn-sm"><iconify-icon
                                     icon="solar:trash-bin-minimalistic-2-broken"
                                     class="align-middle fs-18"></iconify-icon></a>
@@ -161,31 +164,73 @@
 
             </tbody>
         </table>
-        <div class="p-3 bg-light mb-4">
-            <form [formGroup]="clienteForm" (ngSubmit)="enviarVenta()">
-                <div class="row d-flex justify-content-between align-items-center g-2">
-                    
-                    <div class="col-lg-6">
-                        <input type="text" id="cantidad-minima" class="form-control no-bg" placeholder="Cliente" formControlName="cliente" />
-                    </div>
-                    
-                    
-                    <div class="col-lg-6 d-flex gap-2 justify-content-end">
-                        <button (click)="cancelarventa()" class="btn btn-outline-secondary w-auto" type="button">Cancelar</button>
-                        <button type="submit" class="btn btn-primary w-auto" [disabled]="clienteForm.invalid">Registrar venta</button>
-                    </div>
-                </div>
-                
-            </form>
-        </div>
 
 
 
 
 
     </div>
-    <!-- end table-responsive -->
+
+    <form [formGroup]="clienteForm" (ngSubmit)="enviarVenta()">
+
+
+
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Datos del cliente</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+
+                        <div class="mb-3">
+                            <label for="meta-title" class="form-label">Meta Title</label>
+                            <input type="text" id="cantidad-minima" class="form-control " placeholder="Cliente"
+                                formControlName="cliente" />
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <form>
+                            <div class="mb-3">
+                                <label for="meta-tag" class="form-label">Meta Tag Keyword</label>
+                                <input type="text" id="meta-tag" class="form-control" placeholder="Enter word">
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="p-3 bg-light mb-3 rounded">
+            <div class="row justify-content-center justify-content-md-end g-2">
+                <div class="col-auto">
+                    <button (click)="cancelarventa()" class="btn btn-outline-secondary w-auto" type="button">
+                        Cancelar
+                    </button>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary w-auto" [disabled]="clienteForm.invalid">
+                        Registrar venta
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+    </form>
+
+
+
+
+
+
 </div>
+
+
+
+
 
 
 
@@ -291,7 +336,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button  (click)="generatePDF()"type="button" class="btn btn-primary" data-bs-dismiss="modal">Generar</button>
+                <button (click)="generatePDF()" type="button" class="btn btn-primary"
+                    data-bs-dismiss="modal">Generar</button>
             </div>
 
             <!-- app.component.html -->
@@ -303,27 +349,29 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">Modificar cantidad</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modificar cantidad</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
 
-         <form>
-              <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Ingrese cantidad:</label>
-                <input type="number" class="form-control" id="cantidad" min="1">
-              </div>
-              
-            </form>
+                <form>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Ingrese cantidad:</label>
+                        <input type="number" class="form-control" id="cantidad" min="1">
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button (click)="actualizarCantidad()" type="button" class="btn btn-primary"
+                    data-bs-dismiss="modal">Guardar</button>
+            </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button (click)="actualizarCantidad()" type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
