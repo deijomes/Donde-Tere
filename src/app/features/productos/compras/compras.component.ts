@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, ViewEncapsulation } from '@angular/core';
 import { PoductService } from '../../../services/poduct.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -12,7 +12,8 @@ import { CommonModule } from '@angular/common';
   imports: [NgSelectModule, ReactiveFormsModule, CommonModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './compras.component.html',
-  styleUrl: './compras.component.css'
+  styleUrl: './compras.component.css',
+  encapsulation: ViewEncapsulation.None
 })
 
 
@@ -38,7 +39,7 @@ export class ComprasComponent implements OnInit {
   ngOnInit(): void {
     this.producto()
   }
-
+ // SESION : 1 OBTENER PRODUCTO, PARA LUEGO SELCCIONARLO Y GUARDARLO EN LOCAL STORAGE...
   producto() {
     this.serviceproduct.obtenerRegistros().subscribe({
       next: (response) => {
@@ -86,6 +87,7 @@ export class ComprasComponent implements OnInit {
       console.log('Producto no encontrado');
     }
   }
+
   agregarcantidad() {
     const codigo = this.comprasForm.value.codigo;
     const cantidad = this.comprasForm.value.cantidad;
@@ -145,28 +147,7 @@ export class ComprasComponent implements OnInit {
 
   }
 
-  modificarCantidad(productId: string, nuevaCantidad: number) {
-    const productosGuardados = localStorage.getItem('productosSeleccionados');
-    if (productosGuardados) {
-      let productos = JSON.parse(productosGuardados);
-
-      // Buscar el producto por su ID y actualizar la cantidad
-      const index = productos.findIndex((p: any) => p.id === productId);
-      if (index !== -1) {
-        productos[index].quantity = nuevaCantidad;
-
-        // Guardar los productos actualizados en localStorage
-        localStorage.setItem('productosSeleccionados', JSON.stringify(productos));
-
-        // Actualizar la lista en el componente
-        this.productosSeleccionados = productos;
-
-        Swal.fire('¡Cantidad actualizada!', '', 'success');
-      } else {
-        Swal.fire('Error', 'Producto no encontrado en localStorage.', 'error');
-      }
-    }
-  }
+  
 
    eliminarProducto(index: number) {
       Swal.fire({
@@ -207,6 +188,64 @@ export class ComprasComponent implements OnInit {
         return sum + totalProducto; // Sumar al total general
       }, 0);
     }
+
+  //SESION TERMINADA : 1
+
+  //SESION 2: LOGICA BOTON DE MODFICAR CANTIDAD Y ELIMINAR
+   actualizarCantidad() {
+      const cantidad = Number((document.getElementById('cantidad') as HTMLInputElement).value);
+  
+      if (cantidad <= 0 || isNaN(cantidad)) {
+        Swal.fire('Error', 'Por favor ingrese una cantidad válida', 'error');
+        return;
+      }
+  
+      // Alerta de confirmación
+      Swal.fire({
+        title: '¿Está seguro de que desea actualizar la cantidad?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'actualizar',
+        cancelButtonText: 'Cancelar',
+        customClass: {
+          confirmButton: 'swal-confirm-btn',
+          cancelButton: 'swal-cancel-btn'
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Si el usuario confirma, se llama a la función para modificar la cantidad
+          this.modificarCantidad(this.idproduct, cantidad);
+        } else {
+          // Si el usuario cancela, no se hace nada
+          Swal.fire('Cancelado', 'La cantidad no fue modificada', 'info');
+        }
+      });
+    }
+  
+  
+    modificarCantidad(productId: string, nuevaCantidad: number) {
+      const productosGuardados = localStorage.getItem('productosSeleccionados');
+      if (productosGuardados) {
+        let productos = JSON.parse(productosGuardados);
+  
+        // Buscar el producto por su ID y actualizar la cantidad
+        const index = productos.findIndex((p: any) => p.id === productId);
+        if (index !== -1) {
+          productos[index].quantity = nuevaCantidad;
+  
+          // Guardar los productos actualizados en localStorage
+          localStorage.setItem('productosSeleccionados', JSON.stringify(productos));
+  
+          // Actualizar la lista en el componente
+          this.productosSeleccionados = productos;
+  
+          Swal.fire('¡Cantidad actualizada!', '', 'success');
+        } else {
+          Swal.fire('Error', 'Producto no encontrado en localStorage.', 'error');
+        }
+      }
+    }
+  
   
   
 

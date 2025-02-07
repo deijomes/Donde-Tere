@@ -40,25 +40,23 @@
                                 (change)="productoSeleccionado($event)">
 
 
-                                <!-- Opción personalizada con cabecera (solo una vez) -->
                                 <ng-template ng-header-tmp>
-                                    <table class="table table-sm mb-0">
+                                    <table class="table table-sm mb-0 text-center" style="table-layout: fixed; width: 100%;">
                                         <thead>
                                             <tr class="color">
-                                                <th>Artículo</th>
-                                                <th class="text">Código</th>
+                                                <th class="text-start" style="width: 60%;">Artículo</th> 
+                                                <th class="text-start" style="width: 40%;">Código</th> <!-- Alineado a la izquierda -->
                                             </tr>
                                         </thead>
                                     </table>
                                 </ng-template>
-
-                                <!-- Opción personalizada para cada producto -->
+                                
                                 <ng-template ng-option-tmp let-item="item">
-                                    <table class="table table-sm mb-0">
+                                    <table class="table table-sm mb-0 text-center" style="table-layout: fixed; width: 100%;">
                                         <tbody>
                                             <tr>
-                                                <td>{{ item.name }}</td>
-                                                <td class="text">{{ item.code }}</td>
+                                                <td class="text-start" style="width: 60%;">{{ item.name }}</td>  
+                                                <td class="text-start" style="width: 40%;">{{ item.code }}</td> <!-- Alineado a la izquierda -->
                                             </tr>
                                         </tbody>
                                     </table>
@@ -194,7 +192,9 @@
             <iconify-icon icon="mdi:close" class="align-middle fs-18"></iconify-icon>
         </a>
     </div>
-    
+
+
+    <!--HISTORIAL-->
     <div class="card-body">
         <div class="position-relative ms-2">
             <span class="position-absolute start-0  top-0 border border-dashed h-100"></span>
