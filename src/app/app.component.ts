@@ -12,6 +12,7 @@ import { ActualizarComponent } from './features/productos/actualizar/actualizar.
 import { LoginComponent } from './auth/login/login.component';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
+import { ComprasComponent } from './features/productos/compras/compras.component';
 
 
 @Component({
@@ -19,7 +20,7 @@ import { MatInputModule } from '@angular/material/input';
   standalone: true,
   imports: [RouterOutlet, SidebarComponent, NavbarComponent, RegistrarComponent, InventarioComponent,
     VentaComponent, VentasTotalesComponent, InventarioGeneralComponent, MovimientosComponent,
-    ActualizarComponent, LoginComponent, CommonModule,  MatInputModule],
+    ActualizarComponent, LoginComponent, CommonModule,  MatInputModule, ComprasComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA], // Añade esta línea
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

@@ -7,6 +7,7 @@ import { InventarioGeneralComponent } from './features/inventario-general/invent
 import { MovimientosComponent } from './features/movimientos/movimientos.component';
 import { PRODUCTOS_ROUTES } from './features/productos/registro.routes';
 import { LoginComponent } from './auth/login/login.component';
+import { ComprasComponent } from './features/productos/compras/compras.component';
 
 // export const routes: Routes = [
 //   { path: '', redirectTo: 'inventarioo', pathMatch: 'full' },
@@ -42,6 +43,7 @@ export const routes: Routes = [
         children: PRODUCTOS_ROUTES
     },
     { path: 'movimientos', component: MovimientosComponent, },
+    {path: 'compras', component :ComprasComponent},
     { path: 'ventas', component: VentaComponent, },
     { path: 'ventastotales', component: VentasTotalesComponent, },
     { path: 'login', component: LoginComponent },
