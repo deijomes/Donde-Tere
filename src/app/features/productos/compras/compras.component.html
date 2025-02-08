@@ -1,7 +1,6 @@
-
 <div class="row mt-3 gy-2 justify-content-end mb-2">
     <div class="col-lg-2 col-6 cursor-pointer">
-        <div  class="d-flex align-items-center gap-2 border-start border-end p-2 w-100">
+        <div (click)="historial()" class="d-flex align-items-center gap-2 border-start border-end p-2 w-100">
             <div>
                 <iconify-icon icon="solar:notebook-bold-duotone" class="fs-24 text-primary"></iconify-icon>
             </div>
@@ -17,9 +16,9 @@
     <div class="p-3 mb-0 fondo">
         <div class="d-flex align-items-center justify-content-between">
             <h4 class="card-title mi-color-letra">Registro de compras</h4>
-          
+
         </div>
-        
+
     </div>
 
 
@@ -170,51 +169,179 @@
 
 
     </div>
-    <div class="card">
-        <div class="card-header">
-            <h4 class="card-title">Datos del proveedor</h4>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-lg-6">
-                    <form>
+
+    <form [formGroup]="proveedorForm" (ngSubmit)="enviarCompra()">
+
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Datos del proveedor</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-6">
+
                         <div class="mb-3">
-                            <label for="meta-title" class="form-label">Meta Title</label>
-                            <input type="text" id="meta-title" class="form-control" placeholder="Enter Title">
+                            <label for="meta-title" class="form-label">Proveedor</label>
+                            <input type="text" id="meta-title" class="form-control" placeholder=""  formControlName="proveedor">
                         </div>
-                    </form>
-                </div>
-                <div class="col-lg-6">
-                    <form>
+
+                    </div>
+                    <div class="col-lg-6">
+
                         <div class="mb-3">
-                            <label for="meta-tag" class="form-label">Meta Tag Keyword</label>
-                            <input type="text" id="meta-tag" class="form-control" placeholder="Enter word">
+                            <label for="meta-tag" class="form-label"> Identificion</label>
+                            <input type="number" id="meta-tag" class="form-control" placeholder=""  formControlName="identificacion">
                         </div>
-                    </form>
+
+                    </div>
+
                 </div>
-
             </div>
         </div>
-    </div>
 
 
 
-    <div class="p-3 bg-light mb-3 rounded">
-        <div class="row justify-content-end g-2">
-            <div class="col-lg-2">
-                <a href="#!" class="btn btn-outline-secondary w-100">Save Change</a>
-            </div>
-            <div class="col-lg-2">
-                <a href="#!" class="btn btn-primary w-100">Cancel</a>
+        
+        <div class="p-3 bg-light mb-3 rounded">
+            <div class="row justify-content-center justify-content-md-end g-2">
+                <div class="col-auto">
+                    <button  class="btn btn-outline-secondary w-auto" type="button">
+                        Cancelar
+                    </button>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary w-auto" [disabled]="proveedorForm.invalid">
+                        Registrar venta
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
+        
+
+
+
+    </form>
+
+
 
 
 
 
 
 </div>
+
+<div *ngIf="mostrarHistorial" class="card" id="tablaDestino">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h4 class="card-title mb-0">Historial</h4>
+        <a (click)="ocultarHistorial()" class="btn btn-light btn-sm">
+            <iconify-icon icon="mdi:close" class="align-middle fs-18"></iconify-icon>
+        </a>
+    </div>
+
+
+    <!--HISTORIAL-->
+    <div class="card-body" >
+        <div class="position-relative ms-2">
+            <span class="position-absolute start-0  top-0 border border-dashed h-100"></span>
+
+
+            <div *ngFor="let compra  of registroCompras"
+                class="position-relative ps-4">
+                <div class="mb-4">
+                    <span
+                        class="position-absolute start-0 avatar-sm translate-middle-x bg-light d-inline-flex align-items-center justify-content-center rounded-circle text-success fs-20">
+                        <i class="bx bx-check-circle"></i>
+                    </span>
+                    <div class="ms-2 d-flex flex-wrap gap-2 align-items-center justify-content-between">
+                        <div>
+                            <h5 class="mb-1 text-dark fw-medium fs-15"> ID: {{compra.id |id}}</h5>
+                            <p class="mb-2"> Total: {{compra.total}}</p>
+
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center gap-3">
+                            <p class="mb-0">{{compra.createdAt | date: "yyyy-MM-dd h:mm a" : 'es' }}</p>
+                            <a (click)="detalle(compra)"  class="btn btn-light btn-sm " data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop"><iconify-icon icon="solar:eye-broken"
+                                    class="align-middle fs-18"></iconify-icon></a>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+         
+
+        </div>
+    </div>
+
+   
+
+</div>
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Factura Detalles</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+
+                    <div class="card-body">
+                        <p><strong>ID de la Factura:</strong> {{ selctCompra.id | id }}</p>
+                        <p><strong>Cliente:</strong> {{ selctCompra.supplier | uppercase }}</p>
+                        <p><strong>Fecha de Registro:</strong> {{ selctCompra.createdAt |date: "yyyy-MM-dd h:mm a" :
+                            'es' }}</p>
+
+                        <div class="table-responsive mt-3">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre del Producto</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Iterar sobre los items de venta -->
+                                    <tr *ngFor="let item of selctCompra.saleItems">
+                                        <td>{{item.product.name|capitalize }}</td>
+                                        <!-- Puedes reemplazar productId con el nombre del producto si lo tienes -->
+                                        <td class="text-center">{{ item.quantity }}</td>
+                                        <td>${{ item.price }}</td>
+                                        <td>${{ item.subtotal }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" class="text-end"><strong>Total de la Factura</strong></td>
+                                        <td>${{ selctCompra.total }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary"
+                    data-bs-dismiss="modal">Generar</button>
+            </div>
+
+            <!-- app.component.html -->
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
 
 <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">

@@ -50,7 +50,8 @@ export class VentaComponent implements OnInit {
     });
 
     this.clienteForm = this.fb.group({
-      cliente: ['', Validators.required]
+      cliente: ['', Validators.required],
+      identificacion: ''
     })
 
 
@@ -173,12 +174,18 @@ export class VentaComponent implements OnInit {
   enviarVenta() {
     const saleItems = this.prepararDatosParaAPI();
     const cliente = this.clienteForm.value.cliente;
+    const identificacion = this.clienteForm.value.identificacion;
+
+    const idenfic = identificacion.toString();
+
+    
 
 
     console.log('Sale Items:', saleItems);
     console.log('Cliente:', cliente);
+    console.log('identidicacion', identificacion)
 
-    this.serviceproduct.enviarVenta(cliente, saleItems).subscribe({
+    this.serviceproduct.enviarVenta(cliente, idenfic, saleItems).subscribe({
       next: (response) => {
         console.log('Venta enviada con éxito:', response);
         this.Idfactura = response.id
@@ -190,7 +197,7 @@ export class VentaComponent implements OnInit {
           next: (facturaResponse) => {
             this.facturaVent = facturaResponse;
             console.log('Factura obtenida:', this.facturaVent);
-           
+
 
 
           }
@@ -208,10 +215,10 @@ export class VentaComponent implements OnInit {
             confirmButton: 'swal-success-btn'
           }
         }).then(() => {
-          
+
           setTimeout(() => {
-            this.generatePDFF(); 
-          }, 1000); 
+            this.generatePDFF();
+          }, 1000);
         });
 
 
@@ -388,11 +395,11 @@ export class VentaComponent implements OnInit {
 
 
   generatePDF() {
-    setTimeout(()=>{
+    setTimeout(() => {
       this.pdf.generateFacturaPDF(this.selctSalida);
 
-    },500)
-  
+    }, 500)
+
   }
 
   generatePDFF() {
@@ -406,10 +413,10 @@ export class VentaComponent implements OnInit {
     this.mostrarHistorial = true
 
     setTimeout(() => {
-      
+
       const destino = document.getElementById('tablaDestino');
       if (destino) {
-       
+
         destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }, 100);

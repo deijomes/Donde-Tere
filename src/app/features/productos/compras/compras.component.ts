@@ -5,11 +5,14 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ventaModel } from '../../../models/venta.Model';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
+import { ProductoCompraService } from '../../../services/producto-compra.service';
+import { IdPipe } from '../../../pipes/id.pipe';
+import { CapitalizePipe } from '../../../pipes/capitalize.pipe';
 
 @Component({
   selector: 'app-compras',
   standalone: true,
-  imports: [NgSelectModule, ReactiveFormsModule, CommonModule],
+  imports: [NgSelectModule, ReactiveFormsModule, CommonModule, IdPipe, CapitalizePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './compras.component.html',
   styleUrl: './compras.component.css',
@@ -22,12 +25,18 @@ export class ComprasComponent implements OnInit {
   productos: any = [] = []
   filteredProductos: any[] = []
   productosSeleccionados: any = []
+  facturaCompra: any = []
+  registroCompras: any = []
+  selctCompra: any=[]
 
   comprasForm: FormGroup;
+  proveedorForm: FormGroup;
   idproduct: string = '';
-  tablaProducto:boolean = false
+  Idfactura: string = '';
+  tablaProducto: boolean = false
+  mostrarHistorial : boolean =  false
 
-  constructor(private serviceproduct: PoductService, private fb: FormBuilder) {
+  constructor(private serviceproduct: PoductService, private serviceCompra: ProductoCompraService, private fb: FormBuilder) {
 
     this.comprasForm = this.fb.group({
       codigo: '',
@@ -35,11 +44,18 @@ export class ComprasComponent implements OnInit {
       cantidad: ['', Validators.required]
     });
 
+    this.proveedorForm = this.fb.group({
+
+      proveedor: ['', Validators.required],
+      identificacion: ''
+    })
+
   }
   ngOnInit(): void {
     this.producto()
+    this.registrosCompras()
   }
- // SESION : 1 OBTENER PRODUCTO, PARA LUEGO SELCCIONARLO Y GUARDARLO EN LOCAL STORAGE...
+  // SESION : 1 OBTENER PRODUCTO, PARA LUEGO SELCCIONARLO Y GUARDARLO EN LOCAL STORAGE...
   producto() {
     this.serviceproduct.obtenerRegistros().subscribe({
       next: (response) => {
@@ -147,108 +163,259 @@ export class ComprasComponent implements OnInit {
 
   }
 
-  
 
-   eliminarProducto(index: number) {
-      Swal.fire({
-        title: '¿Estás seguro?',
-        text: 'Este producto será eliminado de la lista.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'eliminar',
-        cancelButtonText: 'Cancelar',
-        customClass: {
-          confirmButton: 'swal-confirm-btn',
-          cancelButton: 'swal-cancel-btn'
-        }
-      }).then((result) => {
-        if (result.isConfirmed) {
-  
-          let productos = JSON.parse(localStorage.getItem('productosSeleccionados') || '[]');
-  
-          // 2️Eliminar el producto por su índice
-          productos.splice(index, 1);
-  
-  
-          localStorage.setItem('productosSeleccionados', JSON.stringify(productos));
-  
-  
-          this.cargarProductosSeleccionados();
-  
-  
-          Swal.fire('Eliminado', 'El producto ha sido eliminado.', 'success');
-        }
-      });
-    }
 
-    getTotal(): number {
+  eliminarProducto(index: number) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Este producto será eliminado de la lista.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'eliminar',
+      cancelButtonText: 'Cancelar',
+      customClass: {
+        confirmButton: 'swal-confirm-btn',
+        cancelButton: 'swal-cancel-btn'
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
 
-      return this.productosSeleccionados.reduce((sum:any, producto: any) => {
-        const totalProducto = producto.price * producto.quantity; // Total por producto
-        return sum + totalProducto; // Sumar al total general
-      }, 0);
-    }
+        let productos = JSON.parse(localStorage.getItem('productosSeleccionados') || '[]');
+
+        // 2️Eliminar el producto por su índice
+        productos.splice(index, 1);
+
+
+        localStorage.setItem('productosSeleccionados', JSON.stringify(productos));
+
+
+        this.cargarProductosSeleccionados();
+
+
+        Swal.fire('Eliminado', 'El producto ha sido eliminado.', 'success');
+      }
+    });
+  }
+
+  getTotal(): number {
+
+    return this.productosSeleccionados.reduce((sum: any, producto: any) => {
+      const totalProducto = producto.price * producto.quantity; // Total por producto
+      return sum + totalProducto; // Sumar al total general
+    }, 0);
+  }
 
   //SESION TERMINADA : 1
 
   //SESION 2: LOGICA BOTON DE MODFICAR CANTIDAD Y ELIMINAR
-   actualizarCantidad() {
-      const cantidad = Number((document.getElementById('cantidad') as HTMLInputElement).value);
-  
-      if (cantidad <= 0 || isNaN(cantidad)) {
-        Swal.fire('Error', 'Por favor ingrese una cantidad válida', 'error');
-        return;
-      }
-  
-      // Alerta de confirmación
-      Swal.fire({
-        title: '¿Está seguro de que desea actualizar la cantidad?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'actualizar',
-        cancelButtonText: 'Cancelar',
-        customClass: {
-          confirmButton: 'swal-confirm-btn',
-          cancelButton: 'swal-cancel-btn'
-        }
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // Si el usuario confirma, se llama a la función para modificar la cantidad
-          this.modificarCantidad(this.idproduct, cantidad);
-        } else {
-          // Si el usuario cancela, no se hace nada
-          Swal.fire('Cancelado', 'La cantidad no fue modificada', 'info');
-        }
-      });
+  actualizarCantidad() {
+    const cantidad = Number((document.getElementById('cantidad') as HTMLInputElement).value);
+
+    if (cantidad <= 0 || isNaN(cantidad)) {
+      Swal.fire('Error', 'Por favor ingrese una cantidad válida', 'error');
+      return;
     }
-  
-  
-    modificarCantidad(productId: string, nuevaCantidad: number) {
-      const productosGuardados = localStorage.getItem('productosSeleccionados');
-      if (productosGuardados) {
-        let productos = JSON.parse(productosGuardados);
-  
-        // Buscar el producto por su ID y actualizar la cantidad
-        const index = productos.findIndex((p: any) => p.id === productId);
-        if (index !== -1) {
-          productos[index].quantity = nuevaCantidad;
-  
-          // Guardar los productos actualizados en localStorage
-          localStorage.setItem('productosSeleccionados', JSON.stringify(productos));
-  
-          // Actualizar la lista en el componente
-          this.productosSeleccionados = productos;
-  
-          Swal.fire('¡Cantidad actualizada!', '', 'success');
-        } else {
-          Swal.fire('Error', 'Producto no encontrado en localStorage.', 'error');
-        }
+
+    // Alerta de confirmación
+    Swal.fire({
+      title: '¿Está seguro de que desea actualizar la cantidad?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'actualizar',
+      cancelButtonText: 'Cancelar',
+      customClass: {
+        confirmButton: 'swal-confirm-btn',
+        cancelButton: 'swal-cancel-btn'
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Si el usuario confirma, se llama a la función para modificar la cantidad
+        this.modificarCantidad(this.idproduct, cantidad);
+      } else {
+        // Si el usuario cancela, no se hace nada
+        Swal.fire('Cancelado', 'La cantidad no fue modificada', 'info');
+      }
+    });
+  }
+
+
+  modificarCantidad(productId: string, nuevaCantidad: number) {
+    const productosGuardados = localStorage.getItem('productosSeleccionados');
+    if (productosGuardados) {
+      let productos = JSON.parse(productosGuardados);
+
+      // Buscar el producto por su ID y actualizar la cantidad
+      const index = productos.findIndex((p: any) => p.id === productId);
+      if (index !== -1) {
+        productos[index].quantity = nuevaCantidad;
+
+        // Guardar los productos actualizados en localStorage
+        localStorage.setItem('productosSeleccionados', JSON.stringify(productos));
+
+        // Actualizar la lista en el componente
+        this.productosSeleccionados = productos;
+
+        Swal.fire('¡Cantidad actualizada!', '', 'success');
+      } else {
+        Swal.fire('Error', 'Producto no encontrado en localStorage.', 'error');
       }
     }
-  
-  
-  
+  }
+
+  //SESION 3: OTNEMOS DATOS DEL CLIENTE Y MANDAMOS EL REGISTRO DE COMPRA
+
+  enviarCompra() {
+    const purchaseItems = this.prepararDatosParaAPI();
+    const proveedor = this.proveedorForm.value.proveedor;
+    const identificacion = this.proveedorForm.value.identificacion;
+
+    const idenfic = identificacion.toString();
+
+
+
+
+    console.log('compras Items:', purchaseItems);
+    console.log('proveedor:', proveedor);
+    console.log('identidicacion', identificacion)
+
+    this.serviceCompra.enviarCompra(proveedor, idenfic, purchaseItems).subscribe({
+      next: (response) => {
+        console.log('compra enviada con éxito:', response);
+
+        this.Idfactura = response.id
+        console.log('Idfactura', this.Idfactura)
+
+
+
+        this.serviceCompra.facturaCompra(this.Idfactura).subscribe({
+          next: (facturaResponse) => {
+            this.facturaCompra = facturaResponse;
+            console.log('Factura compra obtenida:', this.facturaCompra);
+
+
+
+          }
+        })
+
+
+
+
+        Swal.fire({
+          title: 'Venta Registrada',
+          text: 'La venta se ha registrado con éxito.',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            confirmButton: 'swal-success-btn'
+          }
+        }).then(() => {
+
+
+        });
+
+        this.eliminarProductosGuardados();
+        this.productosSeleccionados = [];
+        this.registrosCompras()
+
+        
+        this.tablaProducto = false
+        this.proveedorForm.reset()
+
+
+
+
+      },
+      error: (err) => {
+        console.error('Error al enviar la venta:', err);
+        const mensajeError = err.error?.message || 'Hubo un problema al registrar la venta.';
+
+
+        Swal.fire({
+
+          text: mensajeError,
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            confirmButton: 'swal-success-btn'
+          }
+        });
+
+      }
+    });
+
+
+
+
+
+
+
+  }
+
+  prepararDatosParaAPI(): any[] {
+    return this.productosSeleccionados.map((producto: any) => {
+      return {
+        productId: producto.id,
+        quantity: producto.quantity
+      };
+
+    });
+
+
+  }
+
+  eliminarProductosGuardados() {
+    localStorage.removeItem('productosSeleccionados');
+    console.log('Productos eliminados de localStorage.');
+  }
+
+  registrosCompras() {
+    this.serviceCompra.registrosCompras().subscribe({
+      next: (Response) => {
+        this.registroCompras = Response
+        console.log('compras registros',this.registroCompras)
+
+      }
+    })
+  }
+
+  historial() {
+    this.mostrarHistorial = true
+
+    setTimeout(() => {
+
+      const destino = document.getElementById('tablaDestino');
+      if (destino) {
+
+        destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  }
+  ocultarHistorial() {
+    this.mostrarHistorial = false
+  }
+
+  detalle(compra: any) {
+
+    this.selctCompra = compra
+    console.log(this.selctCompra)
+
+
+
+
+  }
+
+
+
+
 
 
 }
+
+
+// Preparar los productos para el formato correcto
+
+  
+
+
+
 

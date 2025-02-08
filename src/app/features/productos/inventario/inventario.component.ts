@@ -1,14 +1,16 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 
 
+
 import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { registerModel } from '../../../models/registerModel';
 import { PoductService } from '../../../services/poduct.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import Swal from 'sweetalert2';
+import { bootstrapAppScopedEarlyEventContract } from '@angular/core/primitives/event-dispatch';
 
-
+declare var bootstrap: any;
 @Component({
   selector: 'app-inventario',
   standalone: true,
@@ -26,11 +28,13 @@ export class InventarioComponent implements OnInit {
 
   cantidad: number = 0;
   idProducto: string = ''
+ 
 
 
   currentPage: number = 1;  // Página actual (comienza en 1)
   itemsPerPage: number = 5;  // Elementos por página (puedes cambiar este valor)
   totalItems: number = 0;  // Total de productos que vamos a paginar
+
 
   constructor(private router: Router, private http: PoductService) {
 
@@ -40,6 +44,9 @@ export class InventarioComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+   
+
 
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -68,6 +75,7 @@ export class InventarioComponent implements OnInit {
 
   // Método para cargar los registros
   registros(): void {
+    
     this.http.obtenerRegistros().subscribe({
       next: (response) => {
         this.productos = response;  // Asignamos los registros obtenidos
@@ -197,6 +205,11 @@ export class InventarioComponent implements OnInit {
   recargarTabla() {
     this.registros();
   }
+
+  
+
+
+
 
 }
 
