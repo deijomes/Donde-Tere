@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { ProductoCompraService } from '../../../services/producto-compra.service';
 import { IdPipe } from '../../../pipes/id.pipe';
 import { CapitalizePipe } from '../../../pipes/capitalize.pipe';
+import { PdfService } from '../../../services/pdf.service';
 
 @Component({
   selector: 'app-compras',
@@ -36,7 +37,8 @@ export class ComprasComponent implements OnInit {
   tablaProducto: boolean = false
   mostrarHistorial : boolean =  false
 
-  constructor(private serviceproduct: PoductService, private serviceCompra: ProductoCompraService, private fb: FormBuilder) {
+  constructor(private serviceproduct: PoductService, private serviceCompra: ProductoCompraService, private fb: FormBuilder,
+     private pdf:PdfService) {
 
     this.comprasForm = this.fb.group({
       codigo: '',
@@ -399,8 +401,13 @@ export class ComprasComponent implements OnInit {
     this.selctCompra = compra
     console.log(this.selctCompra)
 
+  }
 
+  generatePDF() {
+    setTimeout(() => {
+      this.pdf. generateFacturaPDF2(this.selctCompra);
 
+    }, 500)
 
   }
 
