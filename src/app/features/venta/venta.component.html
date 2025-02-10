@@ -302,6 +302,7 @@
                     <div class="card-body">
                         <p><strong>ID de la Factura:</strong> {{ selctSalida.id | id }}</p>
                         <p><strong>Cliente:</strong> {{ selctSalida.customer | uppercase }}</p>
+                        <p><strong>Identificación:</strong> {{ selctSalida.identification | uppercase }}</p>
                         <p><strong>Fecha de Registro:</strong> {{ selctSalida.createdAt |date: "yyyy-MM-dd h:mm a" :
                             'es' }}</p>
 

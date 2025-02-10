@@ -72,7 +72,7 @@ export class VentaComponent implements OnInit {
   producto() {
     this.serviceproduct.obtenerRegistros().subscribe({
       next: (response) => {
-        this.productos = response; // Asegúrate de usar un punto y coma, no coma
+        this.productos = response.data; // Asegúrate de usar un punto y coma, no coma
         this.filteredProductos = [...this.productos];
         console.log(this.filteredProductos, 'este el listado');
       },

@@ -21,10 +21,10 @@ export class PdfService {
       content: [
         // Logo (Si quieres incluir un logo, añade la propiedad `image`)
         // { image: 'path_to_logo', width: 100, alignment: 'center' },
-    
+
         // Título
         { text: 'Factura', style: 'header' },
-    
+
         // Información de la Factura
         {
           text: `ID de la Factura: ${factura.id.slice(-12)}`,
@@ -34,11 +34,17 @@ export class PdfService {
           text: `Fecha de Registro: ${new Date(factura.createdAt).toLocaleDateString('es-ES')}`,
           style: 'subHeader'
         },
-    
+
         // Información del Cliente
         { text: 'Cliente:', style: 'subHeaderBold' },
         { text: factura.customer.toUpperCase(), style: 'customerName' },
-    
+
+        { text: 'Identificación:', style: 'subHeaderBold' },
+        {
+          text: factura.identification
+            .toUpperCase(), style: 'customerName'
+        },
+
         // Tabla de Productos
         {
           table: {
@@ -52,7 +58,7 @@ export class PdfService {
                 { text: 'Subtotal', style: 'tableHeader' }
               ],
               ...factura.saleItems.map((item: any) => [
-                { text:capitalizeFirstLetter(item.product.name), style: 'tableCellLeft' }, // Alineado a la izquierda
+                { text: capitalizeFirstLetter(item.product.name), style: 'tableCellLeft' }, // Alineado a la izquierda
                 { text: item.quantity.toString(), style: 'tableCellCenter' }, // Alineado al centro
                 { text: `$${item.price}`, style: 'tableCellCenter' }, // Alineado al centro
                 { text: `$${item.subtotal}`, style: 'tableCellCenter' } // Alineado al centro
@@ -65,8 +71,8 @@ export class PdfService {
           },
           layout: 'lightHorizontalLines', // Líneas horizontales suaves para la tabla
         },
-    
-        
+
+
         { text: 'Información de la Empresa', style: 'footerTitle' },
         { text: 'Nombre de la Empresa', style: 'footerText' },
         { text: 'Dirección de la Empresa', style: 'footerText' },
@@ -79,39 +85,39 @@ export class PdfService {
           bold: true,
           alignment: 'right', // Alineación a la derecha
           margin: [0, 0, 0, 20],
-          
+
         },
         subHeader: {
           fontSize: 12,
           margin: [0, 5],
           alignment: 'left',
-         
+
         },
         subHeaderBold: {
           fontSize: 12,
           margin: [0, 10], // Espacio mayor entre secciones
           bold: true, // Subtítulo en negrita
           alignment: 'left',
-       
+
         },
         customerName: {
           fontSize: 12,
           margin: [0, 0, 0, 10],
           alignment: 'left',
-         
+
         },
         footerTitle: {
           fontSize: 12,
           bold: true,
           margin: [0, 20, 0, 5],
           alignment: 'left',
-       
+
         },
         footerText: {
           fontSize: 10,
           margin: [0, 0, 0, 2],
           alignment: 'left',
-         
+
         },
         tableHeader: {
           fontSize: 12,
@@ -119,21 +125,21 @@ export class PdfService {
           fillColor: '#f0f0f0', // Fondo gris claro
           margin: [0, 5, 0, 5],
           alignment: 'center',
-          
+
           color: '#333' // Color de texto oscuro
         },
         tableCellLeft: {
           fontSize: 10,
           margin: [0, 5],
           alignment: 'left', // Alineación a la izquierda
-          
+
           color: '#333' // Color de texto oscuro
         },
         tableCellCenter: {
           fontSize: 10,
           margin: [0, 5],
           alignment: 'center', // Alineación al centro
-         
+
           color: '#333' // Color de texto oscuro
         },
         tableTotal: {
@@ -141,23 +147,23 @@ export class PdfService {
           bold: true,
           margin: [0, 10],
           alignment: 'right',
-          
+
           color: '#333' // Color de texto oscuro
         }
       }
     };
-    
-    
-    
-    
-    
+
+
+
+
+
     // Crear y abrir el PDF
     pdfMake.createPdf(documentDefinition).open();
-    
+
     function capitalizeFirstLetter(str: string): string {
       return str.charAt(0).toUpperCase() + str.slice(1);
     }
-   
+
   }
 
   generateFacturaPDF2(factura: any) {
@@ -165,10 +171,10 @@ export class PdfService {
       content: [
         // Logo (Si quieres incluir un logo, añade la propiedad `image`)
         // { image: 'path_to_logo', width: 100, alignment: 'center' },
-    
+
         // Título
         { text: 'Factura', style: 'header' },
-    
+
         // Información de la Factura
         {
           text: `ID de la Factura: ${factura.id.slice(-12)}`,
@@ -178,11 +184,11 @@ export class PdfService {
           text: `Fecha de Registro: ${new Date(factura.createdAt).toLocaleDateString('es-ES')}`,
           style: 'subHeader'
         },
-    
+
         // Información del Cliente
         { text: 'Proveedor:', style: 'subHeaderBold' },
         { text: factura.supplier.toUpperCase(), style: 'customerName' },
-    
+
         // Tabla de Productos
         {
           table: {
@@ -196,7 +202,7 @@ export class PdfService {
                 { text: 'Subtotal', style: 'tableHeader' }
               ],
               ...factura.purchaseItems.map((item: any) => [
-                { text:capitalizeFirstLetter(item.product.name), style: 'tableCellLeft' }, // Alineado a la izquierda
+                { text: capitalizeFirstLetter(item.product.name), style: 'tableCellLeft' }, // Alineado a la izquierda
                 { text: item.quantity.toString(), style: 'tableCellCenter' }, // Alineado al centro
                 { text: `$${item.price}`, style: 'tableCellCenter' }, // Alineado al centro
                 { text: `$${item.subtotal}`, style: 'tableCellCenter' } // Alineado al centro
@@ -209,8 +215,8 @@ export class PdfService {
           },
           layout: 'lightHorizontalLines', // Líneas horizontales suaves para la tabla
         },
-    
-        
+
+
         { text: 'Información de la Empresa', style: 'footerTitle' },
         { text: 'Nombre de la Empresa', style: 'footerText' },
         { text: 'Dirección de la Empresa', style: 'footerText' },
@@ -223,39 +229,39 @@ export class PdfService {
           bold: true,
           alignment: 'right', // Alineación a la derecha
           margin: [0, 0, 0, 20],
-          
+
         },
         subHeader: {
           fontSize: 12,
           margin: [0, 5],
           alignment: 'left',
-         
+
         },
         subHeaderBold: {
           fontSize: 12,
           margin: [0, 10], // Espacio mayor entre secciones
           bold: true, // Subtítulo en negrita
           alignment: 'left',
-       
+
         },
         customerName: {
           fontSize: 12,
           margin: [0, 0, 0, 10],
           alignment: 'left',
-         
+
         },
         footerTitle: {
           fontSize: 12,
           bold: true,
           margin: [0, 20, 0, 5],
           alignment: 'left',
-       
+
         },
         footerText: {
           fontSize: 10,
           margin: [0, 0, 0, 2],
           alignment: 'left',
-         
+
         },
         tableHeader: {
           fontSize: 12,
@@ -263,21 +269,21 @@ export class PdfService {
           fillColor: '#f0f0f0', // Fondo gris claro
           margin: [0, 5, 0, 5],
           alignment: 'center',
-          
+
           color: '#333' // Color de texto oscuro
         },
         tableCellLeft: {
           fontSize: 10,
           margin: [0, 5],
           alignment: 'left', // Alineación a la izquierda
-          
+
           color: '#333' // Color de texto oscuro
         },
         tableCellCenter: {
           fontSize: 10,
           margin: [0, 5],
           alignment: 'center', // Alineación al centro
-         
+
           color: '#333' // Color de texto oscuro
         },
         tableTotal: {
@@ -285,28 +291,28 @@ export class PdfService {
           bold: true,
           margin: [0, 10],
           alignment: 'right',
-          
+
           color: '#333' // Color de texto oscuro
         }
       }
     };
-    
-    
-    
-    
-    
+
+
+
+
+
     // Crear y abrir el PDF
     pdfMake.createPdf(documentDefinition).open();
-    
+
     function capitalizeFirstLetter(str: string): string {
       return str.charAt(0).toUpperCase() + str.slice(1);
     }
-   
+
   }
 
 
- 
 
 
-  
+
+
 }

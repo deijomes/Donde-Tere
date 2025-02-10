@@ -78,7 +78,7 @@ export class InventarioComponent implements OnInit {
     
     this.http.obtenerRegistros().subscribe({
       next: (response) => {
-        this.productos = response;  // Asignamos los registros obtenidos
+        this.productos = response.data;  // Asignamos los registros obtenidos
         this.registrosCargados = true;  // Marcamos que los registros ya fueron cargados
         this.totalItems = response.length;
       },

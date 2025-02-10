@@ -61,7 +61,7 @@ export class ComprasComponent implements OnInit {
   producto() {
     this.serviceproduct.obtenerRegistros().subscribe({
       next: (response) => {
-        this.productos = response; // Asegúrate de usar un punto y coma, no coma
+        this.productos = response.data; // Asegúrate de usar un punto y coma, no coma
         console.log(this.productos)
         this.filteredProductos = [...this.productos];
       },
