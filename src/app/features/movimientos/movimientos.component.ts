@@ -9,6 +9,7 @@ import { PoductService } from '../../services/poduct.service';
 import { error } from 'jquery';
 
 import { NgxPaginationModule } from 'ngx-pagination'
+import { Subscription } from 'rxjs';
 
 
 
@@ -17,8 +18,8 @@ import { NgxPaginationModule } from 'ngx-pagination'
 @Component({
   selector: 'app-movimientos',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, NgSelectModule,NgxPaginationModule],
-   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [ReactiveFormsModule, CommonModule, NgSelectModule, NgxPaginationModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
   templateUrl: './movimientos.component.html',
   styleUrls: ['./movimientos.component.css'],
@@ -30,186 +31,68 @@ export class MovimientosComponent implements OnInit {
 
 
 
-  listaproducto: any[] = []
-  listMovimientos:any [] = []
+
+  listMovimientos: any[] = []
   currentPage: number = 1;  // Página actual (comienza en 1)
   itemsPerPage: number = 10;  // Elementos por página (puedes cambiar este valor)
   totalItems: number = 0;  // Total de productos que vamos a paginar
 
   filteredProductos: any[] = [];
-  mensajeNoEncontrado: string =''
-  
-  
+  searchTermSubscription : any
+  mensajeNoEncontrado: string = ''
+
+
 
   searchTerm: string = '';
-  isLoading: boolean = false;
+
 
 
   entradaForm!: FormGroup
   salidadForm!: FormGroup
 
 
-  constructor(private serviceproduct: BuscadorService,  private http: PoductService, private bf: FormBuilder) { }
+
+  constructor(private serviceproduct: BuscadorService, private http: PoductService, private bf: FormBuilder,
+    
+  ) { 
+
+  }
 
   ngOnInit(): void {
 
     this.getmovimientos()
 
-
-
-    this.getform(); // Inicializa el formulario de entrada
-    this.getforms(); // Inicializa el formulario de salida
-  
     this.selectItem(this.selectedItem);
+    this.suscripciontermino()
+
+  }
+
+  ngOnDestroy(): void {
+    if (this.searchTermSubscription) {
+      this.searchTermSubscription.unsubscribe();
+    }
+  }
   
-    // Obtiene la lista de productos desde el servicio
-    this.isLoading = true;
-    this.listaproducto = this.serviceproduct.getProductos();
-    console.log('Listado de productos:', this.listaproducto);
-  
-    
-    this.isLoading = false;
-  
-    // Maneja los cambios en el campo "codigo" del formulario de entrada
-    this.entradaForm.get('codigo')?.valueChanges.subscribe((codigo) => {
-      const producto = this.listaproducto.find((p) => p.codigo === codigo);
-      if (producto) {
-        this.entradaForm.patchValue({
-          articulo: producto.articulo,
-        });
-      } else {
-        this.entradaForm.patchValue({
-          articulo: '',
-        });
-      }
-    });
-  
-    // Maneja los cambios en el campo "codigo" del formulario de salida
-    
-   /* this.salidadForm.get('codigo')?.valueChanges.subscribe((codigo) => {
-      const producto = this.listaproducto.find((p) => p.codigo === codigo);
-      if (producto) {
-        this.salidadForm.patchValue({
-          articulo: producto.articulo,
-        });
-      } else {
-        this.salidadForm.patchValue({
-          articulo: '',
-        });
-      }
-    });
-    */
-  } 
-  
+
   selectItem(item: string): void {
     this.selectedItem = item;
   }
-  
-  getform(): void {
-    this.entradaForm = this.bf.group({
-      codigo: [null],
-      articulo: [{ value: '', disabled: false }],
-      movimiento: ['entrada'], // Valor predeterminado
-      fecharegistro: ['',Validators.required],
-      cantidad: ['', Validators.required],
-      precioUnitario: ['', Validators.required],
-      totalTransaccion: ['', Validators.required],
-    });
-  
-    console.log('Formulario de entrada inicializado:', this.entradaForm.value);
-  }
-  
-  getforms(): void {
-    this.salidadForm = this.bf.group({
-      codigo: ['',Validators.required],
-      articulo: ['',Validators.required],
-     
-    });
-  
-    console.log('Formulario de salida inicializado:', this.salidadForm.value);
-  }
-  
-  onSubmit(): void {
-    console.log('Datos del formulario de entrada:', this.entradaForm.value);
-  
-    // Resetea el formulario de entrada con valores predeterminados
-    this.entradaForm.reset({
-      codigo: '',
-      articulo: '',
-      movimiento: 'entrada',
-      fecharegistro:'',
-      cantidad: '',
-      precioUnitario: '',
-      totalTransaccion: '',
-    });
-  
-    console.log('Formulario de entrada reseteado:', this.entradaForm.value);
-  }
-  
-  onSubmitt(): void {
-
-    
-      const codigo = this.salidadForm.get('codigo')?.value;
-      const articulo = this.salidadForm.get('articulo')?.value;
-    
-      // Llamar al servicio y pasar los valores como parámetros
-      this.serviceproduct.buscarArticulo(codigo, articulo).subscribe(
-        (resultado: any) => {
-          console.log('Resultado del servicio:', resultado);
-          if (resultado) {
-            this.filteredProductos = [resultado]
-            this.mensajeNoEncontrado = '';
-            
-          } else {
-            console.log('Artículo no encontrado');
-            this.filteredProductos = [];  // Limpiamos los productos filtrados
-            this.mensajeNoEncontrado = 'No se encontraron productos que coincidan con tu búsqueda.';  // Asignamos el mensaje
-           
-          }
-        },
-        (error: any) => {
-          console.error('Error al buscar el artículo:', error);
-        }
-      );
-  
-    // Resetea el formulario de salida con valores predeterminados
-    this.salidadForm.reset({
-      codigo: '',
-      articulo: '',
-    });
-  
-  }
-
-  onSelectProducto(producto: any): void {
-    console.log('Producto seleccionado:', producto);
-    if (this.filteredProductos.length > 0) {
-      // Vaciar la lista después de seleccionar el producto
-      this.filteredProductos = [];
-    }
 
 
-    if (producto) {
-      this.entradaForm.patchValue({
-        codigo: producto.codigo,
-        articulo: producto.articulo,
-        precioUnitario: producto.precio,
-        cantidad: '', // valor por defecto
-        totalTransaccion: producto.precio, // si es necesario
-      });
 
-      console.log('Formulario después de patchValue:', this.entradaForm.value);
-    }
-  
 
-  }
-  
 
-  getmovimientos(){
+
+
+
+
+
+  getmovimientos() {
     this.http.getmovimientos().subscribe({
-      next:(response)=>{
+      next: (response) => {
 
-      this.listMovimientos = response.data
-      console.log('listamovimientos', this.listMovimientos)
+        this.listMovimientos = response.data
+        console.log('listamovimientos', this.listMovimientos)
       }
     })
   }
@@ -223,6 +106,27 @@ export class MovimientosComponent implements OnInit {
         console.error("Error al eliminar producto:", error);
       }
     });
+  }
+
+  suscripciontermino(): void {
+    this.searchTermSubscription = this.serviceproduct.terminoBusqueda$.subscribe(term => {
+      console.log('Término de búsqueda recibido:', term);  // Verifica el valor que llega
+      this.searchTerm = term;
+      this.filterProductos(); // Filtra los productos cada vez que cambia el término
+    });
+  }
+  
+  filterProductos(): void {
+    if (this.searchTerm) {
+      this.filteredProductos = this.listMovimientos.filter(product =>
+        // Verifica que product.product.name exista y que sea una cadena
+        product.product?.name && product.product.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    } else {
+      this.filteredProductos = this.listMovimientos; // Si no hay término de búsqueda, muestra todos los productos
+    }
+  
+    console.log('Productos filtrados:', this.filteredProductos);
   }
   
   
