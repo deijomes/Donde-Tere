@@ -87,17 +87,35 @@ export class PoductService {
 
   }
 
-  getmovimientos(limit: number = 60, offset: number = 0): Observable<any> {
 
-    return this.http.get(`${this.urlmov}`, {
-      params: {
-        limit: limit.toString(),
-        offset: offset.toString()
-      }
-    })
 
+  getmovimientos(
+    limit: number = 30, 
+    offset: number = 0, 
+    startDate: string = new Date(new Date().setDate(new Date().getDate() - 30)).toISOString(), 
+    endDate: string = new Date().toISOString(), 
+    reason?: string, 
+    productId?: string, 
+    type?: string
+  ): Observable<any> {
+  
+    let paramsObject: any = { limit, offset, startDate, endDate };
+  
+    if (reason) paramsObject.reason = reason;
+    if (productId) paramsObject.productId = productId;
+    if (type) paramsObject.type = type;
+  
+    let params = new HttpParams({ fromObject: paramsObject });
+  
+    const url = `${this.urlmov}?${params.toString()}`;
+    console.log('URL generada:', url); // Verifica la URL en la consola
+  
+    return this.http.get(url);
   }
+  
+  
 
+  
   eliminarMovimiento(id: any): Observable<any> {
 
     return this.http.delete(`${this.urlmov}/${id}`).pipe(
@@ -109,21 +127,14 @@ export class PoductService {
 
   }
 
-
-  obtenerSalidas(limit: number = 20, offset: number = 0): Observable<any> {
-    const endDate = new Date(); // Fecha actual
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - 30); // Restar 30 días
-
-
+  obtenerSalidas(limit: number = 30, offset: number = 0): Observable<any> {
     const params = new HttpParams()
-      .set('startDate', startDate.toISOString())
-      .set('endDate', endDate.toISOString())
       .set('limit', limit.toString())
       .set('offset', offset.toString());
-
-    return this.http.get(`${this.baseUrl}`, { params })
-  };
+  
+    return this.http.get(`${this.baseUrl}`, { params }); // ✅ Correcto
+  }
+  
 
   facturaVenta(id: string): Observable < any > {
     return this.http.get(`${this.baseUrl}/${id}`)
