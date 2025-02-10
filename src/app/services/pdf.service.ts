@@ -189,6 +189,12 @@ export class PdfService {
         { text: 'Proveedor:', style: 'subHeaderBold' },
         { text: factura.supplier.toUpperCase(), style: 'customerName' },
 
+        { text: 'Identificación:', style: 'subHeaderBold' },
+        {
+          text: factura.identification
+            .toUpperCase(), style: 'customerName'
+        },
+
         // Tabla de Productos
         {
           table: {

@@ -43,7 +43,8 @@ export class ComprasComponent implements OnInit {
     this.comprasForm = this.fb.group({
       codigo: '',
       articulo: ['', Validators.required],
-      cantidad: ['', Validators.required]
+      cantidad: ['', Validators.required],
+      precio: ['', Validators.required]
     });
 
     this.proveedorForm = this.fb.group({
@@ -98,6 +99,7 @@ export class ComprasComponent implements OnInit {
         codigo: productoEncontrado.code,
         articulo: productoEncontrado.name,
         cantidad: '',
+        precio:''
 
       });
       console.log('Producto seleccionado:', productoEncontrado);
@@ -109,6 +111,7 @@ export class ComprasComponent implements OnInit {
   agregarcantidad() {
     const codigo = this.comprasForm.value.codigo;
     const cantidad = this.comprasForm.value.cantidad;
+    const precio = this.comprasForm.value.precio
 
     // Verificar que el producto y cantidad sean válidos
     if (!codigo || !cantidad || cantidad <= 0) {
@@ -131,7 +134,7 @@ export class ComprasComponent implements OnInit {
           name: productoEncontrado.name,
           code: productoEncontrado.code,
           description: productoEncontrado.description,
-          price: productoEncontrado.price,
+          price: precio,
           quantity: cantidad
         };
 
@@ -312,8 +315,12 @@ export class ComprasComponent implements OnInit {
           }
         }).then(() => {
 
-
+          setTimeout(() => {
+            this.generatePDFF();
+          }, 1000);
         });
+
+        
 
         this.eliminarProductosGuardados();
         this.productosSeleccionados = [];
@@ -357,10 +364,14 @@ export class ComprasComponent implements OnInit {
     return this.productosSeleccionados.map((producto: any) => {
       return {
         productId: producto.id,
-        quantity: producto.quantity
+        quantity: producto.quantity,
+        price: producto.price
       };
 
+      
+
     });
+  
 
 
   }
@@ -410,6 +421,10 @@ export class ComprasComponent implements OnInit {
     }, 500)
 
   }
+  generatePDFF() {
+    this.pdf. generateFacturaPDF2(this.facturaCompra);
+  }
+
 
 
 

@@ -32,7 +32,7 @@
                 <div class="row mt-3">
 
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <div class="mb-3">
                             <label for="product-code" class="form-label">Producto</label>
 
@@ -75,11 +75,19 @@
                     </div>
 
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <div class="mb-3">
                             <label for="cantidad-minima" class="form-label">Cantidad</label>
-                            <input type="number" id="cantidad-minima" class="form-control no-bg" placeholder="Cantidad"
+                            <input type="number" id="cantidad-minima" class="form-control no-bg" placeholder=""
                                 formControlName="cantidad" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="mb-3">
+                            <label for="cantidad-minima" class="form-label">Precio</label>
+                            <input type="number" id="cantidad-minima" class="form-control no-bg" placeholder=""
+                                formControlName="precio" />
                         </div>
                     </div>
 
@@ -294,6 +302,7 @@
                     <div class="card-body">
                         <p><strong>ID de la Factura:</strong> {{ selctCompra.id | id }}</p>
                         <p><strong>Cliente:</strong> {{ selctCompra.supplier | uppercase }}</p>
+                        <p><strong>Idenficación:</strong> {{ selctCompra.identification | uppercase }}</p>
                         <p><strong>Fecha de Registro:</strong> {{ selctCompra.createdAt |date: "yyyy-MM-dd h:mm a" :
                             'es' }}</p>
 
