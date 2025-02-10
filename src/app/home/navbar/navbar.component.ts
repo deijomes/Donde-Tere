@@ -1,20 +1,27 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, Output } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, OnInit, Output } from '@angular/core';
 import { BuscadorService } from '../../services/buscador.service';
+import { ProductoCompraService } from '../../services/producto-compra.service';
+import { CommonModule } from '@angular/common';
+import { TextoSpañolPipe } from '../../pipes/texto-spañol.pipe';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, TextoSpañolPipe],
    schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   configSize: string = 'sm-hover';
+  notificacion: any []=[]
 
-  constructor(private buscadorService:BuscadorService){
+  constructor(private buscadorService:BuscadorService, private services:ProductoCompraService){
 
 
+  }
+  ngOnInit(): void {
+   this.notificaciones()
   }
   
 
@@ -24,12 +31,6 @@ export class NavbarComponent {
     const inputValue = (event.target as HTMLInputElement).value;
     this.buscadorService.setTerminoBusqueda(inputValue); // Notifica al servicio
   }
-
-
-
-
-
-
 
 
   toggleMenuSize(): void {
@@ -58,5 +59,20 @@ export class NavbarComponent {
       htmlElement.setAttribute('data-menu-size', 'sm-hover-active');
       this.configSize = 'sm-hover-active';
     }
+  }
+
+  notificaciones (){
+    this.services.Notificaciones().subscribe({
+      next: (Response)=>{
+
+        this.notificacion = Response
+        console.log(this.notificacion)
+
+      }
+    })
+  }
+
+  get notificationCount(): number {
+    return this.notificacion.length;
   }
 }

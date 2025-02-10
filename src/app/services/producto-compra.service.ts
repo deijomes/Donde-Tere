@@ -8,6 +8,7 @@ import { catchError, Observable } from 'rxjs';
 export class ProductoCompraService {
 
   private baseUrl = 'http://localhost:3000/api/Purchase'
+   private url = 'http://localhost:3000/api/notifications'
 
   constructor(private http: HttpClient) { }
 
@@ -33,6 +34,11 @@ export class ProductoCompraService {
   
   registrosCompras():Observable<any>{
     return this.http.get(`${this.baseUrl}`)
+
+  }
+
+  Notificaciones():Observable<any>{
+    return this.http.get(`${this.url}`)
 
   }
 
