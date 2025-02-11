@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit {
   configSize: string = 'sm-hover';
   notificacion: any []=[]
   searchTerm: string = '';
+  searchTermProductos :string = ''
 
 
   constructor(private buscadorService:BuscadorService, private services:ProductoCompraService){
@@ -37,14 +38,17 @@ export class NavbarComponent implements OnInit {
   
   onClickSearch(): void {
     this.enviarTerminoBusqueda();
+
   }
   
   private enviarTerminoBusqueda(): void {
     if (this.searchTerm.trim()) { // Verifica que no esté vacío
       console.log('Término de búsqueda enviado:', this.searchTerm);
       this.buscadorService.setTerminoBusqueda(this.searchTerm);
+      this.buscadorService.setTerminoBusquedaProductos(this.searchTerm);
     }
   }
+
 
   toggleMenuSize(): void {
     const htmlElement = document.documentElement; // Accede al elemento <html>

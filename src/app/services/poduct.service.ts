@@ -39,6 +39,21 @@ export class PoductService {
 
   }
 
+  getProducts(limit: number, offset: number, code: string): Observable<any> {
+    // Crear los parámetros de la consulta
+    const params = new HttpParams()
+      .set('limit', limit.toString())
+      .set('offset', offset.toString())
+      .set('code', code);
+
+    // Realizar la solicitud GET con los parámetros
+    return this.http.get(this.url, { params });
+  }
+
+
+  
+
+
   prodoctoEditar(id: string): Observable<any> {
 
     return this.http.get(`${this.url}/${id}`)

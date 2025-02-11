@@ -14,6 +14,9 @@ export class BuscadorService {
   private terminoBusquedaSubject = new BehaviorSubject<string>(''); // Estado compartido
   terminoBusqueda$ = this.terminoBusquedaSubject.asObservable(); // Observable para escuchar cambios
 
+  private terminoBusquedaProductos = new BehaviorSubject<string>('');
+  terminoBusquedaProductos$ = this.terminoBusquedaProductos.asObservable();
+
   
 
 
@@ -21,6 +24,9 @@ export class BuscadorService {
   setTerminoBusqueda(termino: string): void {
     this.terminoBusquedaSubject.next(termino);
    
+  }
+  setTerminoBusquedaProductos(termino: string): void {
+    this.terminoBusquedaProductos.next(termino);
   }
 
 

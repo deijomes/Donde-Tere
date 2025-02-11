@@ -9,6 +9,8 @@ import { PoductService } from '../../../services/poduct.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import Swal from 'sweetalert2';
 import { bootstrapAppScopedEarlyEventContract } from '@angular/core/primitives/event-dispatch';
+import { BuscadorService } from '../../../services/buscador.service';
+import { filter, switchMap } from 'rxjs';
 
 declare var bootstrap: any;
 @Component({
@@ -28,7 +30,13 @@ export class InventarioComponent implements OnInit {
 
   cantidad: number = 0;
   idProducto: string = ''
- 
+
+  searchTermSubscription: any
+  searchTerm: string = ''
+  limit: number = 20
+  offset:number = 0
+  products : any  
+
 
 
   currentPage: number = 1;  // Página actual (comienza en 1)
@@ -36,7 +44,7 @@ export class InventarioComponent implements OnInit {
   totalItems: number = 0;  // Total de productos que vamos a paginar
 
 
-  constructor(private router: Router, private http: PoductService) {
+  constructor(private router: Router, private http: PoductService, private serviceproduct: BuscadorService) {
 
 
 
@@ -45,7 +53,7 @@ export class InventarioComponent implements OnInit {
 
   ngOnInit(): void {
 
-   
+
 
 
     this.router.events.subscribe(event => {
@@ -71,11 +79,13 @@ export class InventarioComponent implements OnInit {
     } else {
       this.mostrarTabla = false;  // Ocultar la tabla si estamos en "registrar" o "actualizar"
     }
+
+   this.suscripciontermino()
   }
 
   // Método para cargar los registros
   registros(): void {
-    
+
     this.http.obtenerRegistros().subscribe({
       next: (response) => {
         this.productos = response.data;  // Asignamos los registros obtenidos
@@ -117,38 +127,38 @@ export class InventarioComponent implements OnInit {
 
 
   agregarstock(id: string, nuevaCantidad: number) {
-    
+
     Swal.fire({
       title: '¿Está seguro de que desea actualizar Stock?',
-     
+
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Agregar',
       cancelButtonText: 'Cancelar',
-       confirmButtonColor: '#ffa500',
-      
+      confirmButtonColor: '#ffa500',
+
     }).then((result) => {
-      
+
       if (result.isConfirmed) {
-        
+
         this.http.agregarstock(id, nuevaCantidad).subscribe({
           next: (response) => {
             Swal.fire('¡Stock agregado!', '', 'success');
-            this.registros(); 
+            this.registros();
           },
           error: (err) => {
             Swal.fire('Error', 'Hubo un problema al actualizar la cantidad', 'error');
           }
         });
       } else {
-        
+
         Swal.fire('Cancelado', 'La actualización no se ha realizado', 'info');
       }
     });
   }
-  
 
-  
+
+
 
 
 
@@ -206,8 +216,34 @@ export class InventarioComponent implements OnInit {
     this.registros();
   }
 
-  
+  suscripciontermino(): void {
+    this.searchTermSubscription = this.serviceproduct.terminoBusquedaProductos$.pipe(
+      filter(term => term.trim() !== ''), // Filtra términos vacíos
+      switchMap(term => {
+        console.log('Término de búsqueda recibido:', term);
+        this.searchTerm = term; // Asigna el término de búsqueda
 
+        // Llama al servicio para obtener los productos con los parámetros
+        return this.http.getProducts(this.limit, this.offset, this.searchTerm);
+      })
+    ).subscribe(
+      (response: any) => {
+        this.products = response.data || []; // Asumiendo que la respuesta tiene una propiedad "data"
+        console.log('Productos recibidos:', this.products);
+      },
+      (error) => {
+        console.error('Error al obtener productos:', error);
+      }
+    );
+  }
+
+  // Método para cancelar la suscripción al destruir el componente
+  ngOnDestroy(): void {
+    if (this.searchTermSubscription) {
+      this.searchTermSubscription.unsubscribe();
+    }
+  }
+  
 
 
 
