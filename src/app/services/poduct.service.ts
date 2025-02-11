@@ -90,32 +90,58 @@ export class PoductService {
 
 
   getmovimientos(
-    limit: number = 30, 
-    offset: number = 0, 
-    startDate: string = new Date(new Date().setDate(new Date().getDate() - 30)).toISOString(), 
-    endDate: string = new Date().toISOString(), 
-    reason?: string, 
-    productId?: string, 
+    limit: number = 30,
+    offset: number = 0,
+    startDate: string = new Date(new Date().setDate(new Date().getDate() - 30)).toISOString(),
+    endDate: string = new Date().toISOString(),
+    reason?: string,
+    productId?: string,
     type?: string
   ): Observable<any> {
-  
+
     let paramsObject: any = { limit, offset, startDate, endDate };
-  
+
     if (reason) paramsObject.reason = reason;
     if (productId) paramsObject.productId = productId;
     if (type) paramsObject.type = type;
-  
+
     let params = new HttpParams({ fromObject: paramsObject });
-  
+
     const url = `${this.urlmov}?${params.toString()}`;
     console.log('URL generada:', url); // Verifica la URL en la consola
-  
+
     return this.http.get(url);
   }
-  
-  
 
-  
+  getmovimiento(
+    limit: number = 30,
+    offset: number = 0,
+    startDate: string = '',
+    endDate: string = '',
+    reason?: string,
+    productId?: string
+  ): Observable<any> {
+    let paramsObject: any = { limit, offset };
+
+    // Solo agregar parámetros que no sean vacíos
+    if (startDate) paramsObject.startDate = startDate;
+    if (endDate) paramsObject.endDate = endDate;
+    if (reason) paramsObject.reason = reason;
+    if (productId) paramsObject.productId = productId;
+
+    // Convertir el objeto de parámetros a HttpParams
+    let params = new HttpParams({ fromObject: paramsObject });
+
+    // Generar la URL con los parámetros dinámicamente
+    const url = `${this.urlmov}?${params.toString()}`;
+    console.log('URL generada:', url); // Verifica la URL generada en la consola
+
+    // Realizar la solicitud GET a la API
+    return this.http.get(url);
+  }
+
+
+
   eliminarMovimiento(id: any): Observable<any> {
 
     return this.http.delete(`${this.urlmov}/${id}`).pipe(
@@ -131,14 +157,14 @@ export class PoductService {
     const params = new HttpParams()
       .set('limit', limit.toString())
       .set('offset', offset.toString());
-  
+
     return this.http.get(`${this.baseUrl}`, { params }); // ✅ Correcto
   }
-  
 
-  facturaVenta(id: string): Observable < any > {
+
+  facturaVenta(id: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/${id}`)
-  
+
   }
 
 

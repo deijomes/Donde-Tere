@@ -10,6 +10,7 @@ import { error } from 'jquery';
 
 import { NgxPaginationModule } from 'ngx-pagination'
 import { Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 
 
@@ -37,13 +38,14 @@ export class MovimientosComponent implements OnInit {
   itemsPerPage: number = 10;  // Elementos por página (puedes cambiar este valor)
   totalItems: number = 0;  // Total de productos que vamos a paginar
 
-  filteredProductos: any[] = [];
-  searchTermSubscription : any
+  filteredMovimientos: any[] = [];
+  searchTermSubscription: any
   mensajeNoEncontrado: string = ''
 
 
 
   searchTerm: string = '';
+  validReasons: string[] = ['COMPRA', 'sale', 'DEVOLUCIÓN', 'DAÑO', 'INVENTARIO'];
 
 
 
@@ -53,8 +55,8 @@ export class MovimientosComponent implements OnInit {
 
 
   constructor(private serviceproduct: BuscadorService, private http: PoductService, private bf: FormBuilder,
-    
-  ) { 
+
+  ) {
 
   }
 
@@ -72,7 +74,7 @@ export class MovimientosComponent implements OnInit {
       this.searchTermSubscription.unsubscribe();
     }
   }
-  
+
 
   selectItem(item: string): void {
     this.selectedItem = item;
@@ -108,29 +110,73 @@ export class MovimientosComponent implements OnInit {
     });
   }
 
+
   suscripciontermino(): void {
-    this.searchTermSubscription = this.serviceproduct.terminoBusqueda$.subscribe(term => {
+    this.searchTermSubscription = this.serviceproduct.terminoBusqueda$.pipe(
+      debounceTime(500) // Espera 500ms después de que el usuario deje de escribir
+    ).subscribe(term => {
       console.log('Término de búsqueda recibido:', term);  // Verifica el valor que llega
       this.searchTerm = term;
-      this.filterProductos(); // Filtra los productos cada vez que cambia el término
+      this.obtenerMovimientos()
+    
+    });
+
+
+    
+
+   
+  }
+
+  esFecha(term: string): boolean {
+    const fecha = new Date(term);
+    return !isNaN(fecha.getTime()); // Verifica si es una fecha válida
+  }
+
+  // Método para validar si el motivo es uno de los valores permitidos
+  esMotivoValido(term: string): boolean {
+    return this.validReasons.includes(term.toUpperCase());
+  }
+
+  // Método para obtener los movimientos con base en el término de búsqueda
+  obtenerMovimientos(): void {
+    let startDate = '';
+    let endDate = '';
+    let reason = ''; // Asignar el motivo si es necesario
+    let productId = ''; // Si tienes productId lo puedes asignar aquí
+
+    // Verificar si el término es una fecha
+    if (this.esFecha(this.searchTerm)) {
+      startDate = new Date(new Date(this.searchTerm).setDate(new Date(this.searchTerm).getDate() - 1)).toISOString();
+      endDate = new Date(this.searchTerm).toISOString();
+    } 
+    // Verificar si el término es un motivo válido
+    else if (this.esMotivoValido(this.searchTerm)) {
+      reason = this.searchTerm; // Si el término es válido, asignarlo a `reason`
+    } 
+    else {
+      console.error('Término no válido:', this.searchTerm);
+      return; // Si el término no es válido, no hacer la solicitud
+    }
+
+    // Asegurarse de que solo un tipo de parámetro se esté usando
+    if ((startDate && endDate) && reason) {
+      console.error('Error: Solo puedes proporcionar una de las siguientes opciones: una fecha o un motivo.');
+      return; // Si ambos parámetros están presentes, mostrar error
+    }
+
+    // Llamar al servicio para obtener los movimientos
+    this.http.getmovimientos(
+      10, // Límite de resultados
+      0, // Offset
+      startDate, // startDate
+      endDate, // endDate
+      reason, // reason (nombre o término)
+      productId // productId (si lo tienes)
+    ).subscribe(movimientos => {
+      console.log('Movimientos obtenidos:', movimientos); // Verifica los movimientos obtenidos
+      this.filteredMovimientos = movimientos; // Asignar los movimientos a la lista filtrada
     });
   }
-  
-  filterProductos(): void {
-    if (this.searchTerm) {
-      this.filteredProductos = this.listMovimientos.filter(product =>
-        // Verifica que product.product.name exista y que sea una cadena
-        product.product?.name && product.product.name.toLowerCase().includes(this.searchTerm.toLowerCase())
-      );
-    } else {
-      this.filteredProductos = this.listMovimientos; // Si no hay término de búsqueda, muestra todos los productos
-    }
-  
-    console.log('Productos filtrados:', this.filteredProductos);
-  }
-  
-  
-
 
 
 
