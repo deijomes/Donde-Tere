@@ -10,7 +10,7 @@ import { error } from 'jquery';
 
 import { NgxPaginationModule } from 'ngx-pagination'
 import { Subscription } from 'rxjs';
-import { debounceTime, switchMap } from 'rxjs/operators';
+import { debounceTime, filter, switchMap } from 'rxjs/operators';
 
 
 
@@ -123,39 +123,39 @@ export class MovimientosComponent implements OnInit {
 
   suscripciontermino(): void {
     this.searchTermSubscription = this.serviceproduct.terminoBusqueda$.pipe(
+      filter(term => term.trim() !== ''), // Filtra términos vacíos antes de hacer cualquier acción
       switchMap(term => {
-        console.log('Término de búsqueda recibido:', term);  // Verifica el valor que llega
+        console.log('Término de búsqueda recibido:', term);
         this.searchTerm = term;
-        this.manejarEntrada(this.searchTerm);  // Maneja la entrada del término
   
-        // Verifica si el término no está vacío antes de aplicar el filtro
-        this.isFiltered = !!this.searchTerm.trim();  // Activar la bandera de filtro
+        this.manejarEntrada(this.searchTerm);  // Solo se ejecuta si el término es válido
   
-        // Si el término está vacío, no hace falta obtener datos
+        this.isFiltered = !!this.searchTerm.trim();  
+  
         if (!this.isFiltered) {
-          this.filteredMovimientos = [...this.listMovimientos];  // Mostrar los movimientos originales
-          this.alertShown = false;  // Restablecer la bandera de alerta
-          return [];
+          this.filteredMovimientos = [...this.listMovimientos];
+          this.alertShown = false;
+          return []; 
         }
   
         return this.http.getDatos(this.limit, this.offset, this.productName, this.endDate, this.startDate);
       })
     ).subscribe(response => {
       if (this.isFiltered && (!response?.data || response.data.length === 0)) {
-        if (!this.alertShown) {  // Solo mostramos la alerta si aún no se ha mostrado
+        if (!this.alertShown) {
           console.log('No se encontraron datos con ese término de búsqueda');
           this.showAlert('No se encontraron resultados para los filtros aplicados.');
-          this.alertShown = true;  // Establecer la bandera de alerta como mostrada
+          this.alertShown = true;
         }
-  
-        // Restaurar la lista original si no hay resultados
-        this.filteredMovimientos = [...this.listMovimientos];  // Restauramos la lista original
+        this.filteredMovimientos = [...this.listMovimientos];
       } else {
-        // Si hay datos, mostramos los movimientos filtrados
         this.filteredMovimientos = response?.data || [];
-        this.alertShown = false;  // Restablecer la bandera de alerta si hay resultados
+        this.alertShown = false;
       }
       console.log(this.filteredMovimientos, 'datos filtrados');
+  
+      // **Limpia el término sin volver a emitir en la suscripción**
+      this.searchTerm = '';
     });
   }
   
