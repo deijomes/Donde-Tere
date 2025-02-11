@@ -347,8 +347,12 @@
     </div>
   </div>
   
+  <!-- Alerta personalizada -->
 
-
-
+  <div *ngIf="mostrarAlerta" class="alert alert-warning alert-dismissible fade show custom-alert" role="alert">
+    <strong>Atención:</strong> {{ alertMessage }}
+    <button type="button" class="btn-close" aria-label="Close"(click)="cerrarAlerta()"></button>
+  </div>
+  
 
 

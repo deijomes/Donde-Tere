@@ -42,6 +42,8 @@ export class MovimientosComponent implements OnInit {
   searchTermSubscription: any
   mensajeNoEncontrado: string = ''
   alertShown : boolean = false
+  alertMessage :string = ''
+  mostrarAlerta : boolean = false
 
 
 
@@ -160,9 +162,18 @@ export class MovimientosComponent implements OnInit {
   }
   
   showAlert(message: string) {
-    alert(message);  // Usamos `alert()` aquí, pero puedes usar un componente de alerta si prefieres
-  }
+    this.alertMessage = message;
+    this.mostrarAlerta = true;
+
+    setTimeout(() => {
+      this.cerrarAlerta();
+    }, 3000); // La alerta desaparece desp
   
+  }
+
+  cerrarAlerta() {
+    this.mostrarAlerta = false;
+  }
   
   
 
