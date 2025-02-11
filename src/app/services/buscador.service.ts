@@ -19,8 +19,8 @@ export class BuscadorService {
 
 
   setTerminoBusqueda(termino: string): void {
-    this.terminoBusquedaSubject.next(termino); // Actualiza el término de búsqueda
-    setTimeout(() => this.terminoBusquedaSubject.next(''), 500);
+    this.terminoBusquedaSubject.next(termino);
+   
   }
 
 

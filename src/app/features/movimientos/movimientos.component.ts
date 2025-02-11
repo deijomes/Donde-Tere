@@ -11,6 +11,7 @@ import { error } from 'jquery';
 import { NgxPaginationModule } from 'ngx-pagination'
 import { Subscription } from 'rxjs';
 import { debounceTime, filter, switchMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 
 
@@ -63,7 +64,7 @@ export class MovimientosComponent implements OnInit {
 
 
 
-  constructor(private serviceproduct: BuscadorService, private http: PoductService, private bf: FormBuilder,
+  constructor(private serviceproduct: BuscadorService, private http: PoductService, private bf: FormBuilder, 
 
   ) {
 
@@ -192,6 +193,8 @@ export class MovimientosComponent implements OnInit {
       this.endDate = '';
     }
   }
+
+ 
 
 
 

@@ -9,6 +9,7 @@ import { ProductoCompraService } from '../../../services/producto-compra.service
 import { IdPipe } from '../../../pipes/id.pipe';
 import { CapitalizePipe } from '../../../pipes/capitalize.pipe';
 import { PdfService } from '../../../services/pdf.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-compras',
@@ -37,8 +38,8 @@ export class ComprasComponent implements OnInit {
   tablaProducto: boolean = false
   mostrarHistorial : boolean =  false
 
-  constructor(private serviceproduct: PoductService, private serviceCompra: ProductoCompraService, private fb: FormBuilder,
-     private pdf:PdfService) {
+  constructor(private serviceproduct: PoductService, private serviceCompra: ProductoCompraService, private fb: 
+    FormBuilder,private router: Router, private pdf:PdfService) {
 
     this.comprasForm = this.fb.group({
       codigo: '',
@@ -423,6 +424,12 @@ export class ComprasComponent implements OnInit {
   }
   generatePDFF() {
     this.pdf. generateFacturaPDF2(this.facturaCompra);
+  }
+
+  registro() {
+    this.router.navigateByUrl('productos/registrar');
+    
+
   }
 
 
