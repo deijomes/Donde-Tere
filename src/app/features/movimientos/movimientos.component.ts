@@ -10,7 +10,7 @@ import { error } from 'jquery';
 
 import { NgxPaginationModule } from 'ngx-pagination'
 import { Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, switchMap } from 'rxjs/operators';
 
 
 
@@ -45,11 +45,13 @@ export class MovimientosComponent implements OnInit {
 
 
   searchTerm: string = '';
-  limit = 10;
+  limit = 60;
   offset = 0;
   productName?: string;
   endDate?: string;
   startDate?: string;
+  isFiltered: boolean = false
+  filterTimeout: any;
 
 
 
@@ -62,7 +64,7 @@ export class MovimientosComponent implements OnInit {
 
   ) {
 
-   
+
 
   }
 
@@ -120,57 +122,46 @@ export class MovimientosComponent implements OnInit {
 
   suscripciontermino(): void {
     this.searchTermSubscription = this.serviceproduct.terminoBusqueda$.pipe(
-      debounceTime(500) // Espera 500ms después de que el usuario deje de escribir
-    ).subscribe(term => {
-      console.log('Término de búsqueda recibido:', term);  // Verifica el valor que llega
-      this.searchTerm = term;
-     
-      this. manejarEntrada(this.searchTerm)
-      
-      
-      this.obtenerDatos();
-    
+       
+      switchMap(term => {
+        console.log('Término de búsqueda recibido:', term);  // Verifica el valor que llega
+        this.searchTerm = term;
+        this.manejarEntrada(this.searchTerm);  // Maneja la entrada del término
+  
+        // Verifica si el término no está vacío antes de aplicar el filtro
+        this.isFiltered = !!this.searchTerm.trim();  // Activar la bandera de filtro
+  
+        // Si el término está vacío, no hace falta obtener datos
+        if (!this.isFiltered) {
+          this.filteredMovimientos = [];  // Vaciar los movimientos si no hay término
+          return [];
+        }
+  
+        return this.http.getDatos(this.limit, this.offset, this.productName, this.endDate, this.startDate);
+      })
+    ).subscribe(response => {
+      this.filteredMovimientos = response?.data || [];
+      console.log(this.filteredMovimientos, 'datos filtrados');
     });
-
-
-    
-
-   
   }
-
+  
   manejarEntrada(input: string) {
     const resultado = this.http.convertToDateString(input);
-
+  
     if (resultado.isDate) {
       console.log('Es una fecha');
-      console.log('Fecha inicio:', resultado.startDate);
-      this.startDate = resultado.startDate	
-      console.log('Fecha fin:', resultado.endDate);
-      this.endDate = resultado.endDate
-      this.productName = ''
-
+      this.startDate = resultado.startDate;
+      this.endDate = resultado.endDate;
+      this.productName = '';
     } else {
       console.log('Es un nombre:', resultado.name);
-      this.productName =resultado.name
-      this.startDate = ''
-      this.endDate = ''
+      this.productName = resultado.name;
+      this.startDate = '';
+      this.endDate = '';
     }
   }
-
   
 
- 
-
- 
-
-
-  obtenerDatos(): void {
-    this.http.getDatos(this.limit, this.offset, this.productName, this.endDate, this.startDate).subscribe(response => {
-      console.log(response);
-    });
-  }
-
-  
 
 
 

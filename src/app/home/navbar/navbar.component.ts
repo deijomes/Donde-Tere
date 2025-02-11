@@ -3,11 +3,12 @@ import { BuscadorService } from '../../services/buscador.service';
 import { ProductoCompraService } from '../../services/producto-compra.service';
 import { CommonModule } from '@angular/common';
 import { TextoSpañolPipe } from '../../pipes/texto-spañol.pipe';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, TextoSpañolPipe],
+  imports: [CommonModule, TextoSpañolPipe, FormsModule],
    schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
@@ -15,6 +16,8 @@ import { TextoSpañolPipe } from '../../pipes/texto-spañol.pipe';
 export class NavbarComponent implements OnInit {
   configSize: string = 'sm-hover';
   notificacion: any []=[]
+  searchTerm: string = '';
+
 
   constructor(private buscadorService:BuscadorService, private services:ProductoCompraService){
 
@@ -26,12 +29,22 @@ export class NavbarComponent implements OnInit {
   
 
 
-
-  onSearch(event: Event): void {
-    const inputValue = (event.target as HTMLInputElement).value;
-    this.buscadorService.setTerminoBusqueda(inputValue); // Notifica al servicio
+  onSearch(): void {
+  
+      this.enviarTerminoBusqueda();
+    
   }
-
+  
+  onClickSearch(): void {
+    this.enviarTerminoBusqueda();
+  }
+  
+  private enviarTerminoBusqueda(): void {
+    if (this.searchTerm.trim()) { // Verifica que no esté vacío
+      console.log('Término de búsqueda enviado:', this.searchTerm);
+      this.buscadorService.setTerminoBusqueda(this.searchTerm);
+    }
+  }
 
   toggleMenuSize(): void {
     const htmlElement = document.documentElement; // Accede al elemento <html>

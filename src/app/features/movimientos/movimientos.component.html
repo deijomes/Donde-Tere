@@ -289,7 +289,7 @@
             <span class="position-absolute start-0 top-0 border border-dashed h-100"></span>
 
             <!-- Agregar paginación correctamente -->
-            <div *ngIf="listMovimientos.length > 0">
+            <div *ngIf="!isFiltered">
                 <div *ngFor="let movimiento of listMovimientos | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }" 
                     class="position-relative ps-4">
                     
@@ -306,6 +306,32 @@
 
                             <div class="d-flex justify-content-between align-items-center gap-3">
                                 <p class="mb-0">{{ movimiento.createdAt | date: "yyyy-MM-dd h:mma" : 'es' }}</p>
+                                <!--a (click)="limpiarMovimiento(movimiento.id)" class="btn btn-soft-danger btn-sm">
+                                    <iconify-icon icon="solar:broom-broken" class="align-middle fs-18"></iconify-icon>
+                                </a-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="isFiltered">
+                <div *ngFor="let filtroMovimiento of filteredMovimientos | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }" 
+                    class="position-relative ps-4">
+                    
+                    <div class="mb-4">
+                        <span class="position-absolute start-0 avatar-sm translate-middle-x bg-light d-inline-flex align-items-center justify-content-center rounded-circle text-success fs-20">
+                            <i class="bx bx-check-circle"></i>
+                        </span>
+                        <div class="ms-2 d-flex flex-wrap gap-2 align-items-center justify-content-between">
+                            <div>
+                                <h5 class="mb-1 text-dark fw-medium fs-15">{{filtroMovimiento.product.name |uppercase}}</h5>
+                                <p class="mb-2">Movimiento <a class="link-primary">{{ filtroMovimiento.reason }}</a></p>
+                                <p>Cantidad <a class="btn btn-light">{{ filtroMovimiento.quantity }}</a></p>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center gap-3">
+                                <p class="mb-0">{{ filtroMovimiento.createdAt | date: "yyyy-MM-dd h:mma" : 'es' }}</p>
                                 <!--a (click)="limpiarMovimiento(movimiento.id)" class="btn btn-soft-danger btn-sm">
                                     <iconify-icon icon="solar:broom-broken" class="align-middle fs-18"></iconify-icon>
                                 </a-->
