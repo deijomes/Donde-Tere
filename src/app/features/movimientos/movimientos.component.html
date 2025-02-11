@@ -282,78 +282,73 @@
 -->
 <div class="card">
     <div class="card-header">
-        <h4 class="card-title">Historial movimientos</h4>
+      <h4 class="card-title">Historial movimientos</h4>
     </div>
     <div class="card-body">
-        <div class="position-relative ms-2">
-            <span class="position-absolute start-0 top-0 border border-dashed h-100"></span>
-
-            <!-- Agregar paginación correctamente -->
-            <div *ngIf="!isFiltered">
-                <div *ngFor="let movimiento of listMovimientos | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }" 
-                    class="position-relative ps-4">
-                    
-                    <div class="mb-4">
-                        <span class="position-absolute start-0 avatar-sm translate-middle-x bg-light d-inline-flex align-items-center justify-content-center rounded-circle text-success fs-20">
-                            <i class="bx bx-check-circle"></i>
-                        </span>
-                        <div class="ms-2 d-flex flex-wrap gap-2 align-items-center justify-content-between">
-                            <div>
-                                <h5 class="mb-1 text-dark fw-medium fs-15">{{movimiento.product.name |uppercase}}</h5>
-                                <p class="mb-2">Movimiento <a class="link-primary">{{ movimiento.reason }}</a></p>
-                                <p>Cantidad <a class="btn btn-light">{{ movimiento.quantity }}</a></p>
-                            </div>
-
-                            <div class="d-flex justify-content-between align-items-center gap-3">
-                                <p class="mb-0">{{ movimiento.createdAt | date: "yyyy-MM-dd h:mma" : 'es' }}</p>
-                                <!--a (click)="limpiarMovimiento(movimiento.id)" class="btn btn-soft-danger btn-sm">
-                                    <iconify-icon icon="solar:broom-broken" class="align-middle fs-18"></iconify-icon>
-                                </a-->
-                            </div>
-                        </div>
-                    </div>
+      <div class="position-relative ms-2">
+        <span class="position-absolute start-0 top-0 border border-dashed h-100"></span>
+  
+        <!-- Mostrar la tabla original cuando no haya filtro activo o si el filtro no ha producido resultados -->
+        <div *ngIf="!isFiltered || (isFiltered && filteredMovimientos.length === 0)">
+          <!-- Mostrar los movimientos originales si no hay filtro o no hay resultados filtrados -->
+          <div *ngFor="let movimiento of listMovimientos | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }" class="position-relative ps-4">
+            <div class="mb-4">
+              <span class="position-absolute start-0 avatar-sm translate-middle-x bg-light d-inline-flex align-items-center justify-content-center rounded-circle text-success fs-20">
+                <i class="bx bx-check-circle"></i>
+              </span>
+              <div class="ms-2 d-flex flex-wrap gap-2 align-items-center justify-content-between">
+                <div>
+                  <h5 class="mb-1 text-dark fw-medium fs-15">{{ movimiento.product.name | uppercase }}</h5>
+                  <p class="mb-2">Movimiento <a class="link-primary">{{ movimiento.reason }}</a></p>
+                  <p>Cantidad <a class="btn btn-light">{{ movimiento.quantity }}</a></p>
                 </div>
-            </div>
-
-            <div *ngIf="isFiltered">
-                <div *ngFor="let filtroMovimiento of filteredMovimientos | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }" 
-                    class="position-relative ps-4">
-                    
-                    <div class="mb-4">
-                        <span class="position-absolute start-0 avatar-sm translate-middle-x bg-light d-inline-flex align-items-center justify-content-center rounded-circle text-success fs-20">
-                            <i class="bx bx-check-circle"></i>
-                        </span>
-                        <div class="ms-2 d-flex flex-wrap gap-2 align-items-center justify-content-between">
-                            <div>
-                                <h5 class="mb-1 text-dark fw-medium fs-15">{{filtroMovimiento.product.name |uppercase}}</h5>
-                                <p class="mb-2">Movimiento <a class="link-primary">{{ filtroMovimiento.reason }}</a></p>
-                                <p>Cantidad <a class="btn btn-light">{{ filtroMovimiento.quantity }}</a></p>
-                            </div>
-
-                            <div class="d-flex justify-content-between align-items-center gap-3">
-                                <p class="mb-0">{{ filtroMovimiento.createdAt | date: "yyyy-MM-dd h:mma" : 'es' }}</p>
-                                <!--a (click)="limpiarMovimiento(movimiento.id)" class="btn btn-soft-danger btn-sm">
-                                    <iconify-icon icon="solar:broom-broken" class="align-middle fs-18"></iconify-icon>
-                                </a-->
-                            </div>
-                        </div>
-                    </div>
+  
+                <div class="d-flex justify-content-between align-items-center gap-3">
+                  <p class="mb-0">{{ movimiento.createdAt | date: "yyyy-MM-dd h:mma" : 'es' }}</p>
                 </div>
+              </div>
             </div>
-
-            <!-- PAGINADOR: Ubicación correcta fuera del *ngFor -->
-            <div class="card-footer border-top">
-                <nav aria-label="Page navigation">
-                    <pagination-controls class="pagination justify-content-end mb-0"
-                        (pageChange)="currentPage = $event" 
-                        previousLabel="Anterior" nextLabel="Siguiente"
-                        [responsive]="true" [autoHide]="true">
-                    </pagination-controls>
-                </nav>
-            </div>
+          </div>
         </div>
+  
+        <!-- Mostrar los resultados filtrados cuando hay datos -->
+        <div *ngIf="isFiltered && filteredMovimientos.length > 0">
+          <div *ngFor="let filtroMovimiento of filteredMovimientos | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }" class="position-relative ps-4">
+            <div class="mb-4">
+              <span class="position-absolute start-0 avatar-sm translate-middle-x bg-light d-inline-flex align-items-center justify-content-center rounded-circle text-success fs-20">
+                <i class="bx bx-check-circle"></i>
+              </span>
+              <div class="ms-2 d-flex flex-wrap gap-2 align-items-center justify-content-between">
+                <div>
+                  <h5 class="mb-1 text-dark fw-medium fs-15">{{ filtroMovimiento.product.name | uppercase }}</h5>
+                  <p class="mb-2">Movimiento <a class="link-primary">{{ filtroMovimiento.reason }}</a></p>
+                  <p>Cantidad <a class="btn btn-light">{{ filtroMovimiento.quantity }}</a></p>
+                </div>
+  
+                <div class="d-flex justify-content-between align-items-center gap-3">
+                  <p class="mb-0">{{ filtroMovimiento.createdAt | date: "yyyy-MM-dd h:mma" : 'es' }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- PAGINADOR: Ubicación correcta fuera del *ngFor -->
+        <div class="card-footer border-top">
+          <nav aria-label="Page navigation">
+            <pagination-controls class="pagination justify-content-end mb-0"
+              (pageChange)="currentPage = $event"
+              previousLabel="Anterior" nextLabel="Siguiente"
+              [responsive]="true" [autoHide]="true">
+            </pagination-controls>
+          </nav>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
+  
+
+
 
 
 

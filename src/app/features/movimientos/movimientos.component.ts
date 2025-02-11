@@ -41,6 +41,7 @@ export class MovimientosComponent implements OnInit {
   filteredMovimientos: any[] = [];
   searchTermSubscription: any
   mensajeNoEncontrado: string = ''
+  alertShown : boolean = false
 
 
 
@@ -122,7 +123,6 @@ export class MovimientosComponent implements OnInit {
 
   suscripciontermino(): void {
     this.searchTermSubscription = this.serviceproduct.terminoBusqueda$.pipe(
-       
       switchMap(term => {
         console.log('Término de búsqueda recibido:', term);  // Verifica el valor que llega
         this.searchTerm = term;
@@ -133,21 +133,42 @@ export class MovimientosComponent implements OnInit {
   
         // Si el término está vacío, no hace falta obtener datos
         if (!this.isFiltered) {
-          this.filteredMovimientos = [];  // Vaciar los movimientos si no hay término
+          this.filteredMovimientos = [...this.listMovimientos];  // Mostrar los movimientos originales
+          this.alertShown = false;  // Restablecer la bandera de alerta
           return [];
         }
   
         return this.http.getDatos(this.limit, this.offset, this.productName, this.endDate, this.startDate);
       })
     ).subscribe(response => {
-      this.filteredMovimientos = response?.data || [];
+      if (this.isFiltered && (!response?.data || response.data.length === 0)) {
+        if (!this.alertShown) {  // Solo mostramos la alerta si aún no se ha mostrado
+          console.log('No se encontraron datos con ese término de búsqueda');
+          this.showAlert('No se encontraron resultados para los filtros aplicados.');
+          this.alertShown = true;  // Establecer la bandera de alerta como mostrada
+        }
+  
+        // Restaurar la lista original si no hay resultados
+        this.filteredMovimientos = [...this.listMovimientos];  // Restauramos la lista original
+      } else {
+        // Si hay datos, mostramos los movimientos filtrados
+        this.filteredMovimientos = response?.data || [];
+        this.alertShown = false;  // Restablecer la bandera de alerta si hay resultados
+      }
       console.log(this.filteredMovimientos, 'datos filtrados');
     });
   }
   
+  showAlert(message: string) {
+    alert(message);  // Usamos `alert()` aquí, pero puedes usar un componente de alerta si prefieres
+  }
+  
+  
+  
+
   manejarEntrada(input: string) {
     const resultado = this.http.convertToDateString(input);
-  
+
     if (resultado.isDate) {
       console.log('Es una fecha');
       this.startDate = resultado.startDate;
@@ -160,7 +181,7 @@ export class MovimientosComponent implements OnInit {
       this.endDate = '';
     }
   }
-  
+
 
 
 
