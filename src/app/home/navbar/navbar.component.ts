@@ -4,6 +4,7 @@ import { ProductoCompraService } from '../../services/producto-compra.service';
 import { CommonModule } from '@angular/common';
 import { TextoSpañolPipe } from '../../pipes/texto-spañol.pipe';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -20,7 +21,7 @@ export class NavbarComponent implements OnInit {
   searchTermProductos :string = ''
 
 
-  constructor(private buscadorService:BuscadorService, private services:ProductoCompraService){
+  constructor(private buscadorService:BuscadorService, private services:ProductoCompraService, private router: Router){
 
 
   }
@@ -44,11 +45,20 @@ export class NavbarComponent implements OnInit {
   private enviarTerminoBusqueda(): void {
     if (this.searchTerm.trim()) { // Verifica que no esté vacío
       console.log('Término de búsqueda enviado:', this.searchTerm);
-      this.buscadorService.setTerminoBusqueda(this.searchTerm);
-      this.buscadorService.setTerminoBusquedaProductos(this.searchTerm);
+      // Enviar el término con el contexto adecuado
+      // Define el contexto basado en la ruta actual
+    let contexto = 'general';
+    if (this.router.url.includes('productos')) {
+      contexto = 'productos';
+    } else if (this.router.url.includes('movimientos')) {
+      contexto = 'movimientos';
     }
-  }
 
+    this.buscadorService.setTerminoBusqueda(this.searchTerm, contexto);
+  }
+    
+  }
+   
 
   toggleMenuSize(): void {
     const htmlElement = document.documentElement; // Accede al elemento <html>

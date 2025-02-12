@@ -10,7 +10,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import Swal from 'sweetalert2';
 import { bootstrapAppScopedEarlyEventContract } from '@angular/core/primitives/event-dispatch';
 import { BuscadorService } from '../../../services/buscador.service';
-import { filter, switchMap } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs';
 
 declare var bootstrap: any;
 @Component({
@@ -217,13 +217,21 @@ export class InventarioComponent implements OnInit {
   }
 
   suscripciontermino(): void {
-    this.searchTermSubscription = this.serviceproduct.terminoBusquedaProductos$.pipe(
-      filter(term => term.trim() !== ''), // Filtra términos vacíos
+    this.searchTermSubscription = this.serviceproduct.terminosBusqueda$.pipe(
+      // Filtra términos vacíos
+      filter(terminos => (terminos['productos'] || '').trim() !== ''),
+      
+      // Extrae solo el término de 'productos'
+      map(terminos => terminos['productos']),
+  
+      
+  
+      // Cancela la petición anterior si el término cambia
       switchMap(term => {
         console.log('Término de búsqueda recibido:', term);
         this.searchTerm = term; // Asigna el término de búsqueda
-
-        // Llama al servicio para obtener los productos con los parámetros
+  
+        // Llama al servicio para obtener los productos
         return this.http.getProducts(this.limit, this.offset, this.searchTerm);
       })
     ).subscribe(
@@ -235,18 +243,18 @@ export class InventarioComponent implements OnInit {
         console.error('Error al obtener productos:', error);
       }
     );
-  }
 
-  // Método para cancelar la suscripción al destruir el componente
-  ngOnDestroy(): void {
-    if (this.searchTermSubscription) {
-      this.searchTermSubscription.unsubscribe();
-    }
+    
   }
   
 
-
-
+  // Método para cancelar la suscripción al destruir el componente
+  ngOnDestroy(): void {
+    this.serviceproduct.limpiarBusqueda('productos'); // Limpia el término cuando el componente se destruye
+    this.searchTermSubscription.unsubscribe(); // Evita fugas de memoria
+  }
+  
+ 
 }
 
 

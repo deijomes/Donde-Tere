@@ -10,25 +10,25 @@ export class BuscadorService {
   constructor() { }
 
 
+  private terminosBusqueda = new BehaviorSubject<{ [contexto: string]: string }>({});
+  terminosBusqueda$ = this.terminosBusqueda.asObservable();
 
-  private terminoBusquedaSubject = new BehaviorSubject<string>(''); // Estado compartido
-  terminoBusqueda$ = this.terminoBusquedaSubject.asObservable(); // Observable para escuchar cambios
-
-  private terminoBusquedaProductos = new BehaviorSubject<string>('');
-  terminoBusquedaProductos$ = this.terminoBusquedaProductos.asObservable();
-
-  
-
-
-
-  setTerminoBusqueda(termino: string): void {
-    this.terminoBusquedaSubject.next(termino);
-   
-  }
-  setTerminoBusquedaProductos(termino: string): void {
-    this.terminoBusquedaProductos.next(termino);
+  setTerminoBusqueda(termino: string, contexto: string): void {
+    const nuevosTerminos = { ...this.terminosBusqueda.value, [contexto]: termino };
+    this.terminosBusqueda.next(nuevosTerminos);
   }
 
+  getTerminoBusqueda(contexto: string): string {
+    return this.terminosBusqueda.value[contexto] || '';
+  }
+
+  limpiarBusqueda(contexto: string): void {
+    const nuevosTerminos = { ...this.terminosBusqueda.value };
+    delete nuevosTerminos[contexto];
+    this.terminosBusqueda.next(nuevosTerminos);
+
+    this.terminosBusqueda.next(Object.keys(nuevosTerminos).length ? nuevosTerminos : {});
+  }
 
 }
 

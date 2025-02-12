@@ -10,7 +10,7 @@ import { error } from 'jquery';
 
 import { NgxPaginationModule } from 'ngx-pagination'
 import { Subscription } from 'rxjs';
-import { debounceTime, filter, switchMap } from 'rxjs/operators';
+import { debounceTime, filter, map, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 
@@ -42,9 +42,9 @@ export class MovimientosComponent implements OnInit {
   filteredMovimientos: any[] = [];
   searchTermSubscription: any
   mensajeNoEncontrado: string = ''
-  alertShown : boolean = false
-  alertMessage :string = ''
-  mostrarAlerta : boolean = false
+  alertShown: boolean = false
+  alertMessage: string = ''
+  mostrarAlerta: boolean = false
 
 
 
@@ -64,7 +64,7 @@ export class MovimientosComponent implements OnInit {
 
 
 
-  constructor(private serviceproduct: BuscadorService, private http: PoductService, private bf: FormBuilder, 
+  constructor(private serviceproduct: BuscadorService, private http: PoductService, private bf: FormBuilder,
 
   ) {
 
@@ -82,10 +82,10 @@ export class MovimientosComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    if (this.searchTermSubscription) {
-      this.searchTermSubscription.unsubscribe();
+   
 
-    }
+    this.serviceproduct.limpiarBusqueda('movimientos'); // Limpia la búsqueda al salir del componente
+    this.searchTermSubscription.unsubscribe(); // Evita fugas de memoria
   }
 
 
@@ -125,24 +125,33 @@ export class MovimientosComponent implements OnInit {
 
 
   suscripciontermino(): void {
-    this.searchTermSubscription = this.serviceproduct.terminoBusqueda$.pipe(
-      filter(term => term.trim() !== ''), // Filtra términos vacíos antes de hacer cualquier acción
+    this.searchTermSubscription = this.serviceproduct.terminosBusqueda$.pipe(
+      filter(terminos => (terminos['movimientos'] || '').trim() !== ''), // Filtra términos vacíos antes de hacer cualquier acción
+
+      map(terminos => terminos['movimientos']),
+
+
       switchMap(term => {
         console.log('Término de búsqueda recibido:', term);
-        this.searchTerm = term;
-  
-        this.manejarEntrada(this.searchTerm);  // Solo se ejecuta si el término es válido
-  
-        this.isFiltered = !!this.searchTerm.trim();  
-  
+        this.searchTerm = term; // Asigna el término de búsqueda
+
+        // Llama al servicio para obtener los productos
+        this.manejarEntrada(this.searchTerm)
+
+        this.isFiltered = !!this.searchTerm.trim();
+
         if (!this.isFiltered) {
           this.filteredMovimientos = [...this.listMovimientos];
           this.alertShown = false;
-          return []; 
+          return [];
         }
-  
+
         return this.http.getDatos(this.limit, this.offset, this.productName, this.endDate, this.startDate);
       })
+
+
+
+
     ).subscribe(response => {
       if (this.isFiltered && (!response?.data || response.data.length === 0)) {
         if (!this.alertShown) {
@@ -156,12 +165,12 @@ export class MovimientosComponent implements OnInit {
         this.alertShown = false;
       }
       console.log(this.filteredMovimientos, 'datos filtrados');
-  
+
       // **Limpia el término sin volver a emitir en la suscripción**
       this.searchTerm = '';
     });
   }
-  
+
   showAlert(message: string) {
     this.alertMessage = message;
     this.mostrarAlerta = true;
@@ -169,14 +178,14 @@ export class MovimientosComponent implements OnInit {
     setTimeout(() => {
       this.cerrarAlerta();
     }, 3000); // La alerta desaparece desp
-  
+
   }
 
   cerrarAlerta() {
     this.mostrarAlerta = false;
   }
-  
-  
+
+
 
   manejarEntrada(input: string) {
     const resultado = this.http.convertToDateString(input);
@@ -194,7 +203,7 @@ export class MovimientosComponent implements OnInit {
     }
   }
 
- 
+
 
 
 
