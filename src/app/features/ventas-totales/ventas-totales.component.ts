@@ -6,14 +6,15 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
-
+import { DatePicker } from 'primeng/datepicker';
 @Component({
   selector: 'app-ventas-totales',
   templateUrl: './ventas-totales.component.html',
   styleUrls: ['./ventas-totales.component.css'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NgChartsModule,FormsModule,MatDatepickerModule,MatInputModule,MatFormFieldModule],
+  imports: [NgChartsModule,FormsModule,MatDatepickerModule,MatInputModule,MatFormFieldModule,DatePicker],
+  encapsulation : ViewEncapsulation.None
 
 })
 export class VentasTotalesComponent implements OnInit {

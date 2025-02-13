@@ -11,15 +11,8 @@
     
   }
 
-  /* Estilo del borde cuando el campo es inválido */
-.mat-form-field.ng-invalid.mat-focused .mat-form-field-outline {
-    border-color: #f44336 !important; /* Rojo cuando el campo es inválido y enfocado */
-  }
-  
-  .mat-form-field.ng-invalid .mat-form-field-outline {
-    border-color: #f44336 !important; /* Rojo cuando el campo es inválido */
-  }
-  
+
+
 
   .table td, .table th {
     border: none;  /* Elimina el borde entre las celdas */
@@ -30,6 +23,19 @@
     background-color: #f8f9fa;  /* Color de fondo al pasar el mouse */
 }
 
+
+.p-datepicker input:focus {
+  outline: none !important;   /* Elimina el contorno del focus */
+  border-color: inherit !important; /* Mantiene el color original */
+  box-shadow: none !important; /* Elimina cualquier sombra */
+}
+
+.p-datepicker-day-selected {
+  background: #ff6d2fe3 !important;
+  color: var(--p-datepicker-date-selected-color);
+}
+
+
  
   
-  
+ 

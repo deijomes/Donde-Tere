@@ -160,7 +160,6 @@
 </div>
 
 
-
 <div class="card shadow-sm border-light">
     <div class="card-body">
         <div class="d-flex align-items-center gap-3">
@@ -203,19 +202,14 @@
 
     <div class="card-footer border-top">
         <div class="d-flex gap-4">
-            <mat-form-field appearance="outline" class="datepicker-small flex-grow-1">
-                <mat-label>Inicio</mat-label>
-                <input matInput [matDatepicker]="startPicker" [(ngModel)]="fecha">
-                <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
-                <mat-datepicker #startPicker></mat-datepicker>
-            </mat-form-field>
+            
 
-            <mat-form-field appearance="outline" class="datepicker-small flex-grow-1">
-                <mat-label>Fin</mat-label>
-                <input matInput [matDatepicker]="endPicker" [(ngModel)]="fecha">
-                <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
-                <mat-datepicker #endPicker></mat-datepicker>
-            </mat-form-field>
+          <p-datepicker [(ngModel)]="fecha" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" />
+          <p-datepicker [(ngModel)]="fecha" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" />
+
+
+
+           
         </div>
     </div>
 </div>
