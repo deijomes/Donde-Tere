@@ -58,6 +58,7 @@ export class ComprasComponent implements OnInit {
   ngOnInit(): void {
     this.producto()
     this.registrosCompras()
+    this.cargarProductosSeleccionados()
   }
   // SESION : 1 OBTENER PRODUCTO, PARA LUEGO SELCCIONARLO Y GUARDARLO EN LOCAL STORAGE...
   producto() {
@@ -160,6 +161,7 @@ export class ComprasComponent implements OnInit {
     if (productosGuardados) {
       this.productosSeleccionados = JSON.parse(productosGuardados); // Convertir de JSON a objeto
       console.log('Productos cargados desde LocalStorage:', this.productosSeleccionados);
+      this.tablaProducto = true;
     }
 
   }
@@ -429,6 +431,14 @@ export class ComprasComponent implements OnInit {
   registro() {
     this.router.navigateByUrl('productos/registrar');
     
+
+  }
+  cancelarventa() {
+
+    localStorage.removeItem('productosSeleccionados');
+    console.log('Productos eliminados de localStorage.');
+    this.productosSeleccionados = []
+    this.tablaProducto = false
 
   }
 

@@ -132,7 +132,7 @@
             <tbody>
 
 
-                <tr *ngFor="let producto of productosSeleccionados, let i = index">
+                <tr *ngFor="let producto of productosSeleccion, let i = index">
                     <td class="text-center letra">{{ producto.name }}</td>
 
                     <td class="text-center">{{ producto.code }}</td>
@@ -156,7 +156,7 @@
 
                 </tr>
 
-                <tr *ngIf="productosSeleccionados.length > 0">
+                <tr *ngIf="productosSeleccion.length > 0">
                     <td colspan="4" class="text-end fw-bold">Total:</td>
                     <td class="text-center fw-bold">{{ getTotal() }}</td>
                     <td></td> <!-- Celda vacía para los botones -->

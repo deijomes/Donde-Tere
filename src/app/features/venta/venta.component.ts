@@ -26,7 +26,7 @@ export class VentaComponent implements OnInit {
   clienteForm: FormGroup;
   productos: any[] = [];
   filteredProductos: any[] = [];
-  productosSeleccionados: any[] = [];
+  productosSeleccion: any[] = [];
   prodcutotabla: boolean = false
   salidas: any[] = [];
   selctSalida: any = []
@@ -64,6 +64,7 @@ export class VentaComponent implements OnInit {
     this.producto();
     
     this.obtenerSalidas()
+    this.cargarProductosSeleccionados()
 
 
 
@@ -130,7 +131,7 @@ export class VentaComponent implements OnInit {
     const productoEncontrado = this.productos.find(p => p.code === codigo);
     if (productoEncontrado) {
       // Buscar si el producto ya está en la lista de productos seleccionados
-      const productoExistente = this.productosSeleccionados.find(p => p.code === codigo);
+      const productoExistente = this.productosSeleccion.find(p => p.code === codigo);
 
       if (productoExistente) {
         // Si ya existe, sumamos la cantidad
@@ -146,13 +147,13 @@ export class VentaComponent implements OnInit {
           quantity: cantidad
         };
 
-        this.productosSeleccionados.push(productoAAgregar);
+        this.productosSeleccion.push(productoAAgregar);
       }
 
       // Guardar en localStorage
-      localStorage.setItem('productosSeleccionados', JSON.stringify(this.productosSeleccionados));
+      localStorage.setItem('productosSeleccion', JSON.stringify(this.productosSeleccion));
 
-      console.log('Producto actualizado:', this.productosSeleccionados);
+      console.log('Producto actualizado:', this.productosSeleccion);
 
       this.prodcutotabla = true;
       this.saleForm.reset();  // Reiniciar el formulario después de agregar
@@ -163,10 +164,11 @@ export class VentaComponent implements OnInit {
 
 
   cargarProductosSeleccionados() {
-    const productosGuardados = localStorage.getItem('productosSeleccionados');
+    const productosGuardados = localStorage.getItem('productosSeleccion');
     if (productosGuardados) {
-      this.productosSeleccionados = JSON.parse(productosGuardados); // Convertir de JSON a objeto
-      console.log('Productos cargados desde LocalStorage:', this.productosSeleccionados);
+      this.productosSeleccion = JSON.parse(productosGuardados); // Convertir de JSON a objeto
+      console.log('Productos cargados desde LocalStorage:', this.productosSeleccion);
+      this.prodcutotabla = true;
     }
 
   }
@@ -223,7 +225,7 @@ export class VentaComponent implements OnInit {
 
 
         this.eliminarProductosGuardados();
-        this.productosSeleccionados = [];
+        this.productosSeleccion = [];
 
         this.obtenerSalidas()
         this.prodcutotabla = false
@@ -255,7 +257,7 @@ export class VentaComponent implements OnInit {
 
   // Preparar los productos para el formato correcto
   prepararDatosParaAPI(): any[] {
-    return this.productosSeleccionados.map(producto => {
+    return this.productosSeleccion.map(producto => {
       return {
         productId: producto.id,
         quantity: producto.quantity
@@ -322,7 +324,7 @@ export class VentaComponent implements OnInit {
         localStorage.setItem('productosSeleccionados', JSON.stringify(productos));
 
         // Actualizar la lista en el componente
-        this.productosSeleccionados = productos;
+        this.productosSeleccion = productos;
 
         Swal.fire('¡Cantidad actualizada!', '', 'success');
       } else {
@@ -367,7 +369,7 @@ export class VentaComponent implements OnInit {
 
   getTotal(): number {
 
-    return this.productosSeleccionados.reduce((sum, producto) => {
+    return this.productosSeleccion.reduce((sum, producto) => {
       const totalProducto = producto.price * producto.quantity; // Total por producto
       return sum + totalProducto; // Sumar al total general
     }, 0);
@@ -430,7 +432,7 @@ export class VentaComponent implements OnInit {
 
     localStorage.removeItem('productosSeleccionados');
     console.log('Productos eliminados de localStorage.');
-    this.productosSeleccionados = []
+    this.productosSeleccion = []
     this.prodcutotabla = false
 
   }
