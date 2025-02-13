@@ -1,3 +1,4 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
@@ -6,7 +7,40 @@ import { Observable, of } from 'rxjs';
 })
 export class DashboardService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
+  private Url = 'http://localhost:3000/api/dashboard/top-selling-products'
+
+
+  getProductSelling(limit: number, startDate?: Date, endDate?: Date): Observable<any> {
+    let params = new HttpParams().set('limit', limit.toString());
+  
+    // Agregar fechas solo si están definidas
+    if (startDate) {
+      params = params.set('startdate', startDate.toISOString().split('T')[0]);
+    }
+    if (endDate) {
+      params = params.set('endDate', endDate.toISOString().split('T')[0]);
+    }
+  
+    return this.http.get(this.Url, { params });
+  }
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   getMonthlySales(): Observable<{ month: string; sales: number }[]> {

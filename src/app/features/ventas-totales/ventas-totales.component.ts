@@ -7,6 +7,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { DatePicker } from 'primeng/datepicker';
+import { data } from 'jquery';
 @Component({
   selector: 'app-ventas-totales',
   templateUrl: './ventas-totales.component.html',
@@ -27,7 +28,8 @@ export class VentasTotalesComponent implements OnInit {
 
   productosMenosVendidos :any []=[]
 
-  fecha: Date | null = null;
+  fechaInicial: Date | null = null;
+  fechaFinal: Date | null = null;
 
   ventasTotals: any[] = [];  // Almacenará los datos de ventas
   barChartLabels: string[] = [];  // Etiquetas para el gráfico (meses)
@@ -81,6 +83,8 @@ export class VentasTotalesComponent implements OnInit {
 
     this.getventasActuales();
     this.gettotalActual();
+    this.topMasVendidos()
+    
     
   }
 
@@ -94,6 +98,29 @@ export class VentasTotalesComponent implements OnInit {
     this.servicio.gettotalActual().subscribe((data: any) => { this.totalventas = data })
 
   }
+  topMasVendidos() {
+    const limit = 10;
+  
+    // Validar si hay fechas antes de crearlas
+    const startDate = this.fechaInicial ? new Date(this.fechaInicial + 'T00:00:00.000Z') : undefined;
+    const endDate = this.fechaFinal ? new Date(this.fechaFinal + 'T23:59:59.999Z') : undefined;
+
+    console.log(startDate)
+    console.log(endDate)
+    this.servicio.getProductSelling(limit, startDate, endDate).subscribe((data: any) => {
+      console.log(data, 'top vendidos');
+    });
+
+  }
+
+  
+  topMas(){
+
+    console.log(this.fechaFinal,'fecha inicial captruada')
+      
+  }
+  
+ 
   
   
   
