@@ -1,7 +1,11 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { DashboardService } from '../../services/dashboard.service';
 import { ChartData, ChartDataset, ChartOptions } from 'chart.js';
-import { NgChartsModule } from 'ng2-charts'
+import { NgChartsModule } from 'ng2-charts';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-ventas-totales',
@@ -9,7 +13,7 @@ import { NgChartsModule } from 'ng2-charts'
   styleUrls: ['./ventas-totales.component.css'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NgChartsModule]
+  imports: [NgChartsModule,FormsModule,MatDatepickerModule,MatInputModule,MatFormFieldModule]
 })
 export class VentasTotalesComponent implements OnInit {
 
@@ -21,7 +25,7 @@ export class VentasTotalesComponent implements OnInit {
 
   productosMenosVendidos :any []=[]
 
-
+  fecha: Date | null = null;
 
   ventasTotals: any[] = [];  // Almacenará los datos de ventas
   barChartLabels: string[] = [];  // Etiquetas para el gráfico (meses)
