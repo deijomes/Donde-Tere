@@ -430,7 +430,7 @@ export class VentaComponent implements OnInit {
   }
   cancelarventa() {
 
-    localStorage.removeItem('productosSeleccionados');
+    localStorage.removeItem('productosSeleccion');
     console.log('Productos eliminados de localStorage.');
     this.productosSeleccion = []
     this.prodcutotabla = false
