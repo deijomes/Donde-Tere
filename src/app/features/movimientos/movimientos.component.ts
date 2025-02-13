@@ -142,7 +142,7 @@ export class MovimientosComponent implements OnInit {
 
         if (!this.isFiltered) {
           this.filteredMovimientos = [...this.listMovimientos];
-          this.alertShown = false;
+          this.alertShown = true;
           return [];
         }
 
@@ -153,6 +153,7 @@ export class MovimientosComponent implements OnInit {
 
 
     ).subscribe(response => {
+      this.alertShown = false;
       if (this.isFiltered && (!response?.data || response.data.length === 0)) {
         if (!this.alertShown) {
           console.log('No se encontraron datos con ese término de búsqueda');

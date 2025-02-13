@@ -62,7 +62,7 @@ export class VentaComponent implements OnInit {
 
   ngOnInit(): void {
     this.producto();
-    this.cargarProductosSeleccionados()
+    
     this.obtenerSalidas()
 
 
