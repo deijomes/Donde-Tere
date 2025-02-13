@@ -1,0 +1,35 @@
+.mat-datepicker-content {
+    background-color: #fafafa; /* Fondo personalizado para el calendario */
+  }
+  
+  .mat-datepicker-toggle {
+    color: #ff6d2fe3; /* Color del ícono */
+ 
+  }
+  mat-icon {
+    font-size: 6px; /* Ajusta el tamaño del ícono */
+    
+  }
+
+  /* Estilo del borde cuando el campo es inválido */
+.mat-form-field.ng-invalid.mat-focused .mat-form-field-outline {
+    border-color: #f44336 !important; /* Rojo cuando el campo es inválido y enfocado */
+  }
+  
+  .mat-form-field.ng-invalid .mat-form-field-outline {
+    border-color: #f44336 !important; /* Rojo cuando el campo es inválido */
+  }
+  
+
+  .table td, .table th {
+    border: none;  /* Elimina el borde entre las celdas */
+    padding: 12px 15px;  /* Añade espaciado interno en las celdas */
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f8f9fa;  /* Color de fondo al pasar el mouse */
+}
+
+ 
+  
+  

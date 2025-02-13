@@ -11,3 +11,15 @@ body {
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Open Sans', sans-serif  !important;
   }
+
+  ::ng-deep .mat-datepicker-toggle .mat-icon {
+    font-size: 16px !important; /* Ajusta el tamaño del icono */
+}
+
+::ng-deep .mat-mdc-icon-button .mat-mdc-button-touch-target {
+    height: 22px !important; /* Reduce la altura del área táctil */
+    width: 22px !important;  /* Ajusta el tamaño del área táctil */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
