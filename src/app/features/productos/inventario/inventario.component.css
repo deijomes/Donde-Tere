@@ -44,5 +44,17 @@
   color: white; /* Color blanco para el icono */
 }
 
+.custom-alert {
+  position: fixed;
+  top: 20px; /* Espaciado desde la parte superior de la pantalla */
+  left: 50%; /* Centrado horizontal */
+  transform: translateX(-50%); /* Centrado exacto */
+  max-width: 500px; /* Máximo ancho de 300px */
+  width: 100%; /* Asegura que el tamaño se ajuste al 100% hasta 300px */
+  z-index: 1050; /* Asegura que esté encima de otros elementos */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle un toque profesional */
+  border-radius: 5px; /* Bordes redondeados */
+}
+
 
 

@@ -36,6 +36,10 @@ export class InventarioComponent implements OnInit {
   limit: number = 20
   offset:number = 0
   products : any  
+  mostrarAlerta : boolean = false;
+  alertMessage :  string = '';
+  isFiltered : boolean =  false
+  alertShown : boolean =  false
 
 
 
@@ -224,28 +228,53 @@ export class InventarioComponent implements OnInit {
       // Extrae solo el término de 'productos'
       map(terminos => terminos['productos']),
   
-      
-  
       // Cancela la petición anterior si el término cambia
       switchMap(term => {
         console.log('Término de búsqueda recibido:', term);
         this.searchTerm = term; // Asigna el término de búsqueda
   
+        this.isFiltered = !!this.searchTerm.trim();
+  
+        if (!this.isFiltered) {
+          this.products = [...this.productos];
+          this.alertShown = true;
+          return [];
+        }
+  
         // Llama al servicio para obtener los productos
         return this.http.getProducts(this.limit, this.offset, this.searchTerm);
       })
     ).subscribe(
-      (response: any) => {
+      (response: any) => { 
+        this.alertShown = false;
         this.products = response.data || []; // Asumiendo que la respuesta tiene una propiedad "data"
         console.log('Productos recibidos:', this.products);
+  
+        // Solo muestra la alerta si no hay productos
+        if (!this.products.length) {
+          this.showAlert('No se encontraron resultados para los filtros aplicados.');
+          this.alertShown = true;
+        }
       },
       (error) => {
         console.error('Error al obtener productos:', error);
       }
     );
-
-    
   }
+  
+  showAlert(message: string) {
+    this.alertMessage = message;
+    this.mostrarAlerta = true;
+  
+    setTimeout(() => {
+      this.cerrarAlerta();
+    }, 3000); // La alerta desaparece después de 3 segundos
+  }
+  
+  cerrarAlerta() {
+    this.mostrarAlerta = false;
+  }
+  
   
 
   // Método para cancelar la suscripción al destruir el componente
