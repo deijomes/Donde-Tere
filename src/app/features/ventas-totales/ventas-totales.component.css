@@ -1,28 +1,23 @@
-.mat-datepicker-content {
-    background-color: #fafafa; /* Fondo personalizado para el calendario */
-  }
-  
-  .mat-datepicker-toggle {
-    color: #ff6d2fe3; /* Color del ícono */
- 
-  }
-  mat-icon {
-    font-size: 6px; /* Ajusta el tamaño del ícono */
-    
-  }
-
-
-
-
-  .table td, .table th {
-    border: none;  /* Elimina el borde entre las celdas */
-    padding: 12px 15px;  /* Añade espaciado interno en las celdas */
+.table th, .table td {
+  text-align: center;
+  vertical-align: middle;
+  padding: 12px;
 }
 
-.table-hover tbody tr:hover {
-    background-color: #f8f9fa;  /* Color de fondo al pasar el mouse */
+.table thead {
+  background-color: #f8f9fa;
 }
 
+.table tbody tr {
+  border-bottom: 1px solid #ddd;
+}
+
+.badge {
+  width: 80px;
+  display: inline-block;
+  text-align: center;
+  padding: 6px 0;
+}
 
 .p-datepicker input:focus {
   outline: none !important;   /* Elimina el contorno del focus */

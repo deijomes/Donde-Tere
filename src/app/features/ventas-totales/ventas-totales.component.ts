@@ -8,13 +8,14 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { DatePicker } from 'primeng/datepicker';
 import { data } from 'jquery';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-ventas-totales',
   templateUrl: './ventas-totales.component.html',
   styleUrls: ['./ventas-totales.component.css'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NgChartsModule,FormsModule,MatDatepickerModule,MatInputModule,MatFormFieldModule,DatePicker],
+  imports: [NgChartsModule,FormsModule,MatDatepickerModule,MatInputModule,MatFormFieldModule,DatePicker, CommonModule],
   encapsulation : ViewEncapsulation.None
 
 })
@@ -30,6 +31,7 @@ export class VentasTotalesComponent implements OnInit {
 
   fechaInicial: Date | null = null;
   fechaFinal: Date | null = null;
+  MasVendidos : any [] = []
 
   ventasTotals: any[] = [];  // Almacenará los datos de ventas
   barChartLabels: string[] = [];  // Etiquetas para el gráfico (meses)
@@ -101,18 +103,25 @@ export class VentasTotalesComponent implements OnInit {
   topMasVendidos() {
     const limit = 10;
   
-    // Validar si hay fechas antes de crearlas
-    const startDate = this.fechaInicial ? new Date(this.fechaInicial + 'T00:00:00.000Z') : undefined;
-    const endDate = this.fechaFinal ? new Date(this.fechaFinal + 'T23:59:59.999Z') : undefined;
-
-    console.log(startDate)
-    console.log(endDate)
+    // Convertir fechaInicial a formato ISO (UTC)
+    const startDate = this.fechaInicial
+      ? new Date(this.fechaInicial).toISOString()
+      : undefined;
+  
+    // Convertir fechaFinal a formato ISO (UTC)
+    const endDate = this.fechaFinal
+      ? new Date(this.fechaFinal).toISOString()
+      : undefined;
+  
+    console.log("Fecha inicial en formato ISO:", startDate);
+    console.log("Fecha final en formato ISO:", endDate);
+  
     this.servicio.getProductSelling(limit, startDate, endDate).subscribe((data: any) => {
-      console.log(data, 'top vendidos');
+      console.log(data, " prodcutos filtrados de top vendidos");
+      this.MasVendidos =  data
     });
-
   }
-
+  
   
   topMas(){
 

@@ -12,20 +12,23 @@ export class DashboardService {
   private Url = 'http://localhost:3000/api/dashboard/top-selling-products'
 
 
-  getProductSelling(limit: number, startDate?: Date, endDate?: Date): Observable<any> {
+  getProductSelling(limit: number, startDate?: string, endDate?: string): Observable<any> {
     let params = new HttpParams().set('limit', limit.toString());
-  
+
     // Agregar fechas solo si están definidas
     if (startDate) {
-      params = params.set('startdate', startDate.toISOString().split('T')[0]);
+        params = params.set('startdate', startDate); // Ya viene en formato correcto
     }
     if (endDate) {
-      params = params.set('endDate', endDate.toISOString().split('T')[0]);
+        params = params.set('endDate', endDate); // Ya viene en formato correcto
     }
-  
+
+    const fullUrl = `${this.Url}?${params.toString()}`;
+    console.log(" URL generada:", fullUrl);
+
     return this.http.get(this.Url, { params });
-  }
-  
+}
+
 
 
 
