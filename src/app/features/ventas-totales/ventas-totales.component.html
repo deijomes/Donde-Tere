@@ -8,38 +8,39 @@
                     </div>
                </div>
 
-               <!-- Card de Salidas -->
-               <div class="col-md-6">
-                    <div class="card overflow-hidden">
-                         <div class="card-body">
-                              <div class="row">
-                                   <div class="col-6">
-                                        <div class="avatar-md bg-soft-primary rounded">
-                                             <i class="bx bxs-backpack avatar-title fs-24 text-primary"></i>
-                                        </div>
-                                   </div> <!-- end col -->
-                                   <div class="col-6 text-end">
-                                        <p class="text-muted mb-0 text-truncate">Salidas</p>
-                                        <h3 class="text-dark mt-1 mb-0">{{ventamesActual}}</h3>
-                                   </div> <!-- end col -->
-                              </div> <!-- end row-->
-                         </div> <!-- end card body -->
-                         <div class="card-footer py-2 bg-light bg-opacity-50">
-                              <div class="d-flex align-items-center justify-content-between">
-                                   <div>
-                                        <span class="text-muted ms-1 fs-12">Mes actual</span>
-                                   </div>
-                              </div>
-                         </div> <!-- end card body -->
-                    </div> <!-- end card -->
-
-
-               </div> <!-- end col -->
-
+               <div class="col-md-8">
+                    <div class="card overflow-hidden shadow-sm">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+                                    <div class="avatar-md bg-soft-primary rounded d-flex align-items-center justify-content-center">
+                                        <i class="bx bxs-backpack avatar-title fs-24 text-primary"></i>
+                                    </div>
+                                </div>
+                                <div class="col text-end">
+                                    <p class="text-muted mb-1 text-truncate">Ventas</p>
+                                    <h3 class="text-dark mt-1 mb-0">{{ ventamesActual }}</h3>
+                                    <span class="text-muted fs-12">{{parrafo}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer py-3 bg-light bg-opacity-50">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex gap-3">
+                                    <p-datepicker  [(ngModel)]="Fecha" size="large"  (ngModelChange)="getVentas$()" placeholder="Fecha inicial" showIcon 
+                                        iconDisplay="input" [appendTo]="'body'"> </p-datepicker>
+                
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
 
 
                <!-- Card de Ganancias -->
-               <div class="col-md-6">
+               <div class="col-md-4">
                     <div class="card overflow-hidden">
                          <div class="card-body">
                               <div class="row">

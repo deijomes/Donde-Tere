@@ -24,6 +24,9 @@ export class VentasTotalesComponent implements OnInit {
 
   ventamesActual: number = 0;
   totalventas: number = 0;
+  parrafo : any = 'Hoy'
+  Fecha : Date |null =null
+
 
   productosMasVendidos: any[] = [];
   productosMas: string[] = []
@@ -94,7 +97,9 @@ export class VentasTotalesComponent implements OnInit {
     this.getventasActuales();
     this.gettotalActual();
     this.topMasVendidos()
-    this.topMenosVendidos()
+    this.topMenosVendidos();
+   
+   
 
 
   }
@@ -188,6 +193,27 @@ export class VentasTotalesComponent implements OnInit {
         destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }, 100);
+  }
+
+  getVentas$(){
+
+    if(this.Fecha){
+      const ventasFecha = this.Fecha ? new Date (this.Fecha).toISOString()
+      : undefined;
+      console.log(ventasFecha)
+     
+
+      let endDate
+      const fechaFin = new Date(this.Fecha);
+      fechaFin.setUTCHours(23, 59, 59, 999); // Establece la hora en UTC
+      endDate = fechaFin.toISOString();
+      const soloFecha = endDate.split("T")[0]; // "2025-02-12"
+      this.parrafo = soloFecha
+     
+
+
+      
+    }
   }
 
 
