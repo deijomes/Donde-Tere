@@ -10,6 +10,7 @@ export class DashboardService {
   constructor(private http: HttpClient) { }
 
   private Url = 'http://localhost:3000/api/dashboard/top-selling-products'
+  private urlsold = 'http://localhost:3000/api/dashboard/less-sold'
 
 
   getProductSelling(limit: number, startDate?: string, endDate?: string): Observable<any> {
@@ -17,17 +18,36 @@ export class DashboardService {
 
     // Agregar fechas solo si están definidas
     if (startDate) {
-        params = params.set('startdate', startDate); // Ya viene en formato correcto
+      params = params.set('startdate', startDate); // Ya viene en formato correcto
     }
     if (endDate) {
-        params = params.set('endDate', endDate); // Ya viene en formato correcto
+      params = params.set('endDate', endDate); // Ya viene en formato correcto
     }
 
     const fullUrl = `${this.Url}?${params.toString()}`;
     console.log(" URL generada:", fullUrl);
 
     return this.http.get(this.Url, { params });
-}
+  }
+
+  getProductsold(limit: number, startDate?: string, endDate?: string):Observable <any>{
+    let params = new HttpParams().set('limit', limit.toString());
+
+    // Agregar fechas solo si están definidas
+    if (startDate) {
+      params = params.set('startdate', startDate); // Ya viene en formato correcto
+    }
+    if (endDate) {
+      params = params.set('endDate', endDate); // Ya viene en formato correcto
+    }
+
+    const fullUrl = `${this.urlsold}?${params.toString()}`;
+    console.log(" URL generada:", fullUrl);
+
+    return this.http.get(this.Url, { params });
+  
+  }
+
 
 
 
@@ -52,8 +72,8 @@ export class DashboardService {
       { month: 'Febrero', sales: 4500 },
       { month: 'Marzo', sales: 5200 },
       { month: 'Abril', sales: 4800 },
-      
-      
+
+
     ];
     return of(data);
   }

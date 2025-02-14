@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { DatePicker } from 'primeng/datepicker';
 import { data } from 'jquery';
 import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-ventas-totales',
   templateUrl: './ventas-totales.component.html',
@@ -32,6 +33,13 @@ export class VentasTotalesComponent implements OnInit {
   fechaInicial: Date | null = null;
   fechaFinal: Date | null = null;
   MasVendidos : any [] = []
+  filterCalendar = false
+
+  fechaInicialSold : Date | null = null;
+  fechaFinalSold : Date | null = null;
+  MenosVendidos : any
+  filterCalend  = false
+  
 
   ventasTotals: any[] = [];  // Almacenará los datos de ventas
   barChartLabels: string[] = [];  // Etiquetas para el gráfico (meses)
@@ -86,6 +94,7 @@ export class VentasTotalesComponent implements OnInit {
     this.getventasActuales();
     this.gettotalActual();
     this.topMasVendidos()
+    this.topMenosVendidos()
     
     
   }
@@ -102,32 +111,69 @@ export class VentasTotalesComponent implements OnInit {
   }
   topMasVendidos() {
     const limit = 10;
-  
+
     // Convertir fechaInicial a formato ISO (UTC)
     const startDate = this.fechaInicial
-      ? new Date(this.fechaInicial).toISOString()
-      : undefined;
-  
-    // Convertir fechaFinal a formato ISO (UTC)
-    const endDate = this.fechaFinal
-      ? new Date(this.fechaFinal).toISOString()
-      : undefined;
-  
+        ? new Date(this.fechaInicial).toISOString()
+        : undefined;
+
+    // Convertir fechaFinal a formato ISO (UTC) con la hora máxima del día
+    let endDate;
+    if (this.fechaFinal) {
+        const fechaFin = new Date(this.fechaFinal);
+        fechaFin.setUTCHours(23, 59, 59, 999); // Establece la hora en UTC
+        endDate = fechaFin.toISOString();
+    }
+
     console.log("Fecha inicial en formato ISO:", startDate);
     console.log("Fecha final en formato ISO:", endDate);
-  
-    this.servicio.getProductSelling(limit, startDate, endDate).subscribe((data: any) => {
-      console.log(data, " prodcutos filtrados de top vendidos");
-      this.MasVendidos =  data
-    });
-  }
-  
-  
-  topMas(){
 
-    console.log(this.fechaFinal,'fecha inicial captruada')
-      
+    this.servicio.getProductSelling(limit, startDate, endDate).subscribe((data: any) => {
+        console.log(data, " productos filtrados de top vendidos");
+        this.MasVendidos = data;
+
+        this.filterCalendar = false
+    });
+}
+
+mostrarfiltro(){
+  this.filterCalendar = true
+}
+ 
+
+topMenosVendidos() {
+  const limit = 10;
+
+  // Convertir fechaInicial a formato ISO (UTC)
+  const startDate = this.fechaInicialSold
+      ? new Date(this.fechaInicialSold).toISOString()
+      : undefined;
+
+  // Convertir fechaFinal a formato ISO (UTC) con la hora máxima del día
+  let endDate;
+  if (this.fechaFinalSold) {
+      const fechaFin = new Date(this.fechaFinalSold);
+      fechaFin.setUTCHours(23, 59, 59, 999); // Establece la hora en UTC
+      endDate = fechaFin.toISOString();
   }
+
+  console.log("Fecha inicial en formato ISO:", startDate);
+  console.log("Fecha final en formato ISO:", endDate);
+
+  this.servicio.getProductSelling(limit, startDate, endDate).subscribe((data: any) => {
+      console.log(data, " productos filtrados de top vendidos");
+      this.MenosVendidos = data;
+      
+
+      this.filterCalend = false
+
+      
+  });
+}
+
+mostrarfilter(){
+  this.filterCalend = true
+}
   
  
   
