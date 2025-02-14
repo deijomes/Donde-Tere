@@ -167,7 +167,7 @@ export class VentasTotalesComponent implements OnInit {
     console.log("Fecha inicial en formato ISO:", startDate);
     console.log("Fecha final en formato ISO:", endDate);
 
-    this.servicio.getProductSelling(limit, startDate, endDate).subscribe((data: any) => {
+    this.servicio.getProductsold(limit, startDate, endDate).subscribe((data: any) => {
       console.log(data, " productos filtrados de top vendidos");
       this.MenosVendidos = data;
 
