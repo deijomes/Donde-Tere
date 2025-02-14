@@ -3,8 +3,8 @@ import { DashboardService } from '../../services/dashboard.service';
 import { ChartData, ChartDataset, ChartOptions } from 'chart.js';
 import { NgChartsModule } from 'ng2-charts';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { DatePicker } from 'primeng/datepicker';
 import { data } from 'jquery';
@@ -16,8 +16,8 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./ventas-totales.component.css'],
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [NgChartsModule,FormsModule,MatDatepickerModule,MatInputModule,MatFormFieldModule,DatePicker, CommonModule],
-  encapsulation : ViewEncapsulation.None
+  imports: [NgChartsModule, FormsModule, MatDatepickerModule, MatInputModule, MatFormFieldModule, DatePicker, CommonModule],
+  encapsulation: ViewEncapsulation.None
 
 })
 export class VentasTotalesComponent implements OnInit {
@@ -28,18 +28,18 @@ export class VentasTotalesComponent implements OnInit {
   productosMasVendidos: any[] = [];
   productosMas: string[] = []
 
-  productosMenosVendidos :any []=[]
+  productosMenosVendidos: any[] = []
 
   fechaInicial: Date | null = null;
   fechaFinal: Date | null = null;
-  MasVendidos : any [] = []
+  MasVendidos: any[] = []
   filterCalendar = false
 
-  fechaInicialSold : Date | null = null;
-  fechaFinalSold : Date | null = null;
-  MenosVendidos : any
-  filterCalend  = false
-  
+  fechaInicialSold: Date | null = null;
+  fechaFinalSold: Date | null = null;
+  MenosVendidos: any
+  filterCalend = false
+
 
   ventasTotals: any[] = [];  // Almacenará los datos de ventas
   barChartLabels: string[] = [];  // Etiquetas para el gráfico (meses)
@@ -72,8 +72,8 @@ export class VentasTotalesComponent implements OnInit {
   };
   barChartType: 'bar' = 'bar';  // Especificamos que el tipo de gráfico es 'bar'
 
-  
-  
+
+
 
   Dashboardprt: 'line' = 'line'
 
@@ -95,8 +95,8 @@ export class VentasTotalesComponent implements OnInit {
     this.gettotalActual();
     this.topMasVendidos()
     this.topMenosVendidos()
-    
-    
+
+
   }
 
 
@@ -114,70 +114,85 @@ export class VentasTotalesComponent implements OnInit {
 
     // Convertir fechaInicial a formato ISO (UTC)
     const startDate = this.fechaInicial
-        ? new Date(this.fechaInicial).toISOString()
-        : undefined;
+      ? new Date(this.fechaInicial).toISOString()
+      : undefined;
 
     // Convertir fechaFinal a formato ISO (UTC) con la hora máxima del día
     let endDate;
     if (this.fechaFinal) {
-        const fechaFin = new Date(this.fechaFinal);
-        fechaFin.setUTCHours(23, 59, 59, 999); // Establece la hora en UTC
-        endDate = fechaFin.toISOString();
+      const fechaFin = new Date(this.fechaFinal);
+      fechaFin.setUTCHours(23, 59, 59, 999); // Establece la hora en UTC
+      endDate = fechaFin.toISOString();
     }
 
     console.log("Fecha inicial en formato ISO:", startDate);
     console.log("Fecha final en formato ISO:", endDate);
 
     this.servicio.getProductSelling(limit, startDate, endDate).subscribe((data: any) => {
-        console.log(data, " productos filtrados de top vendidos");
-        this.MasVendidos = data;
+      console.log(data, " productos filtrados de top vendidos");
+      this.MasVendidos = data;
 
-        this.filterCalendar = false
+      this.filterCalendar = false
     });
-}
+  }
 
-mostrarfiltro(){
-  this.filterCalendar = true
-}
- 
+  mostrarfiltro() {
+    this.filterCalendar = true
+    setTimeout(() => {
 
-topMenosVendidos() {
-  const limit = 10;
+      const destino = document.getElementById('Destino1');
+      if (destino) {
 
-  // Convertir fechaInicial a formato ISO (UTC)
-  const startDate = this.fechaInicialSold
+        destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  }
+
+  topMenosVendidos() {
+    const limit = 10;
+
+    // Convertir fechaInicial a formato ISO (UTC)
+    const startDate = this.fechaInicialSold
       ? new Date(this.fechaInicialSold).toISOString()
       : undefined;
 
-  // Convertir fechaFinal a formato ISO (UTC) con la hora máxima del día
-  let endDate;
-  if (this.fechaFinalSold) {
+    // Convertir fechaFinal a formato ISO (UTC) con la hora máxima del día
+    let endDate;
+    if (this.fechaFinalSold) {
       const fechaFin = new Date(this.fechaFinalSold);
       fechaFin.setUTCHours(23, 59, 59, 999); // Establece la hora en UTC
       endDate = fechaFin.toISOString();
-  }
+    }
 
-  console.log("Fecha inicial en formato ISO:", startDate);
-  console.log("Fecha final en formato ISO:", endDate);
+    console.log("Fecha inicial en formato ISO:", startDate);
+    console.log("Fecha final en formato ISO:", endDate);
 
-  this.servicio.getProductSelling(limit, startDate, endDate).subscribe((data: any) => {
+    this.servicio.getProductSelling(limit, startDate, endDate).subscribe((data: any) => {
       console.log(data, " productos filtrados de top vendidos");
       this.MenosVendidos = data;
-      
+
 
       this.filterCalend = false
 
-      
-  });
-}
 
-mostrarfilter(){
-  this.filterCalend = true
-}
-  
- 
-  
-  
-  
+    });
+  }
+
+  mostrarfilter() {
+    this.filterCalend = true;
+    setTimeout(() => {
+
+      const destino = document.getElementById('tablaDestino');
+      if (destino) {
+
+        destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  }
+
+
+
+
+
 
 }
