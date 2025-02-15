@@ -11,6 +11,7 @@ export class DashboardService {
 
   private Url = 'http://localhost:3000/api/dashboard/top-selling-products'
   private urlsold = 'http://localhost:3000/api/dashboard/less-sold'
+  private Urltotal = 'http://localhost:3000/api/dashboard/total-sales'
 
 
   getProductSelling(limit: number, startDate?: string, endDate?: string): Observable<any> {
@@ -30,7 +31,7 @@ export class DashboardService {
     return this.http.get(this.Url, { params });
   }
 
-  getProductsold(limit: number, startDate?: string, endDate?: string):Observable <any>{
+  getProductsold(limit: number, startDate?: string, endDate?: string): Observable<any> {
     let params = new HttpParams().set('limit', limit.toString());
 
     // Agregar fechas solo si están definidas
@@ -45,10 +46,26 @@ export class DashboardService {
     console.log(" URL generada:", fullUrl);
 
     return this.http.get(this.Url, { params });
-  
+
   }
 
 
+  getTotalSales(startDate?: string, endDate?: string): Observable<any> {
+    const today = new Date();
+    
+    // Definir fecha de inicio y fin del día en UTC
+    const startOfDay = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 0, 0, 0, 0)).toISOString();
+    const endOfDay = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 23, 59, 59, 999)).toISOString();
+  
+    let params = new HttpParams()
+      .set('startDate', startDate || startOfDay) // Si no hay fecha, usa la de hoy
+      .set('endDate', endDate || endOfDay); // Si no hay fecha, usa la de hoy
+  
+    console.log("URL generada:", `${this.Url}?${params.toString()}`);
+  
+    return this.http.get(this.Urltotal, { params });
+  }
+  
 
 
 

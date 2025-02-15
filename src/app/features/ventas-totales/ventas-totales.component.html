@@ -8,31 +8,34 @@
                     </div>
                </div>
 
-               <div class="col-md-8">
+               <div class="col-md-12">
                     <div class="card overflow-hidden shadow-sm">
-                        <div class="card-body">
+                        <div (click)="mostrafilter()" class="card-body" style="cursor: pointer;">
                             <div class="row align-items-center">
                                 <div class="col-auto">
                                     <div class="avatar-md bg-soft-primary rounded d-flex align-items-center justify-content-center">
-                                        <i class="bx bxs-backpack avatar-title fs-24 text-primary"></i>
+                                        <i class="bx bx-dollar-circle avatar-title text-primary fs-24"></i>
                                     </div>
                                 </div>
                                 <div class="col text-end">
                                     <p class="text-muted mb-1 text-truncate">Ventas</p>
-                                    <h3 class="text-dark mt-1 mb-0">{{ ventamesActual }}</h3>
+                                    <h3 class="text-dark mt-1 mb-0"> ${{ TotalVentas}}</h3>
                                     <span class="text-muted fs-12">{{parrafo}}</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer py-3 bg-light bg-opacity-50">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div class="d-flex gap-3">
-                                    <p-datepicker  [(ngModel)]="Fecha" size="large"  (ngModelChange)="getVentas$()" placeholder="Fecha inicial" showIcon 
-                                        iconDisplay="input" [appendTo]="'body'"> </p-datepicker>
-                
-                                    
-                                </div>
-                            </div>
+                        <div class="card-footer py-2 bg-light bg-opacity-50">
+                         <div class="d-flex align-items-center justify-content-between w-100">
+                              <div class="d-flex gap-3">
+                                  <a>Ventas por día</a>
+                              </div>
+                              <p-datepicker *ngIf="filter" [(ngModel)]="Fecha" size="small"  
+                                  (ngModelChange)="getVentas$(); filter = false" 
+                                  placeholder="Fecha inicial" showIcon 
+                                  iconDisplay="input" [appendTo]="'body'"> 
+                              </p-datepicker>
+                          </div>
+                          
                         </div>
                     </div>
                 </div>
@@ -40,7 +43,7 @@
 
 
                <!-- Card de Ganancias -->
-               <div class="col-md-4">
+               <div class="col-md-12">
                     <div class="card overflow-hidden">
                          <div class="card-body">
                               <div class="row">
@@ -65,16 +68,7 @@
                     </div> <!-- end card -->
                </div> <!-- end col -->
           </div> <!-- end row -->
-          <div class="col-12 mt-4">
-               <div class="card-header d-flex justify-content-center">
-                    <a class="btn btn-sm btn-soft-primary d-flex align-items-center justify-content-center"
-                         style="width: 90%;">
-                         <iconify-icon icon="solar:eye-broken" class="align-middle fs-18 me-2"></iconify-icon>
-                         <span>Top productos vendidos</span>
-                    </a>
-               </div>
-          </div>
-
+      
 
 
      </div> <!-- end col -->

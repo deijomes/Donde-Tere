@@ -26,6 +26,8 @@ export class VentasTotalesComponent implements OnInit {
   totalventas: number = 0;
   parrafo : any = 'Hoy'
   Fecha : Date |null =null
+  TotalVentas : number = 0
+  filter = false
 
 
   productosMasVendidos: any[] = [];
@@ -94,10 +96,14 @@ export class VentasTotalesComponent implements OnInit {
       this.barChartData.datasets[0].data = this.ventasTotals.map((item) => item.sales);  // Asignar ventas a la data
     });
 
+
+  
+
     this.getventasActuales();
     this.gettotalActual();
     this.topMasVendidos()
     this.topMenosVendidos();
+    this. getVentas$()
    
    
 
@@ -195,26 +201,42 @@ export class VentasTotalesComponent implements OnInit {
     }, 100);
   }
 
-  getVentas$(){
-
-    if(this.Fecha){
-      const ventasFecha = this.Fecha ? new Date (this.Fecha).toISOString()
-      : undefined;
-      console.log(ventasFecha)
-     
-
-      let endDate
+  getVentas$() {
+    let startDate: string;
+    let endDate: string;
+  
+    if (this.Fecha) {
+      // Si hay una fecha seleccionada, la usamos
+      startDate = new Date(this.Fecha).toISOString();
+  
       const fechaFin = new Date(this.Fecha);
-      fechaFin.setUTCHours(23, 59, 59, 999); // Establece la hora en UTC
+      fechaFin.setUTCHours(23, 59, 59, 999);
       endDate = fechaFin.toISOString();
-      const soloFecha = endDate.split("T")[0]; // "2025-02-12"
-      this.parrafo = soloFecha
-     
-
-
+      const soloFecha = endDate.split("T")[0]; // "YYYY-MM-DD"
+      this.parrafo = soloFecha;
       
+    } else {
+      // Si NO hay fecha seleccionada, usamos la fecha actual
+      const today = new Date();
+      startDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 0, 0, 0, 0)).toISOString();
+      endDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 23, 59, 59, 999)).toISOString();
     }
+  
+    console.log("Fecha inicio:", startDate);
+    console.log("Fecha fin:", endDate);
+  
+    // Llamamos al servicio con las fechas correspondientes
+    this.servicio.getTotalSales(startDate, endDate).subscribe((data: any) => {
+      console.log(data, "total ventas");
+      this.TotalVentas = data;
+      
+    });
   }
+
+  mostrafilter(){
+    this.filter  = true
+  }
+  
 
 
 
