@@ -1,0 +1,62 @@
+name: Generate a build and push to another branch
+
+on:
+  push:
+    branches:
+      - Desarrollo  # Cambia esto por la rama que deseas usar
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build and Push
+    permissions:
+      contents: write  # Otorga permisos de escritura al GITHUB_TOKEN
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Git identity
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+
+      - name: Install all dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build  # Genera los archivos en dist/inventario
+
+      - name: Create or reset build branch
+        run: |
+          if git ls-remote --exit-code --heads origin build; then
+            echo "La rama build existe. Reseteando..."
+            git fetch origin build
+            git checkout build
+            
+            if [ -n "$(git ls-files)" ]; then
+              git rm -rf .
+              git commit --allow-empty -m "Reset branch"
+            else
+              echo "La rama build ya está vacía."
+            fi
+          else
+            echo "La rama build no existe. Creándola..."
+            git checkout --orphan build
+            git commit --allow-empty -m "Initial commit"
+            git push origin build
+          fi
+
+      - name: Move files to root
+        run: |
+          mv dist/inventario/* .  # Mueve los archivos generados a la raíz
+          rm -rf dist  # Elimina la carpeta dist
+
+      - name: Push build to branch
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: build
+          FOLDER: .
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MESSAGE: "Build generado el {date} desde {sha}"
+          FORCE_PUSH: true  # Forzar el push
