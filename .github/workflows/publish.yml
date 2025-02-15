@@ -28,13 +28,18 @@ jobs:
 
       - name: Create or reset build branch
         run: |
-          git checkout --orphan temp-build  # Crea una rama huérfana temporal
-          git add -A  # Agrega todos los archivos
-          git commit -m "Initial commit"  # Crea un commit vacío
-          git branch -D build  # Elimina la rama build local si existe
-          git branch -m build  # Renombra la rama temporal a build
-          git push origin --delete build  # Elimina la rama build remota si existe
-          git push origin build  # Sube la nueva rama build
+          if git ls-remote --exit-code --heads origin build; then
+            echo "La rama build existe. Reseteando..."
+            git fetch origin build
+            git checkout build
+            git rm -rf .
+            git commit --allow-empty -m "Reset branch"
+          else
+            echo "La rama build no existe. Creándola..."
+            git checkout --orphan build
+            git commit --allow-empty -m "Initial commit"
+            git push origin build
+          fi
 
       - name: Move files to root
         run: |
