@@ -32,8 +32,13 @@ jobs:
             echo "La rama build existe. Reseteando..."
             git fetch origin build
             git checkout build
-            git rm -rf .
-            git commit --allow-empty -m "Reset branch"
+            
+            if [ -n "$(git ls-files)" ]; then
+              git rm -rf .
+              git commit --allow-empty -m "Reset branch"
+            else
+              echo "La rama build ya está vacía."
+            fi
           else
             echo "La rama build no existe. Creándola..."
             git checkout --orphan build
