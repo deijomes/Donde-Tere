@@ -3,17 +3,25 @@ name: Generate a build and push to another branch
 on:
   push:
     branches:
-      - Desarrollo # Cambia esto por la rama que deseas usar
+      - Desarrollo
 
 jobs:
   build:
     runs-on: ubuntu-latest
     name: Build and Push
     permissions:
-      contents: write 
+      contents: write
     steps:
       - name: git-checkout
         uses: actions/checkout@v3
+
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            node-modules-${{ runner.os }}-
 
       - name: Install all dependencies
         run: npm install
@@ -25,7 +33,7 @@ jobs:
         uses: s0/git-publish-subdir-action@develop
         env:
           REPO: self
-          BRANCH: build # Cambia esto por la rama de destino
-          FOLDER: dist/inventario # Cambia esto por la carpeta de salida del build
+          BRANCH: build
+          FOLDER: dist/inventario
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MESSAGE: "Build generado el {date} desde {sha}"
+          MESSAGE: "Build generado el {date} desde {sha} en la rama {branch}"
