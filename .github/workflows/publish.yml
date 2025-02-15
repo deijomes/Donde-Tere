@@ -3,37 +3,40 @@ name: Generate a build and push to another branch
 on:
   push:
     branches:
-      - Desarrollo
+      - Desarrollo  # Cambia esto por la rama que deseas usar
 
 jobs:
   build:
     runs-on: ubuntu-latest
     name: Build and Push
     permissions:
-      contents: write
+      contents: write  # Otorga permisos de escritura al GITHUB_TOKEN
     steps:
-      - name: git-checkout
+      - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Cache Node.js modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: node-modules-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            node-modules-${{ runner.os }}-
 
       - name: Install all dependencies
         run: npm install
 
       - name: Build
-        run: npm run build
+        run: npm run build  # Genera los archivos en dist/inventario
 
-      - name: Push
+      - name: Create or reset build branch
+        run: |
+          git checkout --orphan build  # Crea una rama huérfana (sin historial)
+          git rm -rf .  # Elimina todos los archivos existentes
+          git commit --allow-empty -m "Initial commit"  # Crea un commit vacío
+
+      - name: Move files to root
+        run: |
+          mv dist/inventario/* .  # Mueve los archivos generados a la raíz
+          rm -rf dist  # Elimina la carpeta dist
+
+      - name: Push build to branch
         uses: s0/git-publish-subdir-action@develop
         env:
           REPO: self
-          BRANCH: build
-          FOLDER: dist/inventario
+          BRANCH: build  # Cambia esto por la rama de destino
+          FOLDER: .  # Usa la raíz de la rama
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MESSAGE: "Build generado el {date} desde {sha} en la rama {branch}"
+          MESSAGE: "Build generado el {date} desde {sha}"
