@@ -96,9 +96,7 @@ export class VentasTotalesComponent implements OnInit {
       console.log(this.ventasTotals);
 
       // Extraer los meses y las ventas
-      this.barChartLabels = this.ventasTotals.map((item) => item.month);  // Asignar meses a las etiquetas
-      this.barChartData.labels = this.barChartLabels;  // Asignar las etiquetas al gráfico
-      this.barChartData.datasets[0].data = this.ventasTotals.map((item) => item.sales);  // Asignar ventas a la data
+      
     });
 
 
@@ -127,6 +125,8 @@ export class VentasTotalesComponent implements OnInit {
     this.servicio.gettotalActual().subscribe((data: any) => { this.totalventas = data })
 
   }
+
+
   topMasVendidos() {
     const limit = 10;
 
@@ -256,8 +256,8 @@ export class VentasTotalesComponent implements OnInit {
 
     // Generamos las fechas para el mes actual y los 3 meses anteriores
     for (let i = 0; i < 4; i++) {
-      const inicioMes = new Date(Date.UTC(hoy.getUTCFullYear(), hoy.getUTCMonth() - i, 1, 5, 0, 0, 0)); // 🕔 Inicio 05:00 UTC
-      const finMes = new Date(Date.UTC(hoy.getUTCFullYear(), hoy.getUTCMonth() - i + 1, 0, 4, 59, 59, 999)); // 🕓 Fin 04:59 UTC
+      const inicioMes = new Date(Date.UTC(hoy.getUTCFullYear(), hoy.getUTCMonth() - i, 1, 0, 0, 0, 0)); // 🕔 Inicio 05:00 UTC
+      const finMes = new Date(Date.UTC(hoy.getUTCFullYear(), hoy.getUTCMonth() - i + 1, 0, 23, 59, 59, 999)); // 🕓 Fin 04:59 UTC
 
       meses.push({
         nombreMes: nombresMeses[inicioMes.getUTCMonth()], // Obtener nombre del mes
@@ -283,6 +283,10 @@ export class VentasTotalesComponent implements OnInit {
       }));
 
       console.log("Ventas por mes:", this.ventasPorMes);
+
+      this.barChartLabels = this.ventasPorMes.map((item) => item.nombreMes);  // Asignar meses a las etiquetas
+      this.barChartData.labels = this.barChartLabels;  // Asignar las etiquetas al gráfico
+      this.barChartData.datasets[0].data = this.ventasPorMes.map((item) => item.totalVentas);  // Asignar ventas a la data
     });
   }
 }
