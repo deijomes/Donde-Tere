@@ -28,9 +28,13 @@ jobs:
 
       - name: Create or reset build branch
         run: |
-          git checkout --orphan build  # Crea una rama huérfana (sin historial)
-          git rm -rf .  # Elimina todos los archivos existentes
-          git commit --allow-empty -m "Initial commit"  # Crea un commit vacío
+          git checkout --orphan temp-build  # Crea una rama huérfana temporal
+          git add -A  # Agrega todos los archivos
+          git commit -m "Initial commit"  # Crea un commit vacío
+          git branch -D build  # Elimina la rama build local si existe
+          git branch -m build  # Renombra la rama temporal a build
+          git push origin --delete build  # Elimina la rama build remota si existe
+          git push origin build  # Sube la nueva rama build
 
       - name: Move files to root
         run: |
@@ -41,7 +45,8 @@ jobs:
         uses: s0/git-publish-subdir-action@develop
         env:
           REPO: self
-          BRANCH: build  # Cambia esto por la rama de destino
-          FOLDER: .  # Usa la raíz de la rama
+          BRANCH: build
+          FOLDER: .
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MESSAGE: "Build generado el {date} desde {sha}"
+          FORCE_PUSH: true  # Forzar el push
