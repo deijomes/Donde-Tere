@@ -1,0 +1,29 @@
+name: Generate a build and push to another branch
+
+on:
+  push:
+    branches:
+      - Desarrollo # Cambia esto por la rama que deseas usar
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build and Push
+    steps:
+      - name: git-checkout
+        uses: actions/checkout@v3
+
+      - name: Install all dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Push
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: build # Cambia esto por la rama de destino
+          FOLDER: dist/inventario # Cambia esto por la carpeta de salida del build
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MESSAGE: "Build generado el {date} desde {sha}"
