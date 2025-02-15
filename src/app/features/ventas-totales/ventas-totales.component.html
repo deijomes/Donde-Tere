@@ -20,14 +20,14 @@
                                 <div class="col text-end">
                                     <p class="text-muted mb-1 text-truncate">Ventas</p>
                                     <h3 class="text-dark mt-1 mb-0"> ${{ TotalVentas}}</h3>
-                                    <span class="text-muted fs-12">{{parrafo}}</span>
+                                
                                 </div>
                             </div>
                         </div>
                         <div class="card-footer py-2 bg-light bg-opacity-50">
                          <div class="d-flex align-items-center justify-content-between w-100">
                               <div class="d-flex gap-3">
-                                  <a>Ventas por día</a>
+                                  <a>{{parrafo}}</a>
                               </div>
                               <p-datepicker *ngIf="filter" [(ngModel)]="Fecha" size="small"  
                                   (ngModelChange)="getVentas$(); filter = false" 
@@ -43,30 +43,7 @@
 
 
                <!-- Card de Ganancias -->
-               <div class="col-md-12">
-                    <div class="card overflow-hidden">
-                         <div class="card-body">
-                              <div class="row">
-                                   <div class="col-6">
-                                        <div class="avatar-md bg-soft-primary rounded">
-                                             <i class="bx bx-dollar-circle avatar-title text-primary fs-24"></i>
-                                        </div>
-                                   </div> <!-- end col -->
-                                   <div class="col-6 text-end">
-                                        <p class="text-muted mb-0 text-truncate">Ganancias</p>
-                                        <h3 class="text-dark mt-1 mb-0">${{totalventas}}</h3>
-                                   </div> <!-- end col -->
-                              </div> <!-- end row-->
-                         </div> <!-- end card body -->
-                         <div class="card-footer py-2 bg-light bg-opacity-50">
-                              <div class="d-flex align-items-center justify-content-between">
-                                   <div>
-                                        <span class="text-muted ms-1 fs-12">Mes actual</span>
-                                   </div>
-                              </div>
-                         </div> <!-- end card body -->
-                    </div> <!-- end card -->
-               </div> <!-- end col -->
+              
           </div> <!-- end row -->
       
 

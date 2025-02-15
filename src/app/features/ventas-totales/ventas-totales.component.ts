@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { DatePicker } from 'primeng/datepicker';
 import { data } from 'jquery';
 import { CommonModule } from '@angular/common';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-ventas-totales',
@@ -28,6 +29,10 @@ export class VentasTotalesComponent implements OnInit {
   Fecha : Date |null =null
   TotalVentas : number = 0
   filter = false
+
+  
+  ventasPorMes: { nombreMes: string, anio: number, totalVentas: any }[] = [];
+
 
 
   productosMasVendidos: any[] = [];
@@ -103,7 +108,9 @@ export class VentasTotalesComponent implements OnInit {
     this.gettotalActual();
     this.topMasVendidos()
     this.topMenosVendidos();
-    this. getVentas$()
+    this. getVentas$();
+    this.getVentasPorMes()
+    
    
    
 
@@ -236,6 +243,52 @@ export class VentasTotalesComponent implements OnInit {
   mostrafilter(){
     this.filter  = true
   }
+
+
+  getVentasPorMes() {
+    const hoy = new Date();
+    const nombresMeses = [
+      "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+      "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    ];
+    
+    const meses: { nombreMes: string, anio: number, inicioMes: Date, finMes: Date }[] = [];
+
+    // Generamos las fechas para el mes actual y los 3 meses anteriores
+    for (let i = 0; i < 4; i++) {
+      const inicioMes = new Date(Date.UTC(hoy.getUTCFullYear(), hoy.getUTCMonth() - i, 1, 5, 0, 0, 0)); // 🕔 Inicio 05:00 UTC
+      const finMes = new Date(Date.UTC(hoy.getUTCFullYear(), hoy.getUTCMonth() - i + 1, 0, 4, 59, 59, 999)); // 🕓 Fin 04:59 UTC
+
+      meses.push({
+        nombreMes: nombresMeses[inicioMes.getUTCMonth()], // Obtener nombre del mes
+        anio: inicioMes.getUTCFullYear(),
+        inicioMes,
+        finMes
+      });
+    }
+
+    console.log("Meses generados:", meses);
+
+    // Hacemos las 4 peticiones en paralelo y esperamos la respuesta
+    forkJoin(
+      meses.map(({ inicioMes, finMes }) =>
+        this.servicio.getTotalSalesMes(inicioMes.toISOString(), finMes.toISOString())
+      )
+    ).subscribe((resultados) => {
+      // Relacionamos los datos con el mes correspondiente
+      this.ventasPorMes = meses.map((mes, index) => ({
+        nombreMes: mes.nombreMes,
+        anio: mes.anio,
+        totalVentas: resultados[index] // Puede ser número o estructura según la API
+      }));
+
+      console.log("Ventas por mes:", this.ventasPorMes);
+    });
+  }
+}
+  
+
+
   
 
 
@@ -243,4 +296,4 @@ export class VentasTotalesComponent implements OnInit {
 
 
 
-}
+

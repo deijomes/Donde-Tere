@@ -67,6 +67,20 @@ export class DashboardService {
   }
   
 
+  
+  
+  getTotalSalesMes(startDate: string, endDate: string): Observable<any> {
+    const params = new HttpParams()
+      .set('startDate', startDate)  
+      .set('endDate', endDate);
+  
+    const url = `${this.Urltotal}?${params.toString()}`;
+    console.log('🔍 URL generada:', url); // 📌 Verifica la URL en la consola
+  
+    return this.http.get(url);
+  }
+  
+  
 
 
 
