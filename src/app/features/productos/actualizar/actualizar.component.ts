@@ -92,38 +92,41 @@ export class ActualizarComponent implements OnInit {
   };
   actualizarProducto(): void {
     this.formEnviado = true;
-
+  
     if (this.actualizarForm.invalid) {
       console.log('Formulario inválido');
       return;
     }
-
   
     const productoActualizado = this.actualizarForm.value;
-
-    
+  
     this.http.EditarProducto(this.id, productoActualizado).subscribe({
       next: (response) => {
         console.log('Producto actualizado exitosamente:', response);
-       
-        
-         Swal.fire({
-                    title: '¡Éxito!',
-                    text: 'El producto fue actualizado.',
-                    icon: 'success',
-                    timer: 2000, 
-                    showConfirmButton: false
-                  });
-        this.inventario.recargarTabla();
+  
+        Swal.fire({
+          title: '¡Éxito!',
+          text: 'El producto fue actualizado.',
+          icon: 'success',
+          timer: 2000, 
+          showConfirmButton: false
+        }).then(() => {
+          this.inventario.recargarTabla(); 
+          this.router.navigate(['/productos']); // 🔹 Navegación después de mostrar la alerta
+        });
       },
       error: (error) => {
         console.error('Error al actualizar el producto:', error);
-        alert('Ocurrió un error al actualizar el producto.');
+        Swal.fire({
+          title: 'Error',
+          text: 'Ocurrió un error al actualizar el producto.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
       }
     });
-
-    this.router.navigate(['/productos']); }
-
+  }
+  
   cancelar(): void {
     this.router.navigate(['/productos']);
   }

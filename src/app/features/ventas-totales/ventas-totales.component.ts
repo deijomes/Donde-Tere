@@ -51,9 +51,9 @@ export class VentasTotalesComponent implements OnInit {
   filterCalend = false
 
 
-  ventasTotals: any[] = [];  // Almacenará los datos de ventas
-  barChartLabels: string[] = [];  // Etiquetas para el gráfico (meses)
-  barChartData: ChartData<'bar'> = {  // Cambiamos el tipo a ChartData<'bar'>
+  ventasTotals: any[] = []; 
+  barChartLabels: string[] = [];  
+  barChartData: ChartData<'bar'> = {  
     labels: [],
     datasets: [{
       data: [],
@@ -90,14 +90,7 @@ export class VentasTotalesComponent implements OnInit {
   constructor(private servicio: DashboardService) { }
 
   ngOnInit(): void {
-    // Obtener ventas mensuales
-    this.servicio.getMonthlySales().subscribe((data) => {
-      this.ventasTotals = data;
-      console.log(this.ventasTotals);
-
-      // Extraer los meses y las ventas
-      
-    });
+   
 
 
   
