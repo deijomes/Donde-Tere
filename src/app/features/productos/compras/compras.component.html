@@ -49,31 +49,27 @@
 
 
                                 <ng-template ng-header-tmp>
-                                    <table class="table table-sm mb-0 text-center"
-                                        style="table-layout: fixed; width: 100%;">
+                                    <table class="table table-hover table-nowrap table-centered m-0 no-border-table header-table">
                                         <thead>
-                                            <tr class="color">
-                                                <th class="text-start" style="width: 60%;">Artículo</th>
-                                                <th class="text-start" style="width: 40%;">Código</th>
-                                                <!-- Alineado a la izquierda -->
+                                            <tr class="header-row">
+                                                <th class="text-start">Artículo</th>
+                                                <th class="text-start">Código</th>
                                             </tr>
                                         </thead>
                                     </table>
                                 </ng-template>
-
+                                
                                 <ng-template ng-option-tmp let-item="item">
-                                    <table class="table table-sm mb-0 text-center"
-                                        style="table-layout: fixed; width: 100%;">
+                                    <table class="table table-sm mb-0 text-center option-table">
                                         <tbody>
-                                            <tr>
-                                                <td class="text-start" style="width: 60%;">{{ item.name }}</td>
-                                                <td class="text-start" style="width: 40%;">{{ item.code }}</td>
-                                                <!-- Alineado a la izquierda -->
+                                            <tr class="option-row">
+                                                <td class="text-start">{{ item.name }}</td>
+                                                <td class="text-start">{{ item.code }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </ng-template>
-
+                                
 
 
                             </ng-select>
@@ -384,3 +380,8 @@
         </div>
     </div>
 </div>
+
+
+
+
+

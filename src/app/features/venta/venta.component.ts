@@ -269,7 +269,7 @@ export class VentaComponent implements OnInit {
   }
 
   eliminarProductosGuardados() {
-    localStorage.removeItem('productosSeleccionados');
+    localStorage.removeItem('productosSeleccion');
     console.log('Productos eliminados de localStorage.');
   }
 
@@ -311,7 +311,7 @@ export class VentaComponent implements OnInit {
 
 
   modificarCantidad(productId: string, nuevaCantidad: number) {
-    const productosGuardados = localStorage.getItem('productosSeleccionados');
+    const productosGuardados = localStorage.getItem('productosSeleccion');
     if (productosGuardados) {
       let productos = JSON.parse(productosGuardados);
 
@@ -321,7 +321,7 @@ export class VentaComponent implements OnInit {
         productos[index].quantity = nuevaCantidad;
 
         // Guardar los productos actualizados en localStorage
-        localStorage.setItem('productosSeleccionados', JSON.stringify(productos));
+        localStorage.setItem('productosSeleccion', JSON.stringify(productos));
 
         // Actualizar la lista en el componente
         this.productosSeleccion = productos;
@@ -350,13 +350,13 @@ export class VentaComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
 
-        let productos = JSON.parse(localStorage.getItem('productosSeleccionados') || '[]');
+        let productos = JSON.parse(localStorage.getItem('productosSeleccion') || '[]');
 
         // 2️Eliminar el producto por su índice
         productos.splice(index, 1);
 
 
-        localStorage.setItem('productosSeleccionados', JSON.stringify(productos));
+        localStorage.setItem('productosSeleccion', JSON.stringify(productos));
 
 
         this.cargarProductosSeleccionados();

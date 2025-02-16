@@ -1,7 +1,7 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, ViewEncapsulation } from '@angular/core';
 import { PoductService } from '../../../services/poduct.service';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ventaModel } from '../../../models/venta.Model';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
@@ -10,11 +10,16 @@ import { IdPipe } from '../../../pipes/id.pipe';
 import { CapitalizePipe } from '../../../pipes/capitalize.pipe';
 import { PdfService } from '../../../services/pdf.service';
 import { Router } from '@angular/router';
+import { SelectModule } from 'primeng/select'
+
+
+
+
 
 @Component({
   selector: 'app-compras',
   standalone: true,
-  imports: [NgSelectModule, ReactiveFormsModule, CommonModule, IdPipe, CapitalizePipe],
+  imports: [NgSelectModule, ReactiveFormsModule, CommonModule, IdPipe, CapitalizePipe, FormsModule, SelectModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './compras.component.html',
   styleUrl: './compras.component.css',
@@ -30,6 +35,7 @@ export class ComprasComponent implements OnInit {
   facturaCompra: any = []
   registroCompras: any = []
   selctCompra: any=[]
+  selectedCountry: string | undefined;
 
   comprasForm: FormGroup;
   proveedorForm: FormGroup;
