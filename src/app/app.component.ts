@@ -32,7 +32,8 @@ export class AppComponent {
   title = 'Inventario';
   currentYear: number = new Date().getFullYear();
   isLoginRoute(): boolean {
-    // Verifica si la ruta activa es la de login
-    return this.router.url === '/login' || this.activatedRoute.snapshot.firstChild?.routeConfig?.path === 'login';
+    const allowedRoutes = ['login', 'register'];
+    const routePath = this.activatedRoute.snapshot.firstChild?.routeConfig?.path;
+    return routePath ? allowedRoutes.includes(routePath) : false;
   }
 }

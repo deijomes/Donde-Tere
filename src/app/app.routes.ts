@@ -8,6 +8,7 @@ import { MovimientosComponent } from './features/movimientos/movimientos.compone
 import { PRODUCTOS_ROUTES } from './features/productos/registro.routes';
 import { LoginComponent } from './auth/login/login.component';
 import { ComprasComponent } from './features/productos/compras/compras.component';
+import { RegistroUsuarioComponent } from './auth/registro-usuario/registro-usuario.component';
 
 // export const routes: Routes = [
 //   { path: '', redirectTo: 'inventarioo', pathMatch: 'full' },
@@ -47,6 +48,7 @@ export const routes: Routes = [
     { path: 'ventas', component: VentaComponent, },
     { path: 'ventastotales', component: VentasTotalesComponent, },
     { path: 'login', component: LoginComponent },
+    {path :'register', component: RegistroUsuarioComponent},
     { path: '**', pathMatch: 'full', redirectTo: 'inventarioo' },
    
 ];
