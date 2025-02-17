@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { UsuarioModel } from '../../models/registerUsuario';
 import { CommonModule } from '@angular/common';
+import { CredencialesService } from '../../services/credenciales.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-registro-usuario',
@@ -17,7 +19,7 @@ export class RegistroUsuarioComponent implements OnInit {
 
   registro: UsuarioModel
   registroForm!: FormGroup
-  constructor(private router: Router, private bf: FormBuilder) {
+  constructor(private router: Router, private bf: FormBuilder, private credenciales: CredencialesService) {
 
     this.registro = new UsuarioModel()
 
@@ -52,18 +54,37 @@ export class RegistroUsuarioComponent implements OnInit {
   get password() { return this.registroForm.get('password'); }
 
   guardar(): void {
-
-
+    // Si el formulario es inválido, no sigue con el registro
+    const usuario = this.registroForm.value
     if (!this.registroForm.valid) {
       console.log('Formulario inválido');
       return; // Sale de la función si el formulario no es válido
     }
-
-    console.log(this.registroForm.value)
-
-
+  
+    // Si el formulario es válido, se procede con el registro
+    this.credenciales.nuevoUsuario(usuario).subscribe(
+      (resp: any) => {
+        console.log('Registro exitoso:', resp);
+        Swal.fire({
+          title: 'Éxito',
+          text: 'Registro exitoso',
+          icon: 'success',
+          timer: 4000,
+          timerProgressBar: true,
+          willClose: () => {
+            this.router.navigateByUrl('/home'); // Redirige a la página de inicio
+          }
+        });
+      },
+      (error: any) => {
+        console.error('Error al registrar:', error);
+        Swal.fire('Error', 'Error de registro, Usuario existente', 'error');
+      }
+    );
+  
+    console.log(this.registroForm.value); // Muestra los datos del formulario en consola
   }
-
+  
 
   login() {
     this.router.navigateByUrl("login")
