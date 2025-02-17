@@ -8,9 +8,33 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 })
 export class CredencialesService {
 
-  private url = 'http://localhost:3000/api/auth/register'
+  private url = 'http://localhost:3000/api/auth/register';
+  private urlLogin = 'http://localhost:3000/api/auth/login';
+  private readonly tokenKey = 'token';
 
   constructor(private http: HttpClient) { }
+
+
+  login(usuario: UsuarioModel): Observable<any> {
+    const authdata = {
+      email: usuario.email, // Asegúrate de usar "email" en lugar de "Emmail"
+      password: usuario.password
+    };
+
+    return this.http.post(`${this.urlLogin}`, authdata)
+      .pipe(
+        map((response: any) => {
+          console.log('Login exitoso', response);
+          if (response?.token) {
+            sessionStorage.setItem(this.tokenKey, response.token); // Guardar token en Session Storage
+          }
+          return response;
+          
+          
+        }),
+        catchError(this.manejarError)
+      );
+  }
 
   nuevoUsuario(usuario: UsuarioModel): Observable<any> {
     
@@ -19,11 +43,22 @@ export class CredencialesService {
       .pipe(
         map((response: any) => {
           console.log('Nuevo usuario registrado', response);
-          console.log(response['token']);
+          if (response?.token) {
+            sessionStorage.setItem(this.tokenKey, response.token); // Guardar token al registrar usuario
+          }
           return response;
+          
         }),
         catchError(this.manejarError)
       );
+  }
+
+  obtenerToken(): string | null {
+    return sessionStorage.getItem(this.tokenKey); // Obtener el token almacenado
+  }
+
+  cerrarSesion(): void {
+    sessionStorage.removeItem(this.tokenKey); // Eliminar el token al cerrar sesión
   }
 
   private manejarError(error: any): Observable<never> {
