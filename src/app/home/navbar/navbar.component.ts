@@ -5,11 +5,14 @@ import { CommonModule } from '@angular/common';
 import { TextoSpañolPipe } from '../../pipes/texto-spañol.pipe';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { EmailPipe } from '../../pipes/email.pipe';
+import { CredencialesService } from '../../services/credenciales.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, TextoSpañolPipe, FormsModule],
+  imports: [CommonModule, TextoSpañolPipe, FormsModule, EmailPipe],
    schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
@@ -18,15 +21,20 @@ export class NavbarComponent implements OnInit {
   configSize: string = 'sm-hover';
   notificacion: any []=[]
   searchTerm: string = '';
-  searchTermProductos :string = ''
+  searchTermProductos :string = '';
+  usuariObtenido: string = ''
 
 
-  constructor(private buscadorService:BuscadorService, private services:ProductoCompraService, private router: Router){
+  constructor(private buscadorService:BuscadorService, private services:ProductoCompraService, private router: Router,
+     private credenciales: CredencialesService){
+
+   
 
 
   }
   ngOnInit(): void {
-   this.notificaciones()
+   this.notificaciones();
+   this.obtenerUsuario()
   }
   
 
@@ -102,4 +110,37 @@ export class NavbarComponent implements OnInit {
   get notificationCount(): number {
     return this.notificacion.length;
   }
+
+  obtenerUsuario(){
+    const usuario = localStorage.getItem('email');
+
+    if(usuario){
+      this.usuariObtenido = usuario
+    }
+
+   
+  }
+
+  cerrarSesion() {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Estás a punto de cerrar sesión.',
+      icon: 'warning',
+      background: '#FF6F00', // Color de fondo naranja
+      color: '#fff', // Color de texto blanco
+      showCancelButton: true,
+      confirmButtonText: 'cerrar sesión',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#FF6F00', // Color naranja para el botón de confirmar
+      cancelButtonColor: '#FF9800', // Color naranja más claro para el botón de cancelar
+      customClass: {
+        popup: 'custom-swal-popup', // Clase personalizada para ajustar el estilo
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.credenciales.cerrarSesion();
+        this.router.navigateByUrl('login');
+      }
+    });}
+  
 }

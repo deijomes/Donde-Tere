@@ -17,7 +17,7 @@ export class CredencialesService {
 
   login(usuario: UsuarioModel): Observable<any> {
     const authdata = {
-      email: usuario.email, // Asegúrate de usar "email" en lugar de "Emmail"
+      email: usuario.email,
       password: usuario.password
     };
 
@@ -26,39 +26,55 @@ export class CredencialesService {
         map((response: any) => {
           console.log('Login exitoso', response);
           if (response?.token) {
-            sessionStorage.setItem(this.tokenKey, response.token); // Guardar token en Session Storage
+            sessionStorage.setItem(this.tokenKey, response.token);
+
+            if (response?.email) {
+              localStorage.setItem('email', response.email);
+            }
+            if (response?.roles) {
+              localStorage.setItem('rol', response.roles);
+            }
           }
           return response;
-          
-          
+
+
         }),
         catchError(this.manejarError)
       );
   }
 
   nuevoUsuario(usuario: UsuarioModel): Observable<any> {
-    
+
 
     return this.http.post(`${this.url}`, usuario)
       .pipe(
         map((response: any) => {
           console.log('Nuevo usuario registrado', response);
           if (response?.token) {
-            sessionStorage.setItem(this.tokenKey, response.token); // Guardar token al registrar usuario
+            sessionStorage.setItem(this.tokenKey, response.token);
+
+          }
+          if (response?.email) {
+            localStorage.setItem('email', response.email);
+          }
+          if (response?.roles) {
+            localStorage.setItem('rol', response.roles);
           }
           return response;
-          
+
         }),
         catchError(this.manejarError)
       );
   }
 
   obtenerToken(): string | null {
-    return sessionStorage.getItem(this.tokenKey); // Obtener el token almacenado
+    return sessionStorage.getItem(this.tokenKey);
   }
 
   cerrarSesion(): void {
-    sessionStorage.removeItem(this.tokenKey); // Eliminar el token al cerrar sesión
+    sessionStorage.removeItem(this.tokenKey);
+    localStorage.removeItem('email');
+    localStorage.removeItem('rol');
   }
 
   private manejarError(error: any): Observable<never> {

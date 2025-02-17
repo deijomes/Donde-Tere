@@ -211,6 +211,7 @@ export class VentaComponent implements OnInit {
         Swal.fire({
           title: 'Venta Registrada',
           text: 'La venta se ha registrado con éxito.',
+          background: '#FF6F00', 
           icon: 'success',
           confirmButtonText: 'Aceptar',
           customClass: {
@@ -242,6 +243,7 @@ export class VentaComponent implements OnInit {
           text: mensajeError,
           icon: 'error',
           confirmButtonText: 'Aceptar',
+          background: '#FF8C00', 
           customClass: {
             confirmButton: 'swal-success-btn'
           }
@@ -283,7 +285,18 @@ export class VentaComponent implements OnInit {
     const cantidad = Number((document.getElementById('cantidad') as HTMLInputElement).value);
 
     if (cantidad <= 0 || isNaN(cantidad)) {
-      Swal.fire('Error', 'Por favor ingrese una cantidad válida', 'error');
+       Swal.fire({
+              title: 'Error',
+              text : 'Por favor ingrese una cantidad válida',
+      
+              icon: 'error',
+              background: '#FF8C00',
+              color: '#fff',
+              confirmButtonColor: '#FF9800',
+              customClass: {
+                icon: 'custom-icon-error',
+              },
+            });
       return;
     }
 
@@ -292,12 +305,15 @@ export class VentaComponent implements OnInit {
       title: '¿Está seguro de que desea actualizar la cantidad?',
       icon: 'warning',
       showCancelButton: true,
+      background: '#FF6F00',
       confirmButtonText: 'actualizar',
       cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#FF6F00', // Color naranja para el botón de confirmar
+      cancelButtonColor: '#FF9800', // Color naranja más claro para el botón de cancelar
       customClass: {
-        confirmButton: 'swal-confirm-btn',
-        cancelButton: 'swal-cancel-btn'
+        popup: 'custom-swal-popup', // Clase personalizada para ajustar el estilo
       }
+
     }).then((result) => {
       if (result.isConfirmed) {
         // Si el usuario confirma, se llama a la función para modificar la cantidad
@@ -326,9 +342,26 @@ export class VentaComponent implements OnInit {
         // Actualizar la lista en el componente
         this.productosSeleccion = productos;
 
-        Swal.fire('¡Cantidad actualizada!', '', 'success');
+         Swal.fire({
+                  title: '¡Éxito!',
+                  text: 'El producto ha sido actualizado.',
+                  icon: 'success',
+                  background: '#FF6F00',
+                  timer: 1000,
+                  showConfirmButton: false
+                });
       } else {
-        Swal.fire('Error', 'Producto no encontrado en localStorage.', 'error');
+        Swal.fire({
+                  title: 'Error',
+        
+                  icon: 'error',
+                  background: '#FF8C00',
+                  color: '#fff',
+                  confirmButtonColor: '#FF9800',
+                  customClass: {
+                    icon: 'custom-icon-error',
+                  },
+                });
       }
     }
   }
@@ -338,14 +371,17 @@ export class VentaComponent implements OnInit {
   eliminarProducto(index: number) {
     Swal.fire({
       title: '¿Estás seguro?',
-      text: 'Este producto será eliminado de la lista.',
+      text: 'Esta acción no se puede deshacer',
       icon: 'warning',
+      background: '#FF6F00', // Color de fondo naranja
+      color: '#fff', // Color de texto blanco
       showCancelButton: true,
-      confirmButtonText: 'eliminar',
+      confirmButtonText: 'Eliminar',
       cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#FF6F00', // Color naranja para el botón de confirmar
+      cancelButtonColor: '#FF9800', // Color naranja más claro para el botón de cancelar
       customClass: {
-        confirmButton: 'swal-confirm-btn',
-        cancelButton: 'swal-cancel-btn'
+        popup: 'custom-swal-popup', // Clase personalizada para ajustar el estilo
       }
     }).then((result) => {
       if (result.isConfirmed) {
@@ -362,7 +398,14 @@ export class VentaComponent implements OnInit {
         this.cargarProductosSeleccionados();
 
 
-        Swal.fire('Eliminado', 'El producto ha sido eliminado.', 'success');
+        Swal.fire({
+                  title: '¡Éxito!',
+                  text: 'El producto ha sido eliminado.',
+                  icon: 'success',
+                  background: '#FF6F00',
+                  timer: 1000,
+                  showConfirmButton: false
+                });
       }
     });
   }
