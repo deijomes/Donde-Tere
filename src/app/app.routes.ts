@@ -44,7 +44,7 @@ export const routes: Routes = [
         component: InventarioComponent,
         children: PRODUCTOS_ROUTES,  canActivate: [authGuard]
     },
-    { path: 'movimientos', component: MovimientosComponent,  canActivate: [authGuard] },
+    { path: 'movimientos', component: MovimientosComponent, canActivate: [authGuard] },
     {path: 'compras', component :ComprasComponent,  canActivate: [authGuard]},
     { path: 'ventas', component: VentaComponent,  canActivate: [authGuard]},
     { path: 'ventastotales', component: VentasTotalesComponent,  canActivate: [authGuard]},

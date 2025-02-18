@@ -67,10 +67,20 @@ export class LoginComponent implements OnInit {
       
     }
 
+     // Verificamos si la respuesta contiene el email antes de guardarlo
+    
     this.loadingService.show(); 
 
     this.servicio.login(usuario).subscribe(
       (resp: any) => {
+
+        if (resp?.email) {
+          localStorage.setItem('email', resp.email);
+          console.log('Email guardado en localStorage:', resp.email);
+        } else {
+          console.warn('El backend no devolvió un email.');
+        }
+    
        
         if (resp && resp.token) {
           console.log('Token recibido:', resp.token); 

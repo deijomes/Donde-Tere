@@ -52,19 +52,28 @@ export class RegistroUsuarioComponent implements OnInit {
   get fullName() { return this.registroForm.get('fullName'); }
   get email() { return this.registroForm.get('email'); }
   get password() { return this.registroForm.get('password'); }
-
   guardar(): void {
     // Si el formulario es inválido, no sigue con el registro
-    const usuario = this.registroForm.value
     if (!this.registroForm.valid) {
       console.log('Formulario inválido');
       return; // Sale de la función si el formulario no es válido
     }
   
+    const usuario = this.registroForm.value;
+  
     // Si el formulario es válido, se procede con el registro
     this.credenciales.nuevoUsuario(usuario).subscribe(
       (resp: any) => {
         console.log('Registro exitoso:', resp);
+  
+        // Verificamos si la respuesta contiene el email antes de guardarlo
+        if (resp?.email) {
+          localStorage.setItem('email', resp.email);
+          console.log('Email guardado en localStorage:', resp.email);
+        } else {
+          console.warn('El backend no devolvió un email.');
+        }
+  
         Swal.fire({
           title: 'Éxito',
           text: 'Registro exitoso',
@@ -82,7 +91,7 @@ export class RegistroUsuarioComponent implements OnInit {
       }
     );
   
-    console.log(this.registroForm.value); // Muestra los datos del formulario en consola
+    console.log('Datos del formulario:', this.registroForm.value); // Muestra los datos del formulario en consola
   }
   
 
