@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { EmailsplitPipe } from '../../pipes/emailsplit.pipe';
 import Swal from 'sweetalert2';
 import { CredencialesService } from '../../services/credenciales.service';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -31,7 +32,11 @@ export class NavbarComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.notificaciones()
+
+    this.notificaciones();
+    interval(20000).subscribe(() => {
+      this.notificaciones();
+    });
     this.obtenerUsuario()
   }
 
@@ -98,8 +103,8 @@ export class NavbarComponent implements OnInit {
     this.services.Notificaciones().subscribe({
       next: (Response) => {
 
-        this.notificacion = Response
-        console.log(this.notificacion)
+        this.notificacion = Response.filter((noti:any) => noti.closed === false)
+        
 
       }
     })

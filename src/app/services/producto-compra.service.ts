@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
 
@@ -8,7 +8,7 @@ import { catchError, Observable } from 'rxjs';
 export class ProductoCompraService {
 
   private baseUrl = 'http://localhost:3000/api/Purchase'
-   private url = 'http://localhost:3000/api/notifications'
+  private url = 'http://localhost:3000/api/notifications'
 
   constructor(private http: HttpClient) { }
 
@@ -24,23 +24,27 @@ export class ProductoCompraService {
     );
   }
 
-  facturaCompra(id: string): Observable<any>{
+  facturaCompra(id: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/${id}`)
-    
+
   }
 
- 
 
-  
-  registrosCompras():Observable<any>{
+
+
+  registrosCompras(): Observable<any> {
     return this.http.get(`${this.baseUrl}`)
 
   }
 
-  Notificaciones():Observable<any>{
-    return this.http.get(`${this.url}`)
-
+ 
+  Notificaciones(): Observable<any> {
+    
+  
+    return this.http.get<any[]>(`${this.url}`)
   }
+  
+  
 
 
 }
