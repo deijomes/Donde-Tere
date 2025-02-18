@@ -2,23 +2,31 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { SidebarComponent } from './home/sidebar/sidebar.component';
 import { NavbarComponent } from './home/navbar/navbar.component';
-
-
+import { RegistrarComponent } from './features/productos/registrar/registrar.component';
+import { InventarioComponent } from './features/productos/inventario/inventario.component';
+import { VentaComponent } from './features/venta/venta.component';
+import { VentasTotalesComponent } from './features/ventas-totales/ventas-totales.component';
+import { InventarioGeneralComponent } from './features/inventario-general/inventario-general.component';
+import { MovimientosComponent } from './features/movimientos/movimientos.component';
+import { ActualizarComponent } from './features/productos/actualizar/actualizar.component';
+import { LoginComponent } from './auth/login/login.component';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
-
+import { ComprasComponent } from './features/productos/compras/compras.component';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, SidebarComponent, NavbarComponent,CommonModule, MatInputModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [RouterOutlet, SidebarComponent, NavbarComponent, RegistrarComponent, InventarioComponent,
+    VentaComponent, VentasTotalesComponent, InventarioGeneralComponent, MovimientosComponent,
+    ActualizarComponent, LoginComponent, CommonModule,  MatInputModule, ComprasComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA], // Añade esta línea
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private router:Router, private activatedRoute: ActivatedRoute){
 
   }
   title = 'Inventario';

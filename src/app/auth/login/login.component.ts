@@ -67,54 +67,26 @@ export class LoginComponent implements OnInit {
         if (resp && resp.token) {
           console.log('Token recibido:', resp.token); // Verifica el token recibido
           // Guarda el token si está presente
+        
           Swal.fire({
             title: 'Inicio de sesión Exitoso',
             text: 'Has iniciado sesión correctamente',
             icon: 'success', 
-            background: '#FF6F00', // Fondo naranja
-            color: '#fff', // Texto blanco
-            showConfirmButton: false,
-            timer: 2000, 
-            timerProgressBar: false, 
+            timer: 4000, 
+            timerProgressBar: true, 
             willClose: () => {
               this.router.navigateByUrl('/home');
             }
           });
         } else {
           console.error('No se recibió el token en la respuesta');
-          Swal.fire({
-            title: 'Error',
-            text: 'No se pudo iniciar sesión. Verifica tus credenciales e intenta nuevamente',
-            icon: 'error',
-            background: '#FF8C00', 
-            color: '#fff',
-            confirmButtonColor: '#FF9800', 
-            customClass: {
-              icon: 'custom-icon-error', 
-            },
-          });
         }
       },
       (error: any) => {
         console.error('Error al iniciar sesión:', error);
-      
-       
-        const errorMessage = error?.error?.message || 'No se pudo iniciar sesión. Verifica tus credenciales e intenta nuevamente';
-      
-        Swal.fire({
-          title: 'Error',
-          text: errorMessage, 
-          icon: 'error',
-          background: '#FF8C00', 
-          color: '#fff', // Texto blanco
-          confirmButtonColor: '#FF9800', 
-          customClass: {
-            icon: 'custom-icon-error', 
-          },
-        });}
+        Swal.fire('Error', 'No se pudo iniciar sesión. Verifica tus credenciales e intenta nuevamente', 'error');
+      }
     );
-    
-    
   }
 
 

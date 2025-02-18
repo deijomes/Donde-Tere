@@ -79,7 +79,6 @@ export class RegistrarComponent implements OnInit {
           title: '¡Éxito!',
           text: 'El producto ha sido guardado.',
           icon: 'success',
-          background: '#FF6F00',
           timer: 2000,
           showConfirmButton: false
         }).then(() => {
@@ -94,8 +93,6 @@ export class RegistrarComponent implements OnInit {
         console.error('Error al registrar producto:', error);
         Swal.fire({
           title: 'Error',
-          background: '#FF8C00', 
-          confirmButtonColor: '#FF9800', 
           text: 'No se pudo registrar el producto.',
           icon: 'error'
         });

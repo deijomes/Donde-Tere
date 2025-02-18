@@ -34,7 +34,7 @@ export class ComprasComponent implements OnInit {
   productosSeleccionados: any = []
   facturaCompra: any = []
   registroCompras: any = []
-  selctCompra: any = []
+  selctCompra: any=[]
   selectedCountry: string | undefined;
 
   comprasForm: FormGroup;
@@ -42,10 +42,10 @@ export class ComprasComponent implements OnInit {
   idproduct: string = '';
   Idfactura: string = '';
   tablaProducto: boolean = false
-  mostrarHistorial: boolean = false
+  mostrarHistorial : boolean =  false
 
-  constructor(private serviceproduct: PoductService, private serviceCompra: ProductoCompraService, private fb:
-    FormBuilder, private router: Router, private pdf: PdfService) {
+  constructor(private serviceproduct: PoductService, private serviceCompra: ProductoCompraService, private fb: 
+    FormBuilder,private router: Router, private pdf:PdfService) {
 
     this.comprasForm = this.fb.group({
       codigo: '',
@@ -107,7 +107,7 @@ export class ComprasComponent implements OnInit {
         codigo: productoEncontrado.code,
         articulo: productoEncontrado.name,
         cantidad: '',
-        precio: ''
+        precio:''
 
       });
       console.log('Producto seleccionado:', productoEncontrado);
@@ -182,17 +182,14 @@ export class ComprasComponent implements OnInit {
   eliminarProducto(index: number) {
     Swal.fire({
       title: '¿Estás seguro?',
-      text: 'Esta acción no se puede deshacer',
+      text: 'Este producto será eliminado de la lista.',
       icon: 'warning',
-      background: '#FF6F00', // Color de fondo naranja
-      color: '#fff', // Color de texto blanco
       showCancelButton: true,
-      confirmButtonText: 'Eliminar',
+      confirmButtonText: 'eliminar',
       cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#FF6F00', // Color naranja para el botón de confirmar
-      cancelButtonColor: '#FF9800', // Color naranja más claro para el botón de cancelar
       customClass: {
-        popup: 'custom-swal-popup', // Clase personalizada para ajustar el estilo
+        confirmButton: 'swal-confirm-btn',
+        cancelButton: 'swal-cancel-btn'
       }
     }).then((result) => {
       if (result.isConfirmed) {
@@ -209,15 +206,7 @@ export class ComprasComponent implements OnInit {
         this.cargarProductosSeleccionados();
 
 
-        Swal.fire({
-          title: '¡Éxito!',
-          text: 'El producto ha sido eliminado.',
-          icon: 'success',
-          background: '#FF6F00',
-          timer: 1000,
-          showConfirmButton: false
-        });
-
+        Swal.fire('Eliminado', 'El producto ha sido eliminado.', 'success');
       }
     });
   }
@@ -237,21 +226,8 @@ export class ComprasComponent implements OnInit {
     const cantidad = Number((document.getElementById('cantidad') as HTMLInputElement).value);
 
     if (cantidad <= 0 || isNaN(cantidad)) {
-      Swal.fire({
-        title: 'Error',
-        text : 'Por favor ingrese una cantidad válida',
-
-        icon: 'error',
-        background: '#FF8C00',
-        color: '#fff',
-        confirmButtonColor: '#FF9800',
-        customClass: {
-          icon: 'custom-icon-error',
-        },
-      });
-      
+      Swal.fire('Error', 'Por favor ingrese una cantidad válida', 'error');
       return;
-     
     }
 
     // Alerta de confirmación
@@ -259,15 +235,12 @@ export class ComprasComponent implements OnInit {
       title: '¿Está seguro de que desea actualizar la cantidad?',
       icon: 'warning',
       showCancelButton: true,
-      background: '#FF6F00',
       confirmButtonText: 'actualizar',
       cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#FF6F00', // Color naranja para el botón de confirmar
-      cancelButtonColor: '#FF9800', // Color naranja más claro para el botón de cancelar
       customClass: {
-        popup: 'custom-swal-popup', // Clase personalizada para ajustar el estilo
+        confirmButton: 'swal-confirm-btn',
+        cancelButton: 'swal-cancel-btn'
       }
-
     }).then((result) => {
       if (result.isConfirmed) {
         // Si el usuario confirma, se llama a la función para modificar la cantidad
@@ -296,27 +269,9 @@ export class ComprasComponent implements OnInit {
         // Actualizar la lista en el componente
         this.productosSeleccionados = productos;
 
-        Swal.fire({
-          title: '¡Éxito!',
-          text: 'El producto ha sido actualizado.',
-          icon: 'success',
-          background: '#FF6F00',
-          timer: 1000,
-          showConfirmButton: false
-        });
+        Swal.fire('¡Cantidad actualizada!', '', 'success');
       } else {
-
-        Swal.fire({
-          title: 'Error',
-
-          icon: 'error',
-          background: '#FF8C00',
-          color: '#fff',
-          confirmButtonColor: '#FF9800',
-          customClass: {
-            icon: 'custom-icon-error',
-          },
-        });
+        Swal.fire('Error', 'Producto no encontrado en localStorage.', 'error');
       }
     }
   }
@@ -362,7 +317,6 @@ export class ComprasComponent implements OnInit {
         Swal.fire({
           title: 'Venta Registrada',
           text: 'La venta se ha registrado con éxito.',
-          background: '#FF6F00', 
           icon: 'success',
           confirmButtonText: 'Aceptar',
           customClass: {
@@ -375,13 +329,13 @@ export class ComprasComponent implements OnInit {
           }, 1000);
         });
 
-
+        
 
         this.eliminarProductosGuardados();
         this.productosSeleccionados = [];
         this.registrosCompras()
 
-
+        
         this.tablaProducto = false
         this.proveedorForm.reset()
 
@@ -398,14 +352,10 @@ export class ComprasComponent implements OnInit {
 
           text: mensajeError,
           icon: 'error',
-          
           confirmButtonText: 'Aceptar',
-          background: '#FF8C00', 
-          color: '#fff',
-          confirmButtonColor: '#FF9800', 
           customClass: {
-            icon: 'custom-icon-error', 
-          },
+            confirmButton: 'swal-success-btn'
+          }
         });
 
       }
@@ -427,10 +377,10 @@ export class ComprasComponent implements OnInit {
         price: producto.price
       };
 
-
+      
 
     });
-
+  
 
 
   }
@@ -444,7 +394,7 @@ export class ComprasComponent implements OnInit {
     this.serviceCompra.registrosCompras().subscribe({
       next: (Response) => {
         this.registroCompras = Response
-        console.log('compras registros', this.registroCompras)
+        console.log('compras registros',this.registroCompras)
 
       }
     })
@@ -475,18 +425,18 @@ export class ComprasComponent implements OnInit {
 
   generatePDF() {
     setTimeout(() => {
-      this.pdf.generateFacturaPDF2(this.selctCompra);
+      this.pdf. generateFacturaPDF2(this.selctCompra);
 
     }, 500)
 
   }
   generatePDFF() {
-    this.pdf.generateFacturaPDF2(this.facturaCompra);
+    this.pdf. generateFacturaPDF2(this.facturaCompra);
   }
 
   registro() {
     this.router.navigateByUrl('productos/registrar');
-
+    
 
   }
   cancelarventa() {
@@ -509,7 +459,7 @@ export class ComprasComponent implements OnInit {
 
 // Preparar los productos para el formato correcto
 
-
+  
 
 
 

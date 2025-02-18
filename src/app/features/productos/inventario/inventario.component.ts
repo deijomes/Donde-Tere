@@ -100,24 +100,24 @@ export class InventarioComponent implements OnInit {
 
   // Método para cargar los registros
   registros(): void {
-
-
+    
+  
     this.http.obtenerRegistros().subscribe({
       next: (response) => {
-        this.productos = response.data;
-        this.registrosCargados = true;
+        this.productos = response.data;  
+        this.registrosCargados = true;  
         this.totalItems = response.length;
       },
       error: (error) => {
         console.error('Error al obtener productos:', error);
       },
       complete: () => {
-
+       
       }
     });
   }
-
-
+  
+  
 
 
 
@@ -199,22 +199,14 @@ export class InventarioComponent implements OnInit {
 
 
     Swal.fire({
-
-      title: '¿Estás seguro?',
-      text: 'Esta acción no se puede deshacer',
-      icon: 'warning',
-      background: '#FF6F00', // Color de fondo naranja
-      color: '#fff', // Color de texto blanco
+      title: "¿Estás seguro?",
+      text: "Esta acción no se puede deshacer",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Eliminar',
-      cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#FF6F00', // Color naranja para el botón de confirmar
-      cancelButtonColor: '#FF9800', // Color naranja más claro para el botón de cancelar
-      customClass: {
-        popup: 'custom-swal-popup', // Clase personalizada para ajustar el estilo
-      }
-
-
+      confirmButtonColor: '#ffa500',
+      cancelButtonColor: "##dc3545",
+      confirmButtonText: "Eliminar",
+      cancelButtonText: "Cancelar"
     }).then((result) => {
       if (result.isConfirmed) {
         this.http.eliminarProducto(id).subscribe({
@@ -224,7 +216,6 @@ export class InventarioComponent implements OnInit {
               title: '¡Éxito!',
               text: 'El producto ha sido eliminado.',
               icon: 'success',
-               background: '#FF6F00',
               timer: 1000,
               showConfirmButton: false
             });
