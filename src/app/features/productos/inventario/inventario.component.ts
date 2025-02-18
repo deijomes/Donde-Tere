@@ -198,15 +198,15 @@ export class InventarioComponent implements OnInit {
     console.log(id)
 
 
-    Swal.fire({
-      title: "¿Estás seguro?",
-      text: "Esta acción no se puede deshacer",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: 'cerrar sesión',
-      cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#FF6F00', // Color naranja para el botón de confirmar
-      cancelButtonColor: '#FF9800', // Color naranja más claro para el botón de cancelar
+     Swal.fire({
+          title: '¿Estás seguro?',
+          text: 'Este producto será eliminado de la lista.',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Eliminar',
+          cancelButtonText: 'Cancelar',
+          confirmButtonColor: '#FF6F00', 
+          cancelButtonColor: '#FF9800', 
     }).then((result) => {
       if (result.isConfirmed) {
         this.http.eliminarProducto(id).subscribe({

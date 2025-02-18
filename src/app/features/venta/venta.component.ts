@@ -292,7 +292,7 @@ export class VentaComponent implements OnInit {
       title: '¿Está seguro de que desea actualizar la cantidad?',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'actualizar',
+      confirmButtonText: 'Actualizar',
       cancelButtonText: 'Cancelar',
       customClass: {
         confirmButton: 'swal-confirm-btn',
@@ -304,7 +304,14 @@ export class VentaComponent implements OnInit {
         this.modificarCantidad(this.idproduct, cantidad);
       } else {
         // Si el usuario cancela, no se hace nada
-        Swal.fire('Cancelado', 'La cantidad no fue modificada', 'info');
+        Swal.fire({
+                 title: 'Cancelado',
+                 text: 'La cantidad no fue modificada',
+                 icon: 'info',
+                 confirmButtonText: 'Entendido', // Cambia el texto del botón
+                 confirmButtonColor: '#FF6F00' // Cambia el color del botón
+               });
+               
       }
     });
   }
@@ -326,7 +333,15 @@ export class VentaComponent implements OnInit {
         // Actualizar la lista en el componente
         this.productosSeleccion = productos;
 
-        Swal.fire('¡Cantidad actualizada!', '', 'success');
+        Swal.fire({
+                 title: '¡Cantidad actualizada!',
+                 
+                 icon: 'success',
+                 timer: 2000, // 
+                 timerProgressBar: true,
+                 showConfirmButton: false,
+                
+               });
       } else {
         Swal.fire('Error', 'Producto no encontrado en localStorage.', 'error');
       }
@@ -341,12 +356,10 @@ export class VentaComponent implements OnInit {
       text: 'Este producto será eliminado de la lista.',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'eliminar',
+      confirmButtonText: 'Eliminar',
       cancelButtonText: 'Cancelar',
-      customClass: {
-        confirmButton: 'swal-confirm-btn',
-        cancelButton: 'swal-cancel-btn'
-      }
+      confirmButtonColor: '#FF6F00', 
+      cancelButtonColor: '#FF9800', 
     }).then((result) => {
       if (result.isConfirmed) {
 
@@ -362,7 +375,14 @@ export class VentaComponent implements OnInit {
         this.cargarProductosSeleccionados();
 
 
-        Swal.fire('Eliminado', 'El producto ha sido eliminado.', 'success');
+      
+         Swal.fire({
+                      title: '¡Éxito!',
+                      text: 'El producto ha sido eliminado.',
+                      icon: 'success',
+                      timer: 1000,
+                      showConfirmButton: false
+                    });
       }
     });
   }

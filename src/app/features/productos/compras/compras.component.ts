@@ -185,7 +185,7 @@ export class ComprasComponent implements OnInit {
       text: 'Este producto será eliminado de la lista.',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'eliminar',
+      confirmButtonText: 'Eliminar',
       cancelButtonText: 'Cancelar',
       
       confirmButtonColor: '#FF6F00', 
@@ -205,7 +205,13 @@ export class ComprasComponent implements OnInit {
         this.cargarProductosSeleccionados();
 
 
-        Swal.fire('Eliminado', 'El producto ha sido eliminado.', 'success');
+         Swal.fire({
+                              title: '¡Éxito!',
+                              text: 'El producto ha sido eliminado.',
+                              icon: 'success',
+                              timer: 1000,
+                              showConfirmButton: false
+                            });
       }
     });
   }
@@ -225,7 +231,15 @@ export class ComprasComponent implements OnInit {
     const cantidad = Number((document.getElementById('cantidad') as HTMLInputElement).value);
 
     if (cantidad <= 0 || isNaN(cantidad)) {
-      Swal.fire('Error', 'Por favor ingrese una cantidad válida', 'error');
+     
+      Swal.fire({
+        title: '¡Error!',
+        text: 'Por favor ingrese una cantidad válida.',
+        icon: 'info',
+        confirmButtonText: 'Entendido',
+        confirmButtonColor: '#FF6F00'
+      });
+      
       return;
     }
 
@@ -234,7 +248,7 @@ export class ComprasComponent implements OnInit {
       title: '¿Está seguro de que desea actualizar la cantidad?',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'actualizar',
+      confirmButtonText: 'Actualizar',
       cancelButtonText: 'Cancelar',
       
       confirmButtonColor: '#FF6F00', // Color naranja para el botón de confirmar
@@ -282,9 +296,7 @@ export class ComprasComponent implements OnInit {
           timer: 2000, // 
           timerProgressBar: true,
           showConfirmButton: false,
-          willClose: () => {
-            this.router.navigateByUrl('/home'); 
-          }
+         
         });
         
       } else {
@@ -332,8 +344,8 @@ export class ComprasComponent implements OnInit {
 
 
         Swal.fire({
-          title: 'Venta Registrada',
-          text: 'La venta se ha registrado con éxito.',
+          title: 'Compra Registrada',
+          text: 'La compra se ha registrado con éxito.',
           icon: 'success',
           confirmButtonText: 'Aceptar',
           customClass: {
