@@ -25,10 +25,14 @@ export class VentasTotalesComponent implements OnInit {
 
   ventamesActual: number = 0;
   totalventas: number = 0;
-  parrafo : any = 'Hoy'
+  parrafo : any = 'Hoy';
+  hoy : any = 'Hoy'
   Fecha : Date |null =null
+  Fecha2 :Date |null =null
   TotalVentas : number = 0
+  TotalCompras : number = 0
   filter = false
+  filtert = false
 
   
   ventasPorMes: { nombreMes: string, anio: number, totalVentas: any }[] = [];
@@ -100,6 +104,7 @@ export class VentasTotalesComponent implements OnInit {
     this.topMasVendidos()
     this.topMenosVendidos();
     this. getVentas$();
+    this. getcompras$()
     this.getVentasPorMes()
     
    
@@ -233,10 +238,46 @@ export class VentasTotalesComponent implements OnInit {
     });
   }
 
+  
+  getcompras$() {
+    let startDate: string;
+    let endDate: string;
+  
+    if (this.Fecha2) {
+      // Si hay una fecha seleccionada, la usamos
+      startDate = new Date(this.Fecha2).toISOString();
+  
+      const fechaFin = new Date(this.Fecha2);
+      fechaFin.setUTCHours(23, 59, 59, 999);
+      endDate = fechaFin.toISOString();
+      const soloFecha = endDate.split("T")[0]; // "YYYY-MM-DD"
+      this.hoy = soloFecha;
+      
+    } else {
+      // Si NO hay fecha seleccionada, usamos la fecha actual
+      const today = new Date();
+      startDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 0, 0, 0, 0)).toISOString();
+      endDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 23, 59, 59, 999)).toISOString();
+    }
+  
+    console.log("Fecha inicio:", startDate);
+    console.log("Fecha fin:", endDate);
+  
+    // Llamamos al servicio con las fechas correspondientes
+    this.servicio. getTotalPurchasesMes(startDate, endDate).subscribe((data: any) => {
+      console.log(data, "total compras");
+      this.TotalCompras = data;
+      
+    });
+  }
+
   mostrafilter(){
     this.filter  = true
   }
-
+  mostrafiltro()
+{
+  this.filtert  = true
+}
 
   getVentasPorMes() {
     const hoy = new Date();

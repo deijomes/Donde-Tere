@@ -64,7 +64,7 @@ export class RegistroUsuarioComponent implements OnInit {
     // Si el formulario es válido, se procede con el registro
     this.credenciales.nuevoUsuario(usuario).subscribe(
       (resp: any) => {
-        console.log('Registro exitoso:', resp);
+       
   
         // Verificamos si la respuesta contiene el email antes de guardarlo
         if (resp?.email) {
@@ -78,16 +78,24 @@ export class RegistroUsuarioComponent implements OnInit {
           title: 'Éxito',
           text: 'Registro exitoso',
           icon: 'success',
-          timer: 4000,
+          timer: 2000,
+          showConfirmButton: false,
           timerProgressBar: true,
           willClose: () => {
             this.router.navigateByUrl('/home'); // Redirige a la página de inicio
           }
         });
+
       },
       (error: any) => {
         console.error('Error al registrar:', error);
-        Swal.fire('Error', 'Error de registro, Usuario existente', 'error');
+         Swal.fire({
+                          title: 'error',
+                          text: 'Usuario existente',
+                          icon: 'info',
+                          confirmButtonText: 'Entendido', // Cambia el texto del botón
+                          confirmButtonColor: '#FF6F00' // Cambia el color del botón
+                        });
       }
     );
   

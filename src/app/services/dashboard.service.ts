@@ -12,6 +12,7 @@ export class DashboardService {
   private Url = 'http://localhost:3000/api/dashboard/top-selling-products'
   private urlsold = 'http://localhost:3000/api/dashboard/less-sold'
   private Urltotal = 'http://localhost:3000/api/dashboard/total-sales'
+  private urlPurchases ='http://localhost:3000/api/dashboard/total-purchases'
 
 
   getProductSelling(limit: number, startDate?: string, endDate?: string): Observable<any> {
@@ -75,10 +76,22 @@ export class DashboardService {
       .set('endDate', endDate);
   
     const url = `${this.Urltotal}?${params.toString()}`;
-    console.log('🔍 URL generada:', url); // 📌 Verifica la URL en la consola
+     
   
     return this.http.get(url);
   }
+
+  getTotalPurchasesMes(startDate: string, endDate: string): Observable<any> {
+    const params = new HttpParams()
+      .set('startDate', startDate)  
+      .set('endDate', endDate);
+  
+    const url = `${this.urlPurchases}?${params.toString()}`;
+     
+  
+    return this.http.get(url);
+  }
+  
   
   
 

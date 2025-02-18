@@ -126,7 +126,7 @@ export class NavbarComponent implements OnInit {
      
      
       showCancelButton: true,
-      confirmButtonText: 'cerrar sesión',
+      confirmButtonText: 'Cerrar sesión',
       cancelButtonText: 'Cancelar',
       confirmButtonColor: '#FF6F00', // Color naranja para el botón de confirmar
       cancelButtonColor: '#FF9800', // Color naranja más claro para el botón de cancelar
