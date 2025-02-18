@@ -34,7 +34,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
 
     this.notificaciones();
-    interval(20000).subscribe(() => {
+    interval(10000).subscribe(() => {
       this.notificaciones();
     });
     this.obtenerUsuario()

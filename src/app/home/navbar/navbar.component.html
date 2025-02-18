@@ -25,7 +25,7 @@
                <button type="button" class="topbar-button position-relative" id="page-header-notifications-dropdown"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <iconify-icon icon="solar:bell-bing-bold-duotone" class="fs-24 align-middle"></iconify-icon>
-                    <span class="position-absolute topbar-badge fs-10 translate-middle badge bg-danger rounded-pill">{{notificationCount}}<span
+                    <span *ngIf="notificationCount > 0 " class="position-absolute topbar-badge fs-10 translate-middle badge bg-danger rounded-pill">{{notificationCount}}<span
                               class="visually-hidden">unread messages</span></span>
                </button>
                <div class="dropdown-menu py-0 dropdown-lg dropdown-menu-end"
