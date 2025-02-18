@@ -203,10 +203,10 @@ export class InventarioComponent implements OnInit {
       text: "Esta acción no se puede deshacer",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#ffa500',
-      cancelButtonColor: "##dc3545",
-      confirmButtonText: "Eliminar",
-      cancelButtonText: "Cancelar"
+      confirmButtonText: 'cerrar sesión',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#FF6F00', // Color naranja para el botón de confirmar
+      cancelButtonColor: '#FF9800', // Color naranja más claro para el botón de cancelar
     }).then((result) => {
       if (result.isConfirmed) {
         this.http.eliminarProducto(id).subscribe({

@@ -187,10 +187,9 @@ export class ComprasComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'eliminar',
       cancelButtonText: 'Cancelar',
-      customClass: {
-        confirmButton: 'swal-confirm-btn',
-        cancelButton: 'swal-cancel-btn'
-      }
+      
+      confirmButtonColor: '#FF6F00', 
+      cancelButtonColor: '#FF9800', 
     }).then((result) => {
       if (result.isConfirmed) {
 
@@ -237,17 +236,23 @@ export class ComprasComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'actualizar',
       cancelButtonText: 'Cancelar',
-      customClass: {
-        confirmButton: 'swal-confirm-btn',
-        cancelButton: 'swal-cancel-btn'
-      }
+      
+      confirmButtonColor: '#FF6F00', // Color naranja para el botón de confirmar
+      cancelButtonColor: '#FF9800', // Color naranja más claro para el botón de cancelar
     }).then((result) => {
       if (result.isConfirmed) {
         // Si el usuario confirma, se llama a la función para modificar la cantidad
         this.modificarCantidad(this.idproduct, cantidad);
       } else {
         // Si el usuario cancela, no se hace nada
-        Swal.fire('Cancelado', 'La cantidad no fue modificada', 'info');
+        Swal.fire({
+          title: 'Cancelado',
+          text: 'La cantidad no fue modificada',
+          icon: 'info',
+          confirmButtonText: 'Entendido', // Cambia el texto del botón
+          confirmButtonColor: '#FF6F00' // Cambia el color del botón
+        });
+        
       }
     });
   }
@@ -269,7 +274,19 @@ export class ComprasComponent implements OnInit {
         // Actualizar la lista en el componente
         this.productosSeleccionados = productos;
 
-        Swal.fire('¡Cantidad actualizada!', '', 'success');
+        
+        Swal.fire({
+          title: '¡Cantidad actualizada!',
+          
+          icon: 'success',
+          timer: 2000, // 
+          timerProgressBar: true,
+          showConfirmButton: false,
+          willClose: () => {
+            this.router.navigateByUrl('/home'); 
+          }
+        });
+        
       } else {
         Swal.fire('Error', 'Producto no encontrado en localStorage.', 'error');
       }

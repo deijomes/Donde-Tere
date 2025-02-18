@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { UsuarioModel } from '../../models/registerUsuario';
 import { CommonModule } from '@angular/common';
 import { CredencialesService } from '../../services/credenciales.service';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-login',
@@ -20,12 +21,17 @@ export class LoginComponent implements OnInit {
   credenciales: UsuarioModel
   loguinForm!: FormGroup
 
-  constructor(private router: Router, private bf: FormBuilder, private servicio : CredencialesService) {
+  constructor(private router: Router, private bf: FormBuilder, private servicio : CredencialesService,
+    private loadingService : LoadingService
+  ) {
     this.credenciales = new UsuarioModel()
 
   }
+
+ 
   ngOnInit(): void {
     this.getforms()
+    this.loadingService.init();
 
   }
 
@@ -61,32 +67,37 @@ export class LoginComponent implements OnInit {
       
     }
 
+    this.loadingService.show(); 
+
     this.servicio.login(usuario).subscribe(
       (resp: any) => {
-        console.log('Respuesta del login:', resp);  // Verifica la respuesta
+       
         if (resp && resp.token) {
-          console.log('Token recibido:', resp.token); // Verifica el token recibido
-          // Guarda el token si está presente
-        
-          Swal.fire({
-            title: 'Inicio de sesión Exitoso',
-            text: 'Has iniciado sesión correctamente',
-            icon: 'success', 
-            timer: 4000, 
-            timerProgressBar: true, 
-            willClose: () => {
-              this.router.navigateByUrl('/home');
-            }
-          });
+          console.log('Token recibido:', resp.token); 
+    
+          this.loadingService.hide(); 
+    
+          
+          this.router.navigateByUrl('/home');
         } else {
           console.error('No se recibió el token en la respuesta');
+          this.loadingService.hide(); 
         }
       },
       (error: any) => {
         console.error('Error al iniciar sesión:', error);
-        Swal.fire('Error', 'No se pudo iniciar sesión. Verifica tus credenciales e intenta nuevamente', 'error');
+        this.loadingService.hide(); 
+       
+         Swal.fire({
+                  title: 'error',
+                  text: 'No se pudo iniciar sesión. Verifica tus credenciales e intenta nuevamente',
+                  icon: 'info',
+                  confirmButtonText: 'Entendido', // Cambia el texto del botón
+                  confirmButtonColor: '#FF6F00' // Cambia el color del botón
+                });
       }
     );
+    
   }
 
 
