@@ -212,7 +212,10 @@ export class VentasTotalesComponent implements OnInit {
   
     if (this.Fecha) {
       // Si hay una fecha seleccionada, la usamos
-      startDate = new Date(this.Fecha).toISOString();
+      const fechaInicio =  new Date(this.Fecha);
+      fechaInicio.setUTCHours(0, 0, 0, 0)
+      startDate = fechaInicio.toISOString()
+      
   
       const fechaFin = new Date(this.Fecha);
       fechaFin.setUTCHours(23, 59, 59, 999);
@@ -238,38 +241,43 @@ export class VentasTotalesComponent implements OnInit {
     });
   }
 
-  
   getcompras$() {
     let startDate: string;
     let endDate: string;
-  
-    if (this.Fecha2) {
-      // Si hay una fecha seleccionada, la usamos
-      startDate = new Date(this.Fecha2).toISOString();
-  
-      const fechaFin = new Date(this.Fecha2);
-      fechaFin.setUTCHours(23, 59, 59, 999);
-      endDate = fechaFin.toISOString();
-      const soloFecha = endDate.split("T")[0]; // "YYYY-MM-DD"
-      this.hoy = soloFecha;
-      
+    
+
+    let fecha: Date;
+
+    if (this.Fecha2 !== null && !isNaN(new Date(this.Fecha2).getTime())) {
+        // Si hay una fecha válida seleccionada, la usamos
+        fecha = new Date(this.Fecha2);
+        this.hoy = this.Fecha2.toISOString().split("T")[0];; // Guardamos la fecha seleccionada
     } else {
-      // Si NO hay fecha seleccionada, usamos la fecha actual
-      const today = new Date();
-      startDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 0, 0, 0, 0)).toISOString();
-      endDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 23, 59, 59, 999)).toISOString();
+        // Si NO hay fecha seleccionada (null o inválida), usamos la fecha actual
+        fecha = new Date();
+        
     }
-  
-    console.log("Fecha inicio:", startDate);
-    console.log("Fecha fin:", endDate);
-  
+
+    // Establecer inicio del día (00:00:00.000)
+    const fechaInicio = new Date(fecha);
+    fechaInicio.setUTCHours(0, 0, 0, 0);
+    startDate = fechaInicio.toISOString();
+
+    // Establecer fin del día (23:59:59.999)
+    const fechaFin = new Date(fecha);
+    fechaFin.setUTCHours(23, 59, 59, 999);
+    endDate = fechaFin.toISOString();
+
     // Llamamos al servicio con las fechas correspondientes
-    this.servicio. getTotalPurchasesMes(startDate, endDate).subscribe((data: any) => {
-      console.log(data, "total compras");
-      this.TotalCompras = data;
-      
+    this.servicio.getTotalPurchasesMes(startDate, endDate).subscribe((data: any) => {
+        console.log(data, "total compras");
+        console.log(startDate, 'inicio del día');
+        console.log(endDate, 'fin del día');
+        console.log(this.hoy, 'valor de hoy');
+        this.TotalCompras = data;
     });
-  }
+}
+
 
   mostrafilter(){
     this.filter  = true

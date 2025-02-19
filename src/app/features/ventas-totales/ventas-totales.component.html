@@ -62,7 +62,7 @@
                                   <a>{{hoy}}</a>
                               </div>
                               <p-datepicker *ngIf="filtert" [(ngModel)]="Fecha2" size="small"  
-                                  (ngModelChange)="getcompras$(); filter = false" 
+                                  (ngModelChange)="getcompras$(); filtert = false" 
                                   placeholder="Fecha inicial" showIcon 
                                   iconDisplay="input" [appendTo]="'body'"> 
                               </p-datepicker>
