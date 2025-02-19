@@ -11,6 +11,7 @@ import { CapitalizePipe } from '../../../pipes/capitalize.pipe';
 import { PdfService } from '../../../services/pdf.service';
 import { Router } from '@angular/router';
 import { SelectModule } from 'primeng/select'
+import { LoadingService } from '../../../services/loading.service';
 
 
 
@@ -45,7 +46,7 @@ export class ComprasComponent implements OnInit {
   mostrarHistorial : boolean =  false
 
   constructor(private serviceproduct: PoductService, private serviceCompra: ProductoCompraService, private fb: 
-    FormBuilder,private router: Router, private pdf:PdfService) {
+    FormBuilder,private router: Router, private pdf:PdfService, private loading : LoadingService) {
 
     this.comprasForm = this.fb.group({
       codigo: '',
@@ -62,12 +63,14 @@ export class ComprasComponent implements OnInit {
 
   }
   ngOnInit(): void {
+    this.loading.init();
     this.producto()
     this.registrosCompras()
     this.cargarProductosSeleccionados()
   }
   // SESION : 1 OBTENER PRODUCTO, PARA LUEGO SELCCIONARLO Y GUARDARLO EN LOCAL STORAGE...
   producto() {
+    this.loading.show()
     this.serviceproduct.obtenerRegistros().subscribe({
       next: (response) => {
         this.productos = response.data; // Asegúrate de usar un punto y coma, no coma
@@ -76,6 +79,9 @@ export class ComprasComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error al obtener productos:', err);
+      }, complete: () => {
+        this.loading.hide()
+       
       }
     });
 

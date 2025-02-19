@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { IdPipe } from '../../pipes/id.pipe';
 import { CapitalizePipe } from "../../pipes/capitalize.pipe";
 import { PdfService } from '../../services/pdf.service';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-venta',
@@ -42,7 +43,7 @@ export class VentaComponent implements OnInit {
   totalItems: number = 0;  //
 
 
-  constructor(private fb: FormBuilder, private serviceproduct: PoductService, private pdf: PdfService) {
+  constructor(private fb: FormBuilder, private serviceproduct: PoductService, private pdf: PdfService, private loading : LoadingService) {
     this.saleForm = this.fb.group({
       codigo: '',
       articulo: ['', Validators.required],
@@ -61,6 +62,7 @@ export class VentaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading.init();
     this.producto();
     
     this.obtenerSalidas()
@@ -71,6 +73,7 @@ export class VentaComponent implements OnInit {
   }
 
   producto() {
+    this.loading.show()
     this.serviceproduct.obtenerRegistros().subscribe({
       next: (response) => {
         this.productos = response.data; // Asegúrate de usar un punto y coma, no coma
@@ -79,7 +82,8 @@ export class VentaComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error al obtener productos:', err);
-      }
+      }, complete: () => {
+        this.loading.hide()}
     });
 
     // Detectar cambios en el campo "codigo" para filtrar productos

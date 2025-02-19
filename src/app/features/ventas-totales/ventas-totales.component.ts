@@ -10,6 +10,7 @@ import { DatePicker } from 'primeng/datepicker';
 import { data } from 'jquery';
 import { CommonModule } from '@angular/common';
 import { forkJoin } from 'rxjs';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-ventas-totales',
@@ -91,13 +92,14 @@ export class VentasTotalesComponent implements OnInit {
 
   Dashboardprt: 'line' = 'line'
 
-  constructor(private servicio: DashboardService) { }
+  constructor(private servicio: DashboardService, private loading : LoadingService) { }
 
   ngOnInit(): void {
    
 
 
-  
+    this.loading.init();
+   
 
     this.getventasActuales();
     this.gettotalActual();
@@ -106,6 +108,7 @@ export class VentasTotalesComponent implements OnInit {
     this. getVentas$();
     this. getcompras$()
     this.getVentasPorMes()
+   
     
    
    
@@ -288,6 +291,8 @@ export class VentasTotalesComponent implements OnInit {
 }
 
   getVentasPorMes() {
+
+    this.loading.show()
     const hoy = new Date();
     const nombresMeses = [
       "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
@@ -328,7 +333,8 @@ export class VentasTotalesComponent implements OnInit {
 
       this.barChartLabels = this.ventasPorMes.map((item) => item.nombreMes);  // Asignar meses a las etiquetas
       this.barChartData.labels = this.barChartLabels;  // Asignar las etiquetas al gráfico
-      this.barChartData.datasets[0].data = this.ventasPorMes.map((item) => item.totalVentas);  // Asignar ventas a la data
+      this.barChartData.datasets[0].data = this.ventasPorMes.map((item) => item.totalVentas); 
+      this.loading.hide() // Asignar ventas a la data
     });
   }
 }

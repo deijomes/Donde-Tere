@@ -60,11 +60,11 @@ export class InventarioComponent implements OnInit {
 
   }
 
-  ngAfterViewInit() {
-    this.loading.init();
-  }
+
 
   ngOnInit(): void {
+
+    this.loading.init();
 
 
 
@@ -102,6 +102,7 @@ export class InventarioComponent implements OnInit {
   registros(): void {
     
   
+    this.loading.show()
     this.http.obtenerRegistros().subscribe({
       next: (response) => {
         this.productos = response.data;  
@@ -112,6 +113,7 @@ export class InventarioComponent implements OnInit {
         console.error('Error al obtener productos:', error);
       },
       complete: () => {
+        this.loading.hide()
        
       }
     });
