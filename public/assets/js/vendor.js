@@ -4167,7 +4167,7 @@
     // Private
     _disableOverFlow() {
       this._saveInitialAttribute(this._element, 'overflow');
-      this._element.style.overflow = 'hidden';
+      // this._element.style.overflow = 'hidden';
     }
     _setElementAttributes(selector, styleProperty, callback) {
       const scrollbarWidth = this.getWidth();

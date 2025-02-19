@@ -82,7 +82,7 @@ export class NavbarComponent implements OnInit {
     if (isMobile) {
       // Si es móvil, aplicamos las clases y estilos correspondientes
       htmlElement.classList.add('sidebar-enable');
-      bodyElement.style.overflow = 'hidden'; // Deshabilitamos el scroll del body
+      // bodyElement.style.overflow = 'hidden'; // Deshabilitamos el scroll del body
     } else {
       // Si no es móvil, eliminamos las clases y estilos
       htmlElement.classList.remove('sidebar-enable');
