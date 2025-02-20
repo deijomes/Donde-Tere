@@ -132,9 +132,11 @@ export class VentasTotalesComponent implements OnInit {
     const limit = 10;
 
     // Convertir fechaInicial a formato ISO (UTC)
-    const startDate = this.fechaInicial
-      ? new Date(this.fechaInicial).toISOString()
+    const startDat = this.fechaInicial
+      ? new Date(this.fechaInicial).setUTCHours(0, 0, 0, 0)
       : undefined;
+
+      const startDate = startDat ? new Date(startDat).toISOString() : undefined;
 
     // Convertir fechaFinal a formato ISO (UTC) con la hora máxima del día
     let endDate;
@@ -171,9 +173,11 @@ export class VentasTotalesComponent implements OnInit {
     const limit = 10;
 
     // Convertir fechaInicial a formato ISO (UTC)
-    const startDate = this.fechaInicialSold
-      ? new Date(this.fechaInicialSold).toISOString()
+    const startDat = this.fechaInicialSold
+      ? new Date(this.fechaInicialSold).setUTCHours(0, 0, 0, 0)
       : undefined;
+
+      const startDate = startDat ? new Date(startDat).toISOString() : undefined;
 
     // Convertir fechaFinal a formato ISO (UTC) con la hora máxima del día
     let endDate;

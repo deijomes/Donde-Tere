@@ -26,10 +26,10 @@ export class DashboardService {
       params = params.set('endDate', endDate); // Ya viene en formato correcto
     }
 
-    const fullUrl = `${this.Url}?${params.toString()}`;
-    console.log(" URL generada:", fullUrl);
+    const fullUrls = `${this.Url}?${params.toString()}`;
+    console.log(" URL generada:", fullUrls);
 
-    return this.http.get(this.Url, { params });
+    return this.http.get(fullUrls);
   }
 
   getProductsold(limit: number, startDate?: string, endDate?: string): Observable<any> {
@@ -46,7 +46,7 @@ export class DashboardService {
     const fullUrl = `${this.urlsold}?${params.toString()}`;
     console.log(" URL generada:", fullUrl);
 
-    return this.http.get(this.Url, { params });
+    return this.http.get(fullUrl);
 
   }
 
