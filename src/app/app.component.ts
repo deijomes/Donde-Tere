@@ -21,7 +21,7 @@ import { ComprasComponent } from './features/productos/compras/compras.component
   imports: [RouterOutlet, SidebarComponent, NavbarComponent, RegistrarComponent, InventarioComponent,
     VentaComponent, VentasTotalesComponent, InventarioGeneralComponent, MovimientosComponent,
     ActualizarComponent, LoginComponent, CommonModule,  MatInputModule, ComprasComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA], // Añade esta línea
+  schemas: [CUSTOM_ELEMENTS_SCHEMA], 
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

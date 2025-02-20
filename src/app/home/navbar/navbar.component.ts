@@ -100,14 +100,21 @@ export class NavbarComponent implements OnInit {
   }
 
   notificaciones() {
-    this.services.Notificaciones().subscribe({
-      next: (Response) => {
 
-        this.notificacion = Response.filter((noti:any) => noti.closed === false)
-        
+    const token = sessionStorage.getItem('token')
 
-      }
-    })
+    if(token){
+
+      this.services.Notificaciones().subscribe({
+        next: (Response) => {
+  
+          this.notificacion = Response.filter((noti:any) => noti.closed === false)
+          
+  
+        }
+      })
+    }
+  
   }
 
   get notificationCount(): number {
