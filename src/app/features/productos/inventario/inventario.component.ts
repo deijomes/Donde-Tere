@@ -242,33 +242,44 @@ export class InventarioComponent implements OnInit {
     this.searchTermSubscription = this.serviceproduct.terminosBusqueda$.pipe(
       // Filtra términos vacíos
       filter(terminos => (terminos['productos'] || '').trim() !== ''),
-
+  
       // Extrae solo el término de 'productos'
-      map(terminos => terminos['productos']),
-
+      map(terminos => terminos['productos'].trim()),
+  
       // Cancela la petición anterior si el término cambia
       switchMap(term => {
         console.log('Término de búsqueda recibido:', term);
-        this.searchTerm = term; // Asigna el término de búsqueda
-
-        this.isFiltered = !!this.searchTerm.trim();
-
+        this.searchTerm = term;
+        this.isFiltered = !!this.searchTerm;
+  
         if (!this.isFiltered) {
           this.products = [...this.productos];
           this.alertShown = true;
           return [];
         }
-
-        // Llama al servicio para obtener los productos
-        return this.http.getProducts(this.limit, this.offset, this.searchTerm);
+  
+        
+        let code = "";
+        let nombre = "";
+  
+        if (/^[A-Za-z0-9-]+$/.test(term) && /\d/.test(term) && /[A-Za-z]/.test(term) && /^\d+$/.test(term)) {
+          code = term;  
+        } else {
+          nombre = term; 
+        }
+  
+        console.log("Código detectado:", code);
+        console.log("Nombre detectado:", nombre);
+  
+        return this.http.getProducts(this.limit, this.offset, code, nombre);
       })
     ).subscribe(
       (response: any) => {
         this.alertShown = false;
-        this.products = response.data || []; // Asumiendo que la respuesta tiene una propiedad "data"
+        this.products = response.data || [];
         console.log('Productos recibidos:', this.products);
-
-        // Solo muestra la alerta si no hay productos
+  
+        // Muestra la alerta si no hay productos
         if (!this.products.length) {
           this.showAlert('No se encontraron resultados para los filtros aplicados.');
           this.alertShown = true;
@@ -279,6 +290,7 @@ export class InventarioComponent implements OnInit {
       }
     );
   }
+  
 
   showAlert(message: string) {
     this.alertMessage = message;

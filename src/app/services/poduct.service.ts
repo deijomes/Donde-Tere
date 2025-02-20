@@ -39,12 +39,13 @@ export class PoductService {
 
   }
 
-  getProducts(limit: number, offset: number, code: string): Observable<any> {
+  getProducts(limit: number, offset: number, code: string, name : string): Observable<any> {
     // Crear los parámetros de la consulta
     const params = new HttpParams()
       .set('limit', limit.toString())
       .set('offset', offset.toString())
-      .set('code', code);
+      .set('code', code)
+      .set('name', name);
 
     // Realizar la solicitud GET con los parámetros
     return this.http.get(this.url, { params });
