@@ -23,3 +23,8 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+body.modal-open {
+  padding-right: 0 !important;
+}
+
