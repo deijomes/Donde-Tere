@@ -20,7 +20,7 @@ export class DashboardService {
 
     // Agregar fechas solo si están definidas
     if (startDate) {
-      params = params.set('startdate', startDate); // Ya viene en formato correcto
+      params = params.set('startDate', startDate); // Ya viene en formato correcto
     }
     if (endDate) {
       params = params.set('endDate', endDate); // Ya viene en formato correcto
@@ -37,7 +37,7 @@ export class DashboardService {
 
     // Agregar fechas solo si están definidas
     if (startDate) {
-      params = params.set('startdate', startDate); // Ya viene en formato correcto
+      params = params.set('startDate', startDate); // Ya viene en formato correcto
     }
     if (endDate) {
       params = params.set('endDate', endDate); // Ya viene en formato correcto
