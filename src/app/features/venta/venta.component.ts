@@ -152,6 +152,14 @@ export class VentaComponent implements OnInit {
         };
 
         this.productosSeleccion.push(productoAAgregar);
+        setTimeout(() => {
+
+          const destino = document.getElementById('tablaDes');
+          if (destino) {
+    
+            destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 100);
       }
 
       // Guardar en localStorage
