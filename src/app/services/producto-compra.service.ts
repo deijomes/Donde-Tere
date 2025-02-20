@@ -1,14 +1,15 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
+import {environment} from '../../environments/environment'
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductoCompraService {
 
-  private baseUrl = 'http://localhost:3000/api/Purchase'
-  private url = 'http://localhost:3000/api/notifications'
+  private baseUrl = `${environment.API_URL}/api/Purchase`
+  private url = `${environment}/api/notifications`
 
   constructor(private http: HttpClient) { }
 

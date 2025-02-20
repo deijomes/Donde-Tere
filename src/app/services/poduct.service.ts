@@ -2,17 +2,17 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { registerModel } from '../models/registerModel';
 import { catchError, Observable } from 'rxjs';
-import { error } from 'jquery';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PoductService {
 
-  private url = 'http://localhost:3000/api/product';
-  private baseUrl = 'http://localhost:3000/api/sale'
-  private urlstock = 'http://localhost:3000/api/Product/add-stock/'
-  private urlmov = 'http://localhost:3000/api/movement'
+  private url = `${environment.API_URL}/api/product`;
+  private baseUrl = `${environment.API_URL}/api/sale`;
+  private urlstock = `${environment.API_URL}/api/Product/add-stock/`
+  private urlmov = `${environment.API_URL}/api/movement`
   constructor(private http: HttpClient) { }
 
   registroProducto(producto: registerModel): Observable<any> {

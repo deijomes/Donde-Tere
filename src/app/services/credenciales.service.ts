@@ -2,14 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UsuarioModel } from '../models/registerUsuario';
 import { catchError, map, Observable, throwError } from 'rxjs';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CredencialesService {
 
-  private url = 'http://localhost:3000/api/auth/register';
-  private urlLogin = 'http://localhost:3000/api/auth/login';
+  private url = `${environment.API_URL}/api/auth/register`;
+  private urlLogin = `${environment.API_URL}/api/auth/login`;
   private readonly tokenKey = 'token';
 
   constructor(private http: HttpClient) { }

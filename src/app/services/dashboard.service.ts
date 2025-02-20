@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import{environment} from '../../environments/environment'
 
 @Injectable({
   providedIn: 'root'
@@ -9,21 +10,21 @@ export class DashboardService {
 
   constructor(private http: HttpClient) { }
 
-  private Url = 'http://localhost:3000/api/dashboard/top-selling-products'
-  private urlsold = 'http://localhost:3000/api/dashboard/less-sold'
-  private Urltotal = 'http://localhost:3000/api/dashboard/total-sales'
-  private urlPurchases ='http://localhost:3000/api/dashboard/total-purchases'
+  private Url = `${environment.API_URL}/api/dashboard/top-selling-products`
+  private urlsold = `${environment.API_URL}/api/dashboard/less-sold`
+  private Urltotal = `${environment.API_URL}/api/dashboard/total-sales`
+  private urlPurchases =`${environment.API_URL}/api/dashboard/total-purchases`
 
 
   getProductSelling(limit: number, startDate?: string, endDate?: string): Observable<any> {
     let params = new HttpParams().set('limit', limit.toString());
 
-    // Agregar fechas solo si están definidas
+   
     if (startDate) {
-      params = params.set('startDate', startDate); // Ya viene en formato correcto
+      params = params.set('startDate', startDate); 
     }
     if (endDate) {
-      params = params.set('endDate', endDate); // Ya viene en formato correcto
+      params = params.set('endDate', endDate); 
     }
 
     const fullUrls = `${this.Url}?${params.toString()}`;
@@ -35,7 +36,6 @@ export class DashboardService {
   getProductsold(limit: number, startDate?: string, endDate?: string): Observable<any> {
     let params = new HttpParams().set('limit', limit.toString());
 
-    // Agregar fechas solo si están definidas
     if (startDate) {
       params = params.set('startDate', startDate); // Ya viene en formato correcto
     }
