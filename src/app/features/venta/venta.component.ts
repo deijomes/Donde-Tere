@@ -199,11 +199,13 @@ export class VentaComponent implements OnInit {
     console.log('Cliente:', cliente);
     console.log('identidicacion', identificacion)
 
+    this.loading.show();
+
     this.serviceproduct.enviarVenta(cliente, idenfic, saleItems).subscribe({
       next: (response) => {
         console.log('Venta enviada con éxito:', response);
         this.Idfactura = response.id
-        console.log('Idfactura', this.Idfactura)
+       this.loading.hide();
 
 
 

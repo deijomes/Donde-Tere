@@ -14,7 +14,7 @@
 
 <div class="card ">
 
-    <div  class="no-padding">
+    <div class="no-padding">
 
 
         <div class="p-3 mb-0 fondo">
@@ -153,85 +153,86 @@
     </div>
 
     <div id="tablaDes" *ngIf="tablaProducto">
-    <div class="table-responsive">
-        <table class="table align-middle mb-0 table-hover table-centered">
-            <thead class="bg-light-subtle">
-                <tr>
+        <div class="table-responsive">
+            <table class="table align-middle mb-0 table-hover table-centered">
+                <thead class="bg-light-subtle">
+                    <tr>
 
-                    <th class="text-center">Artículo</th>
+                        <th class="text-center">Artículo</th>
 
-                    <th class="text-center">Código</th>
+                        <th class="text-center">Código</th>
 
-                    <th class="text-center">Precio</th>
-                    <th class="text-center">Cantidad</th>
-                    <th class="text-center">Total</th>
-                    <th class=""><iconify-icon icon="solar:settings-bold-duotone"></iconify-icon>Opciones
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-
-
-                <tr *ngFor="let producto of productosSeleccionados, let i = index">
-                    <td class="text-center letra">{{ producto.name }}</td>
-
-                    <td class="text-center">{{ producto.code }}</td>
-
-                    <td class="text-center">{{ producto.price }}</td>
-                    <td class="text-center">{{ producto.quantity }}</td>
-                    <td class="text-center">{{ producto.price * producto.quantity }}</td>
-                    <td class="text-center">
-                        <div class="d-flex gap-2 ">
-
-                            <a (click)="modificarProducto(producto.id)" class="btn btn-soft-danger btn-sm custom-btn"
-                                data-bs-toggle="modal" data-bs-target="#staticBackdrop1"><iconify-icon
-                                    icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
-                            <a (click)="eliminarProducto(i)" class="btn btn-soft-danger btn-sm"><iconify-icon
-                                    icon="solar:trash-bin-minimalistic-2-broken"
-                                    class="align-middle fs-18"></iconify-icon></a>
-                        </div>
-                    </td>
+                        <th class="text-center">Precio</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-center">Total</th>
+                        <th class=""><iconify-icon icon="solar:settings-bold-duotone"></iconify-icon>Opciones
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
 
 
+                    <tr *ngFor="let producto of productosSeleccionados, let i = index">
+                        <td class="text-center letra">{{ producto.name }}</td>
 
-                </tr>
+                        <td class="text-center">{{ producto.code }}</td>
 
-                <tr *ngIf="productosSeleccionados.length > 0">
-                    <td colspan="4" class="text-end fw-bold">Total:</td>
-                    <td class="text-center fw-bold">{{ getTotal() }}</td>
-                    <td></td> <!-- Celda vacía para los botones -->
-                </tr>
+                        <td class="text-center">{{ producto.price }}</td>
+                        <td class="text-center">{{ producto.quantity }}</td>
+                        <td class="text-center">{{ producto.price * producto.quantity }}</td>
+                        <td class="text-center">
+                            <div class="d-flex gap-2 ">
+
+                                <a (click)="modificarProducto(producto.id)"
+                                    class="btn btn-soft-danger btn-sm custom-btn" data-bs-toggle="modal"
+                                    data-bs-target="#staticBackdrop1"><iconify-icon icon="solar:pen-2-broken"
+                                        class="align-middle fs-18"></iconify-icon></a>
+                                <a (click)="eliminarProducto(i)" class="btn btn-soft-danger btn-sm"><iconify-icon
+                                        icon="solar:trash-bin-minimalistic-2-broken"
+                                        class="align-middle fs-18"></iconify-icon></a>
+                            </div>
+                        </td>
 
 
 
-            </tbody>
-        </table>
+                    </tr>
+
+                    <tr *ngIf="productosSeleccionados.length > 0">
+                        <td colspan="4" class="text-end fw-bold">Total:</td>
+                        <td class="text-center fw-bold">{{ getTotal() }}</td>
+                        <td></td> <!-- Celda vacía para los botones -->
+                    </tr>
+
+
+
+                </tbody>
+            </table>
 
 
 
 
 
 
-    </div>
+        </div>
 
 
-    <div class="p-3 bg-light mb-3 rounded">
-        <div class="row justify-content-center justify-content-md-end g-2">
-            <div class="col-auto">
-                <button (click)="cancelarventa()" class="btn btn-outline-secondary w-auto" type="button">
-                    Cancelar
-                </button>
-            </div>
-            <div class="col-auto">
-                <button type="submit" class="btn btn-primary w-auto" [disabled]="proveedorForm.invalid">
-                    Registrar compra
-                </button>
+        <div class="p-3 bg-light mb-3 rounded">
+            <div class="row justify-content-center justify-content-md-end g-2">
+                <div class="col-auto">
+                    <button (click)="cancelarventa()" class="btn btn-outline-secondary w-auto" type="button">
+                        Cancelar
+                    </button>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary w-auto" [disabled]="proveedorForm.invalid">
+                        Registrar compra
+                    </button>
+                </div>
             </div>
         </div>
+
+
     </div>
-
-
-</div>
 
 </form>
 
@@ -255,7 +256,8 @@
             <span class="position-absolute start-0  top-0 border border-dashed h-100"></span>
 
 
-            <div *ngFor="let compra  of registroCompras" class="position-relative ps-4">
+            <div *ngFor="let compra  of registroCompras | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }"
+                class="position-relative ps-4">
                 <div class="mb-4">
                     <span
                         class="position-absolute start-0 avatar-sm translate-middle-x bg-light d-inline-flex align-items-center justify-content-center rounded-circle text-success fs-20">
@@ -278,6 +280,16 @@
 
                     </div>
                 </div>
+
+
+            </div>
+
+            <div class="card-footer border-top">
+                <nav aria-label="Page navigation">
+                    <pagination-controls class="pagination justify-content-end mb-0" (pageChange)="currentPage = $event"
+                        previousLabel="Anterior" nextLabel="Siguiente" [responsive]="true" [autoHide]="true">
+                    </pagination-controls>
+                </nav>
             </div>
 
 

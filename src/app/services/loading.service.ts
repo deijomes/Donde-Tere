@@ -22,14 +22,14 @@ export class LoadingService {
   }
 
   hide() {
-    console.log("Forzando ocultar modal...");
+    
   
     const modalElement = document.getElementById('loadingModal');
     if (modalElement) {
       const modalBootstrap = bootstrap.Modal.getInstance(modalElement);
       if (modalBootstrap) {
         modalBootstrap.hide();
-        console.log("Modal ocultado correctamente");
+        
       }
   
       // 🔹 Espera un poco y fuerza el ocultamiento manualmente
@@ -41,7 +41,7 @@ export class LoadingService {
         const backdrops = document.getElementsByClassName('modal-backdrop');
         if (backdrops.length > 0) {
           backdrops[0].remove();
-          console.log("Backdrop eliminado");
+         
         }
       }, 300);
     }

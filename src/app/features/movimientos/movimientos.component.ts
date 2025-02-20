@@ -40,7 +40,7 @@ export class MovimientosComponent implements OnInit {
 
   listMovimientos: any[] = []
   currentPage: number = 1;  // Página actual (comienza en 1)
-  itemsPerPage: number = 10;  // Elementos por página (puedes cambiar este valor)
+  itemsPerPage: number = 50;  // Elementos por página (puedes cambiar este valor)
   totalItems: number = 0;  // Total de productos que vamos a paginar
 
   filteredMovimientos: any[] = [];
@@ -53,7 +53,7 @@ export class MovimientosComponent implements OnInit {
 
 
   searchTerm: string = '';
-  limit = 60;
+  limit = 100;
   offset = 0;
   productName?: string;
   endDate?: string;

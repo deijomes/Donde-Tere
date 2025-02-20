@@ -65,14 +65,14 @@ export class RegistrarComponent implements OnInit {
     this.formEnviado = true;
   
     if (!this.registroForm.valid) {
-      console.log('Formulario inválido');
+      
       return; // Sale de la función si el formulario no es válido
     }
   
     const formData = this.registroForm.value;
     this.http.registroProducto(formData).subscribe({
       next: (response) => {
-        console.log('Producto registrado exitosamente:', response);
+        
   
         // Mostrar alerta y esperar a que el usuario la vea antes de redirigir
         Swal.fire({

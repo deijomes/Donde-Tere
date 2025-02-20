@@ -34,6 +34,8 @@ export class ProductoCompraService {
 
 
   registrosCompras(): Observable<any> {
+
+    
     return this.http.get(`${this.baseUrl}`)
 
   }

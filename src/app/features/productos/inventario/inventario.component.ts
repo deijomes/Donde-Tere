@@ -46,7 +46,7 @@ export class InventarioComponent implements OnInit {
 
 
   currentPage: number = 1;  // Página actual (comienza en 1)
-  itemsPerPage: number = 5;  // Elementos por página (puedes cambiar este valor)
+  itemsPerPage: number = 50;  // Elementos por página (puedes cambiar este valor)
   totalItems: number = 0;  // Total de productos que vamos a paginar
   modalInstance: any;
 

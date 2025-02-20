@@ -55,7 +55,7 @@ export class RegistroUsuarioComponent implements OnInit {
   guardar(): void {
     // Si el formulario es inválido, no sigue con el registro
     if (!this.registroForm.valid) {
-      console.log('Formulario inválido');
+      
       return; // Sale de la función si el formulario no es válido
     }
   
@@ -69,7 +69,7 @@ export class RegistroUsuarioComponent implements OnInit {
         // Verificamos si la respuesta contiene el email antes de guardarlo
         if (resp?.email) {
           localStorage.setItem('email', resp.email);
-          console.log('Email guardado en localStorage:', resp.email);
+        
         } else {
           console.warn('El backend no devolvió un email.');
         }
@@ -99,7 +99,7 @@ export class RegistroUsuarioComponent implements OnInit {
       }
     );
   
-    console.log('Datos del formulario:', this.registroForm.value); // Muestra los datos del formulario en consola
+    
   }
   
 

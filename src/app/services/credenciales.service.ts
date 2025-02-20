@@ -25,7 +25,7 @@ export class CredencialesService {
     return this.http.post(`${this.urlLogin}`, authdata)
       .pipe(
         map((response: any) => {
-          console.log('Login exitoso', response);
+         
           if (response?.token) {
             sessionStorage.setItem(this.tokenKey, response.token); // Guardar token en Session Storage
           }
@@ -43,7 +43,7 @@ export class CredencialesService {
     return this.http.post(`${this.url}`, usuario)
       .pipe(
         map((response: any) => {
-          console.log('Nuevo usuario registrado', response);
+          
           if (response?.token) {
             sessionStorage.setItem(this.tokenKey, response.token); // Guardar token al registrar usuario
           }

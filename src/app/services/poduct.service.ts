@@ -241,7 +241,7 @@ export class PoductService {
 
   }
 
-  obtenerSalidas(limit: number = 30, offset: number = 0): Observable<any> {
+  obtenerSalidas(limit: number = 50, offset: number = 0): Observable<any> {
     const params = new HttpParams()
       .set('limit', limit.toString())
       .set('offset', offset.toString());

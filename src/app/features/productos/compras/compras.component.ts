@@ -12,6 +12,7 @@ import { PdfService } from '../../../services/pdf.service';
 import { Router } from '@angular/router';
 import { SelectModule } from 'primeng/select'
 import { LoadingService } from '../../../services/loading.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -20,7 +21,7 @@ import { LoadingService } from '../../../services/loading.service';
 @Component({
   selector: 'app-compras',
   standalone: true,
-  imports: [NgSelectModule, ReactiveFormsModule, CommonModule, IdPipe, CapitalizePipe, FormsModule, SelectModule],
+  imports: [NgSelectModule, ReactiveFormsModule, CommonModule, IdPipe, CapitalizePipe, FormsModule, SelectModule,  NgxPaginationModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './compras.component.html',
   styleUrl: './compras.component.css',
@@ -44,6 +45,10 @@ export class ComprasComponent implements OnInit {
   Idfactura: string = '';
   tablaProducto: boolean = false
   mostrarHistorial : boolean =  false
+
+  currentPage: number = 1;  // Página actual (comienza en 1)
+  itemsPerPage: number = 10;  // Elementos por página (puedes cambiar este valor)
+  totalItems: number = 0;  //
 
   constructor(private serviceproduct: PoductService, private serviceCompra: ProductoCompraService, private fb: 
     FormBuilder,private router: Router, private pdf:PdfService, private loading : LoadingService) {
@@ -330,24 +335,23 @@ export class ComprasComponent implements OnInit {
 
 
 
-
-    console.log('compras Items:', purchaseItems);
-    console.log('proveedor:', proveedor);
-    console.log('identidicacion', identificacion)
+    this.loading.show()
 
     this.serviceCompra.enviarCompra(proveedor, idenfic, purchaseItems).subscribe({
       next: (response) => {
         console.log('compra enviada con éxito:', response);
 
         this.Idfactura = response.id
-        console.log('Idfactura', this.Idfactura)
+
+        this.loading.hide();
+        
 
 
 
         this.serviceCompra.facturaCompra(this.Idfactura).subscribe({
           next: (facturaResponse) => {
             this.facturaCompra = facturaResponse;
-            console.log('Factura compra obtenida:', this.facturaCompra);
+           
 
 
 

@@ -52,13 +52,12 @@ export class LoginComponent implements OnInit {
   loguearse(): void {
     // Si el formulario es inválido, no sigue con el registro
     if (!this.loguinForm.valid) {
-      console.log('Formulario inválido');
+     
       return; // Sale de la función si el formulario no es válido
     }
 
     const usuario = this.loguinForm.value;
-    console.log(usuario);
-
+   
     if (usuario.rememberMe) {
       localStorage.setItem('email', usuario.email);
      
@@ -76,21 +75,21 @@ export class LoginComponent implements OnInit {
 
         if (resp?.email) {
           localStorage.setItem('email', resp.email);
-          console.log('Email guardado en localStorage:', resp.email);
+          
         } else {
-          console.warn('El backend no devolvió un email.');
+          
         }
     
        
         if (resp && resp.token) {
-          console.log('Token recibido:', resp.token); 
+          
     
           this.loadingService.hide(); 
     
           
           this.router.navigateByUrl('/home');
         } else {
-          console.error('No se recibió el token en la respuesta');
+         
           this.loadingService.hide(); 
         }
       },
