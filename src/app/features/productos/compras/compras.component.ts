@@ -347,6 +347,7 @@ export class ComprasComponent implements OnInit {
 
   enviarCompra() {
     const purchaseItems = this.prepararDatosParaAPI();
+    console.log(purchaseItems,'datos mandados')
     const proveedor = this.proveedorForm.value.proveedor;
     const identificacion = this.proveedorForm.value.identificacion;
 
@@ -568,7 +569,7 @@ export class ComprasComponent implements OnInit {
 
     localStorage.setItem('productoNoInventario', JSON.stringify(this.proSeleccion));
 
-    console.log('✅ Producto agregado:', this.proSeleccion);
+    
     this.tablaProNoInventariado = true;
 
     // Desplazar a la tabla
@@ -738,6 +739,106 @@ export class ComprasComponent implements OnInit {
     this.tablaProNoInventariado = false
 
 
+  }
+
+  enviarCompraProNoInv() {
+    const supplyItems = this.prepararDatos();
+    console.log(supplyItems,'datos amndos2')
+    
+    const proveedor = this.proveedorForm.value.proveedor;
+    const identificacion = this.proveedorForm.value.identificacion;
+
+    const idenfic = identificacion.toString();
+
+
+
+    this.loading.show()
+    const purchaseItems: any[] = []
+
+    this.serviceCompra.enviarCompraProNoInv(proveedor, idenfic, purchaseItems, supplyItems).subscribe({
+      next: (response) => {
+
+        this.Idfactura = response.id
+
+        this.loading.hide();
+
+        this.serviceCompra.facturaCompra(this.Idfactura).subscribe({
+          next: (facturaResponse) => {
+            this.facturaCompra = facturaResponse;
+          }
+        })
+        Swal.fire({
+          title: 'Compra Registrada',
+          text: 'La compra se ha registrado con éxito.',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            confirmButton: 'swal-success-btn'
+          }
+        }).then(() => {
+
+          setTimeout(() => {
+            this.generatePDFF();
+          }, 1000);
+        });
+
+
+
+        this.eliminarProNoInv();
+        this.proSeleccion = [];
+      
+
+
+        this.tablaProNoInventariado = false
+        this.proveedorForm.reset()
+
+
+
+
+      },
+      error: (err) => {
+        console.error('Error al enviar la venta:', err);
+        const mensajeError = err.error?.message || 'Hubo un problema al registrar la venta.';
+
+
+        Swal.fire({
+
+          text: mensajeError,
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            confirmButton: 'swal-success-btn'
+          }
+        });
+
+      }
+    });
+
+
+
+
+
+
+
+  }
+
+  prepararDatos(): any[] {
+    return this.proSeleccion.map((producto: any) => {
+      
+      return {
+        description: producto.name,
+        quantity: producto.quantity,
+        price: producto.price
+      };
+
+    });
+
+  }
+
+  
+  eliminarProNoInv() {
+    localStorage.removeItem('productoNoInventario');
+   
   }
 
 
