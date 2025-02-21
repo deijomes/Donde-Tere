@@ -12,7 +12,7 @@ export class PoductService {
   private url = `${environment.API_URL}/api/product`;
   private baseUrl = `${environment.API_URL}/api/sale`;
   private urlstock = `${environment.API_URL}/api/Product/add-stock/`
-  private urlmov = `${environment.API_URL}/api/movement`
+  private urlmov = `${environment.API_URL}/api/movement/summary`
   constructor(private http: HttpClient) { }
 
   registroProducto(producto: registerModel): Observable<any> {

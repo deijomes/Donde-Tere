@@ -38,6 +38,8 @@ export class ComprasComponent implements OnInit {
   registroCompras: any = []
   selctCompra: any=[]
   selectedCountry: string | undefined;
+  inventariados = true;
+  noInventariados = false
 
   comprasForm: FormGroup;
   proveedorForm: FormGroup;
@@ -58,7 +60,10 @@ export class ComprasComponent implements OnInit {
       articulo: ['', Validators.required],
       cantidad: ['', Validators.required],
       precio: ['', Validators.required]
+      
     });
+
+    
 
     this.proveedorForm = this.fb.group({
 
@@ -71,6 +76,7 @@ export class ComprasComponent implements OnInit {
     this.loading.init();
     this.producto()
     this.registrosCompras()
+    this.inventariado(); 
     this.cargarProductosSeleccionados()
   }
   // SESION : 1 OBTENER PRODUCTO, PARA LUEGO SELCCIONARLO Y GUARDARLO EN LOCAL STORAGE...
@@ -336,8 +342,9 @@ export class ComprasComponent implements OnInit {
 
 
     this.loading.show()
+    const  supplyItems  : any [] = []
 
-    this.serviceCompra.enviarCompra(proveedor, idenfic, purchaseItems).subscribe({
+    this.serviceCompra.enviarCompra(proveedor, idenfic, purchaseItems, supplyItems).subscribe({
       next: (response) => {
         console.log('compra enviada con éxito:', response);
 
@@ -495,6 +502,19 @@ export class ComprasComponent implements OnInit {
 
   }
 
+  inventariado(){
+    this.inventariados = true
+    this.noInventariados = false
+    
+  }
+  noInventariado(){
+    this.inventariados = false
+    this.noInventariados = true
+   
+  }
+
+
+  
 
 
 

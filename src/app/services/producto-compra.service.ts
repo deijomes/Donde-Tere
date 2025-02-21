@@ -13,8 +13,8 @@ export class ProductoCompraService {
 
   constructor(private http: HttpClient) { }
 
-  enviarCompra(cliente: string, identificacion: string, purchaseItems: any[]): Observable<any> {
-    const body = { supplier: cliente, identification: identificacion, purchaseItems };
+  enviarCompra(cliente: string, identificacion: string, purchaseItems: any[],  supplyItems: any[]): Observable<any> {
+    const body = { supplier: cliente, identification: identificacion, purchaseItems, supplyItems };
     console.log('Datos a enviar:', body);
 
     return this.http.post(`${this.baseUrl}`, body).pipe(
