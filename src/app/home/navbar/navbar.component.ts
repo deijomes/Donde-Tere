@@ -4,7 +4,7 @@ import { ProductoCompraService } from '../../services/producto-compra.service';
 import { CommonModule } from '@angular/common';
 import { TextoSpañolPipe } from '../../pipes/texto-spañol.pipe';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLinkActive } from '@angular/router';
 import { EmailsplitPipe } from '../../pipes/emailsplit.pipe';
 import Swal from 'sweetalert2';
 import { CredencialesService } from '../../services/credenciales.service';
@@ -33,11 +33,13 @@ export class NavbarComponent implements OnInit {
   fechaFinal: Date | null = null
   archivoBlob: Blob | null = null; 
   nombreArchivo: string = ''; 
-  tablaReporte = false
+  tablaReporte = false;
+  mostrarBoton = false
 
 
   constructor(private buscadorService: BuscadorService, private services: ProductoCompraService,
-    private router: Router, private credenciales: CredencialesService, private servicio: DashboardService) {
+    private router: Router, private credenciales: CredencialesService, private servicio: DashboardService, 
+    private route:ActivatedRoute) {
 
 
   }
@@ -48,9 +50,15 @@ export class NavbarComponent implements OnInit {
       this.notificaciones();
     });
     this.obtenerUsuario()
+
+    this.router.events.subscribe(() => {
+      this.mostrarBoton = this.router.url.includes('/ventastotales');
+    });
+
   }
 
-
+ 
+   
 
   onSearch(): void {
 
