@@ -1,62 +1,38 @@
-name: Generate a build and push to another branch
+name: Deploy to Hostinger
 
 on:
   push:
     branches:
-      - Desarrollo  # Cambia esto por la rama que deseas usar
+      - testing  # o la rama que uses para producción
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    name: Build and Push
-    permissions:
-      contents: write  # Otorga permisos de escritura al GITHUB_TOKEN
+    
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Git identity
-        run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'  # o la versión que uses
 
-      - name: Install all dependencies
+      - name: Install dependencies
         run: npm install
 
-      - name: Build
-        run: npm run build  # Genera los archivos en dist/inventario
+      - name: Build Angular app
+        run: npm run build --configuration=production
+        
+      - name: List output files
+        run: ls -la dist/
 
-      - name: Create or reset build branch
-        run: |
-          if git ls-remote --exit-code --heads origin build; then
-            echo "La rama build existe. Reseteando..."
-            git fetch origin build
-            git checkout build
-            
-            if [ -n "$(git ls-files)" ]; then
-              git rm -rf .
-              git commit --allow-empty -m "Reset branch"
-            else
-              echo "La rama build ya está vacía."
-            fi
-          else
-            echo "La rama build no existe. Creándola..."
-            git checkout --orphan build
-            git commit --allow-empty -m "Initial commit"
-            git push origin build
-          fi
-
-      - name: Move files to root
-        run: |
-          mv dist/inventario/* .  # Mueve los archivos generados a la raíz
-          rm -rf dist  # Elimina la carpeta dist
-
-      - name: Push build to branch
-        uses: s0/git-publish-subdir-action@develop
-        env:
-          REPO: self
-          BRANCH: build
-          FOLDER: .
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MESSAGE: "Build generado el {date} desde {sha}"
-          FORCE_PUSH: true  # Forzar el push
+      - name: 📂 Deploy to Hostinger
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: dist/inventario/  # Reemplaza con el nombre de tu app
+          server-dir: /public_html/     # o la ruta donde quieres desplegar
+          dangerous-clean-slate: true   # Elimina archivos antiguos del servidor
