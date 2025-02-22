@@ -9,11 +9,15 @@ import { EmailsplitPipe } from '../../pipes/emailsplit.pipe';
 import Swal from 'sweetalert2';
 import { CredencialesService } from '../../services/credenciales.service';
 import { interval } from 'rxjs';
+import { DatePickerModule } from 'primeng/datepicker';
+
+import { FluidModule } from 'primeng/fluid';
+import { DashboardService } from '../../services/dashboard.service';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, TextoSpañolPipe, FormsModule, EmailsplitPipe],
+  imports: [CommonModule, TextoSpañolPipe, FormsModule, EmailsplitPipe, DatePickerModule, FluidModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
@@ -23,11 +27,14 @@ export class NavbarComponent implements OnInit {
   notificacion: any[] = []
   searchTerm: string = '';
   searchTermProductos: string = '';
-  usuariObtenido: string = ''
+  usuariObtenido: string = '';
+
+  fechaInicio:  Date |null = null
+  fechaFinal : Date |null = null
 
 
   constructor(private buscadorService: BuscadorService, private services: ProductoCompraService,
-    private router: Router, private credenciales: CredencialesService) {
+    private router: Router, private credenciales: CredencialesService, private servicio : DashboardService) {
 
 
   }
@@ -152,4 +159,45 @@ export class NavbarComponent implements OnInit {
         this.router.navigateByUrl('login');
       }
     });}
+
+
+    generarReporte() {
+      
+  
+      // Convertir fechaInicial a formato ISO (UTC)
+      let startDate;
+      if (this.fechaFinal) {
+        const fechaFin = new Date(this.fechaFinal);
+        fechaFin.setUTCHours(0, 0, 0, 0); // Establece la hora en UTC
+        startDate = fechaFin.toISOString();
+      }
+       
+  
+        
+  
+      // Convertir fechaFinal a formato ISO (UTC) con la hora máxima del día
+      let endDate;
+      if (this.fechaFinal) {
+        const fechaFin = new Date(this.fechaFinal);
+        fechaFin.setUTCHours(23, 59, 59, 999); // Establece la hora en UTC
+        endDate = fechaFin.toISOString();
+      }
+  
+      console.log("Fecha inicial en formato ISO:", startDate);
+      console.log("Fecha final en formato ISO:", endDate);
+  
+      this.servicio.getReporte(startDate, endDate).subscribe((blob: Blob) => {
+        console.log(blob, " reporte");
+    
+        // Crear un enlace para descargar el archivo
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'reporte.xlsx'; // ✅ Nombre del archivo
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      });
+    }
 }

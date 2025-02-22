@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import{environment} from '../../environments/environment'
+import { environment } from '../../environments/environment'
 
 @Injectable({
   providedIn: 'root'
@@ -13,18 +13,19 @@ export class DashboardService {
   private Url = `${environment.API_URL}/api/dashboard/top-selling-products`
   private urlsold = `${environment.API_URL}/api/dashboard/less-sold`
   private Urltotal = `${environment.API_URL}/api/dashboard/total-sales`
-  private urlPurchases =`${environment.API_URL}/api/dashboard/total-purchases`
+  private urlPurchases = `${environment.API_URL}/api/dashboard/total-purchases`
+  private urlreporte = `${environment.API_URL}/api/reports/excel`
 
 
   getProductSelling(limit: number, startDate?: string, endDate?: string): Observable<any> {
     let params = new HttpParams().set('limit', limit.toString());
 
-   
+
     if (startDate) {
-      params = params.set('startDate', startDate); 
+      params = params.set('startDate', startDate);
     }
     if (endDate) {
-      params = params.set('endDate', endDate); 
+      params = params.set('endDate', endDate);
     }
 
     const fullUrls = `${this.Url}?${params.toString()}`;
@@ -53,47 +54,64 @@ export class DashboardService {
 
   getTotalSales(startDate?: string, endDate?: string): Observable<any> {
     const today = new Date();
-    
+
     // Definir fecha de inicio y fin del día en UTC
     const startOfDay = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 0, 0, 0, 0)).toISOString();
     const endOfDay = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 23, 59, 59, 999)).toISOString();
-  
+
     let params = new HttpParams()
       .set('startDate', startDate || startOfDay) // Si no hay fecha, usa la de hoy
       .set('endDate', endDate || endOfDay); // Si no hay fecha, usa la de hoy
-  
+
     console.log("URL generada:", `${this.Url}?${params.toString()}`);
-  
+
     return this.http.get(this.Urltotal, { params });
   }
-  
 
-  
-  
+
+
+
   getTotalSalesMes(startDate: string, endDate: string): Observable<any> {
     const params = new HttpParams()
-      .set('startDate', startDate)  
+      .set('startDate', startDate)
       .set('endDate', endDate);
-  
+
     const url = `${this.Urltotal}?${params.toString()}`;
-     
-  
+
+
     return this.http.get(url);
   }
 
   getTotalPurchasesMes(startDate: string, endDate: string): Observable<any> {
     const params = new HttpParams()
-      .set('startDate', startDate)  
+      .set('startDate', startDate)
       .set('endDate', endDate);
-  
+
     const url = `${this.urlPurchases}?${params.toString()}`;
-     
-  
+
+
     return this.http.get(url);
+  }
+  getReporte(startDate?: string, endDate?: string): Observable<Blob> {
+    let params = new HttpParams();
+  
+    if (startDate) {
+      params = params.set('startDate', startDate);
+    }
+    
+    if (endDate) {
+      params = params.set('endDate', endDate);
+    }
+  
+    const fullUrls = `${this.urlreporte}?${params.toString()}`;
+    console.log("URL generada:", fullUrls);
+  
+    return this.http.get(fullUrls, { responseType: 'blob' }); 
   }
   
   
-  
+
+
 
 
 

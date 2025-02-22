@@ -9,12 +9,19 @@
 
           <!-- Menu Toggle Button -->
           <div class="topbar-item">
-               <h4 class="fw-bold topbar-button pe-none  mb-0"><i class="bx bx-user-circle text-muted fs-18 align-middle me-1"></i><span
-                    class="align-middle">{{usuariObtenido|emailsplit}}</span></h4>
+               <h4 class="fw-bold topbar-button pe-none  mb-0"><i
+                         class="bx bx-user-circle text-muted fs-18 align-middle me-1"></i><span
+                         class="align-middle">{{usuariObtenido|emailsplit}}</span></h4>
           </div>
      </div>
 
      <div class="d-flex align-items-center gap-1">
+          <div class="topbar-item d-none d-md-flex">
+               <button type="button" class="topbar-button" id="theme-settings-btn" data-bs-toggle="offcanvas"
+                    data-bs-target="#theme-activity-offcanvas" aria-controls="theme-settings-offcanvas">
+                    <iconify-icon icon="solar:clock-circle-bold-duotone" class="fs-24 align-middle"></iconify-icon>
+               </button>
+          </div>
 
 
 
@@ -22,10 +29,15 @@
 
           <!-- Notification -->
           <div class="dropdown topbar-item">
+
+
+
+
                <button type="button" class="topbar-button position-relative" id="page-header-notifications-dropdown"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <iconify-icon icon="solar:bell-bing-bold-duotone" class="fs-24 align-middle"></iconify-icon>
-                    <span *ngIf="notificationCount > 0 " class="position-absolute topbar-badge fs-10 translate-middle badge bg-danger rounded-pill">{{notificationCount}}<span
+                    <span *ngIf="notificationCount > 0 "
+                         class="position-absolute topbar-badge fs-10 translate-middle badge bg-danger rounded-pill">{{notificationCount}}<span
                               class="visually-hidden">unread messages</span></span>
                </button>
                <div class="dropdown-menu py-0 dropdown-lg dropdown-menu-end"
@@ -42,36 +54,40 @@
                               </div>
                          </div>
                     </div>
-                    <div  data-simplebar style="max-height: 280px;">
+                    <div data-simplebar style="max-height: 280px;">
                          <!-- Item -->
-                         <a  *ngFor="let Notifi of notificacion" href="javascript:void(0);" class="dropdown-item py-3 border-bottom text-wrap">
+                         <a *ngFor="let Notifi of notificacion" href="javascript:void(0);"
+                              class="dropdown-item py-3 border-bottom text-wrap">
                               <div class="d-flex">
-                              
+
                                    <div class="flex-grow-1">
                                         <p class="mb-0"><span class="fw-medium">{{ Notifi.message|texto}} </span></p>
                                    </div>
                               </div>
                          </a>
- 
+
+                    </div>
                </div>
-          </div>
 
 
 
 
 
-          <!-- User -->
-          <div class="dropdown topbar-item">
-               <a type="button" class="topbar-button" id="page-header-user-dropdown" data-bs-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <span class="d-flex align-items-center">
-                         <img class="rounded-circle" width="32" src="assets/images/users/usuario.png" alt="avatar-3">
-                    </span>
-               </a>
-               <div class="dropdown-menu dropdown-menu-end">
-                    <!-- item-->
-             
-                    <!-- <a class="dropdown-item" >
+
+
+               <!-- User -->
+               <div class="dropdown topbar-item">
+                    <a type="button" class="topbar-button" id="page-header-user-dropdown" data-bs-toggle="dropdown"
+                         aria-haspopup="true" aria-expanded="false">
+                         <span class="d-flex align-items-center">
+                              <img class="rounded-circle" width="32" src="assets/images/users/usuario.png"
+                                   alt="avatar-3">
+                         </span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end">
+                         <!-- item-->
+
+                         <!-- <a class="dropdown-item" >
                          <i class="bx bx-user-circle text-muted fs-18 align-middle me-1"></i><span
                               class="align-middle">{{usuariObtenido|emailsplit}}</span>
                     </a>
@@ -81,32 +97,111 @@
                               class="align-middle">Help</span>
                     </a> -->
 
-                    <a class="dropdown-item" >
-                         <i class="bx bx-user-circle text-muted fs-18 align-middle me-1"></i><span
-                              class="align-middle">{{usuariObtenido|emailsplit}}</span>
-                    </a>
+                         <a class="dropdown-item">
+                              <i class="bx bx-user-circle text-muted fs-18 align-middle me-1"></i><span
+                                   class="align-middle">{{usuariObtenido|emailsplit}}</span>
+                         </a>
 
 
-                    <div class="dropdown-divider my-1"></div>
+                         <div class="dropdown-divider my-1"></div>
 
-                    <a class="dropdown-item text-danger"  (click)="cerrarSesion()" style="cursor: pointer;" >
-                         <i class="bx bx-log-out fs-18 align-middle me-1"></i><span class="align-middle">Logout</span>
-                    </a>
+                         <a class="dropdown-item text-danger" (click)="cerrarSesion()" style="cursor: pointer;">
+                              <i class="bx bx-log-out fs-18 align-middle me-1"></i><span
+                                   class="align-middle">Logout</span>
+                         </a>
+                    </div>
                </div>
+               <form class="app-search d-none d-md-block ms-2" (ngSubmit)="onSearch()">
+                    <div class="position-relative">
+                         <input type="search" class="form-control" placeholder="Search..." autocomplete="off"
+                              [(ngModel)]="searchTerm" name="search" (keydown.enter)="onSearch()" />
+                         <iconify-icon icon="solar:magnifer-linear" class="search-widget-icon"
+                              (click)="onClickSearch()"></iconify-icon>
+                    </div>
+               </form>
+
+
+
+
+
           </div>
-          <form class="app-search d-none d-md-block ms-2" (ngSubmit)="onSearch()">
-               <div class="position-relative">
-                   <input type="search" class="form-control" placeholder="Search..." autocomplete="off"
-                          [(ngModel)]="searchTerm" name="search"
-                          (keydown.enter)="onSearch()" />
-                   <iconify-icon icon="solar:magnifer-linear" class="search-widget-icon"
-                                 (click)="onClickSearch()"></iconify-icon>
-               </div>
-           </form>
-           
-           
-
-
-
      </div>
-</div>
+
+     <div class="offcanvas offcanvas-end border-0" tabindex="-1" id="theme-activity-offcanvas"
+          style="max-width: 450px; width: 100%;" aria-modal="true" role="dialog">
+          <div class="d-flex align-items-center bg-primary p-3 offcanvas-header">
+               <h5 class="text-white m-0 fw-semibold">Generar reporte</h5>
+               <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+          </div>
+
+          <div class="offcanvas-body p-0">
+               <div data-simplebar="init" class="h-100 p-4"><div class="simplebar-wrapper" style="margin: -36px;"><div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask"><div class="simplebar-offset" style="right: 0px; bottom: 0px;"><div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: 100%; overflow: hidden scroll;"><div class="simplebar-content" style="padding: 36px;">
+                    <div class="position-relative ms-2">
+                         <span class="position-absolute start-0  top-0 border border-dashed h-100"></span>
+                         <div class="position-relative ps-4">
+                              <div class="mb-4">
+                                   <span class="position-absolute start-0 avatar-sm translate-middle-x bg-danger d-inline-flex align-items-center justify-content-center rounded-circle text-light fs-20"><iconify-icon icon="iconamoon:folder-check-duotone"></iconify-icon></span>
+                                   <div class="ms-2">
+                                        <h5 class="mb-1 text-dark fw-semibold fs-15 lh-base">Reporte</h5>
+                                        <p class="d-flex align-items-center">Fecha inicio <span class=" d-flex align-items-center text-primary ms-1"><iconify-icon icon="iconamoon:file-light"></iconify-icon> </span></p>
+                                        
+                                        <div class="bg-light bg-opacity-50 rounded-2 p-2">
+                                             <div class="row">
+                                                  <div class="col-lg-12 border-end border-light">
+                                                       <div class="d-flex align-items-center gap-2">
+                                                            <div class="flex-auto">
+                                                                 
+                                                                 <p-datepicker [(ngModel)]="fechaInicio" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" />
+                                                             </div>
+                                                       </div>
+                                                  </div>
+                                               
+                                             </div>
+                                        </div>
+                                        <h6 class="mt-2 text-muted">Monday , 4:24 PM</h6>
+
+                                        <p class="d-flex align-items-center">Fecha final <span class=" d-flex align-items-center text-primary ms-1"><iconify-icon icon="iconamoon:file-light"></iconify-icon></span></p>
+                                        
+                                        <div class="bg-light bg-opacity-50 rounded-2 p-2">
+                                             <div class="row">
+                                                  <div class="col-lg-12 border-end border-light">
+                                                       <div class="d-flex align-items-center gap-2">
+                                                            <div class="flex-auto">
+                                                                 
+                                                                 <p-datepicker [(ngModel)]="fechaFinal" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" />
+                                                             </div>
+                                                       </div>
+                                                  </div>
+                                               
+                                             </div>
+                                        </div>
+                                        <h6 class="mt-2 text-muted">Monday , 4:24 PM</h6>
+
+
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="position-relative ps-4">
+                              <div class="mb-4">
+                                   <span class="position-absolute start-0 avatar-sm translate-middle-x bg-success d-inline-flex align-items-center justify-content-center rounded-circle text-light fs-20"><iconify-icon icon="iconamoon:check-circle-1-duotone"></iconify-icon></span>
+                                   <div class="ms-2">
+                                        <h5 class="mb-1 text-dark fw-semibold fs-15 lh-base">Reporte generado
+                                        </h5>
+                                        <p class="d-flex align-items-center mb-0">Marked<span class=" d-flex align-items-center text-primary mx-1"><iconify-icon icon="iconamoon:file-light"></iconify-icon> Design </span> as <span class="badge bg-success-subtle text-success px-2 py-1 ms-1"> Completed</span></p>
+                                        <div class="d-flex align-items-center gap-3 mt-1 bg-light bg-opacity-50 p-2 rounded-2">
+                                             <a href="#!" class="fw-medium text-dark">UI/UX Figma Design</a>
+                                             <div class="ms-auto">
+                                                  <a (click)="generarReporte()" class="fw-medium text-primary fs-18" data-bs-toggle="tooltip" data-bs-title="Download" data-bs-placement="bottom" style="cursor:pointer;"><iconify-icon icon="iconamoon:cloud-download-duotone"></iconify-icon></a>
+                                             </div>
+                                        </div>
+                                        <h6 class="mt-3 text-muted">Monday , 3:00 PM</h6>
+                                   </div>
+                              </div>
+                         </div>
+                        
+                    </div>
+                   
+               </div></div></div></div><div class="simplebar-placeholder" style="width: auto; height: 1101px;"></div></div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="width: 0px; display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: visible;"><div class="simplebar-scrollbar" style="height: 25px; transform: translate3d(0px, 0px, 0px); display: block;"></div></div></div>
+          </div>
+     </div>
