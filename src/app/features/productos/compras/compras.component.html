@@ -13,209 +13,236 @@
 </div>
 
 <div class="card ">
-    <div class="p-3 mb-0 fondo">
-        <div class="d-flex align-items-center justify-content-between">
-            <h4 class="card-title mi-color-letra">Registro de compras</h4>
-            <a (click)="registro()" class="btn btn-sm  btn-success me-1"><i class="bx bx-plus"></i> Nuevo
-                Producto</a>
+
+    <div class="no-padding">
+
+
+        <div class="p-3 mb-0 fondo">
+            <div class="d-flex align-items-center justify-content-between">
+                <h4 class="card-title mi-color-letra">Registro de compras</h4>
+                <a (click)="registro()" class="btn btn-sm  btn-success me-1"><i class="bx bx-plus"></i> Nuevo
+                    Producto</a>
+
+
+            </div>
+
 
 
         </div>
 
-      
 
     </div>
-
-
-
-
-
-
-    <div class="mt-2">
-
-        <form [formGroup]="comprasForm" (ngSubmit)="agregarcantidad()">
-            <div class="container padding-lados">
-                <div class="row mt-3">
-
-
-                    <div class="col-lg-4">
-                        <div class="mb-3">
-                            <label for="product-code" class="form-label">Producto</label>
-
-                            <ng-select [items]="filteredProductos" bindLabel="name" bindValue="code"
-                                placeholder="Seleccionar producto" [searchable]="true" [clearable]="true"
-                                [virtualScroll]="true" formControlName="codigo" class="custom-ng-select"
-                                (change)="productoSeleccionado($event)">
-
-
-                                <ng-template ng-header-tmp>
-                                    <table class="table table-sm mb-0 text-center"
-                                        style="table-layout: fixed; width: 100%;">
-                                        <thead>
-                                            <tr class="color">
-                                                <th class="text-start" style="width: 60%;">Artículo</th>
-                                                <th class="text-start" style="width: 40%;">Código</th>
-                                                <!-- Alineado a la izquierda -->
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </ng-template>
-
-                                <ng-template ng-option-tmp let-item="item">
-                                    <table class="table table-sm mb-0 text-center"
-                                        style="table-layout: fixed; width: 100%;">
-                                        <tbody>
-                                            <tr>
-                                                <td class="text-start" style="width: 60%;">{{ item.name }}</td>
-                                                <td class="text-start" style="width: 40%;">{{ item.code }}</td>
-                                                <!-- Alineado a la izquierda -->
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </ng-template>
-
-
-
-                            </ng-select>
-                        </div>
-                    </div>
-
-
-                    <div class="col-lg-4">
-                        <div class="mb-3">
-                            <label for="cantidad-minima" class="form-label">Cantidad</label>
-                            <input type="number" id="cantidad-minima" class="form-control no-bg" placeholder=""
-                                formControlName="cantidad" />
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4">
-                        <div class="mb-3">
-                            <label for="cantidad-minima" class="form-label">Precio</label>
-                            <input type="number" id="cantidad-minima" class="form-control no-bg" placeholder=""
-                                formControlName="precio" />
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-
-
-
-            <div class="p-3 bg-light mb-4">
-                <div class="row justify-content-end g-2">
-                    <div class="col-lg-2">
-                        <button type="submit" class="btn btn-primary w-100" [disabled]="comprasForm.invalid">
-                            Agregar
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </form>
-
-
-    </div>
-
 </div>
-<div *ngIf="tablaProducto" class="no-padding">
-
-
-
-
-    <div class="table-responsive">
-        <table class="table align-middle mb-0 table-hover table-centered">
-            <thead class="bg-light-subtle">
-                <tr>
-
-                    <th class="text-center">Artículo</th>
-
-                    <th class="text-center">Código</th>
-
-                    <th class="text-center">Precio</th>
-                    <th class="text-center">Cantidad</th>
-                    <th class="text-center">Total</th>
-                    <th class=""><iconify-icon icon="solar:settings-bold-duotone"></iconify-icon>Opciones
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-
-
-                <tr *ngFor="let producto of productosSeleccionados, let i = index">
-                    <td class="text-center letra">{{ producto.name }}</td>
-
-                    <td class="text-center">{{ producto.code }}</td>
-
-                    <td class="text-center">{{ producto.price }}</td>
-                    <td class="text-center">{{ producto.quantity }}</td>
-                    <td class="text-center">{{ producto.price * producto.quantity }}</td>
-                    <td class="text-center">
-                        <div class="d-flex gap-2 ">
-
-                            <a (click)="modificarProducto(producto.id)" class="btn btn-soft-danger btn-sm custom-btn"
-                                data-bs-toggle="modal" data-bs-target="#staticBackdrop1"><iconify-icon
-                                    icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
-                            <a (click)="eliminarProducto(i)" class="btn btn-soft-danger btn-sm"><iconify-icon
-                                    icon="solar:trash-bin-minimalistic-2-broken"
-                                    class="align-middle fs-18"></iconify-icon></a>
-                        </div>
-                    </td>
-
-
-
-                </tr>
-
-                <tr *ngIf="productosSeleccionados.length > 0">
-                    <td colspan="4" class="text-end fw-bold">Total:</td>
-                    <td class="text-center fw-bold">{{ getTotal() }}</td>
-                    <td></td> <!-- Celda vacía para los botones -->
-                </tr>
-
-
-
-            </tbody>
-        </table>
-
-
-
-
-
-
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <ul class="nav nav-tabs mt-2"> <!-- Eliminado border-top -->
+                <li (click)="inventariado()" class="nav-item" style="width: 170px; cursor: pointer;">
+                    <a data-bs-toggle="tab" class="nav-link py-2 active">
+                        Inventariados
+                    </a>
+                </li>
+                <li (click)="noInventariado()" class="nav-item" style="width: 170px; cursor: pointer;">
+                    <a data-bs-toggle="tab" class="nav-link py-2">
+                        No inventariados
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
+</div>
 
-    <form [formGroup]="proveedorForm" (ngSubmit)="enviarCompra()">
 
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Datos del proveedor</h4>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-lg-6">
 
-                        <div class="mb-3">
-                            <label for="meta-title" class="form-label">Proveedor</label>
-                            <input type="text" id="meta-title" class="form-control" placeholder=""  formControlName="proveedor">
-                        </div>
+<form *ngIf="inventariados" [formGroup]="proveedorForm" (ngSubmit)="enviarCompra()">
 
-                    </div>
-                    <div class="col-lg-6">
 
-                        <div class="mb-3">
-                            <label for="meta-tag" class="form-label"> Identificion</label>
-                            <input type="number" id="meta-tag" class="form-control" placeholder=""  formControlName="identificacion">
-                        </div>
 
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Datos del proveedor</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-6">
+
+                    <div class="mb-3">
+                        <label for="meta-title" class="form-label">Proveedor</label>
+                        <input type="text" id="meta-title" class="form-control" placeholder=""
+                            formControlName="proveedor">
                     </div>
 
                 </div>
+                <div class="col-lg-6">
+
+                    <div class="mb-3">
+                        <label for="meta-tag" class="form-label"> Identifición</label>
+                        <input type="number" id="meta-tag" class="form-control" placeholder=""
+                            formControlName="identificacion">
+                    </div>
+
+                </div>
+
             </div>
+        </div>
+    </div>
+
+
+    <div class="card ">
+
+        <div class="no-padding">
+
+            <form [formGroup]="comprasForm" (ngSubmit)="agregarcantidad()">
+                <div *ngIf="inventariados" class="container padding-lados">
+                    <div class="row mt-3">
+
+
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="product-code" class="form-label">Producto</label>
+
+                                <ng-select [items]="filteredProductos" bindLabel="name" bindValue="code"
+                                    *ngIf="inventariados" placeholder="Seleccionar producto" [searchable]="true"
+                                    [clearable]="true" [virtualScroll]="true" formControlName="codigo"
+                                    class="custom-ng-select" (change)="productoSeleccionado($event)">
+
+
+                                    <ng-template ng-header-tmp>
+                                        <table
+                                            class="table table-hover table-nowrap table-centered m-0 no-border-table header-table">
+                                            <thead>
+                                                <tr class="header-row">
+                                                    <th class="text-start">Artículo</th>
+                                                    <th class="text-start">Código</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </ng-template>
+
+                                    <ng-template ng-option-tmp let-item="item">
+                                        <table class="table table-sm mb-0 text-center option-table">
+                                            <tbody>
+                                                <tr class="option-row">
+                                                    <td class="text-start">{{ item.name }}</td>
+                                                    <td class="text-start">{{ item.code }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </ng-template>
+
+
+
+                                </ng-select>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="cantidad-minima" class="form-label">Cantidad</label>
+                                <input type="number" id="cantidad-minima" class="form-control no-bg" placeholder=""
+                                    formControlName="cantidad" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="cantidad-minima" class="form-label">Precio</label>
+                                <input type="number" id="cantidad-minima" class="form-control no-bg" placeholder=""
+                                    formControlName="precio" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="p-3 bg-light mb-4">
+                    <div class="row justify-content-end g-2">
+                        <div class="col-lg-2">
+                            <button type="submit" class="btn btn-primary w-100" [disabled]="comprasForm.invalid">
+                                Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+
+
+    <div id="tablaDes" *ngIf="tablaProducto">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0 table-hover table-centered">
+                <thead class="bg-light-subtle">
+                    <tr>
+
+                        <th class="text-center">Artículo</th>
+
+                        <th class="text-center">Código</th>
+
+                        <th class="text-center">Precio</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-center">Total</th>
+                        <th class=""><iconify-icon icon="solar:settings-bold-duotone"></iconify-icon>Opciones
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    <tr *ngFor="let producto of productosSeleccionados, let i = index">
+                        <td class="text-center letra">{{ producto.name }}</td>
+
+                        <td class="text-center">{{ producto.code }}</td>
+
+                        <td class="text-center">{{ producto.price }}</td>
+                        <td class="text-center">{{ producto.quantity }}</td>
+                        <td class="text-center">{{ producto.price * producto.quantity }}</td>
+                        <td class="text-center">
+                            <div class="d-flex gap-2 ">
+
+                                <a (click)="modificarProducto(producto.id)"
+                                    class="btn btn-soft-danger btn-sm custom-btn" data-bs-toggle="modal"
+                                    data-bs-target="#staticBackdrop1"><iconify-icon icon="solar:pen-2-broken"
+                                        class="align-middle fs-18"></iconify-icon></a>
+                                <a (click)="eliminarProducto(i)" class="btn btn-soft-danger btn-sm"><iconify-icon
+                                        icon="solar:trash-bin-minimalistic-2-broken"
+                                        class="align-middle fs-18"></iconify-icon></a>
+                            </div>
+                        </td>
+
+
+
+                    </tr>
+
+                    <tr *ngIf="productosSeleccionados.length > 0">
+                        <td colspan="4" class="text-end fw-bold">Total:</td>
+                        <td class="text-center fw-bold">{{ getTotal() }}</td>
+                        <td></td> <!-- Celda vacía para los botones -->
+                    </tr>
+
+
+
+                </tbody>
+            </table>
+
+
+
+
+
+
         </div>
 
 
-
-        
         <div class="p-3 bg-light mb-3 rounded">
             <div class="row justify-content-center justify-content-md-end g-2">
                 <div class="col-auto">
@@ -225,24 +252,199 @@
                 </div>
                 <div class="col-auto">
                     <button type="submit" class="btn btn-primary w-auto" [disabled]="proveedorForm.invalid">
-                        Registrar venta
+                        Registrar compra
                     </button>
                 </div>
             </div>
         </div>
-        
+
+
+    </div>
+
+</form>
+
+<form *ngIf="noInventariados" [formGroup]="proveedorForm" (ngSubmit)="enviarCompraProNoInv()">
 
 
 
-    </form>
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Datos del proveedor</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-6">
+
+                    <div class="mb-3">
+                        <label for="meta-title" class="form-label">Proveedor</label>
+                        <input type="text" id="meta-title" class="form-control" placeholder=""
+                            formControlName="proveedor">
+                    </div>
+
+                </div>
+                <div class="col-lg-6">
+
+                    <div class="mb-3">
+                        <label for="meta-tag" class="form-label"> Identifición</label>
+                        <input type="number" id="meta-tag" class="form-control" placeholder=""
+                            formControlName="identificacion">
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card ">
+
+        <div class="no-padding">
+
+            <form [formGroup]="comprasNoInvenForms" (ngSubmit)="agregarProducto()">
+                <div class="container padding-lados">
+                    <div class="row mt-3">
+
+
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="cantidad-minima" class="form-label">Producto</label>
+                                <input type="text" id="cantidad-minima" class="form-control no-bg" placeholder=""
+                                    formControlName="nombre" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="cantidad-minima" class="form-label">Cantidad</label>
+                                <input type="number" id="cantidad-minima" class="form-control no-bg" placeholder=""
+                                    formControlName="cantidad" />
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="cantidad-minima" class="form-label">Precio</label>
+                                <input type="number" id="cantidad-minima" class="form-control no-bg" placeholder=""
+                                    formControlName="precio" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
 
 
 
 
 
 
+                <div class="p-3 bg-light mb-4">
+                    <div class="row justify-content-end g-2">
+                        <div class="col-lg-2">
+                            <button type="submit" class="btn btn-primary w-100"
+                                [disabled]="comprasNoInvenForms.invalid">
+                                Agregar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
 
-</div>
+        </div>
+    </div>
+
+
+
+    <div id="tablaNoInventariados" *ngIf="tablaProNoInventariado">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0 table-hover table-centered">
+                <thead class="bg-light-subtle">
+                    <tr>
+
+                        <th class="text-center">Artículo</th>
+
+
+
+                        <th class="text-center">Precio</th>
+                        <th class="text-center">Cantidad</th>
+                        <th class="text-center">Total</th>
+                        <th class=""><iconify-icon icon="solar:settings-bold-duotone"></iconify-icon>Opciones
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    <tr *ngFor="let product of proSeleccion , let i = index">
+                        <td class="text-center letra">{{ product.name }}</td>
+
+
+
+                        <td class="text-center">{{ product.price }}</td>
+                        <td class="text-center">{{ product.quantity }}</td>
+                        <td class="text-center">{{ product.price * product.quantity }}</td>
+                        <td class="text-center">
+                            <div class="d-flex gap-2 ">
+
+                                <a (click)="modificar(i)" class="btn btn-soft-danger btn-sm custom-btn"
+                                    data-bs-toggle="modal" data-bs-target="#modalModificarCantidad">
+                                    <iconify-icon icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon>
+                                </a>
+
+                                <a (click)="eliminarProNoInve(i)" class="btn btn-soft-danger btn-sm"><iconify-icon
+                                        icon="solar:trash-bin-minimalistic-2-broken"
+                                        class="align-middle fs-18"></iconify-icon></a>
+                            </div>
+                        </td>
+
+
+
+                    </tr>
+
+                    <tr *ngIf="proSeleccion.length > 0">
+                        <td colspan="4" class="text-end fw-bold">Total:</td>
+                        <td class="text-center fw-bold">{{ Total() }}</td>
+                        <td></td> <!-- Celda vacía para los botones -->
+                    </tr>
+
+
+
+                </tbody>
+            </table>
+
+
+
+
+
+
+        </div>
+
+
+        <div class="p-3 bg-light mb-3 rounded">
+            <div class="row justify-content-center justify-content-md-end g-2">
+                <div class="col-auto">
+                    <button (click)="cancelarcompraProNoIn()" class="btn btn-outline-secondary w-auto" type="button">
+                        Cancelar
+                    </button>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary w-auto" [disabled]="proveedorForm.invalid">
+                        Registrar compra
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</form>
+
+
+
+
+
+
 
 <div *ngIf="mostrarHistorial" class="card" id="tablaDestino">
     <div class="card-header d-flex justify-content-between align-items-center">
@@ -254,12 +456,12 @@
 
 
     <!--HISTORIAL-->
-    <div class="card-body" >
+    <div class="card-body">
         <div class="position-relative ms-2">
             <span class="position-absolute start-0  top-0 border border-dashed h-100"></span>
 
 
-            <div *ngFor="let compra  of registroCompras"
+            <div *ngFor="let compra  of registroCompras | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }"
                 class="position-relative ps-4">
                 <div class="mb-4">
                     <span
@@ -274,7 +476,7 @@
                         </div>
                         <div class="d-flex justify-content-between align-items-center gap-3">
                             <p class="mb-0">{{compra.createdAt | date: "yyyy-MM-dd h:mm a" : 'es' }}</p>
-                            <a (click)="detalle(compra)"  class="btn btn-light btn-sm " data-bs-toggle="modal"
+                            <a (click)="detalle(compra)" class="btn btn-light btn-sm " data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop"><iconify-icon icon="solar:eye-broken"
                                     class="align-middle fs-18"></iconify-icon></a>
 
@@ -283,14 +485,24 @@
 
                     </div>
                 </div>
+
+
             </div>
 
-         
+            <div class="card-footer border-top">
+                <nav aria-label="Page navigation">
+                    <pagination-controls class="pagination justify-content-end mb-0" (pageChange)="currentPage = $event"
+                        previousLabel="Anterior" nextLabel="Siguiente" [responsive]="true" [autoHide]="true">
+                    </pagination-controls>
+                </nav>
+            </div>
+
+
 
         </div>
     </div>
 
-   
+
 
 </div>
 
@@ -306,12 +518,13 @@
                 <div class="card">
 
                     <div class="card-body">
-                        <p><strong>ID de la Factura:</strong> {{ selctCompra.id | id }}</p>
-                        <p><strong>Cliente:</strong> {{ selctCompra.supplier | uppercase }}</p>
-                        <p><strong>Idenficación:</strong> {{ selctCompra.identification | uppercase }}</p>
-                        <p><strong>Fecha de Registro:</strong> {{ selctCompra.createdAt |date: "yyyy-MM-dd h:mm a" :
-                            'es' }}</p>
-
+                        <p><strong>ID de la Factura:</strong> {{ selctCompra?.id |id }}</p>
+                        <p><strong>Proveedor:</strong> {{ selctCompra?.supplier | uppercase }}</p>
+                        <p><strong>Identificación:</strong> {{ selctCompra?.identification | uppercase }}</p>
+                        <p><strong>Fecha de Registro:</strong> 
+                            {{ selctCompra?.createdAt | date: "yyyy-MM-dd h:mm a" : 'es' }}
+                        </p>
+                    
                         <div class="table-responsive mt-3">
                             <table class="table mb-0">
                                 <thead>
@@ -323,28 +536,43 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Iterar sobre los items de venta -->
-                                    <tr *ngFor="let item of selctCompra.saleItems">
-                                        <td>{{item.product.name|capitalize }}</td>
-                                        <!-- Puedes reemplazar productId con el nombre del producto si lo tienes -->
-                                        <td class="text-center">{{ item.quantity }}</td>
-                                        <td>${{ item.price }}</td>
-                                        <td>${{ item.subtotal }}</td>
-                                    </tr>
+                                    <!-- Si hay supplyItems, se muestra esta tabla -->
+                                    <ng-container *ngIf="selctCompra?.supplyItems?.length > 0; else purchaseTable">
+                                        <tr *ngFor="let item of selctCompra.supplyItems">
+                                            <td>{{ item.description }}</td>
+                                            <td class="text-center">{{ item.quantity }}</td>
+                                            <td>${{ item.price }}</td>
+                                            <td>${{ item.subtotal }}</td>
+                                        </tr>
+                                    </ng-container>
+                    
+                                    <!-- Si supplyItems está vacío, se muestra purchaseItems -->
+                                    <ng-template #purchaseTable>
+                                        <tr *ngFor="let item of selctCompra?.purchaseItems">
+                                            <td>{{ item.product?.name }}</td>
+                                            <td class="text-center">{{ item.quantity }}</td>
+                                            <td>${{ item.price }}</td>
+                                            <td>${{ item.subtotal }}</td>
+                                        </tr>
+                                    </ng-template>
+                    
+                                    <!-- Total -->
                                     <tr>
                                         <td colspan="3" class="text-end"><strong>Total de la Factura</strong></td>
-                                        <td>${{ selctCompra.total }}</td>
+                                        <td>${{ selctCompra?.total }}</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
+                    
+                    
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 <button (click)="generatePDF()" type="button" class="btn btn-primary"
-                 data-bs-dismiss="modal">Generar</button>
+                    data-bs-dismiss="modal">Generar</button>
             </div>
 
             <!-- app.component.html -->
@@ -379,6 +607,32 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button (click)="actualizarCantidad()" type="button" class="btn btn-primary"
+                    data-bs-dismiss="modal">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modalModificarCantidad" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="modalModificarCantidadLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalModificarCantidadLabel">Modificar cantidad</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="cantidad" class="col-form-label">Ingrese cantidad:</label>
+                        <input type="number" class="form-control" id="cantidadModi" min="1">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button (click)="actualizarProNoInventario()" type="button" class="btn btn-primary"
                     data-bs-dismiss="modal">Guardar</button>
             </div>
         </div>

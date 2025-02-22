@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, ViewChild } from '@angular/core';
 
 
 
@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import { bootstrapAppScopedEarlyEventContract } from '@angular/core/primitives/event-dispatch';
 import { BuscadorService } from '../../../services/buscador.service';
 import { filter, map, switchMap } from 'rxjs';
+import { LoadingService } from '../../../services/loading.service';
 
 declare var bootstrap: any;
 @Component({
@@ -23,6 +24,7 @@ declare var bootstrap: any;
 })
 export class InventarioComponent implements OnInit {
 
+
   productos: registerModel[] = [];
 
   mostrarTabla: boolean = true
@@ -34,28 +36,35 @@ export class InventarioComponent implements OnInit {
   searchTermSubscription: any
   searchTerm: string = ''
   limit: number = 20
-  offset:number = 0
-  products : any  
-  mostrarAlerta : boolean = false;
-  alertMessage :  string = '';
-  isFiltered : boolean =  false
-  alertShown : boolean =  false
+  offset: number = 0
+  products: any
+  mostrarAlerta: boolean = false;
+  alertMessage: string = '';
+  isFiltered: boolean = false
+  alertShown: boolean = false
 
 
 
   currentPage: number = 1;  // Página actual (comienza en 1)
-  itemsPerPage: number = 5;  // Elementos por página (puedes cambiar este valor)
+  itemsPerPage: number = 50;  // Elementos por página (puedes cambiar este valor)
   totalItems: number = 0;  // Total de productos que vamos a paginar
+  modalInstance: any;
 
 
-  constructor(private router: Router, private http: PoductService, private serviceproduct: BuscadorService) {
+  constructor(private router: Router, private http: PoductService, private serviceproduct: BuscadorService, private loading: LoadingService
+
+  ) {
 
 
 
 
   }
 
+
+
   ngOnInit(): void {
+
+    this.loading.init();
 
 
 
@@ -84,24 +93,33 @@ export class InventarioComponent implements OnInit {
       this.mostrarTabla = false;  // Ocultar la tabla si estamos en "registrar" o "actualizar"
     }
 
-   this.suscripciontermino()
+    this.suscripciontermino()
   }
+
+
 
   // Método para cargar los registros
   registros(): void {
-
+    
+  
+    this.loading.show()
     this.http.obtenerRegistros().subscribe({
       next: (response) => {
-        this.productos = response.data;  // Asignamos los registros obtenidos
-        this.registrosCargados = true;  // Marcamos que los registros ya fueron cargados
+        this.productos = response.data;  
+        this.registrosCargados = true;  
         this.totalItems = response.length;
       },
       error: (error) => {
         console.error('Error al obtener productos:', error);
+      },
+      complete: () => {
+        this.loading.hide()
+       
       }
     });
   }
-
+  
+  
 
 
 
@@ -182,15 +200,15 @@ export class InventarioComponent implements OnInit {
     console.log(id)
 
 
-    Swal.fire({
-      title: "¿Estás seguro?",
-      text: "Esta acción no se puede deshacer",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: '#ffa500',
-      cancelButtonColor: "##dc3545",
-      confirmButtonText: "Eliminar",
-      cancelButtonText: "Cancelar"
+     Swal.fire({
+          title: '¿Estás seguro?',
+          text: 'Este producto será eliminado de la lista.',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Eliminar',
+          cancelButtonText: 'Cancelar',
+          confirmButtonColor: '#FF6F00', 
+          cancelButtonColor: '#FF9800', 
     }).then((result) => {
       if (result.isConfirmed) {
         this.http.eliminarProducto(id).subscribe({
@@ -224,16 +242,15 @@ export class InventarioComponent implements OnInit {
     this.searchTermSubscription = this.serviceproduct.terminosBusqueda$.pipe(
       // Filtra términos vacíos
       filter(terminos => (terminos['productos'] || '').trim() !== ''),
-      
+  
       // Extrae solo el término de 'productos'
-      map(terminos => terminos['productos']),
+      map(terminos => terminos['productos'].trim()),
   
       // Cancela la petición anterior si el término cambia
       switchMap(term => {
         console.log('Término de búsqueda recibido:', term);
-        this.searchTerm = term; // Asigna el término de búsqueda
-  
-        this.isFiltered = !!this.searchTerm.trim();
+        this.searchTerm = term;
+        this.isFiltered = !!this.searchTerm;
   
         if (!this.isFiltered) {
           this.products = [...this.productos];
@@ -241,16 +258,28 @@ export class InventarioComponent implements OnInit {
           return [];
         }
   
-        // Llama al servicio para obtener los productos
-        return this.http.getProducts(this.limit, this.offset, this.searchTerm);
+        
+        let code = "";
+        let nombre = "";
+  
+        if (/^[A-Za-z0-9-]+$/.test(term) && /\d/.test(term) && /[A-Za-z]/.test(term) && /^\d+$/.test(term)) {
+          code = term;  
+        } else {
+          nombre = term; 
+        }
+  
+        console.log("Código detectado:", code);
+        console.log("Nombre detectado:", nombre);
+  
+        return this.http.getProducts(this.limit, this.offset, code, nombre);
       })
     ).subscribe(
-      (response: any) => { 
+      (response: any) => {
         this.alertShown = false;
-        this.products = response.data || []; // Asumiendo que la respuesta tiene una propiedad "data"
+        this.products = response.data || [];
         console.log('Productos recibidos:', this.products);
   
-        // Solo muestra la alerta si no hay productos
+        // Muestra la alerta si no hay productos
         if (!this.products.length) {
           this.showAlert('No se encontraron resultados para los filtros aplicados.');
           this.alertShown = true;
@@ -262,28 +291,30 @@ export class InventarioComponent implements OnInit {
     );
   }
   
+
   showAlert(message: string) {
     this.alertMessage = message;
     this.mostrarAlerta = true;
-  
+
     setTimeout(() => {
       this.cerrarAlerta();
     }, 3000); // La alerta desaparece después de 3 segundos
   }
-  
+
   cerrarAlerta() {
     this.mostrarAlerta = false;
   }
-  
-  
+
+
 
   // Método para cancelar la suscripción al destruir el componente
   ngOnDestroy(): void {
     this.serviceproduct.limpiarBusqueda('productos'); // Limpia el término cuando el componente se destruye
     this.searchTermSubscription.unsubscribe(); // Evita fugas de memoria
   }
-  
- 
+
+
+
 }
 
 

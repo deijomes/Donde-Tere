@@ -18,37 +18,34 @@
 
                                 <div class="d-flex flex-column h-100 justify-content-center">
                                     <div class="mb-5 authentication-form">
-                                        <form action="index.html">
+                                        <form [formGroup]="loguinForm" (ngSubmit)="loguearse()" >
                                             <div class="mb-3">
                                                 <label class="form-label" for="example-email">Email</label>
-                                                <input type="email" id="example-email" name="example-email" class="form-control" placeholder="Enter your email">
+                                                <input type="email" id="example-email" name="example-email" class="form-control" formControlName="email" placeholder=" email">
                                             </div>
                                             <div class="mb-3">
-                                                <a href="auth-password.html" class="float-end text-muted text-unline-dashed ms-1">Reset password</a>
+                                              
                                                 <label class="form-label" for="example-password">Password</label>
-                                                <input type="password" id="example-password" class="form-control" placeholder="Enter your password">
+                                                <input type="password" id="example-password" class="form-control" formControlName="password" placeholder=" password">
                                             </div>
-                                            <div class="mb-3">
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input" id="checkbox-signin">
-                                                    <label class="form-check-label" for="checkbox-signin">Remember me</label>
-                                                </div>
-                                            </div>
+                                            <div class="mb-3 form-check">
+                                                <input type="checkbox" class="form-check-input" id="rememberMe" formControlName="rememberMe">
+                                                <label class="form-check-label" for="rememberMe">Remember</label>
+                                              </div>
+                                              
+                                          
 
                                             <div class="mb-1 text-center d-grid">
                                                 <button class="btn btn-soft-primary" type="submit">Sign In</button>
                                             </div>
                                         </form>
 
-                                        <p class="mt-3 fw-semibold text-center">OR sign with</p>
+                                       
 
-                                        <div class="d-grid gap-2">
-                                            <a href="javascript:void(0);" class="btn btn-soft-dark"><i class="bx bxl-google fs-20 me-1"></i> Sign in with Google</a>
-                                            <a href="javascript:void(0);" class="btn btn-soft-primary"><i class="bx bxl-facebook fs-20 me-1"></i> Sign in with Facebook</a>
-                                        </div>
+                                       
                                     </div>
 
-                                    <p class="text-danger text-center">Don't have an account? <a href="auth-signup.html" class="text-dark fw-bold ms-1">Sign Up</a></p>
+                                    <p class="text-danger text-center">Don't have an account? <a (click)="registro()" class="text-dark fw-bold ms-1" style="cursor: pointer;">Sign Up</a></p>
                                 </div>
 
                                 <div class="col-12 text-center">

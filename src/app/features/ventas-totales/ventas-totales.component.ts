@@ -10,6 +10,7 @@ import { DatePicker } from 'primeng/datepicker';
 import { data } from 'jquery';
 import { CommonModule } from '@angular/common';
 import { forkJoin } from 'rxjs';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-ventas-totales',
@@ -25,10 +26,14 @@ export class VentasTotalesComponent implements OnInit {
 
   ventamesActual: number = 0;
   totalventas: number = 0;
-  parrafo : any = 'Hoy'
+  parrafo : any = 'Hoy';
+  hoy : any = 'Hoy'
   Fecha : Date |null =null
+  Fecha2 :Date |null =null
   TotalVentas : number = 0
+  TotalCompras : number = 0
   filter = false
+  filtert = false
 
   
   ventasPorMes: { nombreMes: string, anio: number, totalVentas: any }[] = [];
@@ -51,9 +56,9 @@ export class VentasTotalesComponent implements OnInit {
   filterCalend = false
 
 
-  ventasTotals: any[] = [];  // Almacenará los datos de ventas
-  barChartLabels: string[] = [];  // Etiquetas para el gráfico (meses)
-  barChartData: ChartData<'bar'> = {  // Cambiamos el tipo a ChartData<'bar'>
+  ventasTotals: any[] = []; 
+  barChartLabels: string[] = [];  
+  barChartData: ChartData<'bar'> = {  
     labels: [],
     datasets: [{
       data: [],
@@ -87,27 +92,23 @@ export class VentasTotalesComponent implements OnInit {
 
   Dashboardprt: 'line' = 'line'
 
-  constructor(private servicio: DashboardService) { }
+  constructor(private servicio: DashboardService, private loading : LoadingService) { }
 
   ngOnInit(): void {
-    // Obtener ventas mensuales
-    this.servicio.getMonthlySales().subscribe((data) => {
-      this.ventasTotals = data;
-      console.log(this.ventasTotals);
-
-      // Extraer los meses y las ventas
-      
-    });
+   
 
 
-  
+    this.loading.init();
+   
 
     this.getventasActuales();
     this.gettotalActual();
     this.topMasVendidos()
     this.topMenosVendidos();
     this. getVentas$();
+    this. getcompras$()
     this.getVentasPorMes()
+   
     
    
    
@@ -131,9 +132,11 @@ export class VentasTotalesComponent implements OnInit {
     const limit = 10;
 
     // Convertir fechaInicial a formato ISO (UTC)
-    const startDate = this.fechaInicial
-      ? new Date(this.fechaInicial).toISOString()
+    const startDat = this.fechaInicial
+      ? new Date(this.fechaInicial).setUTCHours(0, 0, 0, 0)
       : undefined;
+
+      const startDate = startDat ? new Date(startDat).toISOString() : undefined;
 
     // Convertir fechaFinal a formato ISO (UTC) con la hora máxima del día
     let endDate;
@@ -170,9 +173,11 @@ export class VentasTotalesComponent implements OnInit {
     const limit = 10;
 
     // Convertir fechaInicial a formato ISO (UTC)
-    const startDate = this.fechaInicialSold
-      ? new Date(this.fechaInicialSold).toISOString()
+    const startDat = this.fechaInicialSold
+      ? new Date(this.fechaInicialSold).setUTCHours(0, 0, 0, 0)
       : undefined;
+
+      const startDate = startDat ? new Date(startDat).toISOString() : undefined;
 
     // Convertir fechaFinal a formato ISO (UTC) con la hora máxima del día
     let endDate;
@@ -214,7 +219,10 @@ export class VentasTotalesComponent implements OnInit {
   
     if (this.Fecha) {
       // Si hay una fecha seleccionada, la usamos
-      startDate = new Date(this.Fecha).toISOString();
+      const fechaInicio =  new Date(this.Fecha);
+      fechaInicio.setUTCHours(0, 0, 0, 0)
+      startDate = fechaInicio.toISOString()
+      
   
       const fechaFin = new Date(this.Fecha);
       fechaFin.setUTCHours(23, 59, 59, 999);
@@ -240,12 +248,55 @@ export class VentasTotalesComponent implements OnInit {
     });
   }
 
+  getcompras$() {
+    let startDate: string;
+    let endDate: string;
+    
+
+    let fecha: Date;
+
+    if (this.Fecha2 !== null && !isNaN(new Date(this.Fecha2).getTime())) {
+        // Si hay una fecha válida seleccionada, la usamos
+        fecha = new Date(this.Fecha2);
+        this.hoy = this.Fecha2.toISOString().split("T")[0];; // Guardamos la fecha seleccionada
+    } else {
+        // Si NO hay fecha seleccionada (null o inválida), usamos la fecha actual
+        fecha = new Date();
+        
+    }
+
+    // Establecer inicio del día (00:00:00.000)
+    const fechaInicio = new Date(fecha);
+    fechaInicio.setUTCHours(0, 0, 0, 0);
+    startDate = fechaInicio.toISOString();
+
+    // Establecer fin del día (23:59:59.999)
+    const fechaFin = new Date(fecha);
+    fechaFin.setUTCHours(23, 59, 59, 999);
+    endDate = fechaFin.toISOString();
+
+    // Llamamos al servicio con las fechas correspondientes
+    this.servicio.getTotalPurchasesMes(startDate, endDate).subscribe((data: any) => {
+        console.log(data, "total compras");
+        console.log(startDate, 'inicio del día');
+        console.log(endDate, 'fin del día');
+        console.log(this.hoy, 'valor de hoy');
+        this.TotalCompras = data;
+    });
+}
+
+
   mostrafilter(){
     this.filter  = true
   }
-
+  mostrafiltro()
+{
+  this.filtert  = true
+}
 
   getVentasPorMes() {
+
+    this.loading.show()
     const hoy = new Date();
     const nombresMeses = [
       "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
@@ -286,7 +337,8 @@ export class VentasTotalesComponent implements OnInit {
 
       this.barChartLabels = this.ventasPorMes.map((item) => item.nombreMes);  // Asignar meses a las etiquetas
       this.barChartData.labels = this.barChartLabels;  // Asignar las etiquetas al gráfico
-      this.barChartData.datasets[0].data = this.ventasPorMes.map((item) => item.totalVentas);  // Asignar ventas a la data
+      this.barChartData.datasets[0].data = this.ventasPorMes.map((item) => item.totalVentas); 
+      this.loading.hide() // Asignar ventas a la data
     });
   }
 }

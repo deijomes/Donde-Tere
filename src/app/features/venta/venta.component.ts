@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { IdPipe } from '../../pipes/id.pipe';
 import { CapitalizePipe } from "../../pipes/capitalize.pipe";
 import { PdfService } from '../../services/pdf.service';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-venta',
@@ -42,7 +43,7 @@ export class VentaComponent implements OnInit {
   totalItems: number = 0;  //
 
 
-  constructor(private fb: FormBuilder, private serviceproduct: PoductService, private pdf: PdfService) {
+  constructor(private fb: FormBuilder, private serviceproduct: PoductService, private pdf: PdfService, private loading : LoadingService) {
     this.saleForm = this.fb.group({
       codigo: '',
       articulo: ['', Validators.required],
@@ -61,6 +62,7 @@ export class VentaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading.init();
     this.producto();
     
     this.obtenerSalidas()
@@ -71,6 +73,7 @@ export class VentaComponent implements OnInit {
   }
 
   producto() {
+    this.loading.show()
     this.serviceproduct.obtenerRegistros().subscribe({
       next: (response) => {
         this.productos = response.data; // Asegúrate de usar un punto y coma, no coma
@@ -79,7 +82,8 @@ export class VentaComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error al obtener productos:', err);
-      }
+      }, complete: () => {
+        this.loading.hide()}
     });
 
     // Detectar cambios en el campo "codigo" para filtrar productos
@@ -148,6 +152,14 @@ export class VentaComponent implements OnInit {
         };
 
         this.productosSeleccion.push(productoAAgregar);
+        setTimeout(() => {
+
+          const destino = document.getElementById('tablaDes');
+          if (destino) {
+    
+            destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 100);
       }
 
       // Guardar en localStorage
@@ -187,11 +199,13 @@ export class VentaComponent implements OnInit {
     console.log('Cliente:', cliente);
     console.log('identidicacion', identificacion)
 
+    this.loading.show();
+
     this.serviceproduct.enviarVenta(cliente, idenfic, saleItems).subscribe({
       next: (response) => {
         console.log('Venta enviada con éxito:', response);
         this.Idfactura = response.id
-        console.log('Idfactura', this.Idfactura)
+       this.loading.hide();
 
 
 
@@ -269,7 +283,7 @@ export class VentaComponent implements OnInit {
   }
 
   eliminarProductosGuardados() {
-    localStorage.removeItem('productosSeleccionados');
+    localStorage.removeItem('productosSeleccion');
     console.log('Productos eliminados de localStorage.');
   }
 
@@ -292,7 +306,7 @@ export class VentaComponent implements OnInit {
       title: '¿Está seguro de que desea actualizar la cantidad?',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'actualizar',
+      confirmButtonText: 'Actualizar',
       cancelButtonText: 'Cancelar',
       customClass: {
         confirmButton: 'swal-confirm-btn',
@@ -304,14 +318,21 @@ export class VentaComponent implements OnInit {
         this.modificarCantidad(this.idproduct, cantidad);
       } else {
         // Si el usuario cancela, no se hace nada
-        Swal.fire('Cancelado', 'La cantidad no fue modificada', 'info');
+        Swal.fire({
+                 title: 'Cancelado',
+                 text: 'La cantidad no fue modificada',
+                 icon: 'info',
+                 confirmButtonText: 'Entendido', // Cambia el texto del botón
+                 confirmButtonColor: '#FF6F00' // Cambia el color del botón
+               });
+               
       }
     });
   }
 
 
   modificarCantidad(productId: string, nuevaCantidad: number) {
-    const productosGuardados = localStorage.getItem('productosSeleccionados');
+    const productosGuardados = localStorage.getItem('productosSeleccion');
     if (productosGuardados) {
       let productos = JSON.parse(productosGuardados);
 
@@ -321,12 +342,20 @@ export class VentaComponent implements OnInit {
         productos[index].quantity = nuevaCantidad;
 
         // Guardar los productos actualizados en localStorage
-        localStorage.setItem('productosSeleccionados', JSON.stringify(productos));
+        localStorage.setItem('productosSeleccion', JSON.stringify(productos));
 
         // Actualizar la lista en el componente
         this.productosSeleccion = productos;
 
-        Swal.fire('¡Cantidad actualizada!', '', 'success');
+        Swal.fire({
+                 title: '¡Cantidad actualizada!',
+                 
+                 icon: 'success',
+                 timer: 2000, // 
+                 timerProgressBar: true,
+                 showConfirmButton: false,
+                
+               });
       } else {
         Swal.fire('Error', 'Producto no encontrado en localStorage.', 'error');
       }
@@ -341,28 +370,33 @@ export class VentaComponent implements OnInit {
       text: 'Este producto será eliminado de la lista.',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'eliminar',
+      confirmButtonText: 'Eliminar',
       cancelButtonText: 'Cancelar',
-      customClass: {
-        confirmButton: 'swal-confirm-btn',
-        cancelButton: 'swal-cancel-btn'
-      }
+      confirmButtonColor: '#FF6F00', 
+      cancelButtonColor: '#FF9800', 
     }).then((result) => {
       if (result.isConfirmed) {
 
-        let productos = JSON.parse(localStorage.getItem('productosSeleccionados') || '[]');
+        let productos = JSON.parse(localStorage.getItem('productosSeleccion') || '[]');
 
         // 2️Eliminar el producto por su índice
         productos.splice(index, 1);
 
 
-        localStorage.setItem('productosSeleccionados', JSON.stringify(productos));
+        localStorage.setItem('productosSeleccion', JSON.stringify(productos));
 
 
         this.cargarProductosSeleccionados();
 
 
-        Swal.fire('Eliminado', 'El producto ha sido eliminado.', 'success');
+      
+         Swal.fire({
+                      title: '¡Éxito!',
+                      text: 'El producto ha sido eliminado.',
+                      icon: 'success',
+                      timer: 1000,
+                      showConfirmButton: false
+                    });
       }
     });
   }

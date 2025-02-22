@@ -21,7 +21,7 @@ import { ComprasComponent } from './features/productos/compras/compras.component
   imports: [RouterOutlet, SidebarComponent, NavbarComponent, RegistrarComponent, InventarioComponent,
     VentaComponent, VentasTotalesComponent, InventarioGeneralComponent, MovimientosComponent,
     ActualizarComponent, LoginComponent, CommonModule,  MatInputModule, ComprasComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA], // Añade esta línea
+  schemas: [CUSTOM_ELEMENTS_SCHEMA], 
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -32,7 +32,8 @@ export class AppComponent {
   title = 'Inventario';
   currentYear: number = new Date().getFullYear();
   isLoginRoute(): boolean {
-    // Verifica si la ruta activa es la de login
-    return this.router.url === '/login' || this.activatedRoute.snapshot.firstChild?.routeConfig?.path === 'login';
+    const allowedRoutes = ['login', 'register'];
+    const routePath = this.activatedRoute.snapshot.firstChild?.routeConfig?.path;
+    return routePath ? allowedRoutes.includes(routePath) : false;
   }
 }

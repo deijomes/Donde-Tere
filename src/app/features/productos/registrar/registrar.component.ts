@@ -63,37 +63,43 @@ export class RegistrarComponent implements OnInit {
 
   guardar(): void {
     this.formEnviado = true;
-
-    if (this.registroForm.valid) {
-      const formData = this.registroForm.value
-      this.http.registroProducto(formData).subscribe({
-        next: (response) => {
-          console.log('Producto registrado exitosamente:', response);
-
-          Swal.fire({
-            title: '¡Éxito!',
-            text: 'El producto ha sido guardado.',
-            icon: 'success',
-            timer: 2000, // La alerta desaparecerá después de 2 segundos
-            showConfirmButton: false
-          });
-        },
-        error: (error) => {
-          console.error('Error al registrar producto:', error);
-        }
-      });
-    
-      
-      this.registroForm.reset();
-    } else {
-      console.log('Formulario inválido');
-    }
-
-    this.router.navigateByUrl('productos')
-    this.inventario.recargarTabla();
-    this.inventario.registros()
   
+    if (!this.registroForm.valid) {
+      
+      return; // Sale de la función si el formulario no es válido
+    }
+  
+    const formData = this.registroForm.value;
+    this.http.registroProducto(formData).subscribe({
+      next: (response) => {
+        
+  
+        // Mostrar alerta y esperar a que el usuario la vea antes de redirigir
+        Swal.fire({
+          title: '¡Éxito!',
+          text: 'El producto ha sido guardado.',
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false
+        }).then(() => {
+          this.router.navigateByUrl('productos');
+          this.inventario.recargarTabla();
+          this.inventario.registros();
+        });
+  
+        this.registroForm.reset(); // Reiniciar formulario solo si la petición fue exitosa
+      },
+      error: (error) => {
+        console.error('Error al registrar producto:', error);
+        Swal.fire({
+          title: 'Error',
+          text: 'No se pudo registrar el producto.',
+          icon: 'error'
+        });
+      }
+    });
   }
+  
 
   
   cancelar(): void {

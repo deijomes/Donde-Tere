@@ -1,19 +1,20 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
+import {environment} from '../../environments/environment'
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductoCompraService {
 
-  private baseUrl = 'http://localhost:3000/api/Purchase'
-   private url = 'http://localhost:3000/api/notifications'
+  private baseUrl = `${environment.API_URL}/api/Purchase`
+  private url = `${environment.API_URL}/api/notifications`
 
   constructor(private http: HttpClient) { }
 
-  enviarCompra(cliente: string, identificacion: string, purchaseItems: any[]): Observable<any> {
-    const body = { supplier: cliente, identification: identificacion, purchaseItems };
+  enviarCompra(cliente: string, identificacion: string, purchaseItems: any[],  supplyItems: any[]): Observable<any> {
+    const body = { supplier: cliente, identification: identificacion, purchaseItems, supplyItems };
     console.log('Datos a enviar:', body);
 
     return this.http.post(`${this.baseUrl}`, body).pipe(
@@ -24,23 +25,42 @@ export class ProductoCompraService {
     );
   }
 
-  facturaCompra(id: string): Observable<any>{
-    return this.http.get(`${this.baseUrl}/${id}`)
-    
+  
+  enviarCompraProNoInv(cliente: string, identificacion: string, purchaseItems: any[],  supplyItems: any[]): Observable<any> {
+    const body = { supplier: cliente, identification: identificacion, purchaseItems, supplyItems };
+    console.log('Datos a enviar:', body);
+
+    return this.http.post(`${this.baseUrl}`, body).pipe(
+      catchError(error => {
+        console.error('Error al registrar venta:', error);
+        throw error;
+      })
+    );
   }
 
- 
+  facturaCompra(id: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${id}`)
 
-  
-  registrosCompras():Observable<any>{
+  }
+
+
+
+
+  registrosCompras(): Observable<any> {
+
+    
     return this.http.get(`${this.baseUrl}`)
 
   }
 
-  Notificaciones():Observable<any>{
-    return this.http.get(`${this.url}`)
-
+ 
+  Notificaciones(): Observable<any> {
+    
+  
+    return this.http.get<any[]>(`${this.url}`)
   }
+  
+  
 
 
 }

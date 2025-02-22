@@ -3,6 +3,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { BuscadorService } from '../../services/buscador.service';
 import { registroModel } from '../../models/registroModel';
 import { PdfService } from '../../services/pdf.service';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-inventario-general',
@@ -20,12 +21,16 @@ export class InventarioGeneralComponent implements OnInit {
   BusquedaActiva: boolean = false; 
   
   
-  constructor( private servicio : BuscadorService, private pdf: PdfService){
+  constructor( private servicio : BuscadorService, private pdf: PdfService, private loading:LoadingService){
 
     
     
   }
   ngOnInit(): void {
+
+    this.loading.init();
+    this.loading.show();
+    this.loading.hide()
   
   }
 

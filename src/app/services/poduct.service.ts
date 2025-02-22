@@ -2,17 +2,17 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { registerModel } from '../models/registerModel';
 import { catchError, Observable } from 'rxjs';
-import { error } from 'jquery';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PoductService {
 
-  private url = 'http://localhost:3000/api/product';
-  private baseUrl = 'http://localhost:3000/api/sale'
-  private urlstock = 'http://localhost:3000/api/Product/add-stock/'
-  private urlmov = 'http://localhost:3000/api/movement'
+  private url = `${environment.API_URL}/api/product`;
+  private baseUrl = `${environment.API_URL}/api/sale`;
+  private urlstock = `${environment.API_URL}/api/Product/add-stock/`
+  private urlmov = `${environment.API_URL}/api/movement/summary`
   constructor(private http: HttpClient) { }
 
   registroProducto(producto: registerModel): Observable<any> {
@@ -39,12 +39,13 @@ export class PoductService {
 
   }
 
-  getProducts(limit: number, offset: number, code: string): Observable<any> {
+  getProducts(limit: number, offset: number, code: string, name : string): Observable<any> {
     // Crear los parámetros de la consulta
     const params = new HttpParams()
       .set('limit', limit.toString())
       .set('offset', offset.toString())
-      .set('code', code);
+      .set('code', code)
+      .set('name', name);
 
     // Realizar la solicitud GET con los parámetros
     return this.http.get(this.url, { params });
@@ -241,7 +242,7 @@ export class PoductService {
 
   }
 
-  obtenerSalidas(limit: number = 30, offset: number = 0): Observable<any> {
+  obtenerSalidas(limit: number = 50, offset: number = 0): Observable<any> {
     const params = new HttpParams()
       .set('limit', limit.toString())
       .set('offset', offset.toString());

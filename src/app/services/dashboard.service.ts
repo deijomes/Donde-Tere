@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import{environment} from '../../environments/environment'
 
 @Injectable({
   providedIn: 'root'
@@ -9,34 +10,34 @@ export class DashboardService {
 
   constructor(private http: HttpClient) { }
 
-  private Url = 'http://localhost:3000/api/dashboard/top-selling-products'
-  private urlsold = 'http://localhost:3000/api/dashboard/less-sold'
-  private Urltotal = 'http://localhost:3000/api/dashboard/total-sales'
+  private Url = `${environment.API_URL}/api/dashboard/top-selling-products`
+  private urlsold = `${environment.API_URL}/api/dashboard/less-sold`
+  private Urltotal = `${environment.API_URL}/api/dashboard/total-sales`
+  private urlPurchases =`${environment.API_URL}/api/dashboard/total-purchases`
 
 
   getProductSelling(limit: number, startDate?: string, endDate?: string): Observable<any> {
     let params = new HttpParams().set('limit', limit.toString());
 
-    // Agregar fechas solo si están definidas
+   
     if (startDate) {
-      params = params.set('startdate', startDate); // Ya viene en formato correcto
+      params = params.set('startDate', startDate); 
     }
     if (endDate) {
-      params = params.set('endDate', endDate); // Ya viene en formato correcto
+      params = params.set('endDate', endDate); 
     }
 
-    const fullUrl = `${this.Url}?${params.toString()}`;
-    console.log(" URL generada:", fullUrl);
+    const fullUrls = `${this.Url}?${params.toString()}`;
+    console.log(" URL generada:", fullUrls);
 
-    return this.http.get(this.Url, { params });
+    return this.http.get(fullUrls);
   }
 
   getProductsold(limit: number, startDate?: string, endDate?: string): Observable<any> {
     let params = new HttpParams().set('limit', limit.toString());
 
-    // Agregar fechas solo si están definidas
     if (startDate) {
-      params = params.set('startdate', startDate); // Ya viene en formato correcto
+      params = params.set('startDate', startDate); // Ya viene en formato correcto
     }
     if (endDate) {
       params = params.set('endDate', endDate); // Ya viene en formato correcto
@@ -45,7 +46,7 @@ export class DashboardService {
     const fullUrl = `${this.urlsold}?${params.toString()}`;
     console.log(" URL generada:", fullUrl);
 
-    return this.http.get(this.Url, { params });
+    return this.http.get(fullUrl);
 
   }
 
@@ -75,10 +76,22 @@ export class DashboardService {
       .set('endDate', endDate);
   
     const url = `${this.Urltotal}?${params.toString()}`;
-    console.log('🔍 URL generada:', url); // 📌 Verifica la URL en la consola
+     
   
     return this.http.get(url);
   }
+
+  getTotalPurchasesMes(startDate: string, endDate: string): Observable<any> {
+    const params = new HttpParams()
+      .set('startDate', startDate)  
+      .set('endDate', endDate);
+  
+    const url = `${this.urlPurchases}?${params.toString()}`;
+     
+  
+    return this.http.get(url);
+  }
+  
   
   
 

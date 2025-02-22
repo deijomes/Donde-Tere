@@ -8,6 +8,8 @@ import { MovimientosComponent } from './features/movimientos/movimientos.compone
 import { PRODUCTOS_ROUTES } from './features/productos/registro.routes';
 import { LoginComponent } from './auth/login/login.component';
 import { ComprasComponent } from './features/productos/compras/compras.component';
+import { RegistroUsuarioComponent } from './auth/registro-usuario/registro-usuario.component';
+import { authGuard } from './guards/auth.guard';
 
 // export const routes: Routes = [
 //   { path: '', redirectTo: 'inventarioo', pathMatch: 'full' },
@@ -36,17 +38,18 @@ import { ComprasComponent } from './features/productos/compras/compras.component
 
 
 export const routes: Routes = [
-    { path: 'inventarioo', component: InventarioGeneralComponent },
+    { path: 'inventarioo', component: InventarioGeneralComponent,  canActivate: [authGuard] } ,
     {
         path: 'productos',
         component: InventarioComponent,
-        children: PRODUCTOS_ROUTES
+        children: PRODUCTOS_ROUTES,  canActivate: [authGuard]
     },
-    { path: 'movimientos', component: MovimientosComponent, },
-    {path: 'compras', component :ComprasComponent},
-    { path: 'ventas', component: VentaComponent, },
-    { path: 'ventastotales', component: VentasTotalesComponent, },
+    { path: 'movimientos', component: MovimientosComponent, canActivate: [authGuard] },
+    {path: 'compras', component :ComprasComponent,  canActivate: [authGuard]},
+    { path: 'ventas', component: VentaComponent,  canActivate: [authGuard]},
+    { path: 'ventastotales', component: VentasTotalesComponent,  canActivate: [authGuard]},
     { path: 'login', component: LoginComponent },
+    {path :'register', component: RegistroUsuarioComponent},
     { path: '**', pathMatch: 'full', redirectTo: 'inventarioo' },
    
 ];

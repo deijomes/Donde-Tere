@@ -12,6 +12,10 @@ import { NgxPaginationModule } from 'ngx-pagination'
 import { Subscription } from 'rxjs';
 import { debounceTime, filter, map, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { TranslatePipe } from '../../pipes/translate.pipe';
+import { LoadingService } from '../../services/loading.service';
+
+
 
 
 
@@ -20,7 +24,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-movimientos',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, NgSelectModule, NgxPaginationModule],
+  imports: [ReactiveFormsModule, CommonModule, NgSelectModule, NgxPaginationModule, TranslatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
   templateUrl: './movimientos.component.html',
@@ -36,7 +40,7 @@ export class MovimientosComponent implements OnInit {
 
   listMovimientos: any[] = []
   currentPage: number = 1;  // Página actual (comienza en 1)
-  itemsPerPage: number = 10;  // Elementos por página (puedes cambiar este valor)
+  itemsPerPage: number = 50;  // Elementos por página (puedes cambiar este valor)
   totalItems: number = 0;  // Total de productos que vamos a paginar
 
   filteredMovimientos: any[] = [];
@@ -49,7 +53,7 @@ export class MovimientosComponent implements OnInit {
 
 
   searchTerm: string = '';
-  limit = 60;
+  limit = 100;
   offset = 0;
   productName?: string;
   endDate?: string;
@@ -65,6 +69,7 @@ export class MovimientosComponent implements OnInit {
 
 
   constructor(private serviceproduct: BuscadorService, private http: PoductService, private bf: FormBuilder,
+    private loadingService : LoadingService
 
   ) {
 
@@ -73,6 +78,10 @@ export class MovimientosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.loadingService.init();
+   
+    this.loadingService.show(); 
 
     this.getmovimientos()
 
@@ -108,6 +117,8 @@ export class MovimientosComponent implements OnInit {
 
         this.listMovimientos = response.data
         console.log('listamovimientos', this.listMovimientos)
+        this.loadingService.hide();
+
       }
     })
   }

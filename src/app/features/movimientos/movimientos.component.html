@@ -301,7 +301,7 @@
               <div class="ms-2 d-flex flex-wrap gap-2 align-items-center justify-content-between">
                 <div>
                   <h5 class="mb-1 text-dark fw-medium fs-15">{{ movimiento.product.name | uppercase }}</h5>
-                  <p class="mb-2">Movimiento <a class="link-primary">{{ movimiento.reason }}</a></p>
+                  <p class="mb-2">Movimiento <a class="link-primary">{{ movimiento.reason |translate }}</a></p>
                   <p>Cantidad <a class="btn btn-light">{{ movimiento.quantity }}</a></p>
                 </div>
   
@@ -323,9 +323,10 @@
               <div class="ms-2 d-flex flex-wrap gap-2 align-items-center justify-content-between">
                 <div>
                   <h5 class="mb-1 text-dark fw-medium fs-15">{{ filtroMovimiento.product.name | uppercase }}</h5>
-                  <p class="mb-2">Movimiento <a class="link-primary">{{ filtroMovimiento.reason }}</a></p>
+                  <p class="mb-2">Movimiento <a class="link-primary">{{ filtroMovimiento.reason | translate }}</a></p>
                   <p>Cantidad <a class="btn btn-light">{{ filtroMovimiento.quantity }}</a></p>
                 </div>
+                
   
                 <div class="d-flex justify-content-between align-items-center gap-3">
                   <p class="mb-0">{{ filtroMovimiento.createdAt | date: "yyyy-MM-dd h:mma" : 'es' }}</p>
