@@ -1,38 +1,35 @@
-name: Deploy to Hostinger
+name: 🚀 Deploy Angular to Hostinger
 
 on:
   push:
     branches:
-      - testing  # o la rama que uses para producción
+      - main  # Cambia esto si tu rama principal tiene otro nombre
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checkout repository
+      - name: 📥 Clonar el repositorio
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: 🔨 Instalar Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'  # o la versión que uses
+          node-version: 20  # O la versión que uses en tu proyecto
 
-      - name: Install dependencies
+      - name: 📦 Instalar dependencias
         run: npm install
 
-      - name: Build Angular app
-        run: npm run build --configuration=production
-        
-      - name: List output files
-        run: ls -la dist/
+      - name: 🔧 Construir Angular
+        run: npm run build -- --configuration=production
 
-      - name: 📂 Deploy to Hostinger
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      - name: 📡 Subir archivos a Hostinger (FTP)
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: dist/inventario/  # Reemplaza con el nombre de tu app
-          server-dir: /public_html/     # o la ruta donde quieres desplegar
-          dangerous-clean-slate: true   # Elimina archivos antiguos del servidor
+          local-dir: ./dist/inventario/browser/  # Asegúrate de que es la carpeta correcta
+          server-dir: public_html/  # Directorio donde se aloja tu sitio en Hostinger
+          dangerous-clean-slate: true  
