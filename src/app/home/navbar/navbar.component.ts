@@ -29,12 +29,15 @@ export class NavbarComponent implements OnInit {
   searchTermProductos: string = '';
   usuariObtenido: string = '';
 
-  fechaInicio:  Date |null = null
-  fechaFinal : Date |null = null
+  fechaInicio: Date | null = null
+  fechaFinal: Date | null = null
+  archivoBlob: Blob | null = null; 
+  nombreArchivo: string = ''; 
+  tablaReporte = false
 
 
   constructor(private buscadorService: BuscadorService, private services: ProductoCompraService,
-    private router: Router, private credenciales: CredencialesService, private servicio : DashboardService) {
+    private router: Router, private credenciales: CredencialesService, private servicio: DashboardService) {
 
 
   }
@@ -110,18 +113,18 @@ export class NavbarComponent implements OnInit {
 
     const token = sessionStorage.getItem('token')
 
-    if(token){
+    if (token) {
 
       this.services.Notificaciones().subscribe({
         next: (Response) => {
-  
-          this.notificacion = Response.filter((noti:any) => noti.closed === false)
-          
-  
+
+          this.notificacion = Response.filter((noti: any) => noti.closed === false)
+
+
         }
       })
     }
-  
+
   }
 
   get notificationCount(): number {
@@ -142,8 +145,8 @@ export class NavbarComponent implements OnInit {
       title: '¿Estás seguro?',
       text: 'Estás a punto de cerrar sesión.',
       icon: 'warning',
-     
-     
+
+
       showCancelButton: true,
       confirmButtonText: 'Cerrar sesión',
       cancelButtonText: 'Cancelar',
@@ -158,46 +161,63 @@ export class NavbarComponent implements OnInit {
         localStorage.removeItem('email');
         this.router.navigateByUrl('login');
       }
-    });}
+    });
+  }
 
 
-    generarReporte() {
-      
-  
-      // Convertir fechaInicial a formato ISO (UTC)
-      let startDate;
-      if (this.fechaFinal) {
-        const fechaFin = new Date(this.fechaFinal);
-        fechaFin.setUTCHours(0, 0, 0, 0); // Establece la hora en UTC
-        startDate = fechaFin.toISOString();
-      }
-       
-  
-        
-  
-      // Convertir fechaFinal a formato ISO (UTC) con la hora máxima del día
-      let endDate;
-      if (this.fechaFinal) {
-        const fechaFin = new Date(this.fechaFinal);
-        fechaFin.setUTCHours(23, 59, 59, 999); // Establece la hora en UTC
-        endDate = fechaFin.toISOString();
-      }
-  
-      console.log("Fecha inicial en formato ISO:", startDate);
-      console.log("Fecha final en formato ISO:", endDate);
-  
-      this.servicio.getReporte(startDate, endDate).subscribe((blob: Blob) => {
-        console.log(blob, " reporte");
-    
-        // Crear un enlace para descargar el archivo
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'reporte.xlsx'; // ✅ Nombre del archivo
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-      });
+  generarReporte() {
+
+
+    // Convertir fechaInicial a formato ISO (UTC)
+    let startDate;
+    if (this.fechaFinal) {
+      const fechaFin = new Date(this.fechaFinal);
+      fechaFin.setUTCHours(0, 0, 0, 0); // Establece la hora en UTC
+      startDate = fechaFin.toISOString();
     }
+
+
+
+
+    // Convertir fechaFinal a formato ISO (UTC) con la hora máxima del día
+    let endDate;
+    if (this.fechaFinal) {
+      const fechaFin = new Date(this.fechaFinal);
+      fechaFin.setUTCHours(23, 59, 59, 999); // Establece la hora en UTC
+      endDate = fechaFin.toISOString();
+    }
+
+    console.log("Fecha inicial en formato ISO:", startDate);
+    console.log("Fecha final en formato ISO:", endDate);
+
+    this.servicio.getReporte(startDate, endDate).subscribe((blob: Blob) => {
+
+
+      // Guardar el archivo y el nombre en variables de clase
+      this.archivoBlob = blob;
+      this.nombreArchivo = `reporte_${new Date().toISOString()}.xlsx`;
+      this.tablaReporte = true
+    });
+  }
+
+  descargarArchivo() {
+    if (!this.archivoBlob) {
+     
+      return;
+    }
+
+    
+  
+    const url = window.URL.createObjectURL(this.archivoBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = this.nombreArchivo;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+    this.tablaReporte = false
+  
+    
+  }
 }

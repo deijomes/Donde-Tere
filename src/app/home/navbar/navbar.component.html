@@ -182,17 +182,17 @@
                                    </div>
                               </div>
                          </div>
-                         <div class="position-relative ps-4">
+                         <div *ngIf="tablaReporte" class="position-relative ps-4">
                               <div class="mb-4">
                                    <span class="position-absolute start-0 avatar-sm translate-middle-x bg-success d-inline-flex align-items-center justify-content-center rounded-circle text-light fs-20"><iconify-icon icon="iconamoon:check-circle-1-duotone"></iconify-icon></span>
                                    <div class="ms-2">
                                         <h5 class="mb-1 text-dark fw-semibold fs-15 lh-base">Reporte generado
                                         </h5>
-                                        <p class="d-flex align-items-center mb-0">Marked<span class=" d-flex align-items-center text-primary mx-1"><iconify-icon icon="iconamoon:file-light"></iconify-icon> Design </span> as <span class="badge bg-success-subtle text-success px-2 py-1 ms-1"> Completed</span></p>
+                                        <p class="d-flex align-items-center mb-0"><span class=" d-flex align-items-center text-primary mx-1"><iconify-icon icon="iconamoon:file-light"></iconify-icon> Informe </span> <span class="badge bg-success-subtle text-success px-2 py-1 ms-1"> Completado</span></p>
                                         <div class="d-flex align-items-center gap-3 mt-1 bg-light bg-opacity-50 p-2 rounded-2">
-                                             <a href="#!" class="fw-medium text-dark">UI/UX Figma Design</a>
+                                             <a  class="fw-medium text-dark">{{nombreArchivo}}</a>
                                              <div class="ms-auto">
-                                                  <a (click)="generarReporte()" class="fw-medium text-primary fs-18" data-bs-toggle="tooltip" data-bs-title="Download" data-bs-placement="bottom" style="cursor:pointer;"><iconify-icon icon="iconamoon:cloud-download-duotone"></iconify-icon></a>
+                                                  <a  (click)="descargarArchivo()" class="fw-medium text-primary fs-18" data-bs-toggle="tooltip" data-bs-title="Download" style="cursor: pointer;" data-bs-placement="bottom"><iconify-icon icon="iconamoon:cloud-download-duotone"></iconify-icon></a>
                                              </div>
                                         </div>
                                         <h6 class="mt-3 text-muted">Monday , 3:00 PM</h6>
@@ -201,7 +201,7 @@
                          </div>
                         
                     </div>
-                   
+                    <a (click)="generarReporte()" class="btn btn-outline-dark w-100">Generar</a>
                </div></div></div></div><div class="simplebar-placeholder" style="width: auto; height: 1101px;"></div></div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="width: 0px; display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: visible;"><div class="simplebar-scrollbar" style="height: 25px; transform: translate3d(0px, 0px, 0px); display: block;"></div></div></div>
           </div>
      </div>
