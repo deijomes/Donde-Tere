@@ -3,7 +3,7 @@ name: 🚀 Deploy Angular to Hostinger
 on:
   push:
     branches:
-      - testing  # Cambia esto si tu rama principal tiene otro nombre
+      - testing  # Cambia si usas otra rama
 
 jobs:
   deploy:
@@ -13,13 +13,22 @@ jobs:
       - name: 📥 Clonar el repositorio
         uses: actions/checkout@v3
 
+      - name: 💾 Cache de npm
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
       - name: 🔨 Instalar Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20  # O la versión que uses en tu proyecto
+          cache: 'npm'
 
-      - name: 📦 Instalar dependencias
-        run: npm install
+      - name: 📦 Instalar dependencias (usando cache si está disponible)
+        run: npm ci  # Usa `npm ci` para instalación limpia y más rápida
 
       - name: 🔧 Construir Angular
         run: npm run build -- --configuration=production
@@ -30,6 +39,5 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./dist/inventario/browser/  # Asegúrate de que es la carpeta correcta
-          server-dir: public_html/  # Directorio donde se aloja tu sitio en Hostinger
-          dangerous-clean-slate: true  
+          local-dir: ./dist/inventario/browser/
+          server-dir: public_html/
