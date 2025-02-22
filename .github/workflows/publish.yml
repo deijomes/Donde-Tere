@@ -3,7 +3,7 @@ name: 🚀 Deploy Angular to Hostinger
 on:
   push:
     branches:
-      - main  # Cambia esto si tu rama principal tiene otro nombre
+      - testing  # Cambia esto si tu rama principal tiene otro nombre
 
 jobs:
   deploy:
