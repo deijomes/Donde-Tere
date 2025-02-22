@@ -518,12 +518,13 @@
                 <div class="card">
 
                     <div class="card-body">
-                        <p><strong>ID de la Factura:</strong> {{ selctCompra.id | id }}</p>
-                        <p><strong>Cliente:</strong> {{ selctCompra.supplier | uppercase }}</p>
-                        <p><strong>Idenficación:</strong> {{ selctCompra.identification | uppercase }}</p>
-                        <p><strong>Fecha de Registro:</strong> {{ selctCompra.createdAt |date: "yyyy-MM-dd h:mm a" :
-                            'es' }}</p>
-
+                        <p><strong>ID de la Factura:</strong> {{ selctCompra?.id |id }}</p>
+                        <p><strong>Proveedor:</strong> {{ selctCompra?.supplier | uppercase }}</p>
+                        <p><strong>Identificación:</strong> {{ selctCompra?.identification | uppercase }}</p>
+                        <p><strong>Fecha de Registro:</strong> 
+                            {{ selctCompra?.createdAt | date: "yyyy-MM-dd h:mm a" : 'es' }}
+                        </p>
+                    
                         <div class="table-responsive mt-3">
                             <table class="table mb-0">
                                 <thead>
@@ -535,22 +536,37 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Iterar sobre los items de venta -->
-                                    <tr *ngFor="let item of selctCompra.saleItems">
-                                        <td>{{item.product.name|capitalize }}</td>
-                                        <!-- Puedes reemplazar productId con el nombre del producto si lo tienes -->
-                                        <td class="text-center">{{ item.quantity }}</td>
-                                        <td>${{ item.price }}</td>
-                                        <td>${{ item.subtotal }}</td>
-                                    </tr>
+                                    <!-- Si hay supplyItems, se muestra esta tabla -->
+                                    <ng-container *ngIf="selctCompra?.supplyItems?.length > 0; else purchaseTable">
+                                        <tr *ngFor="let item of selctCompra.supplyItems">
+                                            <td>{{ item.description }}</td>
+                                            <td class="text-center">{{ item.quantity }}</td>
+                                            <td>${{ item.price }}</td>
+                                            <td>${{ item.subtotal }}</td>
+                                        </tr>
+                                    </ng-container>
+                    
+                                    <!-- Si supplyItems está vacío, se muestra purchaseItems -->
+                                    <ng-template #purchaseTable>
+                                        <tr *ngFor="let item of selctCompra?.purchaseItems">
+                                            <td>{{ item.product?.name }}</td>
+                                            <td class="text-center">{{ item.quantity }}</td>
+                                            <td>${{ item.price }}</td>
+                                            <td>${{ item.subtotal }}</td>
+                                        </tr>
+                                    </ng-template>
+                    
+                                    <!-- Total -->
                                     <tr>
                                         <td colspan="3" class="text-end"><strong>Total de la Factura</strong></td>
-                                        <td>${{ selctCompra.total }}</td>
+                                        <td>${{ selctCompra?.total }}</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
+                    
+                    
                 </div>
             </div>
             <div class="modal-footer">

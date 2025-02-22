@@ -781,25 +781,17 @@ export class ComprasComponent implements OnInit {
             this.generatePDFF();
           }, 1000);
         });
-
-
-
         this.eliminarProNoInv();
         this.proSeleccion = [];
+        this.registrosCompras()
       
-
-
         this.tablaProNoInventariado = false
         this.proveedorForm.reset()
-
-
-
 
       },
       error: (err) => {
         console.error('Error al enviar la venta:', err);
         const mensajeError = err.error?.message || 'Hubo un problema al registrar la venta.';
-
 
         Swal.fire({
 
