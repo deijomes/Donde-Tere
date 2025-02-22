@@ -90,7 +90,7 @@ export class ComprasComponent implements OnInit {
     this.inventariado();
     this.cargarProductosSeleccionados();
     this.cargarProInv()
-    
+
   }
   // SESION : 1 OBTENER PRODUCTO, PARA LUEGO SELCCIONARLO Y GUARDARLO EN LOCAL STORAGE...
   producto() {
@@ -343,11 +343,11 @@ export class ComprasComponent implements OnInit {
     }
   }
 
-  //SESION 3: OTNEMOS DATOS DEL CLIENTE Y MANDAMOS EL REGISTRO DE COMPRA
+  //SESION 3: OBTENEMOS DATOS DEL CLIENTE Y MANDAMOS EL REGISTRO DE COMPRA
 
   enviarCompra() {
     const purchaseItems = this.prepararDatosParaAPI();
-    console.log(purchaseItems,'datos mandados')
+    console.log(purchaseItems, 'datos mandados')
     const proveedor = this.proveedorForm.value.proveedor;
     const identificacion = this.proveedorForm.value.identificacion;
 
@@ -517,11 +517,23 @@ export class ComprasComponent implements OnInit {
   }
 
   inventariado() {
+
+    this.loading.show();
+    setTimeout(() => { 
+      this.loading.hide(); 
+    }, 500);
+
     this.inventariados = true
     this.noInventariados = false
 
   }
   noInventariado() {
+    this.loading.show();
+    setTimeout(() => { 
+      this.loading.hide(); 
+    }, 500);
+
+    
     this.inventariados = false
     this.noInventariados = true
 
@@ -569,7 +581,7 @@ export class ComprasComponent implements OnInit {
 
     localStorage.setItem('productoNoInventario', JSON.stringify(this.proSeleccion));
 
-    
+
     this.tablaProNoInventariado = true;
 
     // Desplazar a la tabla
@@ -603,7 +615,7 @@ export class ComprasComponent implements OnInit {
 
   eliminarProNoInve(index: number) {
 
-    console.log('psoicion',index)
+    console.log('psoicion', index)
     Swal.fire({
       title: '¿Estás seguro?',
       text: 'Este producto será eliminado de la lista.',
@@ -639,7 +651,7 @@ export class ComprasComponent implements OnInit {
           showConfirmButton: false
         });
 
-        
+
       }
     });
   }
@@ -731,10 +743,10 @@ export class ComprasComponent implements OnInit {
     }
   }
 
-  cancelarcompraProNoIn(){
+  cancelarcompraProNoIn() {
 
     localStorage.removeItem('productoNoInventario');
-   
+
     this.proSeleccion = []
     this.tablaProNoInventariado = false
 
@@ -743,8 +755,8 @@ export class ComprasComponent implements OnInit {
 
   enviarCompraProNoInv() {
     const supplyItems = this.prepararDatos();
-    console.log(supplyItems,'datos amndos2')
-    
+    console.log(supplyItems, 'datos amndos2')
+
     const proveedor = this.proveedorForm.value.proveedor;
     const identificacion = this.proveedorForm.value.identificacion;
 
@@ -765,6 +777,8 @@ export class ComprasComponent implements OnInit {
         this.serviceCompra.facturaCompra(this.Idfactura).subscribe({
           next: (facturaResponse) => {
             this.facturaCompra = facturaResponse;
+            console.log(facturaResponse,'estos son datos factura')
+            
           }
         })
         Swal.fire({
@@ -784,7 +798,7 @@ export class ComprasComponent implements OnInit {
         this.eliminarProNoInv();
         this.proSeleccion = [];
         this.registrosCompras()
-      
+
         this.tablaProNoInventariado = false
         this.proveedorForm.reset()
 
@@ -816,7 +830,7 @@ export class ComprasComponent implements OnInit {
 
   prepararDatos(): any[] {
     return this.proSeleccion.map((producto: any) => {
-      
+
       return {
         description: producto.name,
         quantity: producto.quantity,
@@ -827,10 +841,10 @@ export class ComprasComponent implements OnInit {
 
   }
 
-  
+
   eliminarProNoInv() {
     localStorage.removeItem('productoNoInventario');
-   
+
   }
 
 
