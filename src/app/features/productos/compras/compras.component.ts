@@ -469,19 +469,12 @@ export class ComprasComponent implements OnInit {
 
 
     const limit = 30;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const endDate = today.toISOString();
+   
 
-
-    const yesterday = new Date(today);
-    yesterday.setDate(today.getDate() - 1);
-    const startDate = yesterday.toISOString();
-
-    this.serviceCompra.registrosCompras(limit,startDate,endDate).subscribe({
+    this.serviceCompra.registrosCompras(limit).subscribe({
       next: (Response) => {
         this.registroCompras = Response.data
-        console.log(Response, 'datos a mostrar')
+        
        
 
       }

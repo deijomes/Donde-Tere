@@ -213,7 +213,7 @@ export class VentaComponent implements OnInit {
         this.serviceproduct.facturaVenta(this.Idfactura).subscribe({
           next: (facturaResponse) => {
             this.facturaVent = facturaResponse;
-            console.log('Factura obtenida:', this.facturaVent);
+            
 
 
 

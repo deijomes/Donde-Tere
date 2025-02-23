@@ -262,7 +262,7 @@ export class PoductService {
       .set('limit', limit.toString())
       .set('offset', offset.toString());
 
-    return this.http.get(`${this.baseUrl}`, { params }); // ✅ Correcto
+    return this.http.get(`${this.baseUrl}`, { params }); 
   }
 
 
