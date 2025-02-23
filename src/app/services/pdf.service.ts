@@ -72,7 +72,7 @@ export class PdfService {
                   widths: ['*', 'auto', 'auto', 'auto'],
                   body: [
                     [
-                      { text: 'Nombre del Suministro', style: 'tableHeader', alignment: 'left' },
+                      { text: 'Nombre del producto', style: 'tableHeader', alignment: 'left' },
                       { text: 'Cantidad', style: 'tableHeader' },
                       { text: 'Precio', style: 'tableHeader' },
                       { text: 'Subtotal', style: 'tableHeader' }
@@ -84,7 +84,7 @@ export class PdfService {
                       { text: `$${item.subtotal}`, style: 'tableCellCenter' }
                     ]),
                     [
-                      { text: 'Total de Suministros', colSpan: 3, style: 'tableTotal', alignment: 'right' },
+                      { text: 'Total', colSpan: 3, style: 'tableTotal', alignment: 'right' },
                       {}, {}, `$${factura.total}`
                     ]
                   ]

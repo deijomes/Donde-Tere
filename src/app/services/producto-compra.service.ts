@@ -46,12 +46,19 @@ export class ProductoCompraService {
 
 
 
-  registrosCompras(): Observable<any> {
-
-    
-    return this.http.get(`${this.baseUrl}`)
-
+  registrosCompras(limit: number, startDate: string, endDate: string): Observable<any> {
+    let params = new HttpParams()
+      .set('limit', limit.toString()); 
+    if (startDate) {
+      params = params.set('startDate', startDate);
+    }
+    if (endDate) {
+      params = params.set('endDate', endDate);
+    }
+    console.log(`${this.baseUrl}?${params.toString()}`, 'esta es la url');
+    return this.http.get(this.baseUrl, { params });
   }
+  
 
  
   Notificaciones(): Observable<any> {

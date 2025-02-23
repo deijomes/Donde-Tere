@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { SelectModule } from 'primeng/select'
 import { LoadingService } from '../../../services/loading.service';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { error } from 'jquery';
 
 
 
@@ -465,10 +466,23 @@ export class ComprasComponent implements OnInit {
   }
 
   registrosCompras() {
-    this.serviceCompra.registrosCompras().subscribe({
+
+
+    const limit = 30;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const endDate = today.toISOString();
+
+
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    const startDate = yesterday.toISOString();
+
+    this.serviceCompra.registrosCompras(limit,startDate,endDate).subscribe({
       next: (Response) => {
-        this.registroCompras = Response
-        console.log('compras registros', this.registroCompras)
+        this.registroCompras = Response.data
+        console.log(Response, 'datos a mostrar')
+       
 
       }
     })

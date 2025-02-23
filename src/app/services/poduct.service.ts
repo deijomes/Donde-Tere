@@ -103,6 +103,21 @@ export class PoductService {
 
   }
 
+  getMovimiento( startDate:string, endDate: string ): Observable<any> {
+    // Crear los parámetros de la consulta
+    let params = new HttpParams()
+    if (startDate) {
+      params = params.set('startDate', startDate);
+    }
+    
+    if (endDate) {
+      params = params.set('endDate', endDate);
+      
+    }
+   
+    return this.http.get(this.urlmov, { params });
+  }
+
 
 
   getmovimientos(
