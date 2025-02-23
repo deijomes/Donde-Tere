@@ -123,7 +123,7 @@ export class MovimientosComponent implements OnInit {
     yesterday.setDate(today.getDate() - 1);
     const startDate = yesterday.toISOString();
 
-    console.log('startDate:', startDate); // Ejemplo: "2025-02-22T00:00:00.000Z"
+    console.log('startDate:', startDate); 
     console.log('endDate:', endDate);
 
     this.http.getMovimiento(startDate, endDate).subscribe({
