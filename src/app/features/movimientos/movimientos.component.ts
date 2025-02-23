@@ -81,7 +81,7 @@ export class MovimientosComponent implements OnInit {
 
     this.loadingService.init();
    
-    this.loadingService.show(); 
+    
 
     this.getmovimientos()
 
@@ -112,6 +112,7 @@ export class MovimientosComponent implements OnInit {
 
 
   getmovimientos() {
+    this.loadingService.show(); 
     this.http.getmovimientos().subscribe({
       next: (response) => {
 
@@ -119,6 +120,13 @@ export class MovimientosComponent implements OnInit {
         console.log('listamovimientos', this.listMovimientos)
         this.loadingService.hide();
 
+      },error: (error) => {
+        console.error('Error al obtener productos:', error);
+        this.loadingService.hide()
+      },
+      complete: () => {
+        this.loadingService.hide()
+       
       }
     })
   }

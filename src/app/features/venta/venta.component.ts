@@ -82,6 +82,7 @@ export class VentaComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error al obtener productos:', err);
+          this.loading.hide()
       }, complete: () => {
         this.loading.hide()}
     });
@@ -249,6 +250,7 @@ export class VentaComponent implements OnInit {
       error: (err) => {
         console.error('Error al enviar la venta:', err);
         const mensajeError = err.error?.message || 'Hubo un problema al registrar la venta.';
+        this.loading.hide()
 
 
         Swal.fire({
@@ -261,6 +263,10 @@ export class VentaComponent implements OnInit {
           }
         });
 
+      },
+      complete: () => {
+        this.loading.hide()
+       
       }
     });
 

@@ -31,7 +31,7 @@ export class NavbarComponent implements OnInit {
 
   fechaInicio: Date | null = null
   fechaFinal: Date | null = null
-  archivoBlob: Blob | null = null; 
+   archivoBlob: Blob | null = null; 
   nombreArchivo: string = ''; 
   tablaReporte = false;
   mostrarBoton = false
@@ -183,6 +183,8 @@ export class NavbarComponent implements OnInit {
       fechaFin.setUTCHours(0, 0, 0, 0); // Establece la hora en UTC
       startDate = fechaFin.toISOString();
     }
+
+     
 
 
 

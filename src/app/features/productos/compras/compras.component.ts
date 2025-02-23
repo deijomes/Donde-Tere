@@ -103,6 +103,7 @@ export class ComprasComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error al obtener productos:', err);
+        this.loading.hide()
       }, complete: () => {
         this.loading.hide()
 
@@ -426,6 +427,11 @@ export class ComprasComponent implements OnInit {
           }
         });
 
+        this.loading.hide()
+
+      },  complete: () => {
+        this.loading.hide()
+       
       }
     });
 
@@ -816,7 +822,11 @@ export class ComprasComponent implements OnInit {
             confirmButton: 'swal-success-btn'
           }
         });
+        this.loading.hide()
 
+      },  complete: () => {
+        this.loading.hide()
+       
       }
     });
 

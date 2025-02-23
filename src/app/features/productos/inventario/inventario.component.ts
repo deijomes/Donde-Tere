@@ -111,6 +111,7 @@ export class InventarioComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error al obtener productos:', error);
+        this.loading.hide()
       },
       complete: () => {
         this.loading.hide()

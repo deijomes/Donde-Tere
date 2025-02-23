@@ -38,7 +38,7 @@ import { authGuard } from './guards/auth.guard';
 
 
 export const routes: Routes = [
-    { path: 'inventarioo', component: InventarioGeneralComponent,  canActivate: [authGuard] } ,
+    { path: 'inventario', component: InventarioGeneralComponent,  canActivate: [authGuard] } ,
     {
         path: 'productos',
         component: InventarioComponent,
@@ -50,6 +50,6 @@ export const routes: Routes = [
     { path: 'ventastotales', component: VentasTotalesComponent,  canActivate: [authGuard]},
     { path: 'login', component: LoginComponent },
     {path :'register', component: RegistroUsuarioComponent},
-    { path: '**', pathMatch: 'full', redirectTo: 'inventarioo' },
+    { path: '**', pathMatch: 'full', redirectTo: 'inventario' },
    
 ];
