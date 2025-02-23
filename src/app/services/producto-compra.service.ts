@@ -8,7 +8,7 @@ import {environment} from '../../environments/environment'
 })
 export class ProductoCompraService {
 
-  private baseUrl = `${environment.API_URL}/api/Purchase`
+  private baseUrl = `${environment.API_URL}/api/purchase`
   private url = `${environment.API_URL}/api/notifications`
 
   constructor(private http: HttpClient) { }
@@ -46,12 +46,14 @@ export class ProductoCompraService {
 
 
 
-  registrosCompras(): Observable<any> {
-
-    
-    return this.http.get(`${this.baseUrl}`)
-
+  registrosCompras(limit: number): Observable<any> {
+    let params = new HttpParams()
+      .set('limit', limit.toString()); 
+   
+    console.log(`${this.baseUrl}?${params.toString()}`, 'esta es la url');
+    return this.http.get(this.baseUrl, { params });
   }
+  
 
  
   Notificaciones(): Observable<any> {

@@ -111,6 +111,7 @@ export class InventarioComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error al obtener productos:', error);
+        this.loading.hide()
       },
       complete: () => {
         this.loading.hide()
@@ -262,7 +263,7 @@ export class InventarioComponent implements OnInit {
         let code = "";
         let nombre = "";
   
-        if (/^[A-Za-z0-9-]+$/.test(term) && /\d/.test(term) && /[A-Za-z]/.test(term) && /^\d+$/.test(term)) {
+        if (/^[A-Za-z0-9-]+$/.test(term) && /\d/.test(term) && /[A-Za-z]/.test(term)) {
           code = term;  
         } else {
           nombre = term; 

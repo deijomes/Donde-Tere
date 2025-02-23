@@ -10,6 +10,7 @@ export class TranslatePipe implements PipeTransform {
     ['PURCHASE', 'COMPRA'],
     ['SALE', 'VENTA'],
     ['RETURN', 'DEVOLUCIÓN'],
+    ['SUPPLIES', 'SUMINISTROS'],
     
   ]);
 

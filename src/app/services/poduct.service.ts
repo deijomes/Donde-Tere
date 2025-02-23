@@ -12,7 +12,7 @@ export class PoductService {
   private url = `${environment.API_URL}/api/product`;
   private baseUrl = `${environment.API_URL}/api/sale`;
   private urlstock = `${environment.API_URL}/api/Product/add-stock/`
-  private urlmov = `${environment.API_URL}/api/movement/summary`
+  private urlmov = `${environment.API_URL}/api/movement`
   constructor(private http: HttpClient) { }
 
   registroProducto(producto: registerModel): Observable<any> {
@@ -101,6 +101,21 @@ export class PoductService {
     );
 
 
+  }
+
+  getMovimiento( startDate:string, endDate: string ): Observable<any> {
+    // Crear los parámetros de la consulta
+    let params = new HttpParams()
+    if (startDate) {
+      params = params.set('startDate', startDate);
+    }
+    
+    if (endDate) {
+      params = params.set('endDate', endDate);
+      
+    }
+   
+    return this.http.get(this.urlmov, { params });
   }
 
 
@@ -247,7 +262,7 @@ export class PoductService {
       .set('limit', limit.toString())
       .set('offset', offset.toString());
 
-    return this.http.get(`${this.baseUrl}`, { params }); // ✅ Correcto
+    return this.http.get(`${this.baseUrl}`, { params }); 
   }
 
 

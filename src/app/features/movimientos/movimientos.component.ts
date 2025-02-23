@@ -69,7 +69,7 @@ export class MovimientosComponent implements OnInit {
 
 
   constructor(private serviceproduct: BuscadorService, private http: PoductService, private bf: FormBuilder,
-    private loadingService : LoadingService
+    private loadingService: LoadingService
 
   ) {
 
@@ -80,8 +80,8 @@ export class MovimientosComponent implements OnInit {
   ngOnInit(): void {
 
     this.loadingService.init();
-   
-    this.loadingService.show(); 
+
+
 
     this.getmovimientos()
 
@@ -91,7 +91,7 @@ export class MovimientosComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-   
+
 
     this.serviceproduct.limpiarBusqueda('movimientos'); // Limpia la búsqueda al salir del componente
     this.searchTermSubscription.unsubscribe(); // Evita fugas de memoria
@@ -112,12 +112,33 @@ export class MovimientosComponent implements OnInit {
 
 
   getmovimientos() {
-    this.http.getmovimientos().subscribe({
+    this.loadingService.show();
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const endDate = today.toISOString();
+
+
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    const startDate = yesterday.toISOString();
+
+    console.log('startDate:', startDate); 
+    console.log('endDate:', endDate);
+
+    this.http.getMovimiento(startDate, endDate).subscribe({
       next: (response) => {
 
         this.listMovimientos = response.data
         console.log('listamovimientos', this.listMovimientos)
         this.loadingService.hide();
+
+      }, error: (error) => {
+        console.error('Error al obtener productos:', error);
+        this.loadingService.hide()
+      },
+      complete: () => {
+        this.loadingService.hide()
 
       }
     })
