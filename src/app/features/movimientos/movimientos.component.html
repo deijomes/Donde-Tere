@@ -326,7 +326,7 @@
               </span>
               <div class="ms-2 d-flex flex-wrap gap-2 align-items-center justify-content-between">
                 <div>
-                  <h5 class="mb-1 text-dark fw-medium fs-15">{{ filtroMovimiento.product.name | uppercase}}</h5>
+                  <h5 class="mb-1 text-dark fw-medium fs-15">{{ filtroMovimiento.product?.name | uppercase}}</h5>
                   <p class="mb-2">Movimiento <a class="link-primary">{{ filtroMovimiento.reason | translate }}</a></p>
                   <p >{{filtroMovimiento.description}} </p>
                   <p>Cantidad <a class="btn btn-light">{{ filtroMovimiento.quantity }}</a></p>
