@@ -113,20 +113,21 @@ export class MovimientosComponent implements OnInit {
 
   getmovimientos() {
     this.loadingService.show();
+    const limit = 500
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const endDate = today.toISOString();
+        // const today = new Date();
+    // today.setHours(0, 0, 0, 0);
+    // const endDate = today.toISOString();
 
 
-    const yesterday = new Date(today);
-    yesterday.setDate(today.getDate() - 1);
-    const startDate = yesterday.toISOString();
+    // const yesterday = new Date(today);
+    // yesterday.setDate(today.getDate() - 1);
+    // const startDate = yesterday.toISOString();
 
-    console.log('startDate:', startDate); 
-    console.log('endDate:', endDate);
+    // console.log('startDate:', startDate); 
+    // console.log('endDate:', endDate);
 
-    this.http.getMovimiento(startDate, endDate).subscribe({
+    this.http.getMovimiento(limit).subscribe({
       next: (response) => {
 
         this.listMovimientos = response.data

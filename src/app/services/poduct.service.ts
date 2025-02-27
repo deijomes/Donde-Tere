@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { registerModel } from '../models/registerModel';
 import { catchError, Observable } from 'rxjs';
-import {environment} from '../../environments/environment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +39,7 @@ export class PoductService {
 
   }
 
-  getProducts(limit: number, offset: number, code: string, name : string): Observable<any> {
+  getProducts(limit: number, offset: number, code: string, name: string): Observable<any> {
     // Crear los parámetros de la consulta
     const params = new HttpParams()
       .set('limit', limit.toString())
@@ -52,7 +52,7 @@ export class PoductService {
   }
 
 
-  
+
 
 
   prodoctoEditar(id: string): Observable<any> {
@@ -103,18 +103,12 @@ export class PoductService {
 
   }
 
-  getMovimiento( startDate:string, endDate: string ): Observable<any> {
+  getMovimiento(limit: number ): Observable<any> {
     // Crear los parámetros de la consulta
     let params = new HttpParams()
-    if (startDate) {
-      params = params.set('startDate', startDate);
-    }
-    
-    if (endDate) {
-      params = params.set('endDate', endDate);
-      
-    }
-   
+      .set('limit', limit.toString());
+
+
     return this.http.get(this.urlmov, { params });
   }
 
@@ -148,12 +142,12 @@ export class PoductService {
 
 
 
- 
+
 
   // Método para construir la URL con los parámetros
-  buildUrl(limit?: number, offset?: number, productName?: string, startDate?:string, endDate?: string): string {
+  buildUrl(limit?: number, offset?: number, productName?: string, startDate?: string, endDate?: string): string {
     let url = this.urlmov
-  
+
     let params = new HttpParams();
 
     if (limit !== undefined) {
@@ -185,7 +179,7 @@ export class PoductService {
   }
 
   // Método para realizar la solicitud HTTP GET con los parámetros
-  getDatos(limit?: number, offset?: number, productName?: string, endDate?: string, startDate?:string): Observable<any> {
+  getDatos(limit?: number, offset?: number, productName?: string, endDate?: string, startDate?: string): Observable<any> {
     const url = this.buildUrl(limit, offset, productName, startDate, endDate);
     console.log(url, 'esta es la url')
     return this.http.get<any>(url);
@@ -221,10 +215,10 @@ export class PoductService {
         const [day, month, year] = input.split('-');
         formattedInput = `${year}-${month}-${day}`;
       }
-      
+
       const startDate = new Date(formattedInput + 'T00:00:00.000Z');
       const endDate = new Date(formattedInput + 'T23:59:59.999Z');
-      
+
       return {
         isDate: true,
         startDate: startDate.toISOString(),
@@ -238,8 +232,8 @@ export class PoductService {
       };
     }
   }
-  
-  
+
+
 
 
 
@@ -262,7 +256,7 @@ export class PoductService {
       .set('limit', limit.toString())
       .set('offset', offset.toString());
 
-    return this.http.get(`${this.baseUrl}`, { params }); 
+    return this.http.get(`${this.baseUrl}`, { params });
   }
 
 
