@@ -16,3 +16,20 @@
 .floating-box {
     margin-top: 20px; /* Ajusta el valor según lo necesites */
 }
+
+.login-wrapper {
+    width: 100vw;
+    height: 100vh;
+    background-color: #1b69b7; /* Cambia según tu diseño */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 500px; /* o el ancho que quieras */
+}
+
