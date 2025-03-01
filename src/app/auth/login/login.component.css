@@ -3,6 +3,7 @@
     box-shadow: -1px 0 2px rgba(255, 165, 0, 0.404); /* Sombra en el lado izquierdo con naranja (rgba) */
  
     border-radius: 10px; /* Bordes redondeados */
+    backdrop-filter: blur(10px);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -20,16 +21,42 @@
 .login-wrapper {
     width: 100vw;
     height: 100vh;
-    background-color: #1b69b7; /* Cambia según tu diseño */
+    background-image: url('/assets/images/rr.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 1rem;
     box-sizing: border-box;
+    position: relative; /* Importante */
+    overflow: hidden; /* Asegura que no se desborde */
 }
 
-.login-container {
-    width: 100%;
-    max-width: 500px; /* o el ancho que quieras */
+.circle-image {
+    background-color: white;
+    border: 3px solid #ffa6001a; /* Mantengo el borde resaltado */
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: -30px;
+    border-radius: 50%; /* Esto asegura que el círculo sea perfecto */
+    position: absolute; /* Si necesitas que flote sobre el cuadro */
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Opcional: le da algo de profundidad */
 }
+
+.circle-image img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%; /* Asegura que la imagen también sea circular */
+}
+
+
+
 

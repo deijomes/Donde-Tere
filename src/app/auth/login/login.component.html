@@ -1,14 +1,35 @@
-<div class="login-wrapper d-flex justify-content-center align-items-center">
-    <div class="login-container">
-        <div class="floating-box p-4 rounded position-relative pt-5">
-            <div class="circle-image position-absolute top-0 start-50 translate-middle"
-                style="background-color: white; border-radius: 50%; padding: 10px;">
-                <img src="assets/images/tere4.png" alt="Logo" class="img-fluid rounded-circle"
-                    style="width: 40px; height: 30px;">
+<div class="login-wrapper d-flex justify-content-center align-items-center" style="height: 100vh; width: 100vw;">
+    <div class="login-container d-flex justify-content-center align-items-center" style="width: 100%;">
+        <div class="floating-box p-4 rounded position-relative"
+            style="width: 100%; max-width: 500px; background-color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding-top: 70px;">
+
+            <!-- Imagen superior -->
+            <div class="header-image position-absolute top-0 start-0 w-100"
+                style="height: 120px; overflow: hidden; z-index: 0;">
+                <img src="assets/images/rr.png"
+                    alt="Header"
+                    style="width: 100%; height: 100%; object-fit: cover;">
             </div>
 
-            <div class="d-flex flex-column h-100 justify-content-center">
-                <div class="mb-5 authentication-form">
+            <!-- Círculo del logo -->
+            <div class="circle-image position-absolute top-0 start-50 translate-middle"
+                style="background-color: white; border: 3px solid #ffa500; border-radius: 50%; padding: 10px; z-index: 1;">
+                <img src="assets/images/tere4.png" alt="Logo" class="img-fluid rounded-circle"
+                    style="width: 40px; height: 40px;">
+            </div>
+
+            <!-- Contenedor de texto + formulario -->
+            <div class="d-flex flex-column align-items-center"
+                style="margin-top: 80px; position: relative; z-index: 1;">
+
+                <!-- Nombre del sistema, más pegado al círculo -->
+                <div class="system-name text-center"
+                    style="font-weight: bold; font-size: 20px; color: #333; margin-top: 55px;">
+                    InveNova System
+                </div>
+
+                <!-- Formulario de login -->
+                <div class="authentication-form w-100 mt-3">
                     <form [formGroup]="loguinForm" (ngSubmit)="loguearse()">
                         <div class="mb-3">
                             <label class="form-label" for="example-email">Email</label>
@@ -21,8 +42,7 @@
                                 placeholder="password">
                         </div>
                         <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="rememberMe"
-                                formControlName="rememberMe">
+                            <input type="checkbox" class="form-check-input" id="rememberMe" formControlName="rememberMe">
                             <label class="form-check-label" for="rememberMe">Remember</label>
                         </div>
 
@@ -30,20 +50,21 @@
                             <button class="btn btn-soft-primary" type="submit">Sign In</button>
                         </div>
                     </form>
-                </div>
 
-                <div *ngIf="spinner" class="d-flex justify-content-center p-3">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Cargando...</span>
+                    <div *ngIf="spinner" class="d-flex justify-content-center p-3">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Cargando...</span>
+                        </div>
                     </div>
-                </div>
 
-                <p class="text-danger text-center">Don't have an account? 
-                    <a (click)="registro()" class="text-dark fw-bold ms-1" style="cursor: pointer;">Sign Up</a>
-                </p>
+                    <p class="text-danger text-center">
+                        Don't have an account?
+                        <a (click)="registro()" class="text-dark fw-bold ms-1" style="cursor: pointer;">Sign Up</a>
+                    </p>
+                </div>
             </div>
 
-            <div class="col-12 text-center">
+            <div class="col-12 text-center mt-3">
                 <a class="fw-bold footer-text" target="_blank">CorpaTech</a>
             </div>
         </div>
