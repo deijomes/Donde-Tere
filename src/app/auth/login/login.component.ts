@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   credenciales: UsuarioModel
   loguinForm!: FormGroup
   spinner = false
+  botton = true
 
   constructor(private router: Router, private bf: FormBuilder, private servicio: CredencialesService,
     private loadingService: LoadingService
@@ -58,6 +59,8 @@ export class LoginComponent implements OnInit {
     }
 
     const usuario = this.loguinForm.value;
+
+    this.botton = false
 
     this.spinner = true
 
@@ -102,6 +105,7 @@ export class LoginComponent implements OnInit {
         console.error('Error al iniciar sesión:', error);
 
         this.spinner = false
+        this.botton = true
 
 
         Swal.fire({

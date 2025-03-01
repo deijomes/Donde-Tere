@@ -34,21 +34,6 @@
     overflow: hidden; /* Asegura que no se desborde */
 }
 
-.circle-image {
-    background-color: white;
-    border: 3px solid #ffa6001a; /* Mantengo el borde resaltado */
-    width: 70px;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    top: -30px;
-    border-radius: 50%; /* Esto asegura que el círculo sea perfecto */
-    position: absolute; /* Si necesitas que flote sobre el cuadro */
-    left: 50%;
-    transform: translateX(-50%);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Opcional: le da algo de profundidad */
-}
 
 .circle-image img {
     width: 40px;
