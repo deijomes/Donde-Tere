@@ -16,3 +16,43 @@
 .floating-box {
     margin-top: 20px; /* Ajusta el valor según lo necesites */
 }
+
+
+.login-wrapper {
+    width: 100vw;
+    height: 100vh;
+    background:
+        linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)),
+        url('/assets/images/fff.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+
+
+.circle-image img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 60%; /* Asegura que la imagen también sea circular */
+}
+
+.circle-image {
+    top: 25px; /* Ajusta este valor para moverlo dentro del área roja */
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: white;
+    border-radius: 50%;
+    padding: 10px;
+    z-index: 2; /* Asegúrate de que esté encima */
+    position: absolute;
+}
+
+
