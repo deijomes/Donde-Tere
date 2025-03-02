@@ -81,7 +81,7 @@ export class PoductService {
   }
   enviarVenta(cliente: string, identificacion: string, saleItems: any[]): Observable<any> {
     const body = { customer: cliente, identification: identificacion, saleItems };
-    console.log('Datos a enviar:', body);
+   
 
     return this.http.post(`${this.baseUrl}`, body).pipe(
       catchError(error => {

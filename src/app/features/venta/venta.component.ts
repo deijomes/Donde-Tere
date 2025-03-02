@@ -78,7 +78,7 @@ export class VentaComponent implements OnInit {
       next: (response) => {
         this.productos = response.data; // Asegúrate de usar un punto y coma, no coma
         this.filteredProductos = [...this.productos];
-        console.log(this.filteredProductos, 'este el listado');
+        
       },
       error: (err) => {
         console.error('Error al obtener productos:', err);
@@ -104,10 +104,10 @@ export class VentaComponent implements OnInit {
   }
 
   productoSeleccionado(producto: any) {
-    console.log('Producto recibido:', producto);
+    
 
     const productoCodigo = producto.code;
-    console.log('Código del producto recibido:', productoCodigo);
+    
 
     // Buscar el producto usando el código
     const productoEncontrado = this.productos.find(p => p.code === productoCodigo);
@@ -118,7 +118,7 @@ export class VentaComponent implements OnInit {
         cantidad: '',
 
       });
-      console.log('Producto seleccionado:', productoEncontrado);
+      
     } else {
       console.log('Producto no encontrado');
     }
@@ -166,7 +166,7 @@ export class VentaComponent implements OnInit {
       // Guardar en localStorage
       localStorage.setItem('productosSeleccion', JSON.stringify(this.productosSeleccion));
 
-      console.log('Producto actualizado:', this.productosSeleccion);
+      
 
       this.prodcutotabla = true;
       this.saleForm.reset();  // Reiniciar el formulario después de agregar
@@ -180,7 +180,7 @@ export class VentaComponent implements OnInit {
     const productosGuardados = localStorage.getItem('productosSeleccion');
     if (productosGuardados) {
       this.productosSeleccion = JSON.parse(productosGuardados); // Convertir de JSON a objeto
-      console.log('Productos cargados desde LocalStorage:', this.productosSeleccion);
+      
       this.prodcutotabla = true;
     }
 
@@ -196,15 +196,13 @@ export class VentaComponent implements OnInit {
     
 
 
-    console.log('Sale Items:', saleItems);
-    console.log('Cliente:', cliente);
-    console.log('identidicacion', identificacion)
+    
 
     this.loading.show();
 
     this.serviceproduct.enviarVenta(cliente, idenfic, saleItems).subscribe({
       next: (response) => {
-        console.log('Venta enviada con éxito:', response);
+        
         this.Idfactura = response.id
        this.loading.hide();
 
@@ -290,7 +288,7 @@ export class VentaComponent implements OnInit {
 
   eliminarProductosGuardados() {
     localStorage.removeItem('productosSeleccion');
-    console.log('Productos eliminados de localStorage.');
+    
   }
 
 
@@ -419,7 +417,7 @@ export class VentaComponent implements OnInit {
     this.serviceproduct.obtenerSalidas().subscribe({
       next: (Response) => {
         this.salidas = Response.data
-        console.log(this.salidas)
+        
 
       }
     })
@@ -428,7 +426,7 @@ export class VentaComponent implements OnInit {
   detalle(salida: any) {
 
     this.selctSalida = salida
-    console.log(this.selctSalida)
+    
 
 
 
@@ -471,7 +469,7 @@ export class VentaComponent implements OnInit {
   cancelarventa() {
 
     localStorage.removeItem('productosSeleccion');
-    console.log('Productos eliminados de localStorage.');
+    
     this.productosSeleccion = []
     this.prodcutotabla = false
 
