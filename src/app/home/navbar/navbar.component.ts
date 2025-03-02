@@ -73,7 +73,7 @@ export class NavbarComponent implements OnInit {
 
   private enviarTerminoBusqueda(): void {
     if (this.searchTerm.trim()) { // Verifica que no esté vacío
-      console.log('Término de búsqueda enviado:', this.searchTerm);
+      
       // Enviar el término con el contexto adecuado
       // Define el contexto basado en la ruta actual
       let contexto = 'general';
@@ -197,8 +197,7 @@ export class NavbarComponent implements OnInit {
       endDate = fechaFin.toISOString();
     }
 
-    console.log("Fecha inicial en formato ISO:", startDate);
-    console.log("Fecha final en formato ISO:", endDate);
+   
 
     this.servicio.getReporte(startDate, endDate).subscribe((blob: Blob) => {
 

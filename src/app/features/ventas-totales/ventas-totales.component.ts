@@ -146,11 +146,10 @@ export class VentasTotalesComponent implements OnInit {
       endDate = fechaFin.toISOString();
     }
 
-    console.log("Fecha inicial en formato ISO:", startDate);
-    console.log("Fecha final en formato ISO:", endDate);
+    
 
     this.servicio.getProductSelling(limit, startDate, endDate).subscribe((data: any) => {
-      console.log(data, " productos filtrados de top vendidos");
+      
       this.MasVendidos = data;
 
       this.filterCalendar = false
@@ -187,11 +186,10 @@ export class VentasTotalesComponent implements OnInit {
       endDate = fechaFin.toISOString();
     }
 
-    console.log("Fecha inicial en formato ISO:", startDate);
-    console.log("Fecha final en formato ISO:", endDate);
+   
 
     this.servicio.getProductsold(limit, startDate, endDate).subscribe((data: any) => {
-      console.log(data, " productos filtrados de top vendidos");
+     
       this.MenosVendidos = data;
 
 
@@ -237,12 +235,11 @@ export class VentasTotalesComponent implements OnInit {
       endDate = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate(), 23, 59, 59, 999)).toISOString();
     }
   
-    console.log("Fecha inicio:", startDate);
-    console.log("Fecha fin:", endDate);
+    
   
     // Llamamos al servicio con las fechas correspondientes
     this.servicio.getTotalSales(startDate, endDate).subscribe((data: any) => {
-      console.log(data, "total ventas");
+     
       this.TotalVentas = data;
       
     });
@@ -277,10 +274,7 @@ export class VentasTotalesComponent implements OnInit {
 
     // Llamamos al servicio con las fechas correspondientes
     this.servicio.getTotalPurchasesMes(startDate, endDate).subscribe((data: any) => {
-        console.log(data, "total compras");
-        console.log(startDate, 'inicio del día');
-        console.log(endDate, 'fin del día');
-        console.log(this.hoy, 'valor de hoy');
+        
         this.TotalCompras = data;
     });
 }
@@ -318,7 +312,7 @@ export class VentasTotalesComponent implements OnInit {
       });
     }
 
-    console.log("Meses generados:", meses);
+    
 
     // Hacemos las 4 peticiones en paralelo y esperamos la respuesta
     forkJoin(
@@ -333,7 +327,7 @@ export class VentasTotalesComponent implements OnInit {
         totalVentas: resultados[index] // Puede ser número o estructura según la API
       }));
 
-      console.log("Ventas por mes:", this.ventasPorMes);
+      
 
       this.barChartLabels = this.ventasPorMes.map((item) => item.nombreMes);  // Asignar meses a las etiquetas
       this.barChartData.labels = this.barChartLabels;  // Asignar las etiquetas al gráfico
