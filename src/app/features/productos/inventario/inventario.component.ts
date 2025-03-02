@@ -188,7 +188,7 @@ export class InventarioComponent implements OnInit {
 
   edicion(id: string) {
 
-    console.log(id)
+    
 
     this.router.navigateByUrl(`/productos/actualizar/${id}`)
 
@@ -198,7 +198,7 @@ export class InventarioComponent implements OnInit {
 
   eliminar(id: string): void {
 
-    console.log(id)
+   
 
 
      Swal.fire({

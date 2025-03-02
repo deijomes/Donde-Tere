@@ -43,7 +43,7 @@ export class ActualizarComponent implements OnInit {
     this.activeRou.params.subscribe((params)=> {
 
       this.id = params['id'];
-      console.log(this.id, 'este es el id obtenido');
+     
 
       this.cargarProdcuto();
 
@@ -94,7 +94,7 @@ export class ActualizarComponent implements OnInit {
     this.formEnviado = true;
   
     if (this.actualizarForm.invalid) {
-      console.log('Formulario inválido');
+      
       return;
     }
   
@@ -102,7 +102,7 @@ export class ActualizarComponent implements OnInit {
   
     this.http.EditarProducto(this.id, productoActualizado).subscribe({
       next: (response) => {
-        console.log('Producto actualizado exitosamente:', response);
+        
   
         Swal.fire({
           title: '¡Éxito!',

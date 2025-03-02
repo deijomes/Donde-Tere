@@ -99,7 +99,7 @@ export class ComprasComponent implements OnInit {
     this.serviceproduct.obtenerRegistros().subscribe({
       next: (response) => {
         this.productos = response.data; // Asegúrate de usar un punto y coma, no coma
-        console.log(this.productos)
+        
         this.filteredProductos = [...this.productos];
       },
       error: (err) => {
@@ -126,10 +126,10 @@ export class ComprasComponent implements OnInit {
    }  */
 
   productoSeleccionado(producto: any) {
-    console.log('Producto recibido:', producto);
+    
 
     const productoCodigo = producto.code;
-    console.log('Código del producto recibido:', productoCodigo);
+    
 
     // Buscar el producto usando el código
     const productoEncontrado = this.productos.find((p: any) => p.code === productoCodigo);
@@ -142,7 +142,7 @@ export class ComprasComponent implements OnInit {
         precio: ''
 
       });
-      console.log('Producto seleccionado:', productoEncontrado);
+      
     } else {
       console.log('Producto no encontrado');
     }
@@ -192,7 +192,7 @@ export class ComprasComponent implements OnInit {
       // Guardar en localStorage
       localStorage.setItem('productosSeleccionados', JSON.stringify(this.productosSeleccionados));
 
-      console.log('Producto actualizado:', this.productosSeleccionados);
+     
       this.tablaProducto = true;
 
 
@@ -206,7 +206,7 @@ export class ComprasComponent implements OnInit {
     const productosGuardados = localStorage.getItem('productosSeleccionados');
     if (productosGuardados) {
       this.productosSeleccionados = JSON.parse(productosGuardados); // Convertir de JSON a objeto
-      console.log('Productos cargados desde LocalStorage:', this.productosSeleccionados);
+     
       this.tablaProducto = true;
     }
 
@@ -349,7 +349,7 @@ export class ComprasComponent implements OnInit {
 
   enviarCompra() {
     const purchaseItems = this.prepararDatosParaAPI();
-    console.log(purchaseItems, 'datos mandados')
+   
     const proveedor = this.proveedorForm.value.proveedor;
     const identificacion = this.proveedorForm.value.identificacion;
 
@@ -362,7 +362,7 @@ export class ComprasComponent implements OnInit {
 
     this.serviceCompra.enviarCompra(proveedor, idenfic, purchaseItems, supplyItems).subscribe({
       next: (response) => {
-        console.log('compra enviada con éxito:', response);
+        
 
         this.Idfactura = response.id
 
@@ -462,7 +462,7 @@ export class ComprasComponent implements OnInit {
 
   eliminarProductosGuardados() {
     localStorage.removeItem('productosSeleccionados');
-    console.log('Productos eliminados de localStorage.');
+    
   }
 
   registrosCompras() {
@@ -500,7 +500,7 @@ export class ComprasComponent implements OnInit {
   detalle(compra: any) {
 
     this.selctCompra = compra
-    console.log(this.selctCompra)
+    
 
   }
 
@@ -523,7 +523,7 @@ export class ComprasComponent implements OnInit {
   cancelarventa() {
 
     localStorage.removeItem('productosSeleccionados');
-    console.log('Productos eliminados de localStorage.');
+    
     this.productosSeleccionados = []
     this.tablaProducto = false
 
@@ -628,7 +628,7 @@ export class ComprasComponent implements OnInit {
 
   eliminarProNoInve(index: number) {
 
-    console.log('psoicion', index)
+    
     Swal.fire({
       title: '¿Estás seguro?',
       text: 'Este producto será eliminado de la lista.',
@@ -673,7 +673,7 @@ export class ComprasComponent implements OnInit {
     const productosGuardados = localStorage.getItem('productoNoInventario');
     if (productosGuardados) {
       this.proSeleccion = JSON.parse(productosGuardados); // Convertir de JSON a objeto
-      console.log('Productos cargados desde LocalStorage:', this.productosSeleccionados);
+      
       this.tablaProNoInventariado = true;
     }
 
@@ -768,7 +768,7 @@ export class ComprasComponent implements OnInit {
 
   enviarCompraProNoInv() {
     const supplyItems = this.prepararDatos();
-    console.log(supplyItems, 'datos amndos2')
+   
 
     const proveedor = this.proveedorForm.value.proveedor;
     const identificacion = this.proveedorForm.value.identificacion;
@@ -790,7 +790,7 @@ export class ComprasComponent implements OnInit {
         this.serviceCompra.facturaCompra(this.Idfactura).subscribe({
           next: (facturaResponse) => {
             this.facturaCompra = facturaResponse;
-            console.log(facturaResponse,'estos son datos factura')
+            
             
           }
         })

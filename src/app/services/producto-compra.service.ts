@@ -15,7 +15,7 @@ export class ProductoCompraService {
 
   enviarCompra(cliente: string, identificacion: string, purchaseItems: any[],  supplyItems: any[]): Observable<any> {
     const body = { supplier: cliente, identification: identificacion, purchaseItems, supplyItems };
-    console.log('Datos a enviar:', body);
+   
 
     return this.http.post(`${this.baseUrl}`, body).pipe(
       catchError(error => {
@@ -28,7 +28,7 @@ export class ProductoCompraService {
   
   enviarCompraProNoInv(cliente: string, identificacion: string, purchaseItems: any[],  supplyItems: any[]): Observable<any> {
     const body = { supplier: cliente, identification: identificacion, purchaseItems, supplyItems };
-    console.log('Datos a enviar:', body);
+    
 
     return this.http.post(`${this.baseUrl}`, body).pipe(
       catchError(error => {

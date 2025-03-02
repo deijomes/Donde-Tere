@@ -131,7 +131,7 @@ export class MovimientosComponent implements OnInit {
       next: (response) => {
 
         this.listMovimientos = response.data
-        console.log('listamovimientos', this.listMovimientos)
+       
         this.loadingService.hide();
 
       }, error: (error) => {
