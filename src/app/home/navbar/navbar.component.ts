@@ -8,11 +8,13 @@ import { ActivatedRoute, Router, RouterLinkActive } from '@angular/router';
 import { EmailsplitPipe } from '../../pipes/emailsplit.pipe';
 import Swal from 'sweetalert2';
 import { CredencialesService } from '../../services/credenciales.service';
-import { interval } from 'rxjs';
+import { interval, Subscription } from 'rxjs';
 import { DatePickerModule } from 'primeng/datepicker';
 
 import { FluidModule } from 'primeng/fluid';
 import { DashboardService } from '../../services/dashboard.service';
+import { NotificationService } from '../../services/notification.service';
+
 
 @Component({
   selector: 'app-navbar',
@@ -36,19 +38,24 @@ export class NavbarComponent implements OnInit {
   tablaReporte = false;
   mostrarBoton = false
 
+  private notificacionSub!: Subscription;
+
 
   constructor(private buscadorService: BuscadorService, private services: ProductoCompraService,
     private router: Router, private credenciales: CredencialesService, private servicio: DashboardService, 
-    private route:ActivatedRoute) {
+    private route:ActivatedRoute, private socketService: NotificationService) {
 
 
   }
   ngOnInit(): void {
 
-    this.notificaciones();
-    interval(10000).subscribe(() => {
-      this.notificaciones();
-    });
+    
+
+
+    this.notificaciones()
+    setTimeout(() => this.notificaciones(), 120000)
+
+    this.inicializarSocket()
     this.obtenerUsuario()
 
     this.router.events.subscribe(() => {
@@ -57,8 +64,7 @@ export class NavbarComponent implements OnInit {
 
   }
 
- 
-   
+
 
   onSearch(): void {
 
@@ -132,7 +138,35 @@ export class NavbarComponent implements OnInit {
         }
       })
     }
+  }
 
+  
+  inicializarSocket() {
+  
+    this.socketService.connect();
+    
+  
+    this.notificacionSub = this.socketService.listen('newNotification').subscribe({
+      next: (nuevaNotificacion) => {
+        console.log(' Notificación recibida:', nuevaNotificacion);
+        this.notificacion.push(nuevaNotificacion);
+      },
+      error: (err) => {
+        console.error(' Error recibiendo notificación:', err);
+      }
+    });
+
+
+  } 
+
+  ngOnDestroy(): void {
+    // Limpia la suscripción al destruir el componente
+    if (this.notificacionSub) {
+      this.notificacionSub.unsubscribe();
+    }
+
+    // Desconecta el socket
+    this.socketService.disconnect();
   }
 
   get notificationCount(): number {
