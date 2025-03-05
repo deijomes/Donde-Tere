@@ -82,7 +82,7 @@ export class RegistroUsuarioComponent implements OnInit {
           showConfirmButton: false,
           timerProgressBar: true,
           willClose: () => {
-            this.router.navigateByUrl('/home'); // Redirige a la página de inicio
+            this.router.navigateByUrl('/admin'); // Redirige a la página de inicio
           }
         });
 

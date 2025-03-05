@@ -1,79 +1,61 @@
 
 
-<div class="floating-box p-4 rounded position-relative"
-style="width: 100%; max-width: 500px; background-color:#ffffff; 
-       padding-top: 70px; 
-       border-radius: 15px; 
-       position: relative;
-       box-shadow: 0 0 5px 0px rgba(255, 126, 95, 0.8);">
 
-<!-- Imagen superior -->
-<div class="header-image position-absolute top-0 start-0 w-100"
-  style="height: 120px; overflow: hidden; z-index: 0; border-top-left-radius: 15px; border-top-right-radius: 10px;">
-  <img src="/assets/images/fff.png" alt="Header" style="width: 100%; height: 100%; object-fit: cover;">
-</div>
 
-<!-- Círculo del logo centrado -->
-<div class="circle-image">
-  <img src="assets/images/tere4.png" alt="Logo" class="img-fluid rounded-circle" style="width: 100px; height: 70px;">
-</div>
 
 <!-- Contenedor de texto + formulario -->
-<div class="d-flex flex-column align-items-center" style="margin-top: 80px; position: relative; z-index: 1;">
+ <div class="card">
+  <div class="d-flex flex-column align-items-center" style=" position: relative; z-index: 1; ">
 
-  <div class="fw-bold footer-text system-name text-center"
-    style="font-weight: bold; font-size: 20px; margin-top: 55px;
-           background: linear-gradient(90deg, #ff7e5f, #feb47b);
-           -webkit-background-clip: text;
-           -webkit-text-fill-color: transparent;">
-    NextNova
-  </div>
 
-  <!-- Formulario de registro -->
-  <div class="authentication-form w-100 mt-3">
-    <form [formGroup]="registroForm" (ngSubmit)="guardar()">
 
-      <!-- Nombre y Apellido -->
-      <div class="mb-3">
-        <label class="form-label" for="new-input">Nombre y Apellido</label>
-        <input type="text" id="new-input" class="form-control" formControlName="fullName">
-        <div *ngIf="fullName?.touched">
-          <small [ngClass]="{'text-danger': fullName?.invalid, 'text-success': fullName?.valid}">
-            {{ fullName?.invalid ? 'Primer caracter debe ser mayúscula' : '✔ Válido' }}
-          </small>
+    <!-- Formulario de registro -->
+    <div class="authentication-form w-100 mt-3">
+      <form [formGroup]="registroForm" (ngSubmit)="guardar()">
+  
+        <!-- Nombre y Apellido -->
+        <div class="mb-3">
+          <label class="form-label" for="new-input">Nombre y Apellido</label>
+          <input type="text" id="new-input" class="form-control" formControlName="fullName">
+          <div *ngIf="fullName?.touched">
+            <small [ngClass]="{'text-danger': fullName?.invalid, 'text-success': fullName?.valid}">
+              {{ fullName?.invalid ? 'Primer caracter debe ser mayúscula' : '✔ Válido' }}
+            </small>
+          </div>
         </div>
-      </div>
-
-      <!-- Email -->
-      <div class="mb-3">
-        <label class="form-label" for="example-email">Email</label>
-        <input type="email" id="example-email" class="form-control" formControlName="email">
-      </div>
-
-      <!-- Contraseña -->
-      <div class="mb-3">
-        <label class="form-label" for="example-password">Contraseña</label>
-        <input type="password" id="example-password" class="form-control" formControlName="password">
-        <div *ngIf="password?.touched">
-          <small [ngClass]="{'text-danger': password?.errors?.['pattern'], 'text-success': !password?.errors?.['pattern']}">
-            {{ password?.errors?.['pattern'] ? 'Debe incluir mayúsculas, minúsculas, números y símbolos' : '✔ Cumple requisitos de seguridad' }}
-          </small>
+  
+        <!-- Email -->
+        <div class="mb-3">
+          <label class="form-label" for="example-email">Email</label>
+          <input type="email" id="example-email" class="form-control" formControlName="email">
         </div>
-      </div>
-
-      <div class="mb-1 text-center d-grid">
-        <button class="btn btn-soft-primary" type="submit" [disabled]="registroForm.invalid">Sign Up</button>
-      </div>
-    </form>
-
-    <p class="text-danger text-center" style="margin-top: 40px;">
-      I already have an account
-      <a (click)="login()" class="text-dark fw-bold ms-1" style="cursor: pointer;">Sign In</a>
-    </p>
+  
+        <!-- Contraseña -->
+        <div class="mb-3">
+          <label class="form-label" for="example-password">Contraseña</label>
+          <input type="password" id="example-password" class="form-control" formControlName="password">
+          <div *ngIf="password?.touched">
+            <small [ngClass]="{'text-danger': password?.errors?.['pattern'], 'text-success': !password?.errors?.['pattern']}">
+              {{ password?.errors?.['pattern'] ? 'Debe incluir mayúsculas, minúsculas, números y símbolos' : '✔ Cumple requisitos de seguridad' }}
+            </small>
+          </div>
+        </div>
+  
+        <div class="mb-1 text-center">
+          <button class="btn btn-soft-primary" 
+                  type="submit" 
+                  [disabled]="registroForm.invalid" 
+                  style="width: 300px; margin: 0 auto; display: block;">
+            Sign Up
+          </button>
+        </div>
+        
+      </form>
+  
+      
+    </div>
   </div>
-</div>
+  
+ </div>
 
-<div class="col-12 text-center mt-3">
-  <a class="fw-bold footer-text" target="_blank">CorpaTech</a>
-</div>
-</div>
+
