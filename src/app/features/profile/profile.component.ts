@@ -25,4 +25,17 @@ export class ProfileComponent  implements OnInit{
     }
   }
 
+  regitroUsuariol() {
+    
+
+    setTimeout(() => {
+
+      const destino = document.getElementById('resgistro');
+      if (destino) {
+
+        destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
+  }
+
 }

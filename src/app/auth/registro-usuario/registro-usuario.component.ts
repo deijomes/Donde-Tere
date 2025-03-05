@@ -67,12 +67,7 @@ export class RegistroUsuarioComponent implements OnInit {
        
   
         // Verificamos si la respuesta contiene el email antes de guardarlo
-        if (resp?.email) {
-          localStorage.setItem('email', resp.email);
-        
-        } else {
-          console.warn('El backend no devolvió un email.');
-        }
+       
   
         Swal.fire({
           title: 'Éxito',
@@ -100,6 +95,20 @@ export class RegistroUsuarioComponent implements OnInit {
     );
   
     
+  }
+
+
+  regitroUsuariol() {
+    
+
+    setTimeout(() => {
+
+      const destino = document.getElementById('resgistro');
+      if (destino) {
+
+        destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   }
   
 
