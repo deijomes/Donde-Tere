@@ -4,7 +4,7 @@ import { ProductoCompraService } from '../../services/producto-compra.service';
 import { CommonModule } from '@angular/common';
 import { TextoSpañolPipe } from '../../pipes/texto-spañol.pipe';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLinkActive } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { EmailsplitPipe } from '../../pipes/emailsplit.pipe';
 import Swal from 'sweetalert2';
 import { CredencialesService } from '../../services/credenciales.service';
@@ -19,7 +19,7 @@ import { NotificationService } from '../../services/notification.service';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, TextoSpañolPipe, FormsModule, EmailsplitPipe, DatePickerModule, FluidModule],
+  imports: [CommonModule, TextoSpañolPipe, FormsModule, EmailsplitPipe, DatePickerModule, FluidModule, RouterLink],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'

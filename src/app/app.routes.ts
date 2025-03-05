@@ -10,6 +10,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { ComprasComponent } from './features/productos/compras/compras.component';
 import { RegistroUsuarioComponent } from './auth/registro-usuario/registro-usuario.component';
 import { authGuard } from './guards/auth.guard';
+import { ProfileComponent } from './features/profile/profile.component';
 
 // export const routes: Routes = [
 //   { path: '', redirectTo: 'inventarioo', pathMatch: 'full' },
@@ -49,7 +50,17 @@ export const routes: Routes = [
     { path: 'ventas', component: VentaComponent,  canActivate: [authGuard]},
     { path: 'ventastotales', component: VentasTotalesComponent,  canActivate: [authGuard]},
     { path: 'login', component: LoginComponent },
-    {path :'register', component: RegistroUsuarioComponent},
+    
+    
+    {
+        path: 'admin',
+        component: ProfileComponent,  children: [
+            {
+              path: 'register',
+              component: RegistroUsuarioComponent
+            },]
+    
+    },
     { path: '**', pathMatch: 'full', redirectTo: 'inventario' },
    
 ];

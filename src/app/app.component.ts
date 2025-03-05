@@ -32,7 +32,7 @@ export class AppComponent {
   title = 'Inventario';
   currentYear: number = new Date().getFullYear();
   isLoginRoute(): boolean {
-    const allowedRoutes = ['login', 'register'];
+    const allowedRoutes = ['login'];
     const routePath = this.activatedRoute.snapshot.firstChild?.routeConfig?.path;
     return routePath ? allowedRoutes.includes(routePath) : false;
   }

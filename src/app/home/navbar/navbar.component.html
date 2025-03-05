@@ -113,9 +113,9 @@
                               class="align-middle">Help</span>
                     </a> -->
 
-                         <a class="dropdown-item">
-                              <i class="bx bx-user-circle text-muted fs-18 align-middle me-1"></i><span
-                                   class="align-middle">{{usuariObtenido|emailsplit}}</span>
+                         <a class="dropdown-item" [routerLink]="['/admin']" routerLinkActive="router-link-active">
+                              <i class="bx bx-user-circle text-muted fs-18 align-middle me-1"></i>
+                              <span class="align-middle">{{ usuariObtenido | emailsplit }}</span>
                          </a>
 
 
@@ -245,11 +245,12 @@
                                                                            class="badge bg-success-subtle text-success px-2 py-1 ms-1">
                                                                            Completado</span></p>
 
-                                                                 <div (click)="descargarArchivo()"  style="cursor: pointer;"
+                                                                 <div (click)="descargarArchivo()"
+                                                                      style="cursor: pointer;"
                                                                       class="d-flex align-items-center gap-3 mt-1 bg-light bg-opacity-50 p-2 rounded-2">
                                                                       <a
                                                                            class="fw-medium text-dark">{{nombreArchivo}}</a>
-                                                                      <div  class="ms-auto">
+                                                                      <div class="ms-auto">
                                                                            <a class="fw-medium text-primary fs-18"
                                                                                 data-bs-toggle="tooltip"
                                                                                 data-bs-title="Download"
