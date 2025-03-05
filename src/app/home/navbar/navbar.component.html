@@ -113,13 +113,16 @@
                               class="align-middle">Help</span>
                     </a> -->
 
-                         <a class="dropdown-item" [routerLink]="['/admin']" routerLinkActive="router-link-active">
-                              <i class="bx bx-user-circle text-muted fs-18 align-middle me-1"></i>
-                              <span class="align-middle">{{ usuariObtenido | emailsplit }}</span>
-                         </a>
+                         <div *ngIf="contenidoHabilitado">
+                              <a class="dropdown-item" [routerLink]="['/admin']" routerLinkActive="router-link-active">
+                                   <i class="bx bx-user-circle text-muted fs-18 align-middle me-1"></i>
+                                   <span class="align-middle">{{ usuariObtenido | emailsplit }}</span>
+                              </a>
 
 
-                         <div class="dropdown-divider my-1"></div>
+                              <div class="dropdown-divider my-1"></div>
+                         </div>
+
 
                          <a class="dropdown-item text-danger" (click)="cerrarSesion()" style="cursor: pointer;">
                               <i class="bx bx-log-out fs-18 align-middle me-1"></i><span

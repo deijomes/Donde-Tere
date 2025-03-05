@@ -81,6 +81,7 @@ export class LoginComponent implements OnInit {
 
         if (resp?.email) {
           localStorage.setItem('email', resp.email);
+          localStorage.setItem('role', resp.role)
 
         } else {
 

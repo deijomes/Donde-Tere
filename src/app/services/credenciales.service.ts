@@ -44,9 +44,7 @@ export class CredencialesService {
       .pipe(
         map((response: any) => {
           
-          if (response?.token) {
-            sessionStorage.setItem(this.tokenKey, response.token); // Guardar token al registrar usuario
-          }
+          
           return response;
           
         }),

@@ -30,6 +30,7 @@ export class NavbarComponent implements OnInit {
   searchTerm: string = '';
   searchTermProductos: string = '';
   usuariObtenido: string = '';
+  contenidoHabilitado = false
 
   fechaInicio: Date | null = null
   fechaFinal: Date | null = null
@@ -55,8 +56,9 @@ export class NavbarComponent implements OnInit {
     this.notificaciones()
     setTimeout(() => this.notificaciones(), 120000)
 
-    this.inicializarSocket()
-    this.obtenerUsuario()
+    this.inicializarSocket();
+    this.obtenerUsuario();
+    this.obtenerRol();
 
     this.router.events.subscribe(() => {
       this.mostrarBoton = this.router.url.includes('/ventastotales');
@@ -181,6 +183,16 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  obtenerRol() {
+    const usuario = localStorage.getItem('role');
+
+    if (usuario === 'ADMIN') {
+        this.contenidoHabilitado = true;  // Solo habilita si es ADMIN
+    } else {
+        this.contenidoHabilitado = false;  // Cualquier otro rol o valor lo bloquea
+    }
+}
+
 
   cerrarSesion() {
     Swal.fire({
@@ -201,6 +213,7 @@ export class NavbarComponent implements OnInit {
       if (result.isConfirmed) {
         this.credenciales.cerrarSesion();
         localStorage.removeItem('email');
+        localStorage.removeItem('role')
         this.router.navigateByUrl('login');
       }
     });
