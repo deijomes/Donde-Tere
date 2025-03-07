@@ -4,6 +4,7 @@
   }
 .color-text{
     color: white;
+    padding-left: 25px;
 }
 
 .letra{
@@ -14,6 +15,8 @@
 .letrapro{
     color:#313b5ed6 ;
     font-weight: bold;
+    padding-left: 25px;
+    
 }
 
 .fondo{
