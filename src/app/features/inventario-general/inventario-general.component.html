@@ -13,8 +13,8 @@
                 <thead class="custom-header">
                     <tr>
                      
-                        <th class="text-center color-text">Artículo</th>
-                        <th class="text-center color-text">Código</th>
+                        <th class=" color-text">Artículo</th>
+                        <th class=" color-text">Código</th>
                        
                         <th class="text-center color-text">Precio de venta</th>
                        
@@ -24,8 +24,8 @@
                 <tbody>
                     <tr *ngFor="let producto of productos | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage } ">
                        
-                        <td class="text-center letrapro">{{ producto.name }}</td>
-                        <td class="text-center letra">{{ producto.code }}</td>
+                        <td class="letrapro">{{ producto.name }}</td>
+                        <td class="letra">{{ producto.code }}</td>
                       
                         <td class="text-center">{{ producto.price }}</td>
                         
