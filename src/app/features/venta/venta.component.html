@@ -74,31 +74,23 @@
                                 <ng-select [items]="filteredProductos" bindLabel="name" bindValue="code"
                                     placeholder="Seleccionar producto" [searchable]="true" [clearable]="true"
                                     [virtualScroll]="true" formControlName="codigo" class="custom-ng-select"
-                                    (change)="productoSeleccionado($event)">
-
+                                    (change)="productoSeleccionado($event)" [searchFn]="filtrarPorNombreOCodigo">
 
                                     <ng-template ng-header-tmp>
-                                        <table
-                                            class="table table-hover table-nowrap table-centered m-0 no-border-table header-table">
-                                            <thead>
-                                                <tr class="header-row">
-                                                    <th class="text-start">Artículo</th>
-                                                    <th class="text-center">Código</th>
-                                                </tr>
-                                            </thead>
-                                        </table>
+                                        <div class="select-header-row">
+                                            <div class="header-column">Artículo</div>
+                                            <div class="header-column">Código</div>
+                                        </div>
+                                    </ng-template>
+                                
+                                    <!-- Cada opción (Producto) -->
+                                    <ng-template ng-option-tmp let-item="item">
+                                        <div class="select-option-row">
+                                            <div class="option-column">{{ item.name }}</div>
+                                            <div class="option-column">{{ item.code }}</div>
+                                        </div>
                                     </ng-template>
 
-                                    <ng-template ng-option-tmp let-item="item">
-                                        <table class="table table-sm mb-0 text-center option-table">
-                                            <tbody>
-                                                <tr class="option-row">
-                                                    <td class="text-start">{{ item.name }}</td>
-                                                    <td class="text-start ">{{ item.code }}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </ng-template>
 
 
 

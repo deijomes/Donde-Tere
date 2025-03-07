@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { ProductoCompraService } from '../../../services/producto-compra.service';
 import { IdPipe } from '../../../pipes/id.pipe';
-import { CapitalizePipe } from '../../../pipes/capitalize.pipe';
+
 import { PdfService } from '../../../services/pdf.service';
 import { Router } from '@angular/router';
 import { SelectModule } from 'primeng/select'
@@ -22,7 +22,7 @@ import { error } from 'jquery';
 @Component({
   selector: 'app-compras',
   standalone: true,
-  imports: [NgSelectModule, ReactiveFormsModule, CommonModule, IdPipe, CapitalizePipe, FormsModule, SelectModule, NgxPaginationModule],
+  imports: [NgSelectModule, ReactiveFormsModule, CommonModule, IdPipe, FormsModule, SelectModule, NgxPaginationModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './compras.component.html',
   styleUrl: './compras.component.css',
@@ -124,6 +124,18 @@ export class ComprasComponent implements OnInit {
        p.codigo?.toLowerCase().includes(searchText.toLowerCase())
      );
    }  */
+     filtrarPorNombreOCodigo(term: string, item: any): boolean {
+      if (!term) {
+          return true; // Si el término está vacío, muestra todos
+      }
+  
+      const termLower = term.toLowerCase();
+  
+      // Filtro por nombre o código
+      return item.name.toLowerCase().includes(termLower) ||
+             item.code.toLowerCase().includes(termLower);
+  }
+  
 
   productoSeleccionado(producto: any) {
     

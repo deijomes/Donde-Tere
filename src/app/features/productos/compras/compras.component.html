@@ -104,30 +104,23 @@
                                 <ng-select [items]="filteredProductos" bindLabel="name" bindValue="code"
                                     *ngIf="inventariados" placeholder="Seleccionar producto" [searchable]="true"
                                     [clearable]="true" [virtualScroll]="true" formControlName="codigo"
-                                    class="custom-ng-select" (change)="productoSeleccionado($event)">
+                                    class="custom-ng-select" (change)="productoSeleccionado($event)"
+                                    [searchFn]="filtrarPorNombreOCodigo">
 
 
                                     <ng-template ng-header-tmp>
-                                        <table
-                                            class="table table-hover table-nowrap table-centered m-0 no-border-table header-table">
-                                            <thead>
-                                                <tr class="header-row">
-                                                    <th class="text-start">Artículo</th>
-                                                    <th class="text-start">Código</th>
-                                                </tr>
-                                            </thead>
-                                        </table>
+                                        <div class="select-header-row">
+                                            <div class="header-column">Artículo</div>
+                                            <div class="header-column">Código</div>
+                                        </div>
                                     </ng-template>
 
+                                    <!-- Cada opción (Producto) -->
                                     <ng-template ng-option-tmp let-item="item">
-                                        <table class="table table-sm mb-0 text-center option-table">
-                                            <tbody>
-                                                <tr class="option-row">
-                                                    <td class="text-start">{{ item.name }}</td>
-                                                    <td class="text-start">{{ item.code }}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                        <div class="select-option-row">
+                                            <div class="option-column">{{ item.name }}</div>
+                                            <div class="option-column">{{ item.code }}</div>
+                                        </div>
                                     </ng-template>
 
 
@@ -521,10 +514,10 @@
                         <p><strong>ID de la Factura:</strong> {{ selctCompra?.id |id }}</p>
                         <p><strong>Proveedor:</strong> {{ selctCompra?.supplier | uppercase }}</p>
                         <p><strong>Identificación:</strong> {{ selctCompra?.identification | uppercase }}</p>
-                        <p><strong>Fecha de Registro:</strong> 
+                        <p><strong>Fecha de Registro:</strong>
                             {{ selctCompra?.createdAt | date: "yyyy-MM-dd h:mm a" : 'es' }}
                         </p>
-                    
+
                         <div class="table-responsive mt-3">
                             <table class="table mb-0">
                                 <thead>
@@ -545,7 +538,7 @@
                                             <td>${{ item.subtotal }}</td>
                                         </tr>
                                     </ng-container>
-                    
+
                                     <!-- Si supplyItems está vacío, se muestra purchaseItems -->
                                     <ng-template #purchaseTable>
                                         <tr *ngFor="let item of selctCompra?.purchaseItems">
@@ -555,7 +548,7 @@
                                             <td>${{ item.subtotal }}</td>
                                         </tr>
                                     </ng-template>
-                    
+
                                     <!-- Total -->
                                     <tr>
                                         <td colspan="3" class="text-end"><strong>Total de la Factura</strong></td>
@@ -565,8 +558,8 @@
                             </table>
                         </div>
                     </div>
-                    
-                    
+
+
                 </div>
             </div>
             <div class="modal-footer">

@@ -103,6 +103,18 @@ export class VentaComponent implements OnInit {
     );
   }
 
+  filtrarPorNombreOCodigo(term: string, item: any): boolean {
+    if (!term) {
+        return true; // Si el término está vacío, muestra todos
+    }
+
+    const termLower = term.toLowerCase();
+
+    // Filtro por nombre o código
+    return item.name.toLowerCase().includes(termLower) ||
+           item.code.toLowerCase().includes(termLower);
+}
+
   productoSeleccionado(producto: any) {
     
 
