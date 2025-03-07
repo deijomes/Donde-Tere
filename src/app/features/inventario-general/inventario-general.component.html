@@ -12,24 +12,35 @@
             <table class="table align-middle mb-0 table-hover table-centered">
                 <thead class="custom-header">
                     <tr>
-                        <th class="text-center color-text">Código</th>
+                     
                         <th class="text-center color-text">Artículo</th>
-                        <th class="text-center color-text">Cantidad Inicial</th>
-                        <th class="text-center color-text">Cantidad Mínima</th>
-                        <th class="text-center color-text">Entradas</th>
-                        <th class="text-center color-text">Salidas</th>
+                        <th class="text-center color-text">Código</th>
+                       
+                        <th class="text-center color-text">Precio de venta</th>
+                       
                         <th class="text-center color-text">Cantidad Actual</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let producto of productos">
-                        <td class="text-center letra">{{ producto.codigo }}</td>
-                        <td class="text-center letrapro">{{ producto.articulo }}</td>
-                        <td class="text-center">{{ producto.cantidadInicial }}</td>
-                        <td class="text-center">{{ producto.cantidadMinima }}</td>
-                        <td class="text-center">{{ producto.entrada }}</td>
-                        <td class="text-center">{{ producto.salida }}</td>
-                        <td class="text-center">{{ producto.cantidadActual }}</td>
+                    <tr *ngFor="let producto of productos | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage } ">
+                       
+                        <td class="text-center letrapro">{{ producto.name }}</td>
+                        <td class="text-center letra">{{ producto.code }}</td>
+                      
+                        <td class="text-center">{{ producto.price }}</td>
+                        
+                        <td class="text-center">
+                            <span 
+                                class="badge py-1 px-2"
+                                [ngClass]="{
+                                    'bg-success-subtle text-success': producto.quantity >= 10,
+                                    'bg-danger-subtle text-danger': producto.quantity < 10
+                                }">
+                                {{ producto.quantity }}
+                            </span>
+                        </td>
+                       
+                        
                     </tr>
                 </tbody>
             </table>
@@ -37,16 +48,17 @@
     </div>
 
     <div class="card-footer border-top">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-end mb-0">
-                <li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>
-                <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
-                <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-                <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-                <li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
-            </ul>
+        <nav aria-label="Page navigation">
+          <pagination-controls
+            class="pagination justify-content-end mb-0"
+            (pageChange)="currentPage = $event"
+            previousLabel="Anterior"
+            nextLabel="Siguiente"
+            [responsive]="true"
+            [autoHide]="true">
+          </pagination-controls>
         </nav>
-    </div>
+      </div>
 
 </div>
 
