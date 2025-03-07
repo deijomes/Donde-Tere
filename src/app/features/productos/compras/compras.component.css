@@ -275,55 +275,7 @@ td.text {
     border-collapse: collapse !important;
 }
 
-.no-border-table th, 
-.no-border-table td {
-    border: none !important;
-}
-/* Quita bordes de la tabla del header */
-.no-border-table {
-  border: none !important;
-  border-collapse: collapse !important;
-}
 
-.header-table {
-  background-color: #ff6d2fc6; /* Azul oscuro elegante */
-  
-  border-radius: 5px; /* Bordes redondeados */
-  padding: auto;
-
-}
-
-.header-table th {
-  color: white !important; /* Azul grisáceo oscuro */
-}
-
-.header-table th {
-  padding: 12px;
-  font-size: 13px;
-}
-
-/* Estilos para la tabla de opciones */
-.option-table {
-  background: #f8f9fa; /* Color de fondo claro */
-  border: 1px solid #dee2e6; /* Bordes suaves */
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-.option-row {
-  border-bottom: 1px solid #dee2e6;
-}
-
-.option-row:last-child {
-  border-bottom: none;
-}
-
-.option-row td {
-  padding: 10px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #343a40;
-}
 
 /* Efecto hover para filas */
 .option-row:hover {
