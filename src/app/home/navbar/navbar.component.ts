@@ -225,10 +225,11 @@ export class NavbarComponent implements OnInit {
 
     // Convertir fechaInicial a formato ISO (UTC)
     let startDate;
-    if (this.fechaFinal) {
-      const fechaFin = new Date(this.fechaFinal);
-      fechaFin.setUTCHours(0, 0, 0, 0); // Establece la hora en UTC
-      startDate = fechaFin.toISOString();
+    if (this.fechaInicio) {
+      const fechaInici = new Date(this.fechaInicio);
+      fechaInici.setUTCHours(0, 0, 0, 0); // Establece la hora en UTC
+      startDate = fechaInici.toISOString();
+      console.log(startDate)
     }
 
      
@@ -242,6 +243,7 @@ export class NavbarComponent implements OnInit {
       const fechaFin = new Date(this.fechaFinal);
       fechaFin.setUTCHours(23, 59, 59, 999); // Establece la hora en UTC
       endDate = fechaFin.toISOString();
+      console.log(endDate)
     }
 
    
