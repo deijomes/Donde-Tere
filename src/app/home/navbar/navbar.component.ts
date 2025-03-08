@@ -186,7 +186,7 @@ export class NavbarComponent implements OnInit {
   obtenerRol() {
     const usuario = localStorage.getItem('role');
 
-    if (usuario === 'ADMIN') {
+    if (usuario === 'ADMIN' || 'SUPERADMIN') {
         this.contenidoHabilitado = true;  // Solo habilita si es ADMIN
     } else {
         this.contenidoHabilitado = false;  // Cualquier otro rol o valor lo bloquea
@@ -229,7 +229,7 @@ export class NavbarComponent implements OnInit {
       const fechaInici = new Date(this.fechaInicio);
       fechaInici.setUTCHours(0, 0, 0, 0); // Establece la hora en UTC
       startDate = fechaInici.toISOString();
-      console.log(startDate)
+      
     }
 
      
@@ -243,7 +243,7 @@ export class NavbarComponent implements OnInit {
       const fechaFin = new Date(this.fechaFinal);
       fechaFin.setUTCHours(23, 59, 59, 999); // Establece la hora en UTC
       endDate = fechaFin.toISOString();
-      console.log(endDate)
+      
     }
 
    
