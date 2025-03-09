@@ -15,6 +15,8 @@ export class ProfileComponent  implements OnInit{
 
   usuariosRegistrados: any []=[];
   userId : string ='';
+  tablaUsuario = false;
+  usuariObtenido = '';
 
 
   constructor(private httpProfile:ProfileService, private router:Router){}
@@ -23,10 +25,10 @@ export class ProfileComponent  implements OnInit{
     this.getUsuarios();
   }
 
-  usuariObtenido = '';
+
 
   obtenerUsuario() {
-    const usuario = localStorage.getItem('email');
+    const usuario = localStorage.getItem('name');
   
     if (usuario) {
       this.usuariObtenido = usuario
@@ -64,7 +66,21 @@ export class ProfileComponent  implements OnInit{
 
     this.userId = id
     this.router.navigateByUrl(`/admin/editar/${id}`)
+    this.tablaUsuario = false
     
+  }
+
+  tablaUser(){
+
+    this.tablaUsuario =  true
+
+    setTimeout(()=>{
+      const tablaDestino = document.getElementById('tab');
+      if(tablaDestino){
+        tablaDestino.scrollIntoView({behavior:'smooth', block:'start'});
+      }
+    },100)
+
   }
 
 }

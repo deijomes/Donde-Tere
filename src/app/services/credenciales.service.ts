@@ -12,6 +12,7 @@ export class CredencialesService {
   private url = `${environment.API_URL}/api/auth/register`;
   private urlLogin = `${environment.API_URL}/api/auth/login`;
   private readonly tokenKey = 'token';
+  private readonly fullname = 'name'
 
   constructor(private http: HttpClient) { }
 
@@ -25,11 +26,19 @@ export class CredencialesService {
     return this.http.post(`${this.urlLogin}`, authdata)
       .pipe(
         map((response: any) => {
+
+          console.log('Respuesta del servidor:', response);
+
          
           if (response?.token) {
-            sessionStorage.setItem(this.tokenKey, response.token); // Guardar token en Session Storage
+            sessionStorage.setItem(this.tokenKey, response.token); 
+           
+           
           }
+          
+
           return response;
+          
           
           
         }),

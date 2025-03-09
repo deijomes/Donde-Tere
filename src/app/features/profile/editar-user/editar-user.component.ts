@@ -93,7 +93,7 @@ export class EditarUserComponent implements OnInit {
 
         Swal.fire({
           title: '¡Éxito!',
-          text: 'El producto fue actualizado.',
+          text: 'Uusuario actualizado.',
           icon: 'success',
           timer: 2000,
           showConfirmButton: false
@@ -102,10 +102,10 @@ export class EditarUserComponent implements OnInit {
         });
       },
       error: (error) => {
-        console.error('Error al actualizar el producto:', error);
+        console.error('Error al actualizar usuario:', error);
         Swal.fire({
           title: 'Error',
-          text: 'Ocurrió un error al actualizar el producto.',
+          text: 'Ocurrió un error al actualizar usuario.',
           icon: 'error',
           confirmButtonText: 'Aceptar'
         });

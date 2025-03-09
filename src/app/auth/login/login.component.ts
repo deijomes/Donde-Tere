@@ -69,8 +69,11 @@ export class LoginComponent implements OnInit {
 
     } else {
       localStorage.removeItem('email');
+    
 
     }
+
+   
 
     // Verificamos si la respuesta contiene el email antes de guardarlo
 
@@ -81,7 +84,11 @@ export class LoginComponent implements OnInit {
 
         if (resp?.email) {
           localStorage.setItem('email', resp.email);
-          localStorage.setItem('role', resp.role)
+          localStorage.setItem('role', resp.role);
+          localStorage.setItem('name', resp.fullName);// Guardar token en Session Storage
+          
+
+          
 
         } else {
 
@@ -117,9 +124,13 @@ export class LoginComponent implements OnInit {
           confirmButtonColor: '#FF6F00' // Cambia el color del botón
         });
       }
-    );
+
+      
+    )
 
   }
+
+
 
 
 }

@@ -213,7 +213,8 @@ export class NavbarComponent implements OnInit {
       if (result.isConfirmed) {
         this.credenciales.cerrarSesion();
         localStorage.removeItem('email');
-        localStorage.removeItem('role')
+        localStorage.removeItem('role');
+        localStorage.removeItem('name')
         this.router.navigateByUrl('login');
       }
     });
