@@ -11,6 +11,7 @@ import { ComprasComponent } from './features/productos/compras/compras.component
 import { RegistroUsuarioComponent } from './auth/registro-usuario/registro-usuario.component';
 import { authGuard } from './guards/auth.guard';
 import { ProfileComponent } from './features/profile/profile.component';
+import { EditarUserComponent } from './features/profile/editar-user/editar-user.component';
 
 // export const routes: Routes = [
 //   { path: '', redirectTo: 'inventarioo', pathMatch: 'full' },
@@ -58,7 +59,12 @@ export const routes: Routes = [
             {
               path: 'register',
               component: RegistroUsuarioComponent
-            },]
+            },
+            {
+                path: 'editar/:id',
+                component: EditarUserComponent
+              },
+        ]
     
     },
     { path: '**', pathMatch: 'full', redirectTo: 'inventario' },

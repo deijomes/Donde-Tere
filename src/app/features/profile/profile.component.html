@@ -63,7 +63,7 @@
                     <td>
                         <div class="d-flex gap-2">
                             
-                            <a href="role-edit.html" class="btn btn-soft-primary btn-sm"><iconify-icon
+                            <a (click)="editarUser(user.id)" class="btn btn-soft-primary btn-sm"><iconify-icon
                                     icon="solar:pen-2-broken" class="align-middle fs-18"></iconify-icon></a>
                            
                         </div>
@@ -89,4 +89,5 @@
     <!-- Este router-outlet es lo más importante para mostrar 'RegistroUsuarioComponent' -->
     <router-outlet></router-outlet>
     <div id="resgistro"></div>
+    <div id="edicion"></div>
 </div>

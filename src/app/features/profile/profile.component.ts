@@ -1,5 +1,5 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { ProfileService } from '../../services/profile.service';
 import { CommonModule } from '@angular/common';
 
@@ -13,10 +13,11 @@ import { CommonModule } from '@angular/common';
 })
 export class ProfileComponent  implements OnInit{
 
-  usuariosRegistrados: any []=[]
+  usuariosRegistrados: any []=[];
+  userId : string ='';
 
 
-  constructor(private httpProfile:ProfileService){}
+  constructor(private httpProfile:ProfileService, private router:Router){}
   ngOnInit(): void {
     this.obtenerUsuario();
     this.getUsuarios();
@@ -57,6 +58,13 @@ export class ProfileComponent  implements OnInit{
       }
     })
 
+  }
+
+  editarUser(id:string){
+
+    this.userId = id
+    this.router.navigateByUrl(`/admin/editar/${id}`)
+    
   }
 
 }

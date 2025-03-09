@@ -5,6 +5,7 @@ import { UsuarioModel } from '../../models/registerUsuario';
 import { CommonModule } from '@angular/common';
 import { CredencialesService } from '../../services/credenciales.service';
 import Swal from 'sweetalert2';
+import { ProfileComponent } from '../../features/profile/profile.component';
 
 @Component({
   selector: 'app-registro-usuario',
@@ -19,7 +20,7 @@ export class RegistroUsuarioComponent implements OnInit {
 
   registro: UsuarioModel
   registroForm!: FormGroup
-  constructor(private router: Router, private bf: FormBuilder, private credenciales: CredencialesService) {
+  constructor(private router: Router, private bf: FormBuilder, private credenciales: CredencialesService, private profile:ProfileComponent) {
 
     this.registro = new UsuarioModel()
 
@@ -78,6 +79,7 @@ export class RegistroUsuarioComponent implements OnInit {
           timerProgressBar: true,
           willClose: () => {
             this.router.navigateByUrl('/admin'); // Redirige a la página de inicio
+            this.profile.getUsuarios();
           }
         });
 
