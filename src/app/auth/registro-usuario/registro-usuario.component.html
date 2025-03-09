@@ -34,11 +34,13 @@
         <div class="mb-3">
           <label class="form-label" for="example-password">Contraseña</label>
           <input type="password" id="example-password" class="form-control" formControlName="password">
-          <div *ngIf="password?.touched">
+          <div *ngIf="password?.touched && password?.value">
             <small [ngClass]="{'text-danger': password?.errors?.['pattern'], 'text-success': !password?.errors?.['pattern']}">
-              {{ password?.errors?.['pattern'] ? 'Debe incluir mayúsculas, minúsculas, números y símbolos' : '✔ Cumple requisitos de seguridad' }}
+                {{ password?.errors?.['pattern'] 
+                   ? 'Debe incluir mayúsculas, minúsculas, números y símbolos' 
+                   : '✔ Cumple requisitos de seguridad' }}
             </small>
-          </div>
+        </div>
         </div>
   
         <div class="mb-1 text-center">

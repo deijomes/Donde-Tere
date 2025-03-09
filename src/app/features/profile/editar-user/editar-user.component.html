@@ -35,11 +35,21 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="mb-3">
-                            <label for="user-name" class="form-label">password</label>
-                            <input type="password" id="user-name" class="form-control" formControlName="password" placeholder=""
-                                value="Gaston Lapierre ">
+                            <label for="user-password" class="form-label">Password</label>
+                            <input type="password" id="user-password" class="form-control" 
+                                   formControlName="password" placeholder="Ingrese su contraseña">
+                        
+                            <!-- Mensajes de error y validación -->
+                            <div *ngIf="password?.touched && password?.value">
+                                <small [ngClass]="{'text-danger': password?.errors?.['pattern'], 'text-success': !password?.errors?.['pattern']}">
+                                    {{ password?.errors?.['pattern'] 
+                                       ? 'Debe incluir mayúsculas, minúsculas, números y símbolos' 
+                                       : '✔ Cumple requisitos de seguridad' }}
+                                </small>
+                            </div>
                         </div>
                     </div>
+                    
                     <div class="col-lg-6">
                         <p>User Status </p>
                         <div class="d-flex gap-2 align-items-center">

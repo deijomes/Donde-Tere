@@ -3,11 +3,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute } from '@angular/router';
 import { ProfileService } from '../../../services/profile.service';
 import Swal from 'sweetalert2';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-editar-user',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './editar-user.component.html',
   styleUrl: './editar-user.component.css'
 })
@@ -53,12 +54,18 @@ export class EditarUserComponent implements OnInit {
     this.actualizarForm = this.fb.group({
      
       email: ['', Validators.required],
-      password: ['', Validators.required],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/) // Requisitos de seguridad
+      ]],
+
       role: ['', Validators.required],
       fullName: ['', Validators.required],
 
     });
   }
+  get password() { return this.actualizarForm.get('password'); }
 
   cargarUser() {
     const user = this.usuarios.find((p) => String(p.id) === this.id);
@@ -93,7 +100,7 @@ export class EditarUserComponent implements OnInit {
 
         Swal.fire({
           title: '¡Éxito!',
-          text: 'Uusuario actualizado.',
+          text: 'Usuario actualizado.',
           icon: 'success',
           timer: 2000,
           showConfirmButton: false
