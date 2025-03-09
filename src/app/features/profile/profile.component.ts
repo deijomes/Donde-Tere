@@ -4,6 +4,7 @@ import { ProfileService } from '../../services/profile.service';
 import { CommonModule } from '@angular/common';
 
 
+
 @Component({
   selector: 'app-profile',
   standalone: true,
@@ -23,8 +24,9 @@ export class ProfileComponent  implements OnInit{
   usuariObtenido = '';
 
 
-  constructor(private httpProfile:ProfileService, private router:Router){}
+  constructor(private httpProfile:ProfileService, private router:Router,){}
   ngOnInit(): void {
+    
     this.obtenerUsuario();
     this.getUsuarios();
   }

@@ -5,6 +5,7 @@ import { ProfileService } from '../../../services/profile.service';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { ProfileComponent } from '../profile.component';
+import { LoadingService } from '../../../services/loading.service';
 
 @Component({
   selector: 'app-editar-user',
@@ -21,7 +22,7 @@ export class EditarUserComponent implements OnInit {
   actualizarForm!: FormGroup;
 
   constructor(private activeRou: ActivatedRoute, private fb: FormBuilder, private http: ProfileService,
-     private router:Router, private profile:ProfileComponent) {
+     private router:Router, private profile:ProfileComponent,private loadingService: LoadingService) {
 
 
   }
@@ -32,6 +33,8 @@ export class EditarUserComponent implements OnInit {
       
 
     })
+
+    this.loadingService.init();
 
     this.getUser();
 
@@ -94,6 +97,8 @@ export class EditarUserComponent implements OnInit {
     const formu = this.actualizarForm.value
     console.log(formu,'daros formulario a enviar')
 
+    this.loadingService.show();
+
     this.http.EditarUser(this.id, formu).subscribe({
       next: (response) => {
 
@@ -107,6 +112,7 @@ export class EditarUserComponent implements OnInit {
           timer: 2000,
           showConfirmButton: false
         }).then(() => {
+          this.loadingService.hide();
 
           this.router.navigateByUrl('/admin')
           this.profile.getUsuarios();
@@ -121,6 +127,7 @@ export class EditarUserComponent implements OnInit {
           icon: 'error',
           confirmButtonText: 'Aceptar'
         });
+        this.loadingService.hide();
       }
     })
 

@@ -7,6 +7,7 @@ import { CredencialesService } from '../../services/credenciales.service';
 import Swal from 'sweetalert2';
 import { ProfileComponent } from '../../features/profile/profile.component';
 import { EventEmitter } from '@angular/core';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-registro-usuario',
@@ -22,12 +23,14 @@ export class RegistroUsuarioComponent implements OnInit {
   registro: UsuarioModel
   registroForm!: FormGroup
   tabla = true
-  constructor(private router: Router, private bf: FormBuilder, private credenciales: CredencialesService, private profile: ProfileComponent) {
+  constructor(private router: Router, private bf: FormBuilder, private credenciales: CredencialesService, 
+    private profile: ProfileComponent,private loadingService: LoadingService) {
 
     this.registro = new UsuarioModel()
 
   }
   ngOnInit(): void {
+    this.loadingService.init();
     this.getform()
   }
 
@@ -63,6 +66,7 @@ export class RegistroUsuarioComponent implements OnInit {
     }
 
     const usuario = this.registroForm.value;
+    this.loadingService.show();
 
     // Si el formulario es válido, se procede con el registro
     this.credenciales.nuevoUsuario(usuario).subscribe(
@@ -80,6 +84,7 @@ export class RegistroUsuarioComponent implements OnInit {
           showConfirmButton: false,
           timerProgressBar: true,
           willClose: () => {
+            this.loadingService.hide();
             
             this.router.navigateByUrl('/admin'); // Redirige a la página de inicio
             this.profile.getUsuarios();
@@ -98,6 +103,7 @@ export class RegistroUsuarioComponent implements OnInit {
           confirmButtonText: 'Entendido', // Cambia el texto del botón
           confirmButtonColor: '#FF6F00' // Cambia el color del botón
         });
+        this.loadingService.hide();
       }
     );
 
