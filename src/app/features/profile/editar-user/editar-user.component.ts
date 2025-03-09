@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProfileService } from '../../../services/profile.service';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
+import { ProfileComponent } from '../profile.component';
 
 @Component({
   selector: 'app-editar-user',
@@ -19,7 +20,8 @@ export class EditarUserComponent implements OnInit {
   usuarios: any[] = [];
   actualizarForm!: FormGroup;
 
-  constructor(private activeRou: ActivatedRoute, private fb: FormBuilder, private http: ProfileService) {
+  constructor(private activeRou: ActivatedRoute, private fb: FormBuilder, private http: ProfileService,
+     private router:Router, private profile:ProfileComponent) {
 
 
   }
@@ -106,6 +108,9 @@ export class EditarUserComponent implements OnInit {
           showConfirmButton: false
         }).then(() => {
 
+          this.router.navigateByUrl('/admin')
+          this.profile.getUsuarios();
+          this.profile.tablaUsuario =true
         });
       },
       error: (error) => {

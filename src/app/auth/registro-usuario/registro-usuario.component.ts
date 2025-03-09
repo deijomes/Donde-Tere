@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { CredencialesService } from '../../services/credenciales.service';
 import Swal from 'sweetalert2';
 import { ProfileComponent } from '../../features/profile/profile.component';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-registro-usuario',
@@ -20,7 +21,8 @@ export class RegistroUsuarioComponent implements OnInit {
 
   registro: UsuarioModel
   registroForm!: FormGroup
-  constructor(private router: Router, private bf: FormBuilder, private credenciales: CredencialesService, private profile:ProfileComponent) {
+  tabla = true
+  constructor(private router: Router, private bf: FormBuilder, private credenciales: CredencialesService, private profile: ProfileComponent) {
 
     this.registro = new UsuarioModel()
 
@@ -56,20 +58,20 @@ export class RegistroUsuarioComponent implements OnInit {
   guardar(): void {
     // Si el formulario es inválido, no sigue con el registro
     if (!this.registroForm.valid) {
-      
+
       return; // Sale de la función si el formulario no es válido
     }
-  
+
     const usuario = this.registroForm.value;
-  
+
     // Si el formulario es válido, se procede con el registro
     this.credenciales.nuevoUsuario(usuario).subscribe(
       (resp: any) => {
-       
-  
+
+
         // Verificamos si la respuesta contiene el email antes de guardarlo
-       
-  
+
+
         Swal.fire({
           title: 'Éxito',
           text: 'Registro exitoso',
@@ -78,33 +80,38 @@ export class RegistroUsuarioComponent implements OnInit {
           showConfirmButton: false,
           timerProgressBar: true,
           willClose: () => {
+            
             this.router.navigateByUrl('/admin'); // Redirige a la página de inicio
             this.profile.getUsuarios();
+            this.profile.tablaUsuario=true
+           
           }
         });
 
       },
       (error: any) => {
         console.error('Error al registrar:', error);
-         Swal.fire({
-                          title: 'error',
-                          text: 'Usuario existente',
-                          icon: 'info',
-                          confirmButtonText: 'Entendido', // Cambia el texto del botón
-                          confirmButtonColor: '#FF6F00' // Cambia el color del botón
-                        });
+        Swal.fire({
+          title: 'error',
+          text: 'Usuario existente',
+          icon: 'info',
+          confirmButtonText: 'Entendido', // Cambia el texto del botón
+          confirmButtonColor: '#FF6F00' // Cambia el color del botón
+        });
       }
     );
-  
-    
+
+
   }
 
 
- 
-  
+
+
 
   login() {
     this.router.navigateByUrl("login")
   }
+
+  
 
 }

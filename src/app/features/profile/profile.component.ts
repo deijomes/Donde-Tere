@@ -1,7 +1,8 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { ProfileService } from '../../services/profile.service';
 import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-profile',
@@ -12,6 +13,9 @@ import { CommonModule } from '@angular/common';
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent  implements OnInit{
+
+ 
+  
 
   usuariosRegistrados: any []=[];
   userId : string ='';
@@ -37,6 +41,8 @@ export class ProfileComponent  implements OnInit{
   }
 
   regitroUsuariol() {
+    
+    this.tablaUsuario = false
     
 
     setTimeout(() => {
@@ -72,7 +78,11 @@ export class ProfileComponent  implements OnInit{
 
   tablaUser(){
 
+    this.getUsuarios();
     this.tablaUsuario =  true
+    this.router.navigateByUrl(`admin`)
+    
+    
 
     setTimeout(()=>{
       const tablaDestino = document.getElementById('tab');
