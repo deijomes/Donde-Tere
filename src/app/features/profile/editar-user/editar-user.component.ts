@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ProfileService } from '../../../services/profile.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-editar-user',
@@ -25,13 +26,14 @@ export class EditarUserComponent implements OnInit {
     this.activeRou.params.subscribe((params) => {
 
       this.id = params['id'];
+      
 
     })
 
     this.getUser();
 
     this.getform();
-    
+
 
   }
 
@@ -41,7 +43,7 @@ export class EditarUserComponent implements OnInit {
 
         this.usuarios = data;
         this.cargarUser()
-        
+
 
       }
     })
@@ -49,25 +51,27 @@ export class EditarUserComponent implements OnInit {
 
   getform(): void {
     this.actualizarForm = this.fb.group({
-      fullName: ['', Validators.required],
+     
       email: ['', Validators.required],
       password: ['', Validators.required],
       role: ['', Validators.required],
+      fullName: ['', Validators.required],
 
     });
   }
 
   cargarUser() {
     const user = this.usuarios.find((p) => String(p.id) === this.id);
-    console.log(user)
+    
 
     if (user) {
 
       this.actualizarForm.patchValue({
-        fullName: user.fullName,
+        
         email: user.email,
         password: user.password,
-        role: user.role
+        role: user.role,
+        fullName: user.fullName,
 
       });
     } else {
@@ -75,6 +79,38 @@ export class EditarUserComponent implements OnInit {
     }
   }
 
+  guardarCambios() {
+    
+    
+    const formu = this.actualizarForm.value
+    console.log(formu,'daros formulario a enviar')
+
+    this.http.EditarUser(this.id, formu).subscribe({
+      next: (response) => {
+
+
+
+
+        Swal.fire({
+          title: '¡Éxito!',
+          text: 'El producto fue actualizado.',
+          icon: 'success',
+          timer: 2000,
+          showConfirmButton: false
+        }).then(() => {
+
+        });
+      },
+      error: (error) => {
+        console.error('Error al actualizar el producto:', error);
+        Swal.fire({
+          title: 'Error',
+          text: 'Ocurrió un error al actualizar el producto.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+      }
+    })
 
 
 
@@ -82,4 +118,6 @@ export class EditarUserComponent implements OnInit {
 
 
 
+
+  }
 }

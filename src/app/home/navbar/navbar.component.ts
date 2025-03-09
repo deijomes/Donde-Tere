@@ -34,8 +34,8 @@ export class NavbarComponent implements OnInit {
 
   fechaInicio: Date | null = null
   fechaFinal: Date | null = null
-   archivoBlob: Blob | null = null; 
-  nombreArchivo: string = ''; 
+  archivoBlob: Blob | null = null;
+  nombreArchivo: string = '';
   tablaReporte = false;
   mostrarBoton = false
 
@@ -43,14 +43,14 @@ export class NavbarComponent implements OnInit {
 
 
   constructor(private buscadorService: BuscadorService, private services: ProductoCompraService,
-    private router: Router, private credenciales: CredencialesService, private servicio: DashboardService, 
-    private route:ActivatedRoute, private socketService: NotificationService) {
+    private router: Router, private credenciales: CredencialesService, private servicio: DashboardService,
+    private route: ActivatedRoute, private socketService: NotificationService) {
 
 
   }
   ngOnInit(): void {
 
-    
+
 
 
     this.notificaciones()
@@ -81,7 +81,7 @@ export class NavbarComponent implements OnInit {
 
   private enviarTerminoBusqueda(): void {
     if (this.searchTerm.trim()) { // Verifica que no esté vacío
-      
+
       // Enviar el término con el contexto adecuado
       // Define el contexto basado en la ruta actual
       let contexto = 'general';
@@ -142,12 +142,12 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  
+
   inicializarSocket() {
-  
+
     this.socketService.connect();
-    
-  
+
+
     this.notificacionSub = this.socketService.listen('newNotification').subscribe({
       next: (nuevaNotificacion) => {
         console.log(' Notificación recibida:', nuevaNotificacion);
@@ -159,7 +159,7 @@ export class NavbarComponent implements OnInit {
     });
 
 
-  } 
+  }
 
   ngOnDestroy(): void {
     // Limpia la suscripción al destruir el componente
@@ -186,12 +186,12 @@ export class NavbarComponent implements OnInit {
   obtenerRol() {
     const usuario = localStorage.getItem('role');
 
-    if (usuario === 'ADMIN' || 'SUPERADMIN') {
-        this.contenidoHabilitado = true;  // Solo habilita si es ADMIN
+    if (usuario === 'ADMIN' || usuario === 'SUPERADMIN') {
+      this.contenidoHabilitado = true;  // Solo habilita si es ADMIN
     } else {
-        this.contenidoHabilitado = false;  // Cualquier otro rol o valor lo bloquea
+      this.contenidoHabilitado = false;  // Cualquier otro rol o valor lo bloquea
     }
-}
+  }
 
 
   cerrarSesion() {
@@ -229,10 +229,10 @@ export class NavbarComponent implements OnInit {
       const fechaInici = new Date(this.fechaInicio);
       fechaInici.setUTCHours(0, 0, 0, 0); // Establece la hora en UTC
       startDate = fechaInici.toISOString();
-      
+
     }
 
-     
+
 
 
 
@@ -243,10 +243,10 @@ export class NavbarComponent implements OnInit {
       const fechaFin = new Date(this.fechaFinal);
       fechaFin.setUTCHours(23, 59, 59, 999); // Establece la hora en UTC
       endDate = fechaFin.toISOString();
-      
+
     }
 
-   
+
 
     this.servicio.getReporte(startDate, endDate).subscribe((blob: Blob) => {
 
@@ -260,12 +260,12 @@ export class NavbarComponent implements OnInit {
 
   descargarArchivo() {
     if (!this.archivoBlob) {
-     
+
       return;
     }
 
-    
-  
+
+
     const url = window.URL.createObjectURL(this.archivoBlob);
     const a = document.createElement('a');
     a.href = url;
@@ -275,7 +275,7 @@ export class NavbarComponent implements OnInit {
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
     this.tablaReporte = false
-  
-    
+
+
   }
 }
