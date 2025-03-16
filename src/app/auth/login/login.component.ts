@@ -81,52 +81,44 @@ export class LoginComponent implements OnInit {
 
     this.servicio.login(usuario).subscribe(
       (resp: any) => {
-
         if (resp?.email) {
           localStorage.setItem('email', resp.email);
           localStorage.setItem('role', resp.role);
-          localStorage.setItem('name', resp.fullName);// Guardar token en Session Storage
-          
-
-          
-
-        } else {
-
+          localStorage.setItem('name', resp.fullName);
         }
-
-
-        if (resp && resp.token) {
-
-          this.spinner = false
-
-
-
-
-
-          this.router.navigateByUrl('/home');
-        } else {
-
-
+    
+        if (resp?.token) {
+          this.spinner = false;
+    
+          // Obtener el rol en mayúsculas para evitar errores de comparación
+          const role = resp.role ? resp.role.toUpperCase() : '';
+    
+          console.log('Rol del usuario:', role); // Debugging
+    
+          // Redirigir según el rol
+          if (role === 'USER') {
+            this.router.navigateByUrl('/ventas');
+          } else {
+            this.router.navigateByUrl('/home');
+          }
         }
       },
       (error: any) => {
         console.error('Error al iniciar sesión:', error);
-
-        this.spinner = false
-        this.botton = true
-
-
+    
+        this.spinner = false;
+        this.botton = true;
+    
         Swal.fire({
-          title: 'error',
+          title: 'Error',
           text: 'No se pudo iniciar sesión. Verifica tus credenciales e intenta nuevamente',
           icon: 'info',
-          confirmButtonText: 'Entendido', // Cambia el texto del botón
-          confirmButtonColor: '#FF6F00' // Cambia el color del botón
+          confirmButtonText: 'Entendido',
+          confirmButtonColor: '#FF6F00'
         });
       }
-
-      
-    )
+    );
+    
 
   }
 

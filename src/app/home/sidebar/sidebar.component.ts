@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -11,10 +11,11 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   activeMenu: string = ''; // Solo se aplica a opciones principales
   selectedSubMenu: string = ''; // Solo se aplica a subopciones
   configSize: string = 'sm-hover'; // Define el tamaño inicial del menú
+  usuario : string | null = null;
 
   constructor(private router: Router) {
     this.router.events.subscribe((event) => {
@@ -22,6 +23,10 @@ export class SidebarComponent {
         this.handleRouteChange(event.urlAfterRedirects);
       }
     });
+  }
+  ngOnInit(): void {
+    this. obtenerRol()
+   
   }
 
   // Detecta cambios de ruta y actualiza el menú activo
@@ -103,4 +108,13 @@ export class SidebarComponent {
       submenu.classList.remove('show');
     });
   }
+
+    /* ---rol para acultar sesiones*/
+
+    obtenerRol() {
+      this.usuario = localStorage.getItem('role');
+  
+      
+    }
+  
 }

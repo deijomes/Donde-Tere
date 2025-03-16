@@ -25,7 +25,7 @@
 
 
                <!-- Inventario -->
-               <li class="nav-item" [ngClass]="{'bg': activeMenu === 'inventario'}"
+               <li *ngIf="usuario === 'ADMIN' || usuario === 'SUPERADMIN'" class="nav-item" class="nav-item" [ngClass]="{'bg': activeMenu === 'inventario'}"
                     (click)="setActiveMenu('inventario')">
                     <a class="nav-link" [routerLink]="['inventario']" routerLinkActive="active">
                          <span class="nav-icon">
@@ -35,7 +35,7 @@
                     </a>
                </li>
 
-               <li class="nav-item" [ngClass]="{'bg': activeMenu === 'productos'}" (click)="setActiveMenu('productos')">
+               <li *ngIf="usuario === 'ADMIN' || usuario === 'SUPERADMIN'" class="nav-item" [ngClass]="{'bg': activeMenu === 'productos'}" (click)="setActiveMenu('productos')">
                     <a class="nav-link" [routerLink]="['productos']" routerLinkActive="active">
                          <span class="nav-icon">
                               <iconify-icon icon="solar:box-bold-duotone"></iconify-icon>
@@ -88,9 +88,9 @@
 
 
 
-               <li class="nav-item" [ngClass]="{'bg': activeMenu === 'movimientos'}"
+               <li *ngIf="usuario === 'SUPERADMIN'" class="nav-item" [ngClass]="{'bg': activeMenu === 'movimientos'}"
                     (click)="setActiveMenu('movimientos')">
-                    <a class="nav-link" [routerLink]="'/movimientos'" routerLinkActive="active">
+                    <a class="nav-link" [routerLink]="'/movimientos'"  routerLinkActive="active">
                          <span class="nav-icon">
                               <iconify-icon icon="solar:card-transfer-bold-duotone"></iconify-icon>
                          </span>
@@ -101,7 +101,7 @@
 
 
 
-               <li class="nav-item" [ngClass]="{'bg': activeMenu === 'compras'}" (click)="setActiveMenu('compras')">
+               <li *ngIf="usuario === 'ADMIN' || usuario === 'SUPERADMIN'" class="nav-item" [ngClass]="{'bg': activeMenu === 'compras'}" (click)="setActiveMenu('compras')">
                     <a class="nav-link" class="nav-link" [routerLink]="'compras'" routerLinkActive="active">
                          <span class="nav-icon">
                               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -122,7 +122,7 @@
                </li>
 
 
-               <li class="nav-item" [ngClass]="{'bg': activeMenu === 'ventas'}" (click)="setActiveMenu('ventas')">
+               <li   class="nav-item" [ngClass]="{'bg': activeMenu === 'ventas'}" (click)="setActiveMenu('ventas')">
                     <a class="nav-link" class="nav-link" [routerLink]="'ventas'" routerLinkActive="active">
                          <span class="nav-icon">
                               <iconify-icon icon="solar:cash-out-bold-duotone"></iconify-icon>
@@ -135,7 +135,7 @@
 
 
 
-               <li class="nav-item" [ngClass]="{'bg': activeMenu === 'Ventas totales'}"
+               <li *ngIf="usuario === 'ADMIN' || usuario === 'SUPERADMIN'" class="nav-item" [ngClass]="{'bg': activeMenu === 'Ventas totales'}"
                     (click)="setActiveMenu('Ventas totales')">
                     <a class="nav-link" [routerLink]="'ventastotales'" routerLinkActive="active">
                          <span class="nav-icon">

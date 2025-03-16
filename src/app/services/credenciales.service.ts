@@ -64,6 +64,7 @@ export class CredencialesService {
   obtenerToken(): string | null {
     return sessionStorage.getItem(this.tokenKey); // Obtener el token almacenado
   }
+ 
 
   cerrarSesion(): void {
     sessionStorage.removeItem(this.tokenKey); // Eliminar el token al cerrar sesión

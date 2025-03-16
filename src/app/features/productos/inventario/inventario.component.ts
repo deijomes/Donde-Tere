@@ -29,6 +29,7 @@ export class InventarioComponent implements OnInit {
 
   mostrarTabla: boolean = true
   registrosCargados: boolean = false;
+  contenidoHabilitado = false
 
   cantidad: number = 0;
   idProducto: string = ''
@@ -65,6 +66,7 @@ export class InventarioComponent implements OnInit {
   ngOnInit(): void {
 
     this.loading.init();
+    this.obtenerRol()
 
 
 
@@ -312,6 +314,18 @@ export class InventarioComponent implements OnInit {
   ngOnDestroy(): void {
     this.serviceproduct.limpiarBusqueda('productos'); // Limpia el término cuando el componente se destruye
     this.searchTermSubscription.unsubscribe(); // Evita fugas de memoria
+  }
+
+  /* ---rol para acultar sesiones*/
+
+  obtenerRol() {
+    const usuario = localStorage.getItem('role');
+
+    if (usuario === 'SUPERADMIN') {
+      this.contenidoHabilitado = true;  // Solo habilita si es ADMIN
+    } else {
+      this.contenidoHabilitado = false;  // Cualquier otro rol o valor lo bloquea
+    }
   }
 
 

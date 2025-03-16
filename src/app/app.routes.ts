@@ -40,33 +40,34 @@ import { EditarUserComponent } from './features/profile/editar-user/editar-user.
 
 
 export const routes: Routes = [
-    { path: 'inventario', component: InventarioGeneralComponent,  canActivate: [authGuard] } ,
+    { path: 'inventario', component: InventarioGeneralComponent, canActivate: [authGuard] },
     {
         path: 'productos',
         component: InventarioComponent,
-        children: PRODUCTOS_ROUTES,  canActivate: [authGuard]
+        children: PRODUCTOS_ROUTES, canActivate: [authGuard]
     },
     { path: 'movimientos', component: MovimientosComponent, canActivate: [authGuard] },
-    {path: 'compras', component :ComprasComponent,  canActivate: [authGuard]},
-    { path: 'ventas', component: VentaComponent,  canActivate: [authGuard]},
-    { path: 'ventastotales', component: VentasTotalesComponent,  canActivate: [authGuard]},
-    { path: 'login', component: LoginComponent },
-    
-    
+    { path: 'compras', component: ComprasComponent, canActivate: [authGuard] },
+    { path: 'ventas', component: VentaComponent, canActivate: [authGuard] },
+    { path: 'ventastotales', component: VentasTotalesComponent, canActivate: [authGuard] },
+    { path: 'login', component: LoginComponent, canActivate: [authGuard] },
+
+
     {
         path: 'admin',
-        component: ProfileComponent,  children: [
+        component: ProfileComponent, children: [
             {
-              path: 'register',
-              component: RegistroUsuarioComponent
+                path: 'register',
+                component: RegistroUsuarioComponent
             },
             {
                 path: 'editar/:id',
                 component: EditarUserComponent
-              },
+            },
         ]
-    
+
     },
-    { path: '**', pathMatch: 'full', redirectTo: 'inventario' },
-   
+
+    { path: '**', pathMatch: 'full', redirectTo: 'inventario' }
+
 ];
