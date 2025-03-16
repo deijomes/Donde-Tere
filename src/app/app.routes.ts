@@ -50,7 +50,7 @@ export const routes: Routes = [
     { path: 'compras', component: ComprasComponent, canActivate: [authGuard] },
     { path: 'ventas', component: VentaComponent, canActivate: [authGuard] },
     { path: 'ventastotales', component: VentasTotalesComponent, canActivate: [authGuard] },
-    { path: 'login', component: LoginComponent, canActivate: [authGuard] },
+    { path: 'login', component: LoginComponent },
 
 
     {
@@ -64,7 +64,7 @@ export const routes: Routes = [
                 path: 'editar/:id',
                 component: EditarUserComponent
             },
-        ]
+        ], canActivate: [authGuard]
 
     },
 

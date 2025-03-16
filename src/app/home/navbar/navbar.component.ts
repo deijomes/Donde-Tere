@@ -186,7 +186,7 @@ export class NavbarComponent implements OnInit {
   obtenerRol() {
     const usuario = localStorage.getItem('role');
 
-    if (usuario === 'ADMIN' || usuario === 'SUPERADMIN') {
+    if (usuario === 'SUPERADMIN') {
       this.contenidoHabilitado = true;  // Solo habilita si es ADMIN
     } else {
       this.contenidoHabilitado = false;  // Cualquier otro rol o valor lo bloquea
