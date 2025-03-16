@@ -22,12 +22,14 @@ export class ProfileComponent  implements OnInit{
   userId : string ='';
   tablaUsuario = false;
   usuariObtenido = '';
+  rol = ''
 
 
   constructor(private httpProfile:ProfileService, private router:Router,){}
   ngOnInit(): void {
     
     this.obtenerUsuario();
+    this. obtenerRol()
     this.getUsuarios();
   }
 
@@ -41,6 +43,17 @@ export class ProfileComponent  implements OnInit{
       
     }
   }
+
+  obtenerRol() {
+    const usuario = localStorage.getItem('role');
+  
+    if (usuario) {
+      this.rol = usuario
+      
+    }
+  }
+
+
 
   regitroUsuariol() {
     
