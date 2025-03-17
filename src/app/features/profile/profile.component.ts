@@ -2,6 +2,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, ViewChild } from '@angular/c
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { ProfileService } from '../../services/profile.service';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
 
 
 
@@ -29,7 +30,7 @@ export class ProfileComponent  implements OnInit{
   ngOnInit(): void {
     
     this.obtenerUsuario();
-    this. obtenerRol()
+    
     this.getUsuarios();
   }
 
@@ -90,7 +91,54 @@ export class ProfileComponent  implements OnInit{
     this.tablaUsuario = false
     
   }
-
+  eliminarUser(id: string) {
+    if (!id) {
+      console.error("ID no válido para eliminar usuariio.");
+      Swal.fire("Error", "El ID del producto no es válido.", "error");
+      return;
+    }
+  
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Este usuario será eliminado de la lista.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#FF6F00', 
+      cancelButtonColor: '#FF9800'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.httpProfile.eliminarUser(id).subscribe({
+          next: (response) => {
+            console.log("usuario eliminado con éxito:", response);
+  
+            Swal.fire({
+              title: '¡Éxito!',
+              text: 'El usuario ha sido eliminado.',
+              icon: 'success',
+              timer: 1500,
+              showConfirmButton: false
+            });
+  
+            this.getUsuarios(); // Actualiza la lista después de eliminar
+          },
+          error: (error) => {
+            console.error("Error al eliminar producto:", error);
+  
+            Swal.fire({
+              title: 'Error',
+              text: 'No se pudo eliminar el producto.',
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+            });
+          }
+        });
+      }
+    });
+  }
+  
+  
   tablaUser(){
 
     this.getUsuarios();

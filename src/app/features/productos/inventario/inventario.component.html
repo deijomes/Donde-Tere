@@ -24,12 +24,12 @@
                          <tr>
 
                               <th class="text-center">Artículo</th>
-                              <th class="text-center">Descripcion</th>
+                              <th class="text-center"> </th>
                               <th class="text-center">Código</th>
                               <th class="text-center">Categoria</th>
                               <th class="text-center">Precio</th>
                               <th class="text-center">Cantidad</th>
-                              <th class=""><iconify-icon icon="solar:settings-bold-duotone"></iconify-icon>Opciones
+                              <th class="ps-5"><iconify-icon icon="solar:settings-bold-duotone"></iconify-icon>Opciones
                               </th>
                          </tr>
                     </thead>
@@ -39,13 +39,13 @@
                          <tr
                               *ngFor="let producto of productos | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }; let i = index">
                               <td class="text-center letra">{{ producto.name }}</td>
-                              <td class="text-center">{{ producto.description }}</td>
+                             <td class="text-center"></td>
                               <td class="text-center">{{ producto.code }}</td>
                               <td class="text-center">{{ producto.category }}</td>
                               <td class="text-center">{{ producto.price }}</td>
                               <td class="text-center">{{ producto.quantity }}</td>
                               <td class="text-center">
-                                   <div class="d-flex gap-2 ">
+                                   <div class="d-flex gap-3 ps-1">
 
                                         <a (click)="stock(producto.id) " data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-light btn-sm btn-hover-dark">
                                              <iconify-icon icon="bi:plus-circle-dotted" class="align-middle fs-18"></iconify-icon>

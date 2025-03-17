@@ -51,7 +51,7 @@ export class VentaComponent implements OnInit {
     });
 
     this.clienteForm = this.fb.group({
-      cliente: ['', Validators.required],
+      cliente: [''],
       identificacion: ''
     })
 

@@ -89,7 +89,10 @@ export class NavbarComponent implements OnInit {
         contexto = 'productos';
       } else if (this.router.url.includes('movimientos')) {
         contexto = 'movimientos';
+      } else if (this.router.url.includes('inventario')) {
+        contexto = 'inventario';
       }
+
 
       this.buscadorService.setTerminoBusqueda(this.searchTerm, contexto);
     }

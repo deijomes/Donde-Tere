@@ -1,6 +1,6 @@
 
 
-<div class="card" *ngIf="!BusquedaActiva || productosFiltrados.length === 0">
+<div >
     <div class="p-3 bg-light custom-header mb-0 fondo">
         <div class="d-flex align-items-center justify-content-between">
             <h4 class="card-title mi-color-letra"> General Inventario</h4>
@@ -21,8 +21,31 @@
                         <th class="text-center color-text">Cantidad Actual</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody  *ngIf="!isFiltered || (isFiltered && products.length === 0)">
                     <tr *ngFor="let producto of productos | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage } ">
+                       
+                        <td class="letrapro">{{ producto.name }}</td>
+                        <td class="letra">{{ producto.code }}</td>
+                      
+                        <td class="text-center">{{ producto.price }}</td>
+                        
+                        <td class="text-center">
+                            <span 
+                                class="badge py-1 px-2"
+                                [ngClass]="{
+                                    'bg-success-subtle text-success': producto.quantity >= 10,
+                                    'bg-danger-subtle text-danger': producto.quantity < 10
+                                }">
+                                {{ producto.quantity }}
+                            </span>
+                        </td>
+                       
+                        
+                    </tr>
+                </tbody>
+
+                <tbody *ngIf="isFiltered && products.length > 0">
+                    <tr *ngFor="let producto of products | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage } ">
                        
                         <td class="letrapro">{{ producto.name }}</td>
                         <td class="letra">{{ producto.code }}</td>
@@ -119,6 +142,10 @@
 </div>
 
 
+<div *ngIf="mostrarAlerta" class="alert alert-warning alert-dismissible fade show custom-alert" role="alert">
+    <strong>Atención:</strong> {{ alertMessage }}
+    <button type="button" class="btn-close" aria-label="Close"(click)="cerrarAlerta()"></button>
+  </div>
 
 
 

@@ -52,7 +52,7 @@ export class RegistrarComponent implements OnInit {
   getform(): void {
     this.registroForm = this.bf.group({
       name: ['', Validators.required],
-      description: ['', Validators.required],
+      
       code: ['', Validators.required],
       category: ['', Validators.required],
       price: [ null, Validators.required],
