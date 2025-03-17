@@ -29,7 +29,7 @@ export class ProfileComponent  implements OnInit{
   ngOnInit(): void {
     
     this.obtenerUsuario();
-    this. obtenerRol()
+    
     this.getUsuarios();
   }
 

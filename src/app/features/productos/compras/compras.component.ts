@@ -365,7 +365,7 @@ export class ComprasComponent implements OnInit {
     const proveedor = this.proveedorForm.value.proveedor;
     const identificacion = this.proveedorForm.value.identificacion;
 
-    const idenfic = identificacion.toString();
+    const idenfic = identificacion.toString()?? '';
 
 
 
