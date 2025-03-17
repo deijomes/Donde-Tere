@@ -115,7 +115,7 @@ export class PdfService {
     };
   
     // Generar PDF
-    pdfMake.createPdf(documentDefinition).open();
+    pdfMake.createPdf(documentDefinition).download();
   
     function capitalizeFirstLetter(str: string): string {
       return str.charAt(0).toUpperCase() + str.slice(1);
@@ -219,7 +219,7 @@ export class PdfService {
     );
   
     // Generar PDF
-    pdfMake.createPdf(documentDefinition).open();
+    pdfMake.createPdf(documentDefinition).download();
   
     function capitalizeFirstLetter(str: string): string {
       return str.charAt(0).toUpperCase() + str.slice(1);
