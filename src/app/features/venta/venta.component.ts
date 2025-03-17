@@ -438,7 +438,7 @@ export class VentaComponent implements OnInit {
   detalle(salida: any) {
 
     this.selctSalida = salida
-    console.log(this.selctSalida,' estas osn las salidas obtenidas')
+    
     
 
 
