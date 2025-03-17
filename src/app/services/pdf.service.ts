@@ -27,10 +27,10 @@ export class PdfService {
   
         // Información del Cliente
         { text: 'Cliente:', style: 'subHeaderBold' },
-        { text: factura.customer.toUpperCase() || 'N/A', style: 'customerName' },
+        { text: factura.customer?.toUpperCase() || 'N/A', style: 'customerName' },
   
         { text: 'Identificación:', style: 'subHeaderBold' },
-        { text: factura.identification.toUpperCase()|| 'N/A', style: 'customerName' },
+        { text: factura.identification?.toUpperCase()|| 'N/A', style: 'customerName' },
   
         // Tabla de Productos
         {
@@ -132,10 +132,10 @@ export class PdfService {
         { text: `Fecha de Registro: ${new Date(factura.createdAt).toLocaleDateString('es-ES')}`, style: 'subHeader' },
   
         { text: 'Proveedor:', style: 'subHeaderBold' },
-        { text: factura.supplier.toUpperCase()|| 'N/A', style: 'customerName' },
+        { text: factura.supplier?.toUpperCase()|| 'N/A', style: 'customerName' },
   
         { text: 'Identificación:', style: 'subHeaderBold' },
-        { text: factura.identification.toUpperCase()|| 'N/A', style: 'customerName' },
+        { text: factura.identification?.toUpperCase()|| 'N/A', style: 'customerName' },
       ],
       styles: {
         header: { fontSize: 15, bold: true, alignment: 'right', margin: [0, 0, 0, 20] },
