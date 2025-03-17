@@ -70,7 +70,7 @@ export class ActualizarComponent implements OnInit {
   getform(): void {
     this.actualizarForm = this.fb.group({
       name: ['', Validators.required],
-      description: ['', Validators.required],
+      
       code: ['', Validators.required],
       category: ['', Validators.required],
       price: [ null, Validators.required],
