@@ -17,10 +17,10 @@
                          <div class="mb-3">
                               <label for="product-brand" class="form-label">Artículo</label>
                               <input type="text" id="product-brand" formControlName="name"
-                                   [class.is-invalid]="nombreNovalido()" class="form-control"
-                                   placeholder="Nombre de producto">
-                              <div *ngIf="nombreNovalido()" class="">
-                                   El es obligatorio.
+                                   (input)="validarCampo('name')" [class.is-invalid]="nombreNovalido()"
+                                   class="form-control" placeholder="">
+                              <div *ngIf="nombreNovalido()" class="invalid-feedback">
+                                   El campo es obligatorio.
                               </div>
                          </div>
                     </div>
@@ -41,7 +41,10 @@
                          <div class="mb-3">
                               <label for="small-field" class="form-label">Categoría</label>
                               <input type="text" id="small-field" formControlName="category" class="form-control"
-                                   placeholder="">
+                                   (input)="validarCampo('category')" [class.is-invalid]="categoriaNovalido()" placeholder="">
+                              <div *ngIf="categoriaNovalido()" class="invalid-feedback">
+                                   El campo es obligatorio.
+                              </div>
                          </div>
                     </div>
 
@@ -50,7 +53,11 @@
                          <div class="mb-3">
                               <label for="product-weight" class="form-label">Código</label>
                               <input type="text" id="product-weight" formControlName="code" class="form-control"
+                              (input)="validarCampo('code')" [class.is-invalid]="codigoNovalido()"
                                    placeholder="">
+                                   <div *ngIf="codigoNovalido()" class="invalid-feedback">
+                                        El campo es obligatorio.
+                                   </div>
                          </div>
                     </div>
                </div>
@@ -64,7 +71,11 @@
                          <div class="mb-3">
                               <label for="small-field" class="form-label">Precio de venta unitario</label>
                               <input type="number" id="small-field" formControlName="price" class="form-control"
-                                   placeholder="Precio de venta unitario">
+                              (input)="validarCampo('price')" [class.is-invalid]="precioNovalido()"
+                                   placeholder="">
+                                   <div *ngIf="precioNovalido()" class="invalid-feedback">
+                                         campo  obligatorio, solo número
+                                   </div>
                          </div>
                     </div>
 
@@ -73,8 +84,13 @@
                          <div class="mb-3">
                               <label for="small-field" class="form-label">Cantidad</label>
                               <input type="number" id="small-field" formControlName="quantity" class="form-control"
+                              (input)="validarCampo('quantity')" [class.is-invalid]="cantidadNovalido()"
                                    placeholder="">
+                                   <div *ngIf="cantidadNovalido()" class="invalid-feedback">
+                                        campo  obligatorio, solo número
+                                  </div>
                          </div>
+                         
                     </div>
                </div>
           </div>
@@ -87,8 +103,8 @@
                          <a (click)="cancelar()" class="btn btn-outline-secondary w-100">Cancelar</a>
                     </div>
                     <div class="col-lg-2">
-                         <button (click)="actualizarProducto()" type="submit"
-                              class="btn btn-primary w-100">Editar</button>
+                         <button (click)="actualizarProducto()" type="submit" class="btn btn-primary w-100"
+                              [disabled]="actualizarForm.invalid">Editar</button>
                     </div>
                </div>
 

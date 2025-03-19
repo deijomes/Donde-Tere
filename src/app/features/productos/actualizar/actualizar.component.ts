@@ -57,15 +57,32 @@ export class ActualizarComponent implements OnInit {
   }
 
   nombreNovalido() {
-    return this.actualizarForm.get('articulo')?.invalid && (this.formEnviado || this.actualizarForm.get('codigo')?.touched);;
+    return this.actualizarForm.get('name')?.invalid && (this.formEnviado || this.actualizarForm.get('name')?.touched);
+  }
+
+  categoriaNovalido() {
+    return this.actualizarForm.get('category')?.invalid &&(this.formEnviado || this.actualizarForm.get('category')?.touched);
   }
 
   codigoNovalido() {
-    return this.actualizarForm.get('codigo')?.invalid &&(this.formEnviado || this.actualizarForm.get('codigo')?.touched);
+    return this.actualizarForm.get('code')?.invalid &&(this.formEnviado || this.actualizarForm.get('code')?.touched);
   }
+  precioNovalido() {
+    return this.actualizarForm.get('price')?.invalid &&(this.formEnviado || this.actualizarForm.get('price')?.touched);
+  }
+  cantidadNovalido() {
+    return this.actualizarForm.get('quantity')?.invalid &&(this.formEnviado || this.actualizarForm.get('quantity')?.touched);
+  }
+
 
  
 
+  
+
+  // Dispara la validación en tiempo real cuando el usuario borra el contenido
+  validarCampo(campo: string) {
+    this.actualizarForm.get(campo)?.markAsTouched(); 
+  }
   // Método para inicializar el formulario
   getform(): void {
     this.actualizarForm = this.fb.group({
