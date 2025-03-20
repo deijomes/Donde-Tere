@@ -165,13 +165,16 @@ export class InventarioComponent implements OnInit {
     }).then((result) => {
 
       if (result.isConfirmed) {
+        this.loading.show();
 
         this.http.agregarstock(id, nuevaCantidad).subscribe({
           next: (response) => {
+            this.loading.hide();
             Swal.fire('¡Stock agregado!', '', 'success');
             this.registros();
           },
           error: (err) => {
+            this.loading.hide();
             Swal.fire('Error', 'Hubo un problema al actualizar la cantidad', 'error');
           }
         });

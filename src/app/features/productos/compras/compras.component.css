@@ -322,3 +322,14 @@ td.text {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.fondobg{
+  background:linear-gradient(#fdebd0, transparent);
+  border: none;
+}
+
+
+.nav-tabs .nav-link {
+  border: none !important;
+ 
+}

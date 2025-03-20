@@ -37,7 +37,8 @@ export class NavbarComponent implements OnInit {
   archivoBlob: Blob | null = null;
   nombreArchivo: string = '';
   tablaReporte = false;
-  mostrarBoton = false
+  mostrarBoton = false;
+  spinner = false
 
   private notificacionSub!: Subscription;
 
@@ -250,11 +251,12 @@ export class NavbarComponent implements OnInit {
 
     }
 
+    this.spinner = true;
 
 
     this.servicio.getReporte(startDate, endDate).subscribe((blob: Blob) => {
 
-
+      this.spinner = false;
       // Guardar el archivo y el nombre en variables de clase
       this.archivoBlob = blob;
       this.nombreArchivo = `reporte_${new Date().toISOString()}.xlsx`;

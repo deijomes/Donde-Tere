@@ -8,6 +8,7 @@ import { registerModel } from '../../../models/registerModel';
 import { Subscription } from 'rxjs';
 import { PoductService } from '../../../services/poduct.service';
 import { InventarioComponent } from '../inventario/inventario.component';
+import { LoadingService } from '../../../services/loading.service';
 
 @Component({
   selector: 'app-actualizar',
@@ -31,6 +32,8 @@ export class ActualizarComponent implements OnInit {
     private activeRou: ActivatedRoute,
     private http : PoductService,
     private inventario : InventarioComponent,
+    private loading: LoadingService
+
    
   ) {
     this.registro = new registerModel();
@@ -38,7 +41,9 @@ export class ActualizarComponent implements OnInit {
 
   ngOnInit(): void {
     // Inicializamos el formulario
-    this.getform();
+    this.getform(); 
+    this.loading.init();
+
 
     this.activeRou.params.subscribe((params)=> {
 
@@ -57,15 +62,32 @@ export class ActualizarComponent implements OnInit {
   }
 
   nombreNovalido() {
-    return this.actualizarForm.get('articulo')?.invalid && (this.formEnviado || this.actualizarForm.get('codigo')?.touched);;
+    return this.actualizarForm.get('name')?.invalid && (this.formEnviado || this.actualizarForm.get('name')?.touched);
+  }
+
+  categoriaNovalido() {
+    return this.actualizarForm.get('category')?.invalid &&(this.formEnviado || this.actualizarForm.get('category')?.touched);
   }
 
   codigoNovalido() {
-    return this.actualizarForm.get('codigo')?.invalid &&(this.formEnviado || this.actualizarForm.get('codigo')?.touched);
+    return this.actualizarForm.get('code')?.invalid &&(this.formEnviado || this.actualizarForm.get('code')?.touched);
   }
+  precioNovalido() {
+    return this.actualizarForm.get('price')?.invalid &&(this.formEnviado || this.actualizarForm.get('price')?.touched);
+  }
+  cantidadNovalido() {
+    return this.actualizarForm.get('quantity')?.invalid &&(this.formEnviado || this.actualizarForm.get('quantity')?.touched);
+  }
+
 
  
 
+  
+
+  // Dispara la validación en tiempo real cuando el usuario borra el contenido
+  validarCampo(campo: string) {
+    this.actualizarForm.get(campo)?.markAsTouched(); 
+  }
   // Método para inicializar el formulario
   getform(): void {
     this.actualizarForm = this.fb.group({
@@ -99,10 +121,11 @@ export class ActualizarComponent implements OnInit {
     }
   
     const productoActualizado = this.actualizarForm.value;
+    this.loading.show()
   
     this.http.EditarProducto(this.id, productoActualizado).subscribe({
       next: (response) => {
-        
+        this.loading.hide()
   
         Swal.fire({
           title: '¡Éxito!',
@@ -111,11 +134,13 @@ export class ActualizarComponent implements OnInit {
           timer: 2000, 
           showConfirmButton: false
         }).then(() => {
+          
           this.inventario.recargarTabla(); 
           this.router.navigate(['/productos']); // 🔹 Navegación después de mostrar la alerta
         });
       },
       error: (error) => {
+        this.loading.hide()
         console.error('Error al actualizar el producto:', error);
         Swal.fire({
           title: 'Error',
@@ -123,6 +148,7 @@ export class ActualizarComponent implements OnInit {
           icon: 'error',
           confirmButtonText: 'Aceptar'
         });
+       
       }
     });
   }

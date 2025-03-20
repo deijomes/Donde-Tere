@@ -35,6 +35,19 @@ export class VentasTotalesComponent implements OnInit {
   filter = false
   filtert = false
 
+  fechaHoy : any = 'hoy';
+   fechaHoy2 : any = 'hoy';
+   mostrarfecha = false;
+   mostarMensaje =true
+
+
+   fechaHoy3 : any = 'hoy';
+   fechaHoy4 : any = 'hoy';
+   mostrarfecha2 = false;
+   mostarMensaje2 =true
+
+
+
   
   ventasPorMes: { nombreMes: string, anio: number, totalVentas: any }[] = [];
 
@@ -118,7 +131,7 @@ export class VentasTotalesComponent implements OnInit {
 
 
   getventasActuales() {
-    this.servicio.getVentasActual().subscribe((data: any) => { this.ventamesActual = data; console.log(this.ventamesActual) })
+    this.servicio.getVentasActual().subscribe((data: any) => { this.ventamesActual = data })
   }
 
   gettotalActual() {
@@ -135,8 +148,13 @@ export class VentasTotalesComponent implements OnInit {
     const startDat = this.fechaInicial
       ? new Date(this.fechaInicial).setUTCHours(0, 0, 0, 0)
       : undefined;
+      
 
       const startDate = startDat ? new Date(startDat).toISOString() : undefined;
+      
+      const fechaFormateada = startDate?.split("T")[0]; 
+      this.fechaHoy = fechaFormateada
+      
 
     // Convertir fechaFinal a formato ISO (UTC) con la hora máxima del día
     let endDate;
@@ -146,14 +164,24 @@ export class VentasTotalesComponent implements OnInit {
       endDate = fechaFin.toISOString();
     }
 
+    const fechaF= endDate?.split("T")[0]; 
+    this.fechaHoy2 = fechaF
+    
+
     
 
     this.servicio.getProductSelling(limit, startDate, endDate).subscribe((data: any) => {
+      
       
       this.MasVendidos = data;
 
       this.filterCalendar = false
     });
+  }
+
+  mostrarfech(){
+    this.mostarMensaje = false
+    this.mostrarfecha = true
   }
 
   mostrarfiltro() {
@@ -177,6 +205,8 @@ export class VentasTotalesComponent implements OnInit {
       : undefined;
 
       const startDate = startDat ? new Date(startDat).toISOString() : undefined;
+      const fechamodificada = startDate?.split('T')[0];
+      this.fechaHoy3 = fechamodificada
 
     // Convertir fechaFinal a formato ISO (UTC) con la hora máxima del día
     let endDate;
@@ -185,6 +215,9 @@ export class VentasTotalesComponent implements OnInit {
       fechaFin.setUTCHours(23, 59, 59, 999); // Establece la hora en UTC
       endDate = fechaFin.toISOString();
     }
+
+    const fechamodific = endDate?.split('T')[0];
+      this.fechaHoy4 = fechamodific
 
    
 
@@ -197,6 +230,11 @@ export class VentasTotalesComponent implements OnInit {
 
 
     });
+  }
+
+  mostrarfechas(){
+    this.mostarMensaje2 = false
+    this.mostrarfecha2 = true
   }
 
   mostrarfilter() {

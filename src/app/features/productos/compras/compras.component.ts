@@ -52,7 +52,8 @@ export class ComprasComponent implements OnInit {
 
   comprasNoInvenForms: FormGroup;
   tablaProNoInventariado = false;
-  idproductNoInv: number = 0
+  idproductNoInv: number = 0;
+  usuario : string|null = null
 
   currentPage: number = 1;  // Página actual (comienza en 1)
   itemsPerPage: number = 10;  // Elementos por página (puedes cambiar este valor)
@@ -75,6 +76,8 @@ export class ComprasComponent implements OnInit {
       precio: ['', Validators.required]
     })
 
+   
+
 
 
     this.proveedorForm = this.fb.group({
@@ -84,8 +87,24 @@ export class ComprasComponent implements OnInit {
     })
 
   }
+
+  nombreNovalido() {
+    return this.proveedorForm.get('proveedor')?.invalid && (this.comprasForm || this.proveedorForm.get('proveedor')?.touched);
+  }
+
+  cantidadNovalido() {
+    return this.comprasForm.get('cantidad')?.invalid && ( this.comprasForm.get('cantidad')?.touched);
+  }
+  precioNovalido() {
+    return this.comprasForm.get('precio')?.invalid && (this.comprasForm.get('precio')?.touched);
+  }
+  validarCampo(campo: string) {
+    this.comprasForm.get(campo)?.markAsTouched(); 
+  }
+
   ngOnInit(): void {
     this.loading.init();
+    this. obtenerRol();
     this.producto()
     this.registrosCompras()
     this.inventariado();
@@ -877,6 +896,12 @@ export class ComprasComponent implements OnInit {
   }
 
 
+ 
+  obtenerRol() {
+    this.usuario = localStorage.getItem('role');
+
+    
+  }
 
 
 
