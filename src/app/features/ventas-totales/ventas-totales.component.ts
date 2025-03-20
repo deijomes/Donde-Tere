@@ -40,6 +40,13 @@ export class VentasTotalesComponent implements OnInit {
    mostrarfecha = false;
    mostarMensaje =true
 
+   spinner = false
+   icono = true
+
+   spinner2 = false
+   icono2 = true
+
+
 
    fechaHoy3 : any = 'hoy';
    fechaHoy4 : any = 'hoy';
@@ -172,7 +179,9 @@ export class VentasTotalesComponent implements OnInit {
 
     this.servicio.getProductSelling(limit, startDate, endDate).subscribe((data: any) => {
       
-      
+      this.spinner = false
+      this.icono = true
+ 
       this.MasVendidos = data;
 
       this.filterCalendar = false
@@ -180,6 +189,9 @@ export class VentasTotalesComponent implements OnInit {
   }
 
   mostrarfech(){
+    this.spinner = true
+    this.icono = false
+ 
     this.mostarMensaje = false
     this.mostrarfecha = true
   }
@@ -216,13 +228,16 @@ export class VentasTotalesComponent implements OnInit {
       endDate = fechaFin.toISOString();
     }
 
+   
+
     const fechamodific = endDate?.split('T')[0];
       this.fechaHoy4 = fechamodific
 
    
 
     this.servicio.getProductsold(limit, startDate, endDate).subscribe((data: any) => {
-     
+      this.spinner = false
+      this.icono = true
       this.MenosVendidos = data;
 
 
@@ -233,6 +248,8 @@ export class VentasTotalesComponent implements OnInit {
   }
 
   mostrarfechas(){
+    this.spinner = true
+    this.icono = false
     this.mostarMensaje2 = false
     this.mostrarfecha2 = true
   }
