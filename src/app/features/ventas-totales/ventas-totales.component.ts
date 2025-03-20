@@ -179,8 +179,8 @@ export class VentasTotalesComponent implements OnInit {
 
     this.servicio.getProductSelling(limit, startDate, endDate).subscribe((data: any) => {
       
-      this.spinner = false
-      this.icono = true
+      this.spinner2 = false
+      this.icono2 = true
  
       this.MasVendidos = data;
 
@@ -189,8 +189,8 @@ export class VentasTotalesComponent implements OnInit {
   }
 
   mostrarfech(){
-    this.spinner = true
-    this.icono = false
+    this.spinner2 = true
+    this.icono2 = false
  
     this.mostarMensaje = false
     this.mostrarfecha = true
