@@ -52,7 +52,8 @@ export class ComprasComponent implements OnInit {
 
   comprasNoInvenForms: FormGroup;
   tablaProNoInventariado = false;
-  idproductNoInv: number = 0
+  idproductNoInv: number = 0;
+  usuario : string|null = null
 
   currentPage: number = 1;  // Página actual (comienza en 1)
   itemsPerPage: number = 10;  // Elementos por página (puedes cambiar este valor)
@@ -103,6 +104,7 @@ export class ComprasComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading.init();
+    this. obtenerRol();
     this.producto()
     this.registrosCompras()
     this.inventariado();
@@ -894,6 +896,12 @@ export class ComprasComponent implements OnInit {
   }
 
 
+ 
+  obtenerRol() {
+    this.usuario = localStorage.getItem('role');
+
+    
+  }
 
 
 

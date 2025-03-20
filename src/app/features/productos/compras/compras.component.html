@@ -18,9 +18,9 @@
 
 
         <div class="p-3 mb-0 fondo">
-            <div class="d-flex align-items-center justify-content-between">
+            <div  class="d-flex align-items-center justify-content-between">
                 <h4 class="card-title mi-color-letra">Registro de compras</h4>
-                <a (click)="registro()" class="btn btn-sm  btn-success me-1"><i class="bx bx-plus"></i> Nuevo
+                <a *ngIf="usuario === 'SUPERADMIN'" (click)="registro()" class="btn btn-sm  btn-success me-1"><i class="bx bx-plus"></i> Nuevo
                     Producto</a>
 
 
