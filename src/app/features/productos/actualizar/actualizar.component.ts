@@ -8,6 +8,7 @@ import { registerModel } from '../../../models/registerModel';
 import { Subscription } from 'rxjs';
 import { PoductService } from '../../../services/poduct.service';
 import { InventarioComponent } from '../inventario/inventario.component';
+import { LoadingService } from '../../../services/loading.service';
 
 @Component({
   selector: 'app-actualizar',
@@ -31,6 +32,8 @@ export class ActualizarComponent implements OnInit {
     private activeRou: ActivatedRoute,
     private http : PoductService,
     private inventario : InventarioComponent,
+    private loading: LoadingService
+
    
   ) {
     this.registro = new registerModel();
@@ -38,7 +41,9 @@ export class ActualizarComponent implements OnInit {
 
   ngOnInit(): void {
     // Inicializamos el formulario
-    this.getform();
+    this.getform(); 
+    this.loading.init();
+
 
     this.activeRou.params.subscribe((params)=> {
 
@@ -116,10 +121,11 @@ export class ActualizarComponent implements OnInit {
     }
   
     const productoActualizado = this.actualizarForm.value;
+    this.loading.show()
   
     this.http.EditarProducto(this.id, productoActualizado).subscribe({
       next: (response) => {
-        
+        this.loading.hide()
   
         Swal.fire({
           title: '¡Éxito!',
@@ -128,11 +134,13 @@ export class ActualizarComponent implements OnInit {
           timer: 2000, 
           showConfirmButton: false
         }).then(() => {
+          
           this.inventario.recargarTabla(); 
           this.router.navigate(['/productos']); // 🔹 Navegación después de mostrar la alerta
         });
       },
       error: (error) => {
+        this.loading.hide()
         console.error('Error al actualizar el producto:', error);
         Swal.fire({
           title: 'Error',
@@ -140,6 +148,7 @@ export class ActualizarComponent implements OnInit {
           icon: 'error',
           confirmButtonText: 'Aceptar'
         });
+       
       }
     });
   }

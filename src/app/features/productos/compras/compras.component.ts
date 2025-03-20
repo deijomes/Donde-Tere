@@ -75,6 +75,8 @@ export class ComprasComponent implements OnInit {
       precio: ['', Validators.required]
     })
 
+   
+
 
 
     this.proveedorForm = this.fb.group({
@@ -84,6 +86,21 @@ export class ComprasComponent implements OnInit {
     })
 
   }
+
+  nombreNovalido() {
+    return this.proveedorForm.get('proveedor')?.invalid && (this.comprasForm || this.proveedorForm.get('proveedor')?.touched);
+  }
+
+  cantidadNovalido() {
+    return this.comprasForm.get('cantidad')?.invalid && ( this.comprasForm.get('cantidad')?.touched);
+  }
+  precioNovalido() {
+    return this.comprasForm.get('precio')?.invalid && (this.comprasForm.get('precio')?.touched);
+  }
+  validarCampo(campo: string) {
+    this.comprasForm.get(campo)?.markAsTouched(); 
+  }
+
   ngOnInit(): void {
     this.loading.init();
     this.producto()

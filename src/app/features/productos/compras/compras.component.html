@@ -36,14 +36,14 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4">
-            <ul class="nav nav-tabs mt-2"> <!-- Eliminado border-top -->
+            <ul class="nav nav-tabs  mt-2"> <!-- Eliminado border-top -->
                 <li (click)="inventariado()" class="nav-item" style="width: 170px; cursor: pointer;">
-                    <a data-bs-toggle="tab" class="nav-link py-2 active">
+                    <a data-bs-toggle="tab" class="nav-link fondobg py-2 active">
                         Inventariados
                     </a>
                 </li>
                 <li (click)="noInventariado()" class="nav-item" style="width: 170px; cursor: pointer;">
-                    <a data-bs-toggle="tab" class="nav-link py-2">
+                    <a data-bs-toggle="tab" class="nav-link fondobg py-2">
                         No inventariados
                     </a>
                 </li>
@@ -68,8 +68,12 @@
 
                     <div class="mb-3">
                         <label for="meta-title" class="form-label">Proveedor</label>
-                        <input type="text" id="meta-title" class="form-control" placeholder=""
+                        <input type="text" id="meta-title" class="form-control"
+                        (input)="validarCampo('proveedor')" [class.is-invalid]="nombreNovalido()" placeholder=""
                             formControlName="proveedor">
+                            <div *ngIf="nombreNovalido()" class="invalid-feedback">
+                                El campo es obligatorio
+                          </div>
                     </div>
 
                 </div>
@@ -135,8 +139,11 @@
                         <div class="col-lg-4">
                             <div class="mb-3">
                                 <label for="cantidad-minima" class="form-label">Cantidad</label>
-                                <input type="number" id="cantidad-minima" class="form-control no-bg" placeholder=""
-                                    formControlName="cantidad" />
+                                <input type="number" id="cantidad-minima" class="form-control no-bg" placeholder="" 
+                                [class.is-invalid]="cantidadNovalido()"   formControlName="cantidad" />
+                                <div *ngIf="cantidadNovalido()" class="invalid-feedback">
+                                    campo  obligatorio, solo número
+                              </div>
                             </div>
                         </div>
 
@@ -144,7 +151,10 @@
                             <div class="mb-3">
                                 <label for="cantidad-minima" class="form-label">Precio</label>
                                 <input type="number" id="cantidad-minima" class="form-control no-bg" placeholder=""
-                                    formControlName="precio" />
+                                [class.is-invalid]="precioNovalido()"  formControlName="precio" />
+                                <div *ngIf="precioNovalido()" class="invalid-feedback">
+                                    Campo  obligatorio, solo número
+                              </div>
                             </div>
                         </div>
 
@@ -271,7 +281,12 @@
                     <div class="mb-3">
                         <label for="meta-title" class="form-label">Proveedor</label>
                         <input type="text" id="meta-title" class="form-control" placeholder=""
+                        (input)="validarCampo('proveedor')" [class.is-invalid]="nombreNovalido()" placeholder=""
                             formControlName="proveedor">
+                            <div *ngIf="nombreNovalido()" class="invalid-feedback">
+                                El campo es obligatorio
+                          </div>
+                           
                     </div>
 
                 </div>
