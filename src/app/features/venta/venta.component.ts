@@ -465,11 +465,13 @@ export class VentaComponent implements OnInit {
         cancelButtonColor: '#FF9800'
       }).then((result) => {
         if (result.isConfirmed) {
+
+          this.loading.show(); 
           this.serviceproduct.eliminarFactura(this.idVenta).subscribe({
             
             next: (response) => {
 
-              
+              this.loading.hide();
               this.obtenerSalidas()
               
               
@@ -489,6 +491,7 @@ export class VentaComponent implements OnInit {
                 icon: 'error',
                 confirmButtonColor: '#FF6F00'
               });
+              this.loading.hide();
             }
           });
         }

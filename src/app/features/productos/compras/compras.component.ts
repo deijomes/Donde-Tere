@@ -561,10 +561,10 @@ export class ComprasComponent implements OnInit {
       cancelButtonColor: '#FF9800'
     }).then((result) => {
       if (result.isConfirmed) {
+        this.loading.show(); 
         this.serviceCompra.eliminarFactura(this.idCompra).subscribe({
-          
           next: (response) => {
-            
+            this.loading.hide();
             this.registrosCompras();
             Swal.fire({
               title: 'Eliminado',
@@ -572,7 +572,6 @@ export class ComprasComponent implements OnInit {
               icon: 'success',
               confirmButtonColor: '#FF6F00'
             });
-           
           },
           error: (err) => {
             console.error('Error al eliminar:', err);
@@ -582,11 +581,13 @@ export class ComprasComponent implements OnInit {
               icon: 'error',
               confirmButtonColor: '#FF6F00'
             });
+            this.loading.hide();
           }
         });
       }
     });
   }
+  
   
   
 
