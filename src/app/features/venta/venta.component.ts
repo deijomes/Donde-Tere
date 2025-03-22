@@ -217,11 +217,7 @@ export class VentaComponent implements OnInit {
     const cliente = this.clienteForm.value.cliente;
     const identificacion = this.clienteForm.value.identificacion;
 
-    const idenfic = identificacion.toString();
-
-
-
-
+    const idenfic = identificacion ? identificacion.toString() : null;
 
 
     this.loading.show();

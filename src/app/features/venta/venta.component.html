@@ -82,7 +82,7 @@
                                             <div class="header-column">Código</div>
                                         </div>
                                     </ng-template>
-                                
+
                                     <!-- Cada opción (Producto) -->
                                     <ng-template ng-option-tmp let-item="item">
                                         <div class="select-option-row">
@@ -133,7 +133,7 @@
 
     <div *ngIf="prodcutotabla">
 
-        <div  id="tablaDes" class="table-responsive">
+        <div id="tablaDes" class="table-responsive">
             <table class="table align-middle mb-0 table-hover table-centered">
                 <thead class="bg-light-subtle">
                     <tr>
@@ -315,7 +315,13 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button (click)="eliminarFactura()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Eliminar</button>
+                <button (click)="eliminarFactura()" type="button" class="btn btn-danger d-flex align-items-center gap-2"
+                    data-bs-dismiss="modal">
+                    <iconify-icon icon="solar:trash-bin-minimalistic-2-broken"
+                        class="align-middle fs-18"></iconify-icon>
+                   
+                </button>
+
                 <button (click)="generatePDF()" type="button" class="btn btn-primary"
                     data-bs-dismiss="modal">Generar</button>
             </div>
@@ -348,9 +354,12 @@
                 </form>
             </div>
             <div class="modal-footer">
+
+
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button (click)="actualizarCantidad()" type="button" class="btn btn-primary"
                     data-bs-dismiss="modal">Guardar</button>
+
             </div>
         </div>
     </div>

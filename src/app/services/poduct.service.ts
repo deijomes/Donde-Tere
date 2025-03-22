@@ -81,7 +81,7 @@ export class PoductService {
   }
   enviarVenta(cliente: string, identificacion: string, saleItems: any[]): Observable<any> {
     const body = { customer: cliente, identification: identificacion, saleItems };
-   
+
 
     return this.http.post(`${this.baseUrl}`, body).pipe(
       catchError(error => {
@@ -103,7 +103,7 @@ export class PoductService {
 
   }
 
-  getMovimiento(limit: number ): Observable<any> {
+  getMovimiento(limit: number): Observable<any> {
     // Crear los parámetros de la consulta
     let params = new HttpParams()
       .set('limit', limit.toString());
@@ -265,15 +265,15 @@ export class PoductService {
 
   }
 
-    eliminarFactura(id: string): Observable<any> {
-      return this.http.delete(`${this.baseUrl}/${id}`).pipe(
-        catchError(error => {
-          console.error('Error al eliminar la factura:', error);
-          return throwError(() => new Error('No se pudo eliminar la factura. Inténtalo nuevamente.'));
-        })
-      );
-    }
-  
+  eliminarFactura(id: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`).pipe(
+      catchError(error => {
+        console.error('Error al eliminar la factura:', error);
+        return throwError(() => new Error('No se pudo eliminar la factura. Inténtalo nuevamente.'));
+      })
+    );
+  }
+
 
 
 }
