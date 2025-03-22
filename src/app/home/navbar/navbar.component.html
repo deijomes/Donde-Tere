@@ -1,153 +1,301 @@
 <div class="navbar-header">
-    <div class="d-flex align-items-center">
-         <!-- Menu Toggle Button -->
-         <div class="topbar-item">
-              <button type="button" class="button-toggle-menu me-2" (click)="toggleMenuSize()">
-                   <iconify-icon icon="solar:hamburger-menu-broken" class="fs-24 align-middle"></iconify-icon>
-              </button>
-         </div>
+     <div class="d-flex align-items-center">
+          <!-- Menu Toggle Button -->
+          <div class="topbar-item">
+               <button type="button" class="button-toggle-menu me-2" (click)="toggleMenuSize()">
+                    <iconify-icon icon="solar:hamburger-menu-broken" class="fs-24 align-middle"></iconify-icon>
+               </button>
+          </div>
 
-         <!-- Menu Toggle Button -->
-         <div class="topbar-item">
-              <h4 class="fw-bold topbar-button pe-none text-uppercase mb-0">Welcome!</h4>
-         </div>
-    </div>
+          <!-- Menu Toggle Button -->
+          <div class="topbar-item">
+               <h4 class="fw-bold topbar-button pe-none  mb-0"><i
+                         class="bx bx-user-circle text-muted fs-18 align-middle me-1"></i><span
+                         class="align-middle">{{usuariObtenido|emailsplit}}</span></h4>
+          </div>
 
-    <div class="d-flex align-items-center gap-1">
+          <div *ngIf="mostrarBoton" class="topbar-item d-none d-md-flex me-6">
+               <button type="button" class="topbar-button" id="theme-settings-btn" data-bs-toggle="offcanvas"
+                    data-bs-target="#theme-activity-offcanvas" aria-controls="theme-settings-offcanvas">
+                    <div class="avatar-sm bg-light d-flex align-items-center justify-content-center rounded"
+                         data-bs-toggle="tooltip" data-bs-placement="top" title="Archive">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                              <path fill="currentColor" fill-rule="evenodd"
+                                   d="M10 22h4c3.771 0 5.657 0 6.828-1.172S22 17.771 22 14v-.437c0-.873 0-1.529-.043-2.063h-4.052c-1.097 0-2.067 0-2.848-.105c-.847-.114-1.694-.375-2.385-1.066c-.692-.692-.953-1.539-1.067-2.386c-.105-.781-.105-1.75-.105-2.848l.01-2.834q0-.124.02-.244C11.121 2 10.636 2 10.03 2C6.239 2 4.343 2 3.172 3.172C2 4.343 2 6.229 2 10v4c0 3.771 0 5.657 1.172 6.828S6.229 22 10 22"
+                                   clip-rule="evenodd" opacity="0.5" />
+                              <path fill="currentColor"
+                                   d="M9.013 19.047a.75.75 0 0 1-1.026 0l-2-1.875a.75.75 0 0 1 1.026-1.094l.737.69V13.5a.75.75 0 0 1 1.5 0v3.269l.737-.691a.75.75 0 0 1 1.026 1.094zM11.51 2.26l-.01 2.835c0 1.097 0 2.066.105 2.848c.114.847.375 1.694 1.067 2.385c.69.691 1.538.953 2.385 1.067c.781.105 1.751.105 2.848.105h4.052q.02.232.028.5H22c0-.268 0-.402-.01-.56a5.3 5.3 0 0 0-.958-2.641c-.094-.128-.158-.204-.285-.357C19.954 7.494 18.91 6.312 18 5.5c-.81-.724-1.921-1.515-2.89-2.161c-.832-.556-1.248-.834-1.819-1.04a6 6 0 0 0-.506-.154c-.384-.095-.758-.128-1.285-.14z" />
+                         </svg>
+                    </div>
+               </button>
 
-         
 
-         <!-- Notification -->
-         <div class="dropdown topbar-item">
-              <button type="button" class="topbar-button position-relative" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                   <iconify-icon icon="solar:bell-bing-bold-duotone" class="fs-24 align-middle"></iconify-icon>
-                   <span class="position-absolute topbar-badge fs-10 translate-middle badge bg-danger rounded-pill">3<span class="visually-hidden">unread messages</span></span>
-              </button>
-              <div class="dropdown-menu py-0 dropdown-lg dropdown-menu-end" aria-labelledby="page-header-notifications-dropdown">
-                   <div class="p-3 border-top-0 border-start-0 border-end-0 border-dashed border">
-                        <div class="row align-items-center">
-                             <div class="col">
-                                  <h6 class="m-0 fs-16 fw-semibold"> Notifications</h6>
-                             </div>
-                             <div class="col-auto">
-                                  <a href="javascript: void(0);" class="text-dark text-decoration-underline">
-                                       <small>Clear All</small>
-                                  </a>
-                             </div>
-                        </div>
-                   </div>
-                   <div data-simplebar style="max-height: 280px;">
-                        <!-- Item -->
-                        <a href="javascript:void(0);" class="dropdown-item py-3 border-bottom text-wrap">
-                             <div class="d-flex">
-                                  <div class="flex-shrink-0">
-                                       <img src="assets/images/users/avatar-1.jpg" class="img-fluid me-2 avatar-sm rounded-circle" alt="avatar-1" />
-                                  </div>
-                                  <div class="flex-grow-1">
-                                       <p class="mb-0"><span class="fw-medium">Josephine Thompson </span>commented on admin panel <span>" Wow 😍! this admin looks good and awesome design"</span></p>
-                                  </div>
-                             </div>
-                        </a>
-                        <!-- Item -->
-                        <a href="javascript:void(0);" class="dropdown-item py-3 border-bottom">
-                             <div class="d-flex">
-                                  <div class="flex-shrink-0">
-                                       <div class="avatar-sm me-2">
-                                            <span class="avatar-title bg-soft-info text-info fs-20 rounded-circle">
-                                                 D
-                                            </span>
-                                       </div>
-                                  </div>
-                                  <div class="flex-grow-1">
-                                       <p class="mb-0 fw-semibold">Donoghue Susan</p>
-                                       <p class="mb-0 text-wrap">
-                                            Hi, How are you? What about our next meeting
-                                       </p>
-                                  </div>
-                             </div>
-                        </a>
-                        <!-- Item -->
-                        <a href="javascript:void(0);" class="dropdown-item py-3 border-bottom">
-                             <div class="d-flex">
-                                  <div class="flex-shrink-0">
-                                       <img src="assets/images/users/avatar-3.jpg" class="img-fluid me-2 avatar-sm rounded-circle" alt="avatar-3" />
-                                  </div>
-                                  <div class="flex-grow-1">
-                                       <p class="mb-0 fw-semibold">Jacob Gines</p>
-                                       <p class="mb-0 text-wrap">Answered to your comment on the cash flow forecast's graph 🔔.</p>
-                                  </div>
-                             </div>
-                        </a>
-                        <!-- Item -->
-                        <a href="javascript:void(0);" class="dropdown-item py-3 border-bottom">
-                             <div class="d-flex">
-                                  <div class="flex-shrink-0">
-                                       <div class="avatar-sm me-2">
-                                            <span class="avatar-title bg-soft-warning text-warning fs-20 rounded-circle">
-                                                 <iconify-icon icon="iconamoon:comment-dots-duotone"></iconify-icon>
-                                            </span>
-                                       </div>
-                                  </div>
-                                  <div class="flex-grow-1">
-                                       <p class="mb-0 fw-semibold text-wrap">You have received <b>20</b> new messages in the
-                                            conversation</p>
-                                  </div>
-                             </div>
-                        </a>
-                        <!-- Item -->
-                        <a href="javascript:void(0);" class="dropdown-item py-3 border-bottom">
-                             <div class="d-flex">
-                                  <div class="flex-shrink-0">
-                                       <img src="assets/images/users/avatar-5.jpg" class="img-fluid me-2 avatar-sm rounded-circle" alt="avatar-5" />
-                                  </div>
-                                  <div class="flex-grow-1">
-                                       <p class="mb-0 fw-semibold">Shawn Bunch</p>
-                                       <p class="mb-0 text-wrap">
-                                            Commented on Admin
-                                       </p>
-                                  </div>
-                             </div>
-                        </a>
-                   </div>
-                   <div class="text-center py-3">
-                        <a href="javascript:void(0);" class="btn btn-primary btn-sm">View All Notification <i class="bx bx-right-arrow-alt ms-1"></i></a>
-                   </div>
-              </div>
-         </div>
 
-         
 
-         
+          </div>
 
-         <!-- User -->
-         <div class="dropdown topbar-item">
-              <a type="button" class="topbar-button" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                   <span class="d-flex align-items-center">
-                        <img class="rounded-circle" width="32" src="assets/images/users/avatar-1.jpg" alt="avatar-3">
-                   </span>
-              </a>
-              <div class="dropdown-menu dropdown-menu-end">
-                   <!-- item-->
-                   <h6 class="dropdown-header">Welcome Gaston!</h6>
-                   <a class="dropdown-item" href="pages-profile.html">
-                        <i class="bx bx-user-circle text-muted fs-18 align-middle me-1"></i><span class="align-middle">Profile</span>
-                   </a>
+
+
+     </div>
+
+     <div class="d-flex align-items-center gap-1">
+
+
+
+
+          <!-- Notification -->
+          <div class="dropdown topbar-item">
+
+
+
+
+               <button type="button" class="topbar-button position-relative" id="page-header-notifications-dropdown"
+                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <iconify-icon icon="solar:bell-bing-bold-duotone" class="fs-24 align-middle"></iconify-icon>
+                    <span *ngIf="notificationCount > 0 "
+                         class="position-absolute topbar-badge fs-10 translate-middle badge bg-danger rounded-pill">{{notificationCount}}<span
+                              class="visually-hidden">unread messages</span></span>
+               </button>
+               <div class="dropdown-menu py-0 dropdown-lg dropdown-menu-end"
+                    aria-labelledby="page-header-notifications-dropdown">
+                    <div class="p-3 border-top-0 border-start-0 border-end-0 border-dashed border">
+                         <div class="row align-items-center">
+                              <div class="col">
+                                   <h6 class="m-0 fs-16 fw-semibold"> Notificaciones</h6>
+                              </div>
+                              <div class="col-auto">
+                                   <a href="javascript: void(0);" class="text-dark text-decoration-underline">
+                                        <small>cerrar</small>
+                                   </a>
+                              </div>
+                         </div>
+                    </div>
+                    <div data-simplebar style="max-height: 280px;">
+                         <!-- Item -->
+                         <a *ngFor="let Notifi of notificacion" href="javascript:void(0);"
+                              class="dropdown-item py-3 border-bottom text-wrap">
+                              <div class="d-flex">
+
+                                   <div class="flex-grow-1">
+                                        <p class="mb-0"><span class="fw-medium">{{ Notifi.message|texto}} </span></p>
+                                   </div>
+                              </div>
+                         </a>
+
+                    </div>
+               </div>
+
+
+
+
+
+
+
+               <!-- User -->
+               <div class="dropdown topbar-item">
+                    <a type="button" class="topbar-button" id="page-header-user-dropdown" data-bs-toggle="dropdown"
+                         aria-haspopup="true" aria-expanded="false">
+                         <span class="d-flex align-items-center">
+                              <img class="rounded-circle" width="32" src="assets/images/users/usuario.png"
+                                   alt="avatar-3">
+                         </span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end">
+                         <!-- item-->
+
+                         <!-- <a class="dropdown-item" >
+                         <i class="bx bx-user-circle text-muted fs-18 align-middle me-1"></i><span
+                              class="align-middle">{{usuariObtenido|emailsplit}}</span>
+                    </a>
+
+                    <a class="dropdown-item">
+                         <i class="bx bx-help-circle text-muted fs-18 align-middle me-1"></i><span
+                              class="align-middle">Help</span>
+                    </a> -->
+
+                         <div *ngIf="contenidoHabilitado">
+                              <a class="dropdown-item" [routerLink]="['/admin']" routerLinkActive="router-link-active">
+                                   <i class="bx bx-user-circle text-muted fs-18 align-middle me-1"></i>
+                                   <span class="align-middle">{{ usuariObtenido | emailsplit }}</span>
+                              </a>
+
+
+                              <div class="dropdown-divider my-1"></div>
+                         </div>
+
+
+                         <a class="dropdown-item text-danger" (click)="cerrarSesion()" style="cursor: pointer;">
+                              <i class="bx bx-log-out fs-18 align-middle me-1"></i><span
+                                   class="align-middle">Logout</span>
+                         </a>
+                    </div>
+               </div>
+               <form class="app-search d-none d-md-block ms-2" (ngSubmit)="onSearch()">
+                    <div class="position-relative">
+                         <input type="search" class="form-control" placeholder="Search..." autocomplete="off"
+                              [(ngModel)]="searchTerm" name="search" (keydown.enter)="onSearch()" />
+                         <iconify-icon icon="solar:magnifer-linear" class="search-widget-icon"
+                              (click)="onClickSearch()"></iconify-icon>
+                             
+                    </div>
                   
-                   <a class="dropdown-item" href="pages-faqs.html">
-                        <i class="bx bx-help-circle text-muted fs-18 align-middle me-1"></i><span class="align-middle">Help</span>
-                   </a>
-                   
 
-                   <div class="dropdown-divider my-1"></div>
+               </form>
 
-                   <a class="dropdown-item text-danger" href="auth-signin.html">
-                        <i class="bx bx-log-out fs-18 align-middle me-1"></i><span class="align-middle">Logout</span>
-                   </a>
-              </div>
-         </div>
+               
 
-        
-         
-    </div>
-</div>
 
+
+
+
+          </div>
+     </div>
+
+     <div class="offcanvas offcanvas-end border-0" tabindex="-1" id="theme-activity-offcanvas"
+          style="max-width: 450px; width: 100%;" aria-modal="true" role="dialog">
+          <div class="d-flex align-items-center bg-primary p-3 offcanvas-header">
+               <h5 class="text-white m-0 fw-semibold">Generar reporte</h5>
+               <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+          </div>
+
+          <div class="offcanvas-body p-0">
+               <div data-simplebar="init" class="h-100 p-4">
+                    <div class="simplebar-wrapper" style="margin: -36px;">
+                         <div class="simplebar-height-auto-observer-wrapper">
+                              <div class="simplebar-height-auto-observer"></div>
+                         </div>
+                         <div class="simplebar-mask">
+                              <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                   <div class="simplebar-content-wrapper" tabindex="0" role="region"
+                                        aria-label="scrollable content" style="height: 100%; overflow: hidden scroll;">
+                                        <div class="simplebar-content" style="padding: 36px;">
+                                             <div class="position-relative ms-2">
+                                                  <span
+                                                       class="position-absolute start-0  top-0 border border-dashed h-100"></span>
+                                                  <div class="position-relative ps-4">
+                                                       <div class="mb-4">
+                                                            <span
+                                                                 class="position-absolute start-0 avatar-sm translate-middle-x bg-danger d-inline-flex align-items-center justify-content-center rounded-circle text-light fs-20"><iconify-icon
+                                                                      icon="iconamoon:folder-check-duotone"></iconify-icon></span>
+                                                            <div class="ms-2">
+                                                                 <h5 class="mb-1 text-dark fw-semibold fs-15 lh-base">
+                                                                      Reporte</h5>
+                                                                 <p class="d-flex align-items-center">Fecha inicio <span
+                                                                           class=" d-flex align-items-center text-primary ms-1"><iconify-icon
+                                                                                icon="iconamoon:file-light"></iconify-icon>
+                                                                      </span></p>
+
+                                                                 <div class="bg-light bg-opacity-50 rounded-2 p-2">
+                                                                      <div class="row">
+                                                                           <div
+                                                                                class="col-lg-12 border-end border-light">
+                                                                                <div
+                                                                                     class="d-flex align-items-center gap-2">
+                                                                                     <div class="flex-auto">
+
+                                                                                          <p-datepicker
+                                                                                               [(ngModel)]="fechaInicio"
+                                                                                               [iconDisplay]="'input'"
+                                                                                               [showIcon]="true"
+                                                                                               inputId="icondisplay" />
+                                                                                     </div>
+                                                                                </div>
+                                                                           </div>
+
+                                                                      </div>
+                                                                 </div>
+                                                                 <h6 class="mt-2 text-muted"></h6>
+
+                                                                 <p class="d-flex align-items-center">Fecha final <span
+                                                                           class=" d-flex align-items-center text-primary ms-1"><iconify-icon
+                                                                                icon="iconamoon:file-light"></iconify-icon></span>
+                                                                 </p>
+
+                                                                 <div class="bg-light bg-opacity-50 rounded-2 p-2">
+                                                                      <div class="row">
+                                                                           <div
+                                                                                class="col-lg-12 border-end border-light">
+                                                                                <div
+                                                                                     class="d-flex align-items-center gap-2">
+                                                                                     <div class="flex-auto">
+
+                                                                                          <p-datepicker
+                                                                                               [(ngModel)]="fechaFinal"
+                                                                                               [iconDisplay]="'input'"
+                                                                                               [showIcon]="true"
+                                                                                               inputId="icondisplay" />
+                                                                                     </div>
+                                                                                </div>
+                                                                           </div>
+
+                                                                      </div>
+                                                                 </div>
+
+
+
+                                                            </div>
+                                                       </div>
+                                                  </div>
+                                                  <div *ngIf="tablaReporte" class="position-relative ps-4">
+                                                       <div class="mb-4">
+                                                            <span
+                                                                 class="position-absolute start-0 avatar-sm translate-middle-x bg-success d-inline-flex align-items-center justify-content-center rounded-circle text-light fs-20"><iconify-icon
+                                                                      icon="iconamoon:check-circle-1-duotone"></iconify-icon></span>
+                                                            <div class="ms-2">
+                                                                 <h5 class="mb-1 text-dark fw-semibold fs-15 lh-base">
+                                                                      Reporte generado
+                                                                 </h5>
+                                                                 <p class="d-flex align-items-center mb-0"><span
+                                                                           class=" d-flex align-items-center text-primary mx-1"><iconify-icon
+                                                                                icon="iconamoon:file-light"></iconify-icon>
+                                                                           Informe </span> <span
+                                                                           class="badge bg-success-subtle text-success px-2 py-1 ms-1">
+                                                                           Completado</span></p>
+
+                                                                 <div (click)="descargarArchivo()"
+                                                                      style="cursor: pointer;"
+                                                                      class="d-flex align-items-center gap-3 mt-1 bg-light bg-opacity-50 p-2 rounded-2">
+                                                                      <a
+                                                                           class="fw-medium text-dark">{{nombreArchivo}}</a>
+                                                                      <div class="ms-auto">
+                                                                           <a class="fw-medium text-primary fs-18"
+                                                                                data-bs-toggle="tooltip"
+                                                                                data-bs-title="Download"
+                                                                                style="cursor: pointer;"
+                                                                                data-bs-placement="bottom"><iconify-icon
+                                                                                     icon="iconamoon:cloud-download-duotone"></iconify-icon></a>
+                                                                      </div>
+
+                                                                 </div>
+
+
+                                                            </div>
+                                                       </div>
+                                                  </div>
+
+                                             </div>
+                                             <a (click)="generarReporte()"
+                                                  class="btn btn-outline-dark w-100">Generar</a>
+                                        </div>
+
+                                        <div *ngIf="spinner" class="d-flex justify-content-center p-1">
+                                             <div class="spinner-border text-primary" role="status">
+                                                 <span class="visually-hidden">Cargando...</span>
+                                             </div>
+                                         </div>
+                                   </div>
+                              </div>
+                         </div>
+                         <div class="simplebar-placeholder" style="width: auto; height: 1101px;"></div>
+                    </div>
+                    <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+                         <div class="simplebar-scrollbar" style="width: 0px; display: none;"></div>
+                    </div>
+                    <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
+                         <div class="simplebar-scrollbar"
+                              style="height: 25px; transform: translate3d(0px, 0px, 0px); display: block;"></div>
+                    </div>
+               </div>
+          </div>
+     </div>

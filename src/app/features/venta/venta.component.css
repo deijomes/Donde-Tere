@@ -1,0 +1,383 @@
+.form-control {
+   
+  
+    background: #eae8e8;
+    border-radius: 0.375rem; /* Bordes ligeramente redondeados */
+    padding: 0.5rem 1rem; /* Espaciado interno cómodo */
+    font-size: 1rem; /* Tamaño de texto estándar */
+   
+    transition: box-shadow 0.3s ease, border-color 0.3s ease; /* Animaciones suaves */
+}
+
+.form-control:focus {
+    border-color: #ff6d2f74; /* Resalta el borde al enfocar */
+    outline: none; /* Elimina el contorno azul estándar */
+    box-shadow: 0 0 5px rgba(135, 48, 11, 0.09); /* Sombra más intensa al enfocar */
+}
+
+/* Fondo para toda la fila */
+.custom-bg td {
+    background-color: rgba(135, 48, 11, 0.1); /* Puedes cambiar este color */
+}
+
+/* Fondo cuando la celda está activa */
+.custom-bg td input:focus {
+    background-color: rgba(135, 48, 11, 0.3); /* Fondo más oscuro cuando la celda es activada */
+}
+
+
+/* Ocultar las flechas de selección en campos numéricos */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Para Firefox */
+}
+
+.padding-lados {
+    padding-left: 40px;
+    padding-right: 40px;
+    padding: auto;
+  }
+
+  @media (max-width: 768px) {
+    #product-date {
+      margin-bottom: 20px; /* Añade espacio debajo del campo de fecha */
+    }
+
+    .table-responsive {
+      margin-top: 20px; /* Añade espacio entre la tabla y el contenido superior */
+    }
+  }
+
+  .form-control {
+    border: 1px solid #ccc;
+    background-color: rgba(135, 48, 11, 0.05);
+    color: #333;
+    border-radius: 0.375rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Transición suave */
+}
+  .form-control:focus {
+    border-color: #ff6d2f74; /* Resalta el borde al enfocar */
+    outline: none; /* Elimina el contorno azul estándar */
+    box-shadow: 0 0 5px rgba(135, 48, 11, 0.09); /* Sombra más intensa al enfocar */
+}
+.no-border-radius {
+  border-radius: 4px !important; /* Elimina el borde redondeado */
+}
+
+.is-invalid {
+  border-color: orange; /* Borde naranja cuando es inválido */
+}
+
+.is-valid {
+  border-color: green; /* Borde verde cuando es válido */
+}
+
+.text-danger {
+  color: orange; /* Color naranja para el mensaje de error */
+}
+.fondo{
+  background:#ff6d2fe3 !important;
+  border-radius: 3px;
+}
+
+.mi-color-letra{
+  color: white !important;
+}
+
+
+
+.ng-select.ng-select-single .ng-select-container{
+  height: 42px !important;
+}
+
+
+.ng-select.ng-select-focused:not(.ng-select-opened) > .ng-select-container {
+  border-color: orange !important; /* Cambiar el color del borde a naranja */
+  box-shadow: none !important; 
+  background-color: #f9f2f2da; /* Fondo claro */
+}
+
+.ng-select .ng-select-container .ng-value-container .ng-placeholder{
+  font-size: 16px;
+  padding-left: 8px !important;
+  
+}
+
+.progress, .progress-stacked {
+  --bs-progress-height: 0.75rem;
+  --bs-progress-font-size: 0.65625rem;
+  --bs-progress-bg: rgba(255, 166, 0, 0.221);
+  --bs-progress-border-radius: var(--bs-border-radius);
+  --bs-progress-box-shadow: var(--bs-box-shadow-inset);
+  --bs-progress-bar-color: #ffffff;
+  --bs-progress-bar-bg: #ff6c2f;
+  --bs-progress-bar-transition: width 0.6s ease;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex
+;
+ 
+}
+
+
+
+
+
+
+
+.no-bg-placeholder {
+  background: transparent !important; 
+  border:  1px solid rgba(240, 96, 96, 0.208);
+  
+}
+
+.padding-lado {
+  padding-left: 40px;
+  padding-right: 20px;
+  padding: auto;
+}
+
+/* Caja con sombra y efecto flotante */
+.floating-box {
+  width: 300px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Sombra sutil */
+  transition: all 0.3s ease; /* Transición suave */
+  display: inline-block;
+  margin: 20px;
+}
+
+.floating-box:hover {
+  transform: translateY(-5px); /* Efecto de flotado */
+ 
+}
+
+.floating-content {
+  display: flex;
+  align-items: center;
+}
+
+.floating-content input {
+  margin-right: 10px;  /* Separación entre checkbox y texto */
+}
+
+.floating-content label {
+  font-size: 14px;
+  color: #333;  /* Color del texto */
+}
+
+.floating-box {
+  transition: all 0.3s ease;
+}
+
+.floating-box.visible {
+  display: block; /* La barra se muestra */
+}
+
+.floating-box.hidden {
+  display: none; /* La barra desaparece completamente */
+}
+
+/* Estilos generales para el botón */
+/* Estilos generales para el botón */
+.icon-button {
+  transition: color 0.3s, background-color 0.3s; /* Transición suave */
+  padding: 8px; /* Añadir algo de espacio alrededor del icono */
+  border: none; /* Evitar que el botón tenga borde */
+  background-color: transparent; /* Fondo transparente */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+ 
+}
+
+/* Efecto hover sobre el icono */
+.icon-button:hover i {
+  color: #ff4500; /* Color del icono cuando se hace hover */
+}
+
+/* Estilo activo cuando se hace clic */
+.icon-button:active i {
+  color: #ff4500; /* Color del icono cuando el botón está activo */
+}
+
+/* (Opcional) Cambiar el color del fondo del botón al hacer hover */
+
+/* Personalización de la tabla para reducir el padding */
+table.table-sm {
+  th, td {
+    padding: 5px 10px; /* Reduce el padding en las celdas */
+  }
+
+  thead th {
+    font-size: 14px; /* Tamaño de fuente más pequeño para los encabezados */
+    font-weight: bold; /* Aumentar la negrita del encabezado */
+    
+  }
+
+  tbody td {
+    font-size: 13px; /* Tamaño de fuente más pequeño para las celdas */
+  }
+}
+
+.text-center {
+  text-align: center; /* Asegura que el texto esté centrado */
+}
+/* Agregar padding para mover el texto de la cabecera a la derecha */
+th.text {
+  text-align: left;  /* Asegúrate de que esté alineado a la izquierda */
+  padding-right:  50px!important;  /* Esto mueve más a la derecha */
+}
+
+td.text {
+  text-align: left; /* Alinea el texto a la derecha */
+  padding-right:  80px!important
+}
+
+.no-bg {
+  background-color: transparent !important; /* Se asegura de quitar el color de fondo */
+  border-radius: 5px;
+}
+.custom-ng-select .ng-select-container {
+  border-radius: 5px; /* Ajusta el radio según lo necesites */
+  border: 1px solid #ccc; /* Opcional: mejora el borde */
+  padding: 5px; /* Opcional: mejora el espaciado interno */
+}
+
+
+.swal-success-btn {
+  background-color: orange !important; /* Azul */
+  color: white !important;
+  border: none !important;
+}
+.swal-confirm-btn{
+  background-color: orange !important; /* Azul */
+  color: white !important;
+  border: none !important;
+
+}
+.ngx-pagination .current {
+  padding: .1875rem .625rem;
+  background:#ff6d2fe3 !important;
+  color: #fefefe;
+  cursor: default;
+  border-radius: 3px;
+}
+
+/* Quita bordes de la tabla del header */
+.no-border-table {
+  border: none !important;
+  border-collapse: collapse !important;
+}
+
+.header-table {
+  background-color: #ff6d2fc6; /* Azul oscuro elegante */
+  
+  border-radius: 5px; /* Bordes redondeados */
+  padding: auto;
+
+}
+
+.header-table th {
+  color: white !important; /* Azul grisáceo oscuro */
+}
+
+.header-table th {
+  padding: 12px;
+  font-size: 13px;
+}
+
+/* Estilos para la tabla de opciones */
+.option-table {
+  background: #f8f9fa; /* Color de fondo claro */
+  border: 1px solid #dee2e6; /* Bordes suaves */
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.option-row {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.option-row:last-child {
+  border-bottom: none;
+}
+
+.option-row td {
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #343a40;
+}
+
+/* Efecto hover para filas */
+.option-row:hover {
+  background-color: #e9ecef;
+}
+/* Centra solo la segunda columna (Código) */
+.option-table td:nth-child(2) {
+  text-align: center !important;
+}
+
+/* Efecto hover para filas */
+.option-row:hover {
+  background-color: #e9ecef;
+}
+/* Header (Fila superior con títulos) */
+.select-header-row {
+  display: flex;
+  color: white !important;
+  background-color: #ff6d2fc6;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 3px;
+  font-size: 14px;
+  
+}
+
+.header-column {
+  flex: 1;
+  text-align: left;
+  padding: 0 5px;
+  white-space: nowrap;
+}
+
+/* Cada fila de producto (nombre y código) */
+.select-option-row {
+  display: flex;
+  padding: 4px 5px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.2s;
+  
+}
+
+.select-option-row:hover {
+  background-color: #f1f1f1;
+}
+
+.option-column {
+  flex: 1;
+  text-align: left;
+  padding: 0 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+
+
+
+
+
+
+
+

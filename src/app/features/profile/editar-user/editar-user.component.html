@@ -1,0 +1,84 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Editar Información</h4>
+            </div>
+            <div class="card-body">
+
+                <form [formGroup]="actualizarForm" (ngSubmit)="guardarCambios()">
+
+                      <div class="row">
+                    <div class="col-lg-6">
+                        
+                            <div class="mb-3">
+                                <label for="roles-name" class="form-label">Nombre</label>
+                                <input type="text"  class="form-control" formControlName="fullName" placeholder="Role name"
+                                    value="Workspace Manager">
+                            </div>
+                        
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            <label for="roles-name" class="form-label">Role</label>
+                            <select class="form-control" formControlName="role">
+                                <option value="ADMIN">ADMIN</option>
+                                <option value="USER">USER</option>
+                            </select>
+                        </div>
+                        
+                       
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            <label for="roles-name" class="form-label">email</label>
+                            <input type="text" class="form-control" formControlName="email" placeholder=""
+                                value="Workspace Manager">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            <label for="user-password" class="form-label">Password</label>
+                            <input type="password" id="user-password" class="form-control" 
+                                   formControlName="password" placeholder="Ingrese su contraseña">
+                        
+                            <!-- Mensajes de error y validación -->
+                            <div *ngIf="password?.touched && password?.value">
+                                <small [ngClass]="{'text-danger': password?.errors?.['pattern'], 'text-success': !password?.errors?.['pattern']}">
+                                    {{ password?.errors?.['pattern'] 
+                                       ? 'Debe incluir mayúsculas, minúsculas, números y símbolos' 
+                                       : '✔ Cumple requisitos de seguridad' }}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6">
+                        <p>Estado </p>
+                        <div class="d-flex gap-2 align-items-center">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                    id="flexRadioDefault1" checked="">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Activo
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="card-footer border-top">
+                    <button type="submit" class="btn btn-primary">Editar usuario</button>
+                  </div>
+
+
+                </form>
+              
+
+            </div>
+           
+        </div>
+    </div>
+</div>

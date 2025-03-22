@@ -1,0 +1,59 @@
+.floating-box {
+    background-color: #ffffff; /* Fondo blanco */
+    box-shadow: -1px 0 2px rgba(255, 165, 0, 0.404); /* Sombra en el lado izquierdo con naranja (rgba) */
+ 
+    border-radius: 10px; /* Bordes redondeados */
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.floating-box:hover {
+    transform: translateY(-5px); /* Pequeño movimiento hacia arriba al pasar el cursor */
+    box-shadow: 4px 0 6px rgba(0, 0, 0, 0.1); /* Sombra sutil solo en el lado derecho */
+
+
+}
+
+.floating-box {
+    margin-top: 20px; /* Ajusta el valor según lo necesites */
+}
+
+.login-wrapper {
+    width: 100vw;
+    height: 100vh;
+    background:
+        linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)),
+        url('/assets/images/fff.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+
+
+.circle-image img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 60%; /* Asegura que la imagen también sea circular */
+}
+
+.circle-image {
+    top: 25px; /* Ajusta este valor para moverlo dentro del área roja */
+    left: 50%;
+    transform: translate(-50%, 0);
+  
+    border-radius: 50%;
+    padding: 10px;
+    z-index: 2; /* Asegúrate de que esté encima */
+    position: absolute;
+}
+
+
+

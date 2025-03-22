@@ -1,0 +1,63 @@
+
+
+
+
+
+<!-- Contenedor de texto + formulario -->
+ <div  class="card">
+  <div class="d-flex flex-column align-items-center" style=" position: relative; z-index: 1; ">
+
+
+
+    <!-- Formulario de registro -->
+    <div class="authentication-form w-100 mt-3">
+      <form [formGroup]="registroForm" (ngSubmit)="guardar()">
+  
+        <!-- Nombre y Apellido -->
+        <div class="mb-3">
+          <label class="form-label" for="new-input">Nombre y Apellido</label>
+          <input type="text" id="new-input" class="form-control" formControlName="fullName">
+          <div *ngIf="fullName?.touched">
+            <small [ngClass]="{'text-danger': fullName?.invalid, 'text-success': fullName?.valid}">
+              {{ fullName?.invalid ? 'Primer caracter debe ser mayúscula' : '✔ Válido' }}
+            </small>
+          </div>
+        </div>
+  
+        <!-- Email -->
+        <div class="mb-3">
+          <label class="form-label" for="example-email">Email</label>
+          <input type="email" id="example-email" class="form-control" formControlName="email">
+        </div>
+  
+        <!-- Contraseña -->
+        <div class="mb-3">
+          <label class="form-label" for="example-password">Contraseña</label>
+          <input type="password" id="example-password" class="form-control" formControlName="password">
+          <div *ngIf="password?.touched && password?.value">
+            <small [ngClass]="{'text-danger': password?.errors?.['pattern'], 'text-success': !password?.errors?.['pattern']}">
+                {{ password?.errors?.['pattern'] 
+                   ? 'Debe incluir mayúsculas, minúsculas, números y símbolos' 
+                   : '✔ Cumple requisitos de seguridad' }}
+            </small>
+        </div>
+        </div>
+  
+        <div class="mb-1 text-center">
+          <button class="btn btn-soft-primary" 
+                  type="submit" 
+                  [disabled]="registroForm.invalid" 
+                  style="width: 300px; margin: 0 auto; display: block;">
+            Sign Up
+          </button>
+        </div>
+        
+      </form>
+  
+      
+    </div>
+  </div>
+  
+ </div>
+
+
