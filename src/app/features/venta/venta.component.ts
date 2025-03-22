@@ -42,8 +42,12 @@ export class VentaComponent implements OnInit {
   itemsPerPage: number = 10;  // Elementos por página (puedes cambiar este valor)
   totalItems: number = 0;  //
 
+  imagenBase64: string | null = '';
 
-  constructor(private fb: FormBuilder, private serviceproduct: PoductService, private pdf: PdfService, private loading : LoadingService) {
+  
+
+
+  constructor(private fb: FormBuilder, private serviceproduct: PoductService, private pdf: PdfService, private loading: LoadingService) {
     this.saleForm = this.fb.group({
       codigo: '',
       articulo: ['', Validators.required],
@@ -64,9 +68,16 @@ export class VentaComponent implements OnInit {
   ngOnInit(): void {
     this.loading.init();
     this.producto();
-    
+
     this.obtenerSalidas()
     this.cargarProductosSeleccionados()
+
+    this.pdf.convertirImagenABase64('assets/images/menbrete.jpg')
+      .then(base64 => {
+        this.imagenBase64 = base64;
+       
+      })
+      .catch(error => console.error('Error al cargar la imagen:', error));
 
 
 
@@ -78,13 +89,14 @@ export class VentaComponent implements OnInit {
       next: (response) => {
         this.productos = response.data; // Asegúrate de usar un punto y coma, no coma
         this.filteredProductos = [...this.productos];
-        
+
       },
       error: (err) => {
         console.error('Error al obtener productos:', err);
-          this.loading.hide()
+        this.loading.hide()
       }, complete: () => {
-        this.loading.hide()}
+        this.loading.hide()
+      }
     });
 
     // Detectar cambios en el campo "codigo" para filtrar productos
@@ -105,21 +117,21 @@ export class VentaComponent implements OnInit {
 
   filtrarPorNombreOCodigo(term: string, item: any): boolean {
     if (!term) {
-        return true; // Si el término está vacío, muestra todos
+      return true; // Si el término está vacío, muestra todos
     }
 
     const termLower = term.toLowerCase();
 
     // Filtro por nombre o código
     return item.name.toLowerCase().includes(termLower) ||
-           item.code.toLowerCase().includes(termLower);
-}
+      item.code.toLowerCase().includes(termLower);
+  }
 
   productoSeleccionado(producto: any) {
-    
+
 
     const productoCodigo = producto.code;
-    
+
 
     // Buscar el producto usando el código
     const productoEncontrado = this.productos.find(p => p.code === productoCodigo);
@@ -130,7 +142,7 @@ export class VentaComponent implements OnInit {
         cantidad: '',
 
       });
-      
+
     } else {
       console.log('Producto no encontrado');
     }
@@ -169,7 +181,7 @@ export class VentaComponent implements OnInit {
 
           const destino = document.getElementById('tablaDes');
           if (destino) {
-    
+
             destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
         }, 100);
@@ -178,7 +190,7 @@ export class VentaComponent implements OnInit {
       // Guardar en localStorage
       localStorage.setItem('productosSeleccion', JSON.stringify(this.productosSeleccion));
 
-      
+
 
       this.prodcutotabla = true;
       this.saleForm.reset();  // Reiniciar el formulario después de agregar
@@ -192,7 +204,7 @@ export class VentaComponent implements OnInit {
     const productosGuardados = localStorage.getItem('productosSeleccion');
     if (productosGuardados) {
       this.productosSeleccion = JSON.parse(productosGuardados); // Convertir de JSON a objeto
-      
+
       this.prodcutotabla = true;
     }
 
@@ -205,25 +217,25 @@ export class VentaComponent implements OnInit {
 
     const idenfic = identificacion.toString();
 
-    
 
 
-    
+
+
 
     this.loading.show();
 
     this.serviceproduct.enviarVenta(cliente, idenfic, saleItems).subscribe({
       next: (response) => {
-        
+
         this.Idfactura = response.id
-       this.loading.hide();
+        this.loading.hide();
 
 
 
         this.serviceproduct.facturaVenta(this.Idfactura).subscribe({
           next: (facturaResponse) => {
             this.facturaVent = facturaResponse;
-            
+
 
 
 
@@ -276,7 +288,7 @@ export class VentaComponent implements OnInit {
       },
       complete: () => {
         this.loading.hide()
-       
+
       }
     });
 
@@ -300,7 +312,7 @@ export class VentaComponent implements OnInit {
 
   eliminarProductosGuardados() {
     localStorage.removeItem('productosSeleccion');
-    
+
   }
 
 
@@ -335,13 +347,13 @@ export class VentaComponent implements OnInit {
       } else {
         // Si el usuario cancela, no se hace nada
         Swal.fire({
-                 title: 'Cancelado',
-                 text: 'La cantidad no fue modificada',
-                 icon: 'info',
-                 confirmButtonText: 'Entendido', // Cambia el texto del botón
-                 confirmButtonColor: '#FF6F00' // Cambia el color del botón
-               });
-               
+          title: 'Cancelado',
+          text: 'La cantidad no fue modificada',
+          icon: 'info',
+          confirmButtonText: 'Entendido', // Cambia el texto del botón
+          confirmButtonColor: '#FF6F00' // Cambia el color del botón
+        });
+
       }
     });
   }
@@ -364,14 +376,14 @@ export class VentaComponent implements OnInit {
         this.productosSeleccion = productos;
 
         Swal.fire({
-                 title: '¡Cantidad actualizada!',
-                 
-                 icon: 'success',
-                 timer: 2000, // 
-                 timerProgressBar: true,
-                 showConfirmButton: false,
-                
-               });
+          title: '¡Cantidad actualizada!',
+
+          icon: 'success',
+          timer: 2000, // 
+          timerProgressBar: true,
+          showConfirmButton: false,
+
+        });
       } else {
         Swal.fire('Error', 'Producto no encontrado en localStorage.', 'error');
       }
@@ -388,8 +400,8 @@ export class VentaComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Eliminar',
       cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#FF6F00', 
-      cancelButtonColor: '#FF9800', 
+      confirmButtonColor: '#FF6F00',
+      cancelButtonColor: '#FF9800',
     }).then((result) => {
       if (result.isConfirmed) {
 
@@ -405,14 +417,14 @@ export class VentaComponent implements OnInit {
         this.cargarProductosSeleccionados();
 
 
-      
-         Swal.fire({
-                      title: '¡Éxito!',
-                      text: 'El producto ha sido eliminado.',
-                      icon: 'success',
-                      timer: 1000,
-                      showConfirmButton: false
-                    });
+
+        Swal.fire({
+          title: '¡Éxito!',
+          text: 'El producto ha sido eliminado.',
+          icon: 'success',
+          timer: 1000,
+          showConfirmButton: false
+        });
       }
     });
   }
@@ -429,7 +441,7 @@ export class VentaComponent implements OnInit {
     this.serviceproduct.obtenerSalidas().subscribe({
       next: (Response) => {
         this.salidas = Response.data
-        
+
 
       }
     })
@@ -438,8 +450,8 @@ export class VentaComponent implements OnInit {
   detalle(salida: any) {
 
     this.selctSalida = salida
-    
-    
+
+
 
 
 
@@ -449,14 +461,14 @@ export class VentaComponent implements OnInit {
 
   generatePDF() {
     setTimeout(() => {
-      this.pdf.generateFacturaPDF(this.selctSalida);
+      this.pdf.generateFacturaPDF(this.selctSalida, this.imagenBase64);
 
     }, 500)
 
   }
 
   generatePDFF() {
-    this.pdf.generateFacturaPDF(this.facturaVent);
+    this.pdf.generateFacturaPDF(this.facturaVent, this.imagenBase64);
   }
 
 
@@ -482,11 +494,15 @@ export class VentaComponent implements OnInit {
   cancelarventa() {
 
     localStorage.removeItem('productosSeleccion');
-    
+
     this.productosSeleccion = []
     this.prodcutotabla = false
 
   }
+
+
+
+
 
 }
 

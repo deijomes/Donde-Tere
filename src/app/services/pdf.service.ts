@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { IdPipe } from '../pipes/id.pipe';
+
+import { HttpClient } from '@angular/common/http';
+
 
 declare var pdfMake: any;
 
@@ -11,15 +13,45 @@ declare var pdfMake: any;
 })
 export class PdfService {
 
-  constructor() {
+  constructor(private http: HttpClient) {
     // Asignar las fuentes virtuales
     (pdfMake as any).vfs = pdfMake.vfs;
   }
 
-  generateFacturaPDF(factura: any) {
+  
+
+  convertirImagenABase64(ruta: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      this.http.get(ruta, { responseType: 'blob' }).subscribe({
+        next: blob => {
+          const lector = new FileReader();
+          lector.onloadend = () => resolve(lector.result as string);
+          lector.onerror = reject;
+          lector.readAsDataURL(blob);
+        },
+        error: reject
+      });
+    });
+  }
+
+
+  generateFacturaPDF(factura: any, imagenBase64: any) {
     const documentDefinition = {
+
+      background: [
+        {
+          image: imagenBase64,
+          width: 595.28, // Ancho en puntos para A4
+          height: 841.89, // Alto en puntos para A4
+          absolutePosition: { x: 0, y: 0 } // Posición en la esquina superior izquierda
+        },
+       
+      ],
+      
       content: [
-        { text: 'Factura', style: 'header' },
+
+        { text: '', margin: [0, 40] },
+       
   
         // Información de la Factura
         { text: `ID de la Factura: ${factura.id.slice(-12)}`, style: 'subHeaderBold' },
@@ -93,11 +125,7 @@ export class PdfService {
             ]
           : []),
   
-        { text: 'Información de la Empresa', style: 'footerTitle' },
-        { text: 'Nombre de la Empresa', style: 'footerText' },
-        { text: 'Dirección de la Empresa', style: 'footerText' },
-        { text: 'Teléfono: (XXX) XXX-XXXX', style: 'footerText' },
-        { text: 'Email: contacto@empresa.com', style: 'footerText' },
+        
       ],
       styles: {
         header: { fontSize: 15, bold: true, alignment: 'right', margin: [0, 0, 0, 20] },
@@ -123,10 +151,22 @@ export class PdfService {
   
 
 
-  generateFacturaPDF2(factura: any) {
+  generateFacturaPDF2(factura: any,  imagenBase64: any) {
     const documentDefinition: any = {
+
+      background: [
+        {
+          image: imagenBase64,
+          width: 595.28, // Ancho en puntos para A4
+          height: 841.89, // Alto en puntos para A4
+          absolutePosition: { x: 0, y: 0 } // Posición en la esquina superior izquierda
+        },
+       
+      ],
+     
       content: [
-        { text: 'Factura', style: 'header' },
+        { text: '', margin: [0, 40] },
+        
         { text: `ID de la Factura: ${factura.id.slice(-12)}`, style: 'subHeaderBold' },
         { text: `Fecha de Registro: ${new Date(factura.createdAt).toLocaleDateString('es-ES')}`, style: 'subHeader' },
         
@@ -211,13 +251,13 @@ export class PdfService {
     }
   
     // Información de la Empresa (Pie de página)
-    documentDefinition.content.push(
+    /* documentDefinition.content.push(
       { text: 'Información de la Empresa', style: 'footerTitle' },
       { text: 'Nombre de la Empresa', style: 'footerText' },
       { text: 'Dirección de la Empresa', style: 'footerText' },
       { text: 'Teléfono: (XXX) XXX-XXXX', style: 'footerText' },
       { text: 'Email: contacto@empresa.com', style: 'footerText' }
-    );
+    );*/
   
     // Generar PDF
     pdfMake.createPdf(documentDefinition).open();
@@ -226,6 +266,8 @@ export class PdfService {
       return str.charAt(0).toUpperCase() + str.slice(1);
     }
   }
+  
+
   
   
 

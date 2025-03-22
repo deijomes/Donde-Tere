@@ -59,6 +59,8 @@ export class ComprasComponent implements OnInit {
   itemsPerPage: number = 10;  // Elementos por página (puedes cambiar este valor)
   totalItems: number = 0;  //
 
+  imagenBase64: string | null = '';
+
   constructor(private serviceproduct: PoductService, private serviceCompra: ProductoCompraService, private fb:
     FormBuilder, private router: Router, private pdf: PdfService, private loading: LoadingService) {
 
@@ -109,7 +111,15 @@ export class ComprasComponent implements OnInit {
     this.registrosCompras()
     this.inventariado();
     this.cargarProductosSeleccionados();
-    this.cargarProInv()
+    this.cargarProInv();
+    
+    this.pdf.convertirImagenABase64('assets/images/menbrete.jpg')
+      .then(base64 => {
+        this.imagenBase64 = base64;
+
+      })
+      .catch(error => console.error('Error al cargar la imagen:', error));
+
 
   }
   // SESION : 1 OBTENER PRODUCTO, PARA LUEGO SELCCIONARLO Y GUARDARLO EN LOCAL STORAGE...
@@ -537,13 +547,13 @@ export class ComprasComponent implements OnInit {
 
   generatePDF() {
     setTimeout(() => {
-      this.pdf.generateFacturaPDF2(this.selctCompra);
+      this.pdf.generateFacturaPDF2(this.selctCompra,this.imagenBase64);
 
     }, 500)
 
   }
   generatePDFF() {
-    this.pdf.generateFacturaPDF2(this.facturaCompra);
+    this.pdf.generateFacturaPDF2(this.facturaCompra,this.imagenBase64);
   }
 
   registro() {
