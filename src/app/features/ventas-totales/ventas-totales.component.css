@@ -1,0 +1,41 @@
+.table th, .table td {
+  text-align: center;
+  vertical-align: middle;
+  padding: 12px;
+}
+
+.table thead {
+  background-color: #f8f9fa;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid #ddd;
+}
+
+.badge {
+  width: 80px;
+  display: inline-block;
+  text-align: center;
+  padding: 6px 0;
+}
+
+.p-datepicker input:focus {
+  outline: none !important;   /* Elimina el contorno del focus */
+  border-color: inherit !important; /* Mantiene el color original */
+  box-shadow: none !important; /* Elimina cualquier sombra */
+}
+
+.p-datepicker-day-selected {
+  background: #ff6d2fe3 !important;
+  color: var(--p-datepicker-date-selected-color);
+}
+.spinner-border.custom-size {
+  width: 1rem;
+  height: 1rem;
+  border-width: 0.15em;
+  
+}
+
+ 
+  
+ 

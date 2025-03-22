@@ -1,45 +1,77 @@
-
 <div class="wrapper">
      <!-- ========== Topbar Start ========== -->
-     <header class="topbar">
+     <header *ngIf="!isLoginRoute()" class="topbar">
           <div class="container-fluid">
-               <app-navbar></app-navbar> 
+               <app-navbar></app-navbar>
           </div>
      </header>
 
      <!-- ========== Topbar End ========== -->
 
      <!-- ========== App Menu Start ========== -->
- 
-     
+
+
+     <ng-container *ngIf="!isLoginRoute()">
+          <!-- Sidebar solo si NO es login -->
           <app-sidebar></app-sidebar>
-
-
-     <!-- ========== App Menu End ========== -->
-
-     <!-- ==================================================== -->
-     <!-- Start right Content here -->
-     <!-- ==================================================== -->
-     <div class="page-content">
-
-          <!-- Start Container Fluid -->
-          <div class="container-fluid">
-
-               <router-outlet></router-outlet>
-
+      
+          <!-- Contenido normal de la app -->
+          <div class="page-content">
+              <div class="container-fluid">
+                  <router-outlet></router-outlet>
+              </div>
+      
+              <!-- Footer solo si NO es login -->
+              <footer class="footer">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-12 text-center">
+                              {{ currentYear }} &copy; DondeTere. Crafted by
+                              <iconify-icon icon="f7:logo-rss" class="fs-12 align-middle text-danger"></iconify-icon>
+                              <a href="https://heyzine.com/flip-book/5241be4323.html" class="fw-bold footer-text"
+                                 target="_blank">CorpaTech</a>
+                          </div>
+                      </div>
+                  </div>
+              </footer>
           </div>
-          <!-- End Container Fluid -->
-
-     </div>
+      </ng-container>
+      
+      <!-- Login o registro, sin layout, ocupa toda la pantalla -->
+      <ng-container *ngIf="isLoginRoute()">
+          <router-outlet></router-outlet>
+      </ng-container>
+      
      <!-- ==================================================== -->
      <!-- End Page Content -->
      <!-- ==================================================== -->
 
+     <!-- Modal de Carga Bootstrap -->
+     <div id="loadingModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+               <div class="modal-content bg-transparent border-0">
+                    <div class="modal-body d-flex flex-column justify-content-center align-items-center">
+                         <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                              <span class="visually-hidden">Loading...</span>
+                         </div>
+                         <p class="mt-3 text-white fw-bold">Cargando...</p>
+                    </div>
+               </div>
+          </div>
+     </div>
+     <div id="loadingModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+               <div class="modal-content bg-transparent border-0">
+                    <div class="modal-body d-flex flex-column justify-content-center align-items-center">
+                         <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                              <span class="visually-hidden">Loading...</span>
+                         </div>
+                         <p class="mt-3 text-white fw-bold">Cargando...</p>
+                    </div>
+               </div>
+          </div>
+     </div>
+
+
 
 </div>
-
-
-
-
-
-

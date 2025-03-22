@@ -1,1 +1,366 @@
-<p>movimientos works!</p>
+<!--<div class="row row-cols-xxl-5 row-cols-md-2 row-cols-1 mb-4 ">
+    <div class="col">
+        <div class="progress mt-3 selectable" [ngClass]="{'active': selectedItem === 'Entradas'}" style="height: 4px; "
+            (click)="selectItem('Entradas')">
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar"
+                style="width: 0%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="70"></div>
+        </div>
+        <p class="mb-0 mt-2 text-center selectable" (click)="selectItem('Entradas')">Entradas</p>
+    </div>
+    <div class="col">
+        <div class="progress mt-3 selectable" [ngClass]="{'active': selectedItem === 'Salidas'}" style="height: 4px"
+            (click)="selectItem('Salidas')">
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar"
+                style="width: 0%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="70"></div>
+        </div>
+        <p class="mb-0 mt-2 text-center selectable" (click)="selectItem('Salidas')">Salidas</p>
+    </div>
+</div-> -->
+
+<!-- Formulario de Registro de Entradas -->
+
+<!--
+<div class="card " *ngIf="selectedItem === 'Entradas' ">
+    <div class="p-3 mb-3 fondo">
+        <div class="d-flex align-items-center justify-content-between">
+            <h4 class="card-title mi-color-letra">Registro de entradas</h4>
+        </div>
+    </div>
+
+    <div class=" padding-lado  mb-2 ">
+
+        <form [formGroup]="salidadForm" (ngSubmit)="onSubmitt()" class="row g-2">
+            <div class="col-md-5">
+                <label for="validationDefault01" class="form-label"></label>
+                <input type="text" class="form-control no-bg-placeholder" formControlName="articulo"
+                    id="validationDefault01" placeholder="Artículo" required>
+            </div>
+
+
+
+
+            <div class="col-md-3">
+                <label for="validationDefault02" class="form-label"></label>
+                <input type="text" class="form-control no-bg-placeholder" formControlName="codigo"
+                    id="validationDefault02" placeholder="Codigo" required>
+            </div>
+
+            <div class="col-md-1 d-flex align-items-center">
+                <button type="submit" class="btn btn-soft-danger btn-sm mt-3" [disabled]="salidadForm.invalid">
+                    <iconify-icon icon="solar:filter-linear" class="align-middle fs-18"></iconify-icon>
+                </button>
+            </div>
+        </form>
+
+
+
+        <div *ngIf="filteredProductos.length > 0; else noResultsTemplate " class="floating-box">
+            <table class="table table-hover table-nowrap table-centered m-0" style="table-layout: fixed; width: 100%;">
+              <thead>
+                <tr>
+                  <th class="text-muted ps-3" style="padding: 4px; padding-left: 8px;">Producto</th> 
+                  <th class="text-muted" style="padding: 4px;">Código</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr  *ngFor="let producto of filteredProductos" (click)="onSelectProducto(producto)">
+                  <td class="ps-3" style="padding: 4px; display: flex; align-items: center; justify-content: space-between;">
+                  
+                  
+                    <span>{{ producto.articulo }}</span>
+                  </td>
+                  <td style="padding: 4px;">
+                    <span>{{ producto.codigo }}</span>
+                  </td>
+                  <a class="icon-button" style="height: 50%; display: flex; align-items: center;">
+                    <i class='bx bx-select-multiple'></i>
+                  </a>
+                  
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <ng-template #noResultsTemplate>
+            <div  *ngIf="mensajeNoEncontrado" class="alert alert-success mb-0 mt-1 d-flex align-items-center gap-2" role="alert" style="width: 430px;">
+                <iconify-icon icon="solar:shield-check-bold" class="fs-28 align-middle"></iconify-icon>
+                {{ mensajeNoEncontrado }}
+           </div>
+          </ng-template>
+
+          
+          
+      
+
+
+
+    </div>
+
+
+    <div class="mt-4">
+
+        <form [formGroup]="entradaForm" (ngSubmit)="onSubmit()">
+            <div class="container padding-lados">
+                <div class="row mt-3">
+
+                    <div class="col-lg-4">
+                        <div class="mb-3">
+                            <label for="product-articulo" class="form-label">Articulo</label>
+                            <input type="text" id="product-articulo" class="form-control"
+                                placeholder="Nombre del artículo" formControlName="articulo" readonly />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="mb-3">
+                            <label for="product-articulo" class="form-label">codigo</label>
+                            <input type="text" id="product-articulo" class="form-control"
+                                placeholder="Nombre del artículo" formControlName="codigo" readonly />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="mb-3">
+                            <label for="product-cantidad-inicial" class="form-label">Movimiento</label>
+                            <input type="text" id="product-cantidad-inicial" class="form-control"
+                                formControlName="movimiento" placeholder="Cantidad inicial" readonly />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+
+                    <div class="col-lg-4">
+                        <div class="mb-2">
+                            <label for="product-cantidad-inicial" class="form-label">Fecha</label>
+                            <input type="date" id="product-cantidad-inicial" class="form-control"
+                                formControlName="fecharegistro" placeholder="Cantidad inicial" />
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-4">
+                        <div class="mb-3">
+                            <label for="cantidad-minima" class="form-label">Cantidad</label>
+                            <input type="number" id="cantidad-minima" class="form-control" placeholder="Cantidad"
+                                formControlName="cantidad" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="mb-3">
+                            <label for="pv-unitario" class="form-label">Precio unitario</label>
+                            <input type="number" id="pv-unitario" class="form-control" placeholder="Precio unitario"
+                                formControlName="precioUnitario" />
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 mt-3">
+                        <div class="mb-3">
+                            <label for="pc-unitario" class="form-label">Total transacción</label>
+                            <input type="number" id="pc-unitario" class="form-control" placeholder="Total transacción"
+                                formControlName="totalTransaccion" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-3 bg-light mb-4">
+                <div class="row justify-content-end g-2">
+                    <div class="col-lg-2">
+                        <button type="submit" class="btn btn-primary w-100" [disabled]="entradaForm.invalid">
+                            Guardar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+</div>
+-->
+
+
+<!--
+
+<div class="card" *ngIf="selectedItem === 'Salidas'">
+    <div class="p-3 mb-3 fondo">
+        <div class="d-flex align-items-center justify-content-between">
+            <h4 class="card-title mi-color-letra">Registro de salidas</h4>
+        </div>
+    </div>
+
+    <form [formGroup]="salidadForm" (ngSubmit)="onSubmitt()">
+        <div class="container padding-lados">
+            <div class="row mt-3">
+                <div class="col-lg-4">
+                    <div class="mb-3">
+                        <label for="product-code" class="form-label">Código</label>
+                        <ng-select [items]="filteredProductos" bindLabel="codigo" bindValue="codigo"
+                            placeholder="Seleccionar codigo" [searchable]="true" [clearable]="true"
+                            [virtualScroll]="true" [loading]="isLoading" formControlName="codigo"
+                            class="custom-ng-select">
+                        </ng-select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="mb-3">
+                        <label for="product-articulo" class="form-label">Articulo</label>
+                        <input type="text" id="product-articulo" class="form-control" placeholder="Nombre del artículo"
+                            formControlName="articulo" readonly />
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="mb-3">
+                        <label for="product-cantidad-inicial" class="form-label">Movimiento</label>
+                        <input type="text" id="product-cantidad-inicial" class="form-control"
+                            formControlName="movimiento" placeholder="Cantidad inicial" readonly />
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+            <div class="row mt-3">
+
+                <div class="col-lg-4">
+                    <div class="mb-3">
+                        <label for="product-cantidad-inicial" class="form-label">Fecha </label>
+                        <input type="date" id="product-cantidad-inicial" class="form-control" formControlName="fecha"
+                            placeholder="Cantidad inicial" />
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="mb-3">
+                        <label for="cantidad-minima" class="form-label">Cantidad</label>
+                        <input type="number" id="cantidad-minima" class="form-control" placeholder="Cantidad "
+                            formControlName="cantidad" />
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="col-lg-4">
+                    <div class="mb-3">
+                        <label for="pv-unitario" class="form-label">Precio unitario</label>
+                        <input type="number" id="pv-unitario" class="form-control" placeholder="Precio unitario"
+                            formControlName="precioUnitario" />
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="mb-3">
+                        <label for="pc-unitario" class="form-label">Total transacción</label>
+                        <input type="number" id="pc-unitario" class="form-control" placeholder="Total transacción"
+                            formControlName="totalTransaccion" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-3 bg-light mb-3">
+            <div class="row justify-content-end g-2">
+                <div class="col-lg-2">
+                    <button type="submit" class="btn btn-primary w-100" [disabled]="salidadForm.invalid">
+                        Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+-->
+<div class="card">
+    <div class="card-header">
+      <h4 class="card-title">Historial movimientos</h4>
+    </div>
+
+   
+    <div class="card-body">
+      <div class="position-relative ms-2">
+        <span class="position-absolute start-0 top-0 border border-dashed h-100"></span>
+  
+        <!-- Mostrar la tabla original cuando no haya filtro activo o si el filtro no ha producido resultados -->
+        <div *ngIf="!isFiltered || (isFiltered && filteredMovimientos.length === 0)">
+          <!-- Mostrar los movimientos originales si no hay filtro o no hay resultados filtrados -->
+          <div *ngFor="let movimiento of listMovimientos | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }" class="position-relative ps-4">
+            <div class="mb-4">
+                <span class="position-absolute start-0 avatar-sm translate-middle-x bg-light d-inline-flex align-items-center justify-content-center rounded-circle text-success fs-20">
+                    <i class="bx bx-check-circle"></i>
+                  </span>
+                  
+                  <div class="ms-2 d-flex flex-wrap gap-2 align-items-center justify-content-between">
+                    <div>
+                      <h5 class="mb-1 text-dark fw-medium fs-15">
+                        {{ movimiento.product?.name ? (movimiento.product.name | uppercase) : '' }}
+                      </h5>
+                      <p class="mb-2">Movimiento <a class="link-primary">{{ movimiento.reason | translate }}</a></p>
+                      <p>{{ movimiento.description }}</p>
+                      <p>Cantidad <a class="btn btn-light">{{ movimiento.quantity }}</a></p>
+                    </div>
+                
+                    <div class="d-flex justify-content-between align-items-center gap-3">
+                      <p class="mb-0">{{ movimiento.createdAt | date: "yyyy-MM-dd h:mma" : 'es' }}</p>
+                    </div>
+                  </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Mostrar los resultados filtrados cuando hay datos -->
+        <div *ngIf="isFiltered && filteredMovimientos.length > 0">
+          <div *ngFor="let filtroMovimiento of filteredMovimientos | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }" class="position-relative ps-4">
+            <div class="mb-4">
+              <span class="position-absolute start-0 avatar-sm translate-middle-x bg-light d-inline-flex align-items-center justify-content-center rounded-circle text-success fs-20">
+                <i class="bx bx-check-circle"></i>
+              </span>
+              <div class="ms-2 d-flex flex-wrap gap-2 align-items-center justify-content-between">
+                <div>
+                  <h5 class="mb-1 text-dark fw-medium fs-15">{{ filtroMovimiento.product?.name | uppercase}}</h5>
+                  <p class="mb-2">Movimiento <a class="link-primary">{{ filtroMovimiento.reason | translate }}</a></p>
+                  <p >{{filtroMovimiento.description}} </p>
+                  <p>Cantidad <a class="btn btn-light">{{ filtroMovimiento.quantity }}</a></p>
+                </div>
+                
+  
+                <div class="d-flex justify-content-between align-items-center gap-3">
+                  <p class="mb-0">{{ filtroMovimiento.createdAt | date: "yyyy-MM-dd h:mma" : 'es' }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- PAGINADOR: Ubicación correcta fuera del *ngFor -->
+        <div class="card-footer border-top">
+          <nav aria-label="Page navigation">
+            <pagination-controls class="pagination justify-content-end mb-0"
+              (pageChange)="currentPage = $event"
+              previousLabel="Anterior" nextLabel="Siguiente"
+              [responsive]="true" [autoHide]="true">
+            </pagination-controls>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Alerta personalizada -->
+
+  <div *ngIf="mostrarAlerta" class="alert alert-warning alert-dismissible fade show custom-alert" role="alert">
+    <strong>Atención:</strong> {{ alertMessage }}
+    <button type="button" class="btn-close" aria-label="Close"(click)="cerrarAlerta()"></button>
+  </div>
+  
+
+

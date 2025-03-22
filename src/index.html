@@ -8,6 +8,7 @@
     <!-- Title Meta -->
     <meta charset="utf-8" />
     <title>Donde Tere</title>
+    <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="A fully responsive premium admin dashboard template" />
     <meta name="author" content="Techzaa" />
@@ -27,12 +28,20 @@
 
     <!-- Theme Config js (Require in all Page) -->
     <script src="assets/js/config.js"></script>
+
+    <!-- Enlace a Google Fonts para Open Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+
 </head>
+
+
+
 
 <body>
 
     <app-root></app-root>
-    
+
     <!-- Vendor Javascript (Require in all Page) -->
     <script src="assets/js/vendor.js"></script>
 
@@ -46,19 +55,20 @@
 
     <!-- Dashboard Js -->
     <script src="assets/js/pages/dashboard.js"></script>
+    <!-- Agregar pdfmake desde CDN -->
+    <script src="assets/js/pages/pdfmake.min.js"></script>
+    <script src="assets/js/pages/vfs_fonts.js"></script>
+  
 
-    <footer class="footer">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <script>document.write(new Date().getFullYear())</script> &copy; DondeTere. Crafted by <iconify-icon
-                        icon="f7:logo-rss" class="fs-12 align-middle text-danger"></iconify-icon> <a
-                        href="https://heyzine.com/flip-book/5241be4323.html" class="fw-bold footer-text"
-                        target="_blank">CorpaTech</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+
+
+
+
+
+<!-- Modal de carga en index.html -->
+
+</body> <!-- 🔹 Justo antes de cerrar el body -->
+</html>
 
 
 
