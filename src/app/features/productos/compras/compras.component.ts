@@ -395,7 +395,8 @@ export class ComprasComponent implements OnInit {
     const proveedor = this.proveedorForm.value.proveedor;
     const identificacion = this.proveedorForm.value.identificacion;
 
-    const idenfic = identificacion.toString()?? '';
+    const idenfic = identificacion ? identificacion.toString() : '';
+
 
 
 
@@ -571,7 +572,7 @@ export class ComprasComponent implements OnInit {
               icon: 'success',
               confirmButtonColor: '#FF6F00'
             });
-            this.router.navigateByUrl('compras')
+           
           },
           error: (err) => {
             console.error('Error al eliminar:', err);
