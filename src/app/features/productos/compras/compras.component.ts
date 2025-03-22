@@ -48,7 +48,8 @@ export class ComprasComponent implements OnInit {
   idproduct: string = '';
   Idfactura: string = '';
   tablaProducto: boolean = false
-  mostrarHistorial: boolean = false
+  mostrarHistorial: boolean = false;
+  idCompra : string = '';
 
   comprasNoInvenForms: FormGroup;
   tablaProNoInventariado = false;
@@ -541,9 +542,52 @@ export class ComprasComponent implements OnInit {
   detalle(compra: any) {
 
     this.selctCompra = compra
+    this.idCompra = compra.id
+    
     
 
   }
+
+  eliminarFactura() {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'La factura será eliminada',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#FF6F00',
+      cancelButtonColor: '#FF9800'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.serviceCompra.eliminarFactura(this.idCompra).subscribe({
+          
+          next: (response) => {
+            
+            this.registrosCompras();
+            Swal.fire({
+              title: 'Eliminado',
+              text: 'La factura ha sido eliminada con éxito.',
+              icon: 'success',
+              confirmButtonColor: '#FF6F00'
+            });
+            this.router.navigateByUrl('compras')
+          },
+          error: (err) => {
+            console.error('Error al eliminar:', err);
+            Swal.fire({
+              title: 'Error',
+              text: 'No se pudo eliminar la factura. Inténtalo nuevamente.',
+              icon: 'error',
+              confirmButtonColor: '#FF6F00'
+            });
+          }
+        });
+      }
+    });
+  }
+  
+  
 
   generatePDF() {
     setTimeout(() => {

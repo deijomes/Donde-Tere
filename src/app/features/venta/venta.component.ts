@@ -12,6 +12,7 @@ import { CapitalizePipe } from "../../pipes/capitalize.pipe";
 import { PdfService } from '../../services/pdf.service';
 import { LoadingService } from '../../services/loading.service';
 
+
 @Component({
   selector: 'app-venta',
   standalone: true,
@@ -32,6 +33,7 @@ export class VentaComponent implements OnInit {
   salidas: any[] = [];
   selctSalida: any = []
   Idfactura: string = '';
+  idVenta:string = '';
   facturaVent: any[] = []
   mostrarHistorial: boolean = false
   ProductoSeleccionado: ventaModel[] = []
@@ -44,7 +46,7 @@ export class VentaComponent implements OnInit {
 
   imagenBase64: string | null = '';
 
-  
+
 
 
   constructor(private fb: FormBuilder, private serviceproduct: PoductService, private pdf: PdfService, private loading: LoadingService) {
@@ -75,7 +77,7 @@ export class VentaComponent implements OnInit {
     this.pdf.convertirImagenABase64('assets/images/menbrete.jpg')
       .then(base64 => {
         this.imagenBase64 = base64;
-       
+
       })
       .catch(error => console.error('Error al cargar la imagen:', error));
 
@@ -450,13 +452,55 @@ export class VentaComponent implements OnInit {
   detalle(salida: any) {
 
     this.selctSalida = salida
-
-
-
-
-
+    this.idVenta = salida.id;
+    console.log(this.idVenta, 'este es el id de venta')
 
   }
+
+   eliminarFactura() {
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'La factura será eliminada',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#FF6F00',
+        cancelButtonColor: '#FF9800'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.serviceproduct.eliminarFactura(this.idVenta).subscribe({
+            
+            next: (response) => {
+
+              
+              this.obtenerSalidas()
+              
+              
+              Swal.fire({
+                title: 'Eliminado',
+                text: 'La factura ha sido eliminada con éxito.',
+                icon: 'success',
+                confirmButtonColor: '#FF6F00'
+              });
+             
+            },
+            error: (err) => {
+              console.error('Error al eliminar:', err);
+              Swal.fire({
+                title: 'Error',
+                text: 'No se pudo eliminar la factura. Inténtalo nuevamente.',
+                icon: 'error',
+                confirmButtonColor: '#FF6F00'
+              });
+            }
+          });
+        }
+      });
+    }
+    
+
+
 
 
   generatePDF() {

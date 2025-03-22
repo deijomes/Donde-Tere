@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import {environment} from '../../environments/environment'
 
 @Injectable({
@@ -42,6 +42,16 @@ export class ProductoCompraService {
     return this.http.get(`${this.baseUrl}/${id}`)
 
   }
+
+  eliminarFactura(id: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`).pipe(
+      catchError(error => {
+        console.error('Error al eliminar la factura:', error);
+        return throwError(() => new Error('No se pudo eliminar la factura. Inténtalo nuevamente.'));
+      })
+    );
+  }
+
 
 
 
